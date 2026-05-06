@@ -1,0 +1,326 @@
+# Example Workflow Plan
+# Request: "Build a production-grade AI-enabled document processing API"
+# This is the Sprint Quality Gate benchmark scenario from BACKLOG.md Section 18.
+
+workflow_plan:
+  plan_id: WP-20260506-001
+  created: "2026-05-06"
+  objective: Build a production-grade AI-enabled REST API that accepts documents, extracts structured data using an LLM, and returns results with observability and security controls.
+  complexity: full-sdlc
+  classification_confidence: high
+
+  detected_phases:
+    - name: architecture
+      skill: system-architecture
+      confidence: high
+      rationale: "API", "production-grade", and system scope signals require architecture decisions before implementation begins.
+
+    - name: ai-engineering
+      skill: ai-engineering
+      confidence: high
+      rationale: "AI-enabled" and "LLM" are primary AI-engineering signals; document extraction requires prompt architecture and eval design.
+
+    - name: backend
+      skill: backend-engineering
+      confidence: high
+      rationale: "REST API" and "document processing" are primary backend signals requiring service, endpoint, and data model design.
+
+    - name: security
+      skill: devsecops
+      confidence: high
+      rationale: "production-grade" combined with data handling and external API exposure are primary DevSecOps signals.
+
+    - name: qa
+      skill: qa-automation
+      confidence: high
+      rationale: "production-grade" implies test strategy, AI eval harness, and integration test coverage.
+
+    - name: release
+      skill: release-management
+      confidence: medium
+      rationale: "production-grade" implies deployment pipeline and release readiness review.
+
+    - name: observability
+      skill: observability
+      confidence: medium
+      rationale: Production API requires SLO definition, structured logging, and alerting strategy.
+
+  skill_chain:
+    - step: 1
+      skill: system-architecture
+      phase: architecture
+      depends_on: []
+      parallel_with: []
+      inputs:
+        - name: user objective
+          source: user-provided
+        - name: non-functional requirements
+          source: user-provided
+      outputs:
+        - name: system design document
+          consumed_by: [backend-engineering, ai-engineering, devsecops]
+        - name: ADR-001 (AI provider selection)
+          consumed_by: [ai-engineering]
+        - name: ADR-002 (API framework selection)
+          consumed_by: [backend-engineering]
+        - name: service boundary map
+          consumed_by: [backend-engineering, devsecops]
+      gate_before_next: architecture-approved
+
+    - step: 2
+      skill: ai-engineering
+      phase: ai-engineering
+      depends_on: [system-architecture]
+      parallel_with: []
+      inputs:
+        - name: system design document
+          source: upstream-skill
+        - name: ADR-001 (AI provider selection)
+          source: upstream-skill
+      outputs:
+        - name: AI architecture document
+          consumed_by: [backend-engineering, devsecops, qa-automation]
+        - name: prompt design specification
+          consumed_by: [backend-engineering]
+        - name: eval plan
+          consumed_by: [qa-automation]
+        - name: AI risk classification
+          consumed_by: [devsecops, compliance-governance]
+      gate_before_next: ai-design-approved
+
+    - step: 3
+      skill: backend-engineering
+      phase: backend
+      depends_on: [system-architecture, ai-engineering]
+      parallel_with: []
+      inputs:
+        - name: system design document
+          source: upstream-skill
+        - name: AI architecture document
+          source: upstream-skill
+        - name: prompt design specification
+          source: upstream-skill
+      outputs:
+        - name: API specification (OpenAPI)
+          consumed_by: [devsecops, qa-automation]
+        - name: service implementation plan
+          consumed_by: [devsecops, qa-automation]
+        - name: database schema
+          consumed_by: [devsecops]
+      gate_before_next: backend-implementation-ready
+
+    - step: 4
+      skill: devsecops
+      phase: security
+      depends_on: [system-architecture, backend-engineering, ai-engineering]
+      parallel_with: []
+      inputs:
+        - name: system design document
+          source: upstream-skill
+        - name: API specification
+          source: upstream-skill
+        - name: AI risk classification
+          source: upstream-skill
+        - name: database schema
+          source: upstream-skill
+      outputs:
+        - name: threat model
+          consumed_by: [qa-automation, release-management]
+        - name: security findings
+          consumed_by: [qa-automation]
+        - name: remediation task list
+          consumed_by: [memory-packet]
+      gate_before_next: security-review-passed
+
+    - step: 5
+      skill: qa-automation
+      phase: qa
+      depends_on: [backend-engineering, devsecops, ai-engineering]
+      parallel_with: []
+      inputs:
+        - name: API specification
+          source: upstream-skill
+        - name: eval plan
+          source: upstream-skill
+        - name: threat model
+          source: upstream-skill
+        - name: security findings
+          source: upstream-skill
+      outputs:
+        - name: test strategy document
+          consumed_by: [release-management]
+        - name: test case suite
+          consumed_by: [release-management]
+        - name: AI eval harness design
+          consumed_by: [release-management]
+      gate_before_next: test-strategy-accepted
+
+    - step: 6
+      skill: release-management
+      phase: release
+      depends_on: [qa-automation, devsecops]
+      parallel_with: []
+      inputs:
+        - name: test strategy document
+          source: upstream-skill
+        - name: threat model
+          source: upstream-skill
+        - name: API specification
+          source: upstream-skill
+      outputs:
+        - name: release checklist
+          consumed_by: [observability]
+        - name: deployment plan
+          consumed_by: [observability]
+        - name: rollback plan
+          consumed_by: [memory-packet]
+      gate_before_next: release-readiness-confirmed
+
+    - step: 7
+      skill: observability
+      phase: observability
+      depends_on: [release-management]
+      parallel_with: []
+      inputs:
+        - name: deployment plan
+          source: upstream-skill
+        - name: API specification
+          source: upstream-skill
+      outputs:
+        - name: SLO definitions
+          consumed_by: [memory-packet]
+        - name: alert strategy
+          consumed_by: [memory-packet]
+        - name: dashboard requirements
+          consumed_by: [memory-packet]
+
+  quality_gates:
+    - gate_name: architecture-approved
+      transition: "architecture → ai-engineering"
+      pass_criteria:
+        - System design document exists and covers all major components
+        - Service boundaries are defined with clear interface contracts
+        - At least one ADR exists for each major technology decision
+        - Non-functional requirements (latency, throughput, availability) are stated
+      fail_action: block
+      evidence_required:
+        - system design document
+        - at least one ADR
+
+    - gate_name: ai-design-approved
+      transition: "ai-engineering → backend-engineering"
+      pass_criteria:
+        - AI architecture document specifies model selection rationale
+        - Prompt design specification exists with input/output schema
+        - Eval plan defines success metrics and at least 3 test cases
+        - AI risk classification is assigned (low/medium/high/critical)
+      fail_action: block
+      evidence_required:
+        - AI architecture document
+        - eval plan
+        - AI risk classification
+
+    - gate_name: backend-implementation-ready
+      transition: "backend-engineering → devsecops"
+      pass_criteria:
+        - OpenAPI specification covers all endpoints with request/response schemas
+        - Auth strategy is defined (not deferred)
+        - Database schema includes all entities and relationships
+        - Service implementation plan lists all components and dependencies
+      fail_action: block
+      evidence_required:
+        - OpenAPI specification
+        - database schema
+
+    - gate_name: security-review-passed
+      transition: "devsecops → qa-automation"
+      pass_criteria:
+        - Threat model exists and covers all service entry points
+        - No critical-severity findings are left unmitigated
+        - Secrets management approach is defined
+        - AI-specific risks are addressed (prompt injection, data leakage)
+      fail_action: block
+      evidence_required:
+        - threat model
+        - security findings list with severity ratings
+
+    - gate_name: test-strategy-accepted
+      transition: "qa-automation → release-management"
+      pass_criteria:
+        - Test strategy covers unit, integration, and AI eval layers
+        - Coverage targets are defined and achievable
+        - At least one end-to-end test scenario is specified
+        - Regression baseline is defined
+      fail_action: block
+      evidence_required:
+        - test strategy document
+        - test case suite
+
+    - gate_name: release-readiness-confirmed
+      transition: "release-management → observability"
+      pass_criteria:
+        - Release checklist is complete with no open blockers
+        - Deployment plan includes rollback procedure
+        - All upstream gate statuses are PASS
+        - Changelog or release notes drafted
+      fail_action: block
+      evidence_required:
+        - release checklist
+        - deployment plan with rollback
+
+  memory_strategy:
+    preserve:
+      - user objective
+      - accepted ADRs and design decisions
+      - AI risk classification
+      - all quality gate statuses (pass/fail/criteria)
+      - open questions and constraints
+      - artifact names and locations
+      - remediation tasks from failed gates
+    compress_after:
+      - intermediate reasoning steps within each skill
+      - raw conversation turns once a phase is complete
+      - superseded design drafts
+      - rejected alternatives (keep summary only)
+    packet_location: examples/memory-packets/ai-document-processing-api.yaml
+
+  token_budget:
+    total_estimated: 120000
+    allocation:
+      planning: 12000       # 10% — orchestration, classification, plan production
+      source_context: 24000 # 20% — reading existing code, schemas, standards
+      reasoning: 36000      # 30% — analysis, design, decision-making per skill
+      output: 36000         # 30% — produced artifacts and structured responses
+      buffer: 12000         # 10% — gate evaluation, memory ops, compression
+    compression_trigger: 75%
+
+  risks:
+    - id: RISK-001
+      description: AI provider latency may not meet production SLO targets for document processing.
+      severity: high
+      phase: ai-engineering
+      mitigation: Define latency SLO before model selection; include async processing fallback in architecture.
+
+    - id: RISK-002
+      description: Prompt injection attacks could expose internal document data or bypass processing logic.
+      severity: high
+      phase: security
+      mitigation: Include prompt injection defense in threat model; add input sanitization to AI engineering design.
+
+    - id: RISK-003
+      description: LLM outputs may be non-deterministic, making regression testing difficult.
+      severity: medium
+      phase: qa
+      mitigation: Define eval harness with deterministic assertions on output schema; use snapshot testing for structured fields.
+
+    - id: RISK-004
+      description: Context bloat from full-SDLC workflow may exhaust token budget before observability phase.
+      severity: medium
+      phase: all
+      mitigation: Apply memory compression after each phase gate; preserve only structured decisions in memory packet.
+
+  next_action:
+    description: Load system-architecture skill. Produce system design document and ADRs for AI provider and API framework selection.
+    skill: system-architecture
+    input_needed: Confirm document types to be processed, expected throughput (docs/hour), and target deployment environment (cloud provider, container platform).
+    gate_to_pass: N/A

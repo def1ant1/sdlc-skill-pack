@@ -1,0 +1,307 @@
+{
+  "version": "1.0",
+  "description": "Benchmark prompts for orchestration intent classification and routing accuracy. Each entry includes the prompt, expected detected phases, expected complexity tier, and notes. Used by P1-014 regression suite.",
+  "prompts": [
+
+    {
+      "id": "BP-001",
+      "category": "single-phase",
+      "prompt": "Write a threat model for our new payment API",
+      "expected_phases": ["security"],
+      "expected_complexity": "single-phase",
+      "expected_primary_skill": "devsecops",
+      "notes": "Clear security signal; no other phase signals present."
+    },
+
+    {
+      "id": "BP-002",
+      "category": "single-phase",
+      "prompt": "Create a test strategy and write unit tests for the auth service",
+      "expected_phases": ["qa"],
+      "expected_complexity": "single-phase",
+      "expected_primary_skill": "qa-automation",
+      "notes": "QA-only prompt; no architecture or implementation signals."
+    },
+
+    {
+      "id": "BP-003",
+      "category": "single-phase",
+      "prompt": "Review this pull request for code quality and maintainability",
+      "expected_phases": ["code-review"],
+      "expected_complexity": "single-phase",
+      "expected_primary_skill": "code-review",
+      "notes": "Explicit PR review request; standalone skill."
+    },
+
+    {
+      "id": "BP-004",
+      "category": "single-phase",
+      "prompt": "Write a product requirements document for a user notification feature",
+      "expected_phases": ["requirements"],
+      "expected_complexity": "single-phase",
+      "expected_primary_skill": "requirements-engineering",
+      "notes": "PRD and feature spec are primary requirements signals."
+    },
+
+    {
+      "id": "BP-005",
+      "category": "single-phase",
+      "prompt": "Create a release plan and changelog for version 3.0",
+      "expected_phases": ["release"],
+      "expected_complexity": "single-phase",
+      "expected_primary_skill": "release-management",
+      "notes": "Release and version are primary release signals."
+    },
+
+    {
+      "id": "BP-006",
+      "category": "single-phase",
+      "prompt": "We have a production outage. Help me triage and create a postmortem",
+      "expected_phases": ["operations"],
+      "expected_complexity": "single-phase",
+      "expected_primary_skill": "sre-incident-response",
+      "notes": "Incident triage is standalone; loads immediately regardless of prior phases."
+    },
+
+    {
+      "id": "BP-007",
+      "category": "single-phase",
+      "prompt": "Write an executive summary of our Q2 delivery status for the board",
+      "expected_phases": ["reporting"],
+      "expected_complexity": "single-phase",
+      "expected_primary_skill": "executive-reporting",
+      "notes": "Leadership reporting with no implementation signals."
+    },
+
+    {
+      "id": "BP-008",
+      "category": "single-phase",
+      "prompt": "Set up Prometheus metrics and Grafana dashboards for our API",
+      "expected_phases": ["observability"],
+      "expected_complexity": "single-phase",
+      "expected_primary_skill": "observability",
+      "notes": "Observability tools are primary signals."
+    },
+
+    {
+      "id": "BP-009",
+      "category": "single-phase",
+      "prompt": "Design the database schema and API endpoints for a todo application",
+      "expected_phases": ["backend"],
+      "expected_complexity": "single-phase",
+      "expected_primary_skill": "backend-engineering",
+      "notes": "Database schema and API endpoint are primary backend signals."
+    },
+
+    {
+      "id": "BP-010",
+      "category": "single-phase",
+      "prompt": "Build a React component library with accessibility and design system support",
+      "expected_phases": ["frontend"],
+      "expected_complexity": "single-phase",
+      "expected_primary_skill": "frontend-engineering",
+      "notes": "React, component, accessibility, and design system are frontend signals."
+    },
+
+    {
+      "id": "BP-011",
+      "category": "multi-phase",
+      "prompt": "Design and implement a payment microservice with a REST API and PostgreSQL database",
+      "expected_phases": ["architecture", "backend"],
+      "expected_complexity": "multi-phase",
+      "expected_primary_skill": "system-architecture",
+      "notes": "Design maps to architecture; implement + REST API + database map to backend."
+    },
+
+    {
+      "id": "BP-012",
+      "category": "multi-phase",
+      "prompt": "Build a secure user authentication service with JWT and write integration tests",
+      "expected_phases": ["backend", "security", "qa"],
+      "expected_complexity": "multi-phase",
+      "expected_primary_skill": "backend-engineering",
+      "notes": "Three-phase prompt: backend implementation + security (JWT, auth) + QA (tests)."
+    },
+
+    {
+      "id": "BP-013",
+      "category": "multi-phase",
+      "prompt": "Perform a security review of this service and create a deployment plan",
+      "expected_phases": ["security", "release"],
+      "expected_complexity": "multi-phase",
+      "expected_primary_skill": "devsecops",
+      "notes": "Security review + deployment plan; two distinct phase signals."
+    },
+
+    {
+      "id": "BP-014",
+      "category": "multi-phase",
+      "prompt": "Design an LLM-based document extraction pipeline and define the evaluation strategy",
+      "expected_phases": ["ai-engineering"],
+      "expected_complexity": "multi-phase",
+      "expected_primary_skill": "ai-engineering",
+      "notes": "LLM and evaluation are primary AI engineering signals; architecture added by dependency expansion."
+    },
+
+    {
+      "id": "BP-015",
+      "category": "multi-phase",
+      "prompt": "Conduct a code review and then run a security audit on the reviewed service",
+      "expected_phases": ["code-review", "security"],
+      "expected_complexity": "multi-phase",
+      "expected_primary_skill": "code-review",
+      "notes": "Sequential review then security; two explicit phase signals."
+    },
+
+    {
+      "id": "BP-016",
+      "category": "multi-phase",
+      "prompt": "Write user stories and acceptance criteria for the checkout feature, then design the system architecture",
+      "expected_phases": ["requirements", "architecture"],
+      "expected_complexity": "multi-phase",
+      "expected_primary_skill": "requirements-engineering",
+      "notes": "User stories + acceptance criteria → requirements; then architecture explicitly requested."
+    },
+
+    {
+      "id": "BP-017",
+      "category": "multi-phase",
+      "prompt": "Set up CI/CD pipelines, define SLOs, and configure alerting for our production service",
+      "expected_phases": ["release", "observability"],
+      "expected_complexity": "multi-phase",
+      "expected_primary_skill": "release-management",
+      "notes": "CI/CD maps to release; SLO and alerting map to observability."
+    },
+
+    {
+      "id": "BP-018",
+      "category": "full-sdlc",
+      "prompt": "Build a production-grade AI-enabled document processing API with architecture, backend, security review, tests, CI/CD deployment, and observability",
+      "expected_phases": ["architecture", "ai-engineering", "backend", "security", "qa", "release", "observability"],
+      "expected_complexity": "full-sdlc",
+      "expected_primary_skill": "system-architecture",
+      "notes": "Sprint quality gate benchmark scenario from BACKLOG.md Section 18. Seven explicit phase signals."
+    },
+
+    {
+      "id": "BP-019",
+      "category": "full-sdlc",
+      "prompt": "Design, build, secure, test, and release a new feature end-to-end with compliance reporting",
+      "expected_phases": ["architecture", "backend", "security", "qa", "release", "compliance"],
+      "expected_complexity": "full-sdlc",
+      "expected_primary_skill": "system-architecture",
+      "notes": "Six phases explicitly requested; end-to-end scope."
+    },
+
+    {
+      "id": "BP-020",
+      "category": "full-sdlc",
+      "prompt": "We need to build an AI agent platform: define requirements, design the architecture, implement the backend, conduct security review, write tests, deploy it, and set up monitoring",
+      "expected_phases": ["requirements", "architecture", "ai-engineering", "backend", "security", "qa", "release", "observability"],
+      "expected_complexity": "full-sdlc",
+      "expected_primary_skill": "requirements-engineering",
+      "notes": "Eight explicitly named phases; full SDLC with AI."
+    },
+
+    {
+      "id": "BP-021",
+      "category": "multi-phase",
+      "prompt": "Our RAG pipeline needs a governance review and audit evidence for our SOC 2 audit",
+      "expected_phases": ["ai-engineering", "compliance"],
+      "expected_complexity": "multi-phase",
+      "expected_primary_skill": "ai-engineering",
+      "notes": "RAG maps to AI engineering; SOC 2 audit maps to compliance-governance."
+    },
+
+    {
+      "id": "BP-022",
+      "category": "multi-phase",
+      "prompt": "Implement the React frontend for our checkout flow and ensure WCAG 2.1 accessibility compliance",
+      "expected_phases": ["frontend"],
+      "expected_complexity": "multi-phase",
+      "expected_primary_skill": "frontend-engineering",
+      "notes": "React + frontend + accessibility are primary frontend signals. Architecture added by dep expansion."
+    },
+
+    {
+      "id": "BP-023",
+      "category": "multi-phase",
+      "prompt": "Write a test strategy covering unit, integration, and end-to-end tests, then build a CI/CD release pipeline",
+      "expected_phases": ["qa", "release"],
+      "expected_complexity": "multi-phase",
+      "expected_primary_skill": "qa-automation",
+      "notes": "Test strategy → QA; CI/CD release pipeline → release-management."
+    },
+
+    {
+      "id": "BP-024",
+      "category": "ambiguous",
+      "prompt": "Help me with my software project",
+      "expected_phases": [],
+      "expected_complexity": "single-phase",
+      "expected_primary_skill": "requirements-engineering",
+      "notes": "No specific signals. Should fall back to requirements as safe default or classify as unknown and ask a clarifying question."
+    },
+
+    {
+      "id": "BP-025",
+      "category": "ambiguous",
+      "prompt": "Improve our system",
+      "expected_phases": [],
+      "expected_complexity": "single-phase",
+      "expected_primary_skill": "requirements-engineering",
+      "notes": "Vague directive. No phase signals. Safe fallback expected."
+    },
+
+    {
+      "id": "BP-026",
+      "category": "ambiguous",
+      "prompt": "We need to do something about performance and reliability",
+      "expected_phases": ["observability"],
+      "expected_complexity": "single-phase",
+      "expected_primary_skill": "observability",
+      "notes": "Reliability is a weak observability/SRE signal. Classification should be medium confidence at most."
+    },
+
+    {
+      "id": "BP-027",
+      "category": "multi-phase",
+      "prompt": "Refactor the authentication module, review the code, and add missing test coverage",
+      "expected_phases": ["code-review", "qa"],
+      "expected_complexity": "multi-phase",
+      "expected_primary_skill": "code-review",
+      "notes": "Refactor + review → code-review; add test coverage → qa-automation."
+    },
+
+    {
+      "id": "BP-028",
+      "category": "multi-phase",
+      "prompt": "Define the OpenAPI spec for our GraphQL gateway and design the database schema",
+      "expected_phases": ["backend", "architecture"],
+      "expected_complexity": "multi-phase",
+      "expected_primary_skill": "system-architecture",
+      "notes": "API spec and database schema are backend signals; GraphQL gateway design is an architecture signal."
+    },
+
+    {
+      "id": "BP-029",
+      "category": "single-phase",
+      "prompt": "Classify this project's AI risk tier and map it to our compliance controls",
+      "expected_phases": ["compliance"],
+      "expected_complexity": "single-phase",
+      "expected_primary_skill": "compliance-governance",
+      "notes": "Risk classification and compliance controls are primary compliance-governance signals."
+    },
+
+    {
+      "id": "BP-030",
+      "category": "full-sdlc",
+      "prompt": "We are building a HIPAA-compliant AI medical records API. We need architecture, backend, LLM integration, threat modeling, comprehensive tests, a deployment plan, and audit evidence.",
+      "expected_phases": ["architecture", "ai-engineering", "backend", "security", "qa", "release", "compliance"],
+      "expected_complexity": "full-sdlc",
+      "expected_primary_skill": "system-architecture",
+      "notes": "Regulated domain (HIPAA) + AI + full lifecycle. Seven phase signals. Should also trigger escalation consideration due to regulated data."
+    }
+
+  ]
+}

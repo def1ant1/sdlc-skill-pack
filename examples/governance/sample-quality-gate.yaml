@@ -1,0 +1,5 @@
+quality_gate:
+  category: security
+  criteria: no hardcoded secrets
+  validator: secret scan
+  severity: high

@@ -1,0 +1,57 @@
+# Contributing
+
+## Branch Strategy
+
+- `main`: stable releases
+- `develop`: integration
+- `feature/*`: new features
+- `hotfix/*`: urgent fixes
+- `experimental/*`: R&D
+
+## Commit Convention
+
+Use scoped conventional commits:
+
+```text
+feat(orchestration): add workflow routing contract
+fix(memory): preserve accepted decisions in compression
+security(devsecops): add secret-handling rule
+docs(standards): clarify naming conventions
+test(skills): add frontmatter validation test
+```
+
+Allowed types:
+
+- `feat`
+- `fix`
+- `refactor`
+- `docs`
+- `test`
+- `security`
+- `governance`
+- `orchestration`
+- `memory`
+
+## Pull Request Checklist
+
+Every PR must include:
+
+- objective
+- affected skills
+- standards impacted
+- test evidence
+- governance implications
+- token/context impact
+- rollback considerations
+
+## Skill Contribution Rules
+
+Every skill folder must:
+
+- use kebab-case
+- contain exact `SKILL.md`
+- include valid YAML frontmatter
+- include `name` and `description`
+- avoid XML angle brackets in frontmatter
+- use `references/` for long material
+- include examples when workflow behavior is non-trivial

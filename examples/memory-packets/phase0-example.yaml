@@ -1,0 +1,43 @@
+memory_packet:
+  project:
+    name: Apotheon SDLC Skill Platform
+    domain: AI-native software delivery
+    objective: Establish Phase 0 foundation
+  phase:
+    current: foundation
+    previous: null
+    next: orchestration-control-plane
+  decisions:
+    accepted:
+      - modular skill-pack architecture
+      - centralized shared standards
+      - memory packets for handoff
+    rejected: []
+    pending:
+      - exact MCP integration priority
+  constraints:
+    technical:
+      - skills must use exact SKILL.md naming
+      - skill names must be kebab-case
+    governance:
+      - security and AI governance baselines required
+  artifacts:
+    created:
+      - repo skeleton
+      - orchestration skill
+      - memory skill
+    modified: []
+    required:
+      - Phase 1 workflow router
+  quality:
+    risks:
+      - overloading context with too many standards
+    tests_needed:
+      - frontmatter validation
+      - structure validation
+    review_required:
+      - architecture review before Phase 1
+  context:
+    summary: Phase 0 establishes the control-plane foundation.
+    unresolved_questions: []
+    next_action: Begin Phase 1 orchestration implementation.

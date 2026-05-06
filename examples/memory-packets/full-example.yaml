@@ -1,0 +1,266 @@
+# Full Memory Packet Example
+# Workflow: AI-enabled document processing API
+# State: After architecture and AI engineering phases complete; backend blocked on security constraint.
+
+memory_packet:
+
+  packet_id: MP-20260506-001
+  version: "1.0"
+  created_at: "2026-05-06T09:00:00Z"
+  updated_at: "2026-05-06T15:45:00Z"
+  workflow_plan_id: WP-20260506-001
+
+  project:
+    name: DocFlow AI API
+    domain: AI-native document processing
+    objective: Build a production-grade REST API that accepts documents, extracts structured data using an LLM, and returns results with observability and security controls.
+    complexity: full-sdlc
+
+  phase_status:
+    architecture: complete
+    ai-engineering: complete
+    backend: in_progress
+    security: pending
+    qa: pending
+    release: pending
+    observability: pending
+
+  current_phase: backend
+
+  decisions:
+    accepted:
+      - id: DEC-001
+        phase: architecture
+        decision: Use FastAPI on Python 3.12 for the REST API layer.
+        rationale: Team has existing FastAPI expertise; async support matches document processing throughput requirements.
+        adr_ref: docs/adrs/ADR-001-api-framework.md
+
+      - id: DEC-002
+        phase: architecture
+        decision: Use PostgreSQL 16 with pgvector for document metadata and embedding storage.
+        rationale: Consolidates relational and vector storage; avoids dual-database operational complexity.
+        adr_ref: docs/adrs/ADR-002-database.md
+
+      - id: DEC-003
+        phase: architecture
+        decision: Deploy as containerized service on AWS ECS Fargate with ALB.
+        rationale: Matches existing infrastructure; serverless containers reduce ops burden for initial release.
+        adr_ref: docs/adrs/ADR-003-deployment.md
+
+      - id: DEC-004
+        phase: ai-engineering
+        decision: Use Claude claude-sonnet-4-6 via Anthropic API for document extraction.
+        rationale: Best accuracy on structured extraction benchmarks; acceptable latency for async processing mode.
+        adr_ref: docs/adrs/ADR-004-model-selection.md
+
+      - id: DEC-005
+        phase: ai-engineering
+        decision: All document extraction runs asynchronously via a job queue; no synchronous LLM calls on the request path.
+        rationale: Decouples API latency SLO from LLM inference latency; enables retry and observability.
+
+    rejected:
+      - id: REJ-001
+        phase: architecture
+        option: MongoDB as the primary datastore
+        reason: Lack of native vector support requires additional tooling; team has stronger PostgreSQL expertise.
+
+      - id: REJ-002
+        phase: ai-engineering
+        option: Synchronous LLM calls on the API request path
+        reason: P99 latency of LLM inference (2–8s) would violate the 500ms API response SLO.
+
+    pending:
+      - id: PEN-001
+        phase: backend
+        question: Should the job queue use SQS or an in-process queue (Celery/Redis)?
+        unblocks: backend-implementation-ready gate (GATE-004)
+        owner: user
+
+  constraints:
+    business:
+      - Must be production-ready for pilot within 6 weeks.
+      - Initial pilot limited to internal documents only — no external user uploads.
+    technical:
+      - Must deploy on AWS; no GCP or Azure services.
+      - API response SLO is 500ms at P95 for job submission; extraction results are async.
+      - Python 3.12+ required to match existing team stack.
+    security:
+      - No document content may be logged at INFO level or below.
+      - Anthropic API key must be stored in AWS Secrets Manager; never in environment variables or config files.
+      - All inter-service communication must use TLS 1.3.
+    compliance:
+      - Documents may contain PII; data handling must comply with internal data governance policy.
+    ai_specific:
+      - Model outputs must include a confidence score or uncertainty indicator.
+      - Extraction failures must be surfaced to the caller, not silently returned as empty results.
+
+  artifacts:
+    - name: System Design Document
+      type: document
+      phase: architecture
+      location: docs/architecture/docflow-system-design.md
+      status: complete
+      consumed_by: [backend, ai-engineering, security]
+
+    - name: ADR-001 API Framework
+      type: document
+      phase: architecture
+      location: docs/adrs/ADR-001-api-framework.md
+      status: complete
+      consumed_by: [backend]
+
+    - name: ADR-002 Database
+      type: document
+      phase: architecture
+      location: docs/adrs/ADR-002-database.md
+      status: complete
+      consumed_by: [backend, security]
+
+    - name: ADR-003 Deployment
+      type: document
+      phase: architecture
+      location: docs/adrs/ADR-003-deployment.md
+      status: complete
+      consumed_by: [release, observability]
+
+    - name: ADR-004 Model Selection
+      type: document
+      phase: ai-engineering
+      location: docs/adrs/ADR-004-model-selection.md
+      status: complete
+      consumed_by: [backend, security, qa]
+
+    - name: AI Architecture Document
+      type: document
+      phase: ai-engineering
+      location: docs/ai/docflow-ai-architecture.md
+      status: complete
+      consumed_by: [backend, security, qa]
+
+    - name: Prompt Design Specification
+      type: spec
+      phase: ai-engineering
+      location: docs/ai/extraction-prompt-spec.md
+      status: complete
+      consumed_by: [backend]
+
+    - name: Eval Plan
+      type: document
+      phase: ai-engineering
+      location: docs/ai/eval-plan.md
+      status: complete
+      consumed_by: [qa]
+
+    - name: AI Risk Classification
+      type: report
+      phase: ai-engineering
+      location: docs/ai/risk-classification.md
+      status: complete
+      consumed_by: [security, compliance-governance]
+
+    - name: OpenAPI Specification
+      type: spec
+      phase: backend
+      location: docs/api/openapi.yaml
+      status: draft
+      consumed_by: [security, qa]
+
+    - name: Database Schema
+      type: schema
+      phase: backend
+      location: docs/db/schema.sql
+      status: draft
+      consumed_by: [security]
+
+  quality_gate_status:
+    - gate_name: architecture-approved
+      transition: "architecture → ai-engineering"
+      status: PASS
+      evaluated_at: "2026-05-06T11:20:00Z"
+      criteria:
+        - text: System design document exists and covers all major components
+          result: PASS
+        - text: Service boundaries are defined with clear interface contracts
+          result: PASS
+        - text: At least one ADR exists for each major technology decision
+          result: PASS
+        - text: Non-functional requirements are stated
+          result: PASS
+
+    - gate_name: ai-design-approved
+      transition: "ai-engineering → backend-engineering"
+      status: PASS_WITH_WARNINGS
+      evaluated_at: "2026-05-06T14:05:00Z"
+      criteria:
+        - text: AI architecture document specifies model provider and rationale
+          result: PASS
+        - text: Prompt design specification exists with input/output schema
+          result: PASS
+        - text: Eval plan defines success metrics and at least three test cases
+          result: PASS
+        - text: AI risk classification is assigned
+          result: PASS
+        - text: Human oversight requirements are stated for the assigned risk tier
+          result: WARN
+          note: Risk tier is medium; human review loop is defined but approval SLA not yet set.
+        - text: Fallback behavior is defined for model unavailability
+          result: PASS
+      remediation_tasks: []
+
+    - gate_name: backend-implementation-ready
+      transition: "backend-engineering → devsecops"
+      status: NOT_EVALUATED
+      evaluated_at: null
+
+  open_questions:
+    - id: OQ-001
+      question: Should the job queue use SQS or an in-process queue (Celery/Redis)?
+      blocks: GATE-004 (backend-implementation-ready)
+      owner: user
+
+    - id: OQ-002
+      question: What is the maximum document size (MB) the API must accept?
+      blocks: OpenAPI spec finalization
+      owner: user
+
+  risks:
+    - id: RISK-001
+      description: AI provider latency may not meet extraction throughput targets under load.
+      severity: high
+      phase: ai-engineering
+      status: mitigated
+      mitigation: Async job queue decouples API SLO from LLM latency (DEC-005).
+
+    - id: RISK-002
+      description: Prompt injection attacks could expose internal document data or bypass extraction logic.
+      severity: high
+      phase: security
+      status: open
+      mitigation: Threat model must include prompt injection attack surface; input sanitization to be specified in backend.
+
+    - id: RISK-003
+      description: LLM outputs are non-deterministic, making regression testing difficult.
+      severity: medium
+      phase: qa
+      status: open
+      mitigation: Eval plan specifies deterministic schema assertions; confidence scoring requirement captures uncertainty.
+
+    - id: RISK-004
+      description: Context bloat from full-SDLC workflow may exhaust token budget before observability phase.
+      severity: medium
+      phase: all
+      status: mitigated
+      mitigation: Memory compression triggered at 75%; intermediate reasoning dropped after each phase gate.
+
+  token_stats:
+    total_budget: 120000
+    consumed: 48200
+    remaining: 71800
+    compression_triggered: false
+    last_compression_at: null
+
+  next_action:
+    description: Complete backend-engineering phase. Finalize OpenAPI specification, resolve queue technology decision (OQ-001), and complete database schema. Then evaluate GATE-004.
+    skill: backend-engineering
+    gate_just_passed: ai-design-approved
+    input_needed: Answer to OQ-001 (SQS vs Celery/Redis) and OQ-002 (max document size) required to finalize the OpenAPI spec and service implementation plan.

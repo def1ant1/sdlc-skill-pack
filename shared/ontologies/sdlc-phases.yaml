@@ -1,0 +1,11 @@
+phases:
+  - product
+  - requirements
+  - architecture
+  - implementation
+  - testing
+  - security
+  - release
+  - operations
+  - governance
+  - executive
