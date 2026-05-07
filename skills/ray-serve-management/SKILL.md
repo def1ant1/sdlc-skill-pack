@@ -1,6 +1,6 @@
 ---
 name: ray-serve-management
-description: Manages Ray Serve deployments with autoscaling, canary routing, and traffic splitting.
+description: Manages Ray Serve deployments with autoscaling, canary routing, and traffic splitting for the inference serving layer.
 metadata:
   version: "0.1.0"
   category: infrastructure
@@ -11,30 +11,69 @@ metadata:
 
 ## Role
 
-Manages Ray Serve deployments with autoscaling, canary routing, and traffic splitting.
+Ray Serve deployment manager. Handles the full lifecycle of Ray Serve deployments including
+initial deployment, configuration updates, canary rollouts, A/B traffic splitting, and
+graceful scale-in. Provides a higher-level deployment API on top of `ray-runtime` for
+serving-specific workflows.
 
 ## Activation Triggers
 
-- Invoked by `sdlc-orchestration` when the objective requires ray serve management capability
-- Called by orchestration plan referencing this skill as a required step
+- A new model serving endpoint is required on the Ray Serve layer
+- A serving deployment requires a configuration update (new model, changed replicas, timeout)
+- A canary rollout is initiated for a new model version
+- A/B traffic split is required for `workflow-ab-testing` or `reinforcement-optimizer`
+- A deployment health check fails and requires rollback
+- Operator requests a replica count adjustment for a specific deployment
 
 ## Execution Protocol
 
-1. **Receive task context**: Parse the skill invocation payload and validate required fields.
-2. **Execute skill workflow**: Apply the domain-specific logic documented in `references/`.
-3. **Validate outputs**: Check outputs against quality gates before returning.
-4. **Return result**: Emit structured output and telemetry.
+1. **Deployment definition**: Parse a Ray Serve deployment spec:
+   - `deployment_name`, `route_prefix`
+   - `replica_config`: min_replicas, max_replicas, target_ongoing_requests (autoscaling)
+   - `model_config`: model path, batch size, max concurrent queries
+   - `health_check_period_s`, `graceful_shutdown_wait_s`
+
+2. **Deploy**: Submit deployment to Ray Serve via `ray-runtime`. Wait for min_replicas
+   to reach RUNNING status. Verify endpoint responds to health probe.
+
+3. **Canary rollout**: For version updates:
+   a. Deploy new version alongside existing as a separate deployment
+   b. Route 5% of traffic to the new version via Ray Serve's `@serve.ingress` router
+   c. Monitor error rate and p95 latency on the canary for 15 minutes
+   d. If metrics are within SLO: gradually shift traffic (5% → 25% → 50% → 100%)
+   e. If metrics breach SLO: immediately route 100% back to stable version and alert
+
+4. **Autoscaling**: Configure Ray Serve's built-in autoscaler with:
+   `target_ongoing_requests` as the scaling metric. Set `upscale_delay_s` and `downscale_delay_s`
+   to avoid thrashing.
+
+5. **Delete/scale-to-zero**: On operator request, gracefully drain and delete a deployment.
+   Wait for in-flight requests to complete up to `graceful_shutdown_wait_s`.
 
 ## Output Format
 
 ```yaml
-result:
-  status: success | partial | failed
-  skill: ray-serve-management
-  outputs: {}
-  quality_gates_passed: true
+serve_deployment:
+  deployment_name: "llama3-70b-instruct"
+  route_prefix: "/v1/llama3-70b"
+  status: RUNNING | DEPLOYING | UNHEALTHY | DELETING
+  replicas:
+    running: 4
+    starting: 0
+    failed: 0
+  canary:
+    active: false
+    canary_traffic_pct: 0
+    canary_status: null
+  autoscaling_metric: "ongoing_requests"
+  p95_latency_ms: 0
 ```
+
+## Quality Gates
+
+- Canary must receive ≥ 100 requests before promotion decision
+- Rollback must complete within 60 seconds of SLO breach detection
 
 ## References
 
-- `references/` — Domain-specific methodology, schemas, and standards
+- `references/` — Deployment spec schema, canary rollout policy, autoscaling configuration

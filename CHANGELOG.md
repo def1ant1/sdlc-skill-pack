@@ -4,6 +4,128 @@ All notable changes to the Apotheon AI Company OS are documented here.
 
 ---
 
+## [8.0.0] — 2026-05-07 — Sovereign Autonomous Enterprise Intelligence OS (V8)
+
+Implements phases 75–92 of the V8 gap analysis backlog: Enterprise OS Platform, Compute &
+Runtime Infrastructure, Memory & Learning, Enterprise Connectivity, Sovereign Operations,
+and Multi-Modal & Compliance Runtime. Grows the registry from 135 to 194 directories.
+
+### New Core Skills — Enterprise OS Platform (Wave 8)
+
+- `core/sdk-runtime` — SDK package loading, manifest validation, sandboxed execution, quota enforcement
+- `core/developer-portal` — Registry API, marketplace certification, versioning, discovery for the SDK ecosystem
+- `core/persistent-agent-runtime` — Always-on named enterprise agent lifecycle, standing mandate evaluation, inter-agent messaging
+- `core/world-model` — Organizational belief state engine with Bayesian updates and contradiction resolution
+- `core/operator-console` — Unified Enterprise OS dashboard: agent fleet, workflows, inference fleet, cost, escalation queue
+
+### New Core Skills — Compute & Runtime Infrastructure (Wave 9)
+
+- `core/inference-engine-fleet` — Multi-engine deployment, health monitoring, failover, autoscaling (vLLM, SGLang, TRT-LLM, Ollama, llama.cpp, DeepSpeed)
+- `core/ray-runtime` — Ray cluster and KubeRay operator for distributed workload scheduling
+- `core/temporal-integration` — Temporal.io integration for durable workflow signals, queries, and schedules
+
+### New Core Skills — Memory, Learning & Connectivity (Waves 10–11)
+
+- `core/reinforcement-optimizer` — Multi-armed bandit and RL-based optimization of prompts, routing, and workflows
+- `core/enterprise-integration-hub` — ERP/CRM/ITSM/HRIS connector framework with bidirectional sync
+- `core/notification-orchestration` — Multi-channel alert routing with deduplication, on-call management, escalation chains
+
+### New Core Skills — Security, Multi-Modal & Compliance (Waves 12–13)
+
+- `core/zero-trust-runtime` — mTLS/JWT identity verification, OPA-based continuous authorization, least-privilege enforcement
+- `core/multimodal-runtime` — Multi-modal input pipeline for PDF, image, audio, and video enterprise content
+- `core/compliance-runtime` — Continuous compliance control evaluation and automated evidence collection
+
+### New Domain Skills — Phase 75 (Enterprise OS SDK)
+
+- `skills/sdk-authoring` — SDK scaffolding and authoring workflows for third-party Enterprise OS skill development
+- `skills/marketplace-publishing` — Skill certification, publishing, and versioning lifecycle
+
+### New Domain Skills — Phase 77 (World Model)
+
+- `skills/belief-state-management` — World model queries, uncertainty quantification, entity state estimation
+
+### New Domain Skills — Phase 79 (Inference Engine Fleet)
+
+- `skills/inference-engine-deployment` — Engine-specific deployment playbooks (vLLM, SGLang, TRT-LLM, Ollama, llama.cpp, DeepSpeed)
+- `skills/inference-engine-benchmarking` — Cross-engine latency/throughput benchmarking with automatic selection
+
+### New Domain Skills — Phase 80–81 (Distributed & Temporal)
+
+- `skills/distributed-training-orchestration` — Ray Train fine-tuning with DDP/FSDP strategies
+- `skills/ray-serve-management` — Ray Serve deployment, autoscaling, and canary routing
+
+### New Domain Skills — Phase 82–84 (Memory & Learning)
+
+- `skills/memory-compression` — Episodic-to-semantic memory consolidation with importance scoring
+- `skills/temporal-memory-replay` — Point-in-time organizational state reconstruction and memory timeline queries
+- `skills/prompt-optimization` — Systematic prompt variant evaluation and automated improvement
+- `skills/workflow-ab-testing` — Workflow variant traffic splitting and statistical comparison
+- `skills/lessons-learned-extraction` — Post-execution lesson synthesis and knowledge graph integration
+- `skills/institutional-knowledge-query` — Organizational precedent, past decision, and failure pattern queries
+
+### New Domain Skills — Phase 85–86 (Enterprise Connectivity)
+
+- `skills/inbox-automation` — Email/Slack/Teams message classification, drafting, routing, and follow-up tracking
+- `skills/communication-analytics` — Communication volume, response time, and thread health analytics
+- `skills/erp-integration` — SAP/Oracle financial sync and procurement automation
+- `skills/crm-integration` — Salesforce/HubSpot pipeline management and contact synchronization
+- `skills/itsm-integration` — ServiceNow/Jira SM incident management and service catalog
+
+### New Domain Skills — Phase 88–89 (Sovereign Security & DR)
+
+- `skills/zero-trust-policy-authoring` — Zero-trust policy definition, scope declaration, exception management
+- `skills/lateral-movement-detection` — Anomalous access pattern detection across agent execution
+- `skills/disaster-recovery-automation` — DR runbook execution, cross-region failover, chaos testing
+- `skills/business-continuity-planning` — BCP authoring, DR simulation, RTO/RPO monitoring
+
+### New Domain Skills — Phase 90–92 (Edge, Multi-Modal, Compliance)
+
+- `skills/edge-runtime-management` — Edge node deployment, tiny model selection, disconnected operation
+- `skills/iot-data-ingestion` — MQTT/CoAP/OPC-UA sensor data processing and edge-to-cloud sync
+- `skills/document-intelligence` — PDF/Word/Excel structure extraction, OCR, contract understanding
+- `skills/audio-video-processing` — Audio transcription, speaker diarization, video frame analysis
+- `skills/visual-analytics` — Chart interpretation, dashboard screenshot analysis, diagram understanding
+- `skills/continuous-control-monitoring` — SOC2/ISO 27001/HIPAA/GDPR/EU AI Act control evaluation
+- `skills/compliance-posture-reporting` — Regulator-ready compliance reports and gap tracking
+
+### New Agent Definitions (Phase 76)
+
+- `agents/cfo-agent` — Financial oversight, spend anomaly detection, budget governance
+- `agents/security-architect-agent` — Continuous security posture monitoring and threat response
+- `agents/infrastructure-optimization-agent` — Autonomous compute cost and performance optimization
+- `agents/compliance-agent` — Continuous compliance monitoring with automated evidence collection
+- `agents/research-agent` — Autonomous literature review, hypothesis generation, evidence synthesis
+- `agents/revenue-operations-agent` — Pipeline monitoring, forecast alerting, GTM coordination
+- `agents/program-governance-agent` — Portfolio RAG status tracking, milestone monitoring, escalation
+
+### Reference Files Added
+
+- `core/world-model/references/entity-taxonomy.md` — Entity type taxonomy, observation schema, Bayesian update parameters
+- `core/persistent-agent-runtime/references/mandate-config-schema.md` — Mandate YAML spec, authority scope taxonomy, inter-agent message schema
+- `core/inference-engine-fleet/references/engine-fleet-spec.md` — Engine deployment manifest, routing policy, autoscaling thresholds
+- `core/operator-console/references/console-panel-spec.md` — Panel data models, escalation severity taxonomy, directive schema
+- `core/zero-trust-runtime/references/opa-policy-structure.md` — OPA bundle layout, Rego example, mTLS/JWT spec, policy violation taxonomy
+- `core/compliance-runtime/references/control-catalog-schema.md` — Control definition YAML, framework coverage matrix, evidence vault schema, posture scoring formula
+- `core/notification-orchestration/references/alert-routing-policy.md` — Alert severity taxonomy, channel routing matrix, on-call schedule schema, deduplication algorithm
+- `core/enterprise-integration-hub/references/connector-catalog.md` — Connector registry, canonical entity schemas, rate limit management, webhook validation
+- `core/reinforcement-optimizer/references/rl-algorithm-specs.md` — Thompson Sampling and UCB1 implementations, reward signal taxonomy, convergence criteria, experiment log schema
+- `core/multimodal-runtime/references/modality-routing-table.md` — MIME routing table, multi-modal submission schema, context assembly schema, processing time estimates
+- `skills/continuous-control-monitoring/references/control-catalog-soc2-iso.md` — SOC2/ISO 27001/EU AI Act control catalog with evaluation methods
+- `skills/disaster-recovery-automation/references/dr-runbook-library.md` — Region outage and DB failure runbooks, recovery validation suite, chaos test scenarios
+- `skills/inbox-automation/references/message-classification-taxonomy.md` — Intent/urgency classification, domain routing table, follow-up SLA, confidence thresholds
+- `skills/edge-runtime-management/references/edge-hardware-profiles.md` — Hardware profile catalog, model selection matrix and algorithm, OTA update protocol, disconnected operation spec
+
+### Validation Status
+
+- `validate_skill_structure.py`: PASS (0 errors, 0 warnings)
+- `validate_frontmatter.py`: PASS (0 errors)
+- Stub SKILL.md files remaining: 0 (all 194 skills have full behavioral contracts)
+- Registry: 63 core + 115 domain + 16 agents = 194 total directories
+- Reference files: 224 total across all skills
+
+---
+
 ## [7.0.0] — 2026-05-07 — Sovereign Enterprise Intelligence
 
 Implements phases 52–74 of the Master Optimized Enhancement Backlog: Cognitive Runtime,
