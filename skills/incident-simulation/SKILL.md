@@ -6,7 +6,7 @@ metadata:
   category: simulation
   owner: sre
   maturity: alpha
-  dependencies: [simulation-engine, sre, telemetry]
+  dependencies: [simulation-engine, sre-incident-response, telemetry]
 ---
 
 ## Role
