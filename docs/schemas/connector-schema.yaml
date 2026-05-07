@@ -1,0 +1,274 @@
+# Connector Schema
+# Version: 1.0.0
+#
+# JSON Schema (YAML format) for Apotheon Connector Hub connector definitions.
+# Used by core/connector-hub/SKILL.md and scripts/validation/validate_connector.py.
+# Full field descriptions: core/connector-hub/references/connector-contract.md
+
+$schema: "http://json-schema.org/draft-07/schema#"
+title: ConnectorDefinition
+description: >
+  Defines a connector registered with the Apotheon Connector Hub.
+  Every connector must pass all CV-001–CV-011 validation rules before activation.
+version: "1.0.0"
+
+type: object
+
+required:
+  - connector_id
+  - connector_type
+  - name
+  - description
+  - auth_method
+  - endpoint
+  - rate_limits
+  - retry_policy
+  - capabilities
+  - health_check
+  - audit_log
+
+properties:
+
+  connector_id:
+    type: string
+    description: Unique kebab-case identifier for this connector.
+    pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"
+    examples:
+      - github-api
+      - postgres-primary
+      - ollama-local
+
+  connector_type:
+    type: string
+    description: Category of external system this connector targets.
+    enum:
+      - api
+      - database
+      - mcp
+      - cloud
+      - local
+      - filesystem
+
+  name:
+    type: string
+    description: Human-readable display name.
+    minLength: 1
+    maxLength: 100
+
+  description:
+    type: string
+    description: What this connector connects to and why. Max 500 characters.
+    minLength: 1
+    maxLength: 500
+
+  auth_method:
+    type: string
+    description: Authentication method used by this connector.
+    enum:
+      - none
+      - api-key
+      - oauth2
+      - jwt
+      - mtls
+      - iam
+      - credentials
+      - path-based
+      - connection-string
+      - mcp-auth
+      - local-socket
+      - path-permissions
+
+  endpoint:
+    type: string
+    description: >
+      Base URL (api/cloud), connection string (database),
+      file path (filesystem/local), or socket path (mcp).
+    minLength: 1
+
+  rate_limits:
+    type: object
+    description: Request rate constraints for this connector.
+    required:
+      - requests_per_minute
+      - requests_per_day
+      - burst_limit
+    properties:
+      requests_per_minute:
+        type: integer
+        minimum: 0
+        description: Max requests per minute. 0 = unlimited.
+      requests_per_day:
+        type: integer
+        minimum: 0
+        description: Max requests per day. 0 = unlimited.
+      burst_limit:
+        type: integer
+        minimum: 1
+        description: Max concurrent in-flight requests.
+
+  retry_policy:
+    type: object
+    description: How failed requests are retried.
+    required:
+      - max_retries
+      - backoff_strategy
+      - timeout_ms
+    properties:
+      max_retries:
+        type: integer
+        minimum: 0
+        maximum: 10
+        description: Maximum retry attempts on transient failure.
+      backoff_strategy:
+        type: string
+        enum:
+          - none
+          - linear
+          - exponential
+        description: Backoff strategy between retries.
+      timeout_ms:
+        type: integer
+        minimum: 100
+        description: Request timeout in milliseconds.
+
+  capabilities:
+    type: array
+    description: Operations this connector supports.
+    minItems: 1
+    uniqueItems: true
+    items:
+      type: string
+      enum:
+        - read
+        - write
+        - search
+        - stream
+        - subscribe
+        - execute
+
+  health_check:
+    type: string
+    description: >
+      URL, SQL query, CLI command, or endpoint path used to verify
+      connectivity. Must return a non-error response when connector is healthy.
+    minLength: 1
+
+  audit_log:
+    type: boolean
+    description: >
+      Whether every interaction with this connector is written to the audit log.
+      Must be true for api and database connector types.
+
+  metadata:
+    type: object
+    description: Optional metadata for documentation and discovery.
+    properties:
+      owner:
+        type: string
+        description: Team or individual responsible for this connector.
+      docs_url:
+        type: string
+        description: Link to external API or service documentation.
+      tags:
+        type: array
+        items:
+          type: string
+        description: Free-form tags for filtering and discovery.
+      created_at:
+        type: string
+        format: date
+        description: Date connector was registered (YYYY-MM-DD).
+      last_validated:
+        type: string
+        format: date
+        description: Date connector definition was last validated.
+
+additionalProperties: false
+
+# ---------------------------------------------------------------------------
+# Examples
+# ---------------------------------------------------------------------------
+
+examples:
+
+  - connector_id: github-api
+    connector_type: api
+    name: GitHub REST API
+    description: >
+      GitHub REST API v3 for reading repository metadata, pull requests, issues,
+      and commit history. Used by code-review and requirements-engineering skills.
+    auth_method: api-key
+    endpoint: https://api.github.com
+    rate_limits:
+      requests_per_minute: 60
+      requests_per_day: 5000
+      burst_limit: 10
+    retry_policy:
+      max_retries: 3
+      backoff_strategy: exponential
+      timeout_ms: 10000
+    capabilities:
+      - read
+      - search
+    health_check: https://api.github.com/zen
+    audit_log: true
+    metadata:
+      owner: platform-team
+      docs_url: https://docs.github.com/en/rest
+      tags: [git, code, scm]
+      created_at: "2026-05-06"
+
+  - connector_id: postgres-primary
+    connector_type: database
+    name: Primary Postgres Database
+    description: >
+      Primary Postgres 16 database for structured application data. Used by
+      backend-engineering and analytics-intelligence skills.
+    auth_method: credentials
+    endpoint: postgresql://postgres-primary.internal:5432/apotheon
+    rate_limits:
+      requests_per_minute: 1000
+      requests_per_day: 0
+      burst_limit: 50
+    retry_policy:
+      max_retries: 5
+      backoff_strategy: exponential
+      timeout_ms: 5000
+    capabilities:
+      - read
+      - write
+      - search
+      - stream
+    health_check: "SELECT 1"
+    audit_log: true
+    metadata:
+      owner: data-platform
+      tags: [postgres, sql, primary]
+      created_at: "2026-05-06"
+
+  - connector_id: ollama-local
+    connector_type: local
+    name: Ollama Local Model Runtime
+    description: >
+      Ollama REST API serving local Qwen and Llama models on DGX Spark hardware.
+      Used by local-runtime skill for offline AI inference.
+    auth_method: none
+    endpoint: http://localhost:11434
+    rate_limits:
+      requests_per_minute: 30
+      requests_per_day: 0
+      burst_limit: 4
+    retry_policy:
+      max_retries: 2
+      backoff_strategy: linear
+      timeout_ms: 120000
+    capabilities:
+      - execute
+      - stream
+    health_check: http://localhost:11434/api/tags
+    audit_log: false
+    metadata:
+      owner: ai-infrastructure
+      docs_url: https://github.com/ollama/ollama
+      tags: [ollama, local, llm, qwen, llama]
+      created_at: "2026-05-06"
