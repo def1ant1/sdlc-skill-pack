@@ -1,0 +1,120 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Transaction
+description: Schema for a financial transaction record managed by accounting-automation.
+type: object
+required: [id, type, vendor, amount, currency, date, gl_code]
+additionalProperties: false
+
+properties:
+  id:
+    type: string
+    pattern: "^TXN-\\d{8}-\\d{3}$"
+    description: Unique transaction identifier (TXN-YYYYMMDD-NNN)
+    example: "TXN-20260506-001"
+
+  type:
+    type: string
+    enum: [invoice, expense, payment, journal, adjustment, refund]
+    description: Type of financial transaction
+
+  vendor:
+    type: string
+    minLength: 1
+    description: Vendor or payee name
+
+  vendor_id:
+    type: string
+    description: Reference to vendor registry entry (VND-NNN)
+
+  amount:
+    type: number
+    minimum: 0
+    description: Transaction amount (always positive; debit/credit indicated by type)
+
+  currency:
+    type: string
+    pattern: "^[A-Z]{3}$"
+    default: "USD"
+    description: ISO 4217 currency code
+
+  date:
+    type: string
+    format: date
+    description: Transaction date (YYYY-MM-DD)
+
+  due_date:
+    type: string
+    format: date
+    description: Payment due date (for invoices)
+
+  gl_code:
+    type: string
+    description: General ledger account code
+
+  cost_center:
+    type: string
+    description: Cost center code
+
+  project_code:
+    type: string
+    description: Project code if applicable
+
+  description:
+    type: string
+    maxLength: 500
+    description: Line item description
+
+  approval_status:
+    type: string
+    enum: [pending, approved, rejected, auto-approved]
+    default: pending
+
+  approval_level_required:
+    type: string
+    enum: [auto, level-1, level-2, level-3]
+    description: Required approval level based on amount and category
+
+  approved_by:
+    type: string
+    description: Name of approver
+
+  approved_at:
+    type: string
+    format: date-time
+
+  posted:
+    type: boolean
+    default: false
+    description: Whether this transaction has been posted to the GL
+
+  posted_at:
+    type: string
+    format: date-time
+
+  anomaly_flags:
+    type: array
+    items:
+      type: object
+      required: [rule, severity]
+      properties:
+        rule:
+          type: string
+          enum: [DUPLICATE_INVOICE, ROUND_NUMBER, VELOCITY_SPIKE, NEW_VENDOR, POLICY_VIOLATION]
+        severity:
+          type: string
+          enum: [HIGH, MEDIUM, LOW]
+        description:
+          type: string
+    default: []
+
+  source_document:
+    type: string
+    description: Reference to the source document (invoice PDF path, expense report ID)
+
+  created_at:
+    type: string
+    format: date-time
+
+  created_by:
+    type: string
+    description: System or operator that created this record

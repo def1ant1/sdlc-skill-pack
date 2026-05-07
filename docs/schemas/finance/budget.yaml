@@ -1,0 +1,144 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: Budget
+description: Schema for a budget record managed by budget-planning.
+type: object
+required: [id, period, fiscal_year, status, departments]
+additionalProperties: false
+
+properties:
+  id:
+    type: string
+    pattern: "^BDG-\\d{4}-Q[1-4]|^BDG-\\d{4}-ANNUAL"
+    description: Budget identifier (BDG-YYYY-Q1 or BDG-YYYY-ANNUAL)
+    example: "BDG-2026-ANNUAL"
+
+  period:
+    type: string
+    enum: [annual, q1, q2, q3, q4, monthly]
+    description: Budget period type
+
+  fiscal_year:
+    type: integer
+    minimum: 2020
+    maximum: 2100
+    description: Fiscal year
+
+  fiscal_quarter:
+    type: integer
+    minimum: 1
+    maximum: 4
+    description: Fiscal quarter (for quarterly budgets)
+
+  version:
+    type: string
+    description: Budget version (e.g., "approved", "reforecast-q1", "reforecast-q2")
+
+  status:
+    type: string
+    enum: [draft, under-review, approved, active, closed, superseded]
+    default: draft
+
+  approved_by:
+    type: string
+    description: CFO or board member who approved this budget
+
+  approved_at:
+    type: string
+    format: date-time
+
+  effective_date:
+    type: string
+    format: date
+
+  summary:
+    type: object
+    properties:
+      total_revenue:
+        type: number
+        description: Total projected revenue
+      total_opex:
+        type: number
+        description: Total operating expense
+      total_headcount:
+        type: integer
+        description: Total approved headcount (FTE)
+      gross_margin:
+        type: number
+        description: Gross margin percentage
+      ebitda:
+        type: number
+      burn_rate:
+        type: number
+        description: Monthly burn rate
+      runway_months:
+        type: number
+
+  departments:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      required: [name, total_budget, headcount]
+      properties:
+        name:
+          type: string
+          description: Department name
+        cost_center:
+          type: string
+        total_budget:
+          type: number
+          minimum: 0
+        headcount:
+          type: integer
+          minimum: 0
+        breakdown:
+          type: object
+          properties:
+            personnel:
+              type: number
+            software:
+              type: number
+            infrastructure:
+              type: number
+            marketing:
+              type: number
+            travel:
+              type: number
+            other:
+              type: number
+        owner:
+          type: string
+          description: Department head responsible for this budget
+
+  scenarios:
+    type: array
+    items:
+      type: object
+      required: [name, total_revenue, total_opex]
+      properties:
+        name:
+          type: string
+          enum: [base, upside, downside]
+        total_revenue:
+          type: number
+        total_opex:
+          type: number
+        burn_rate:
+          type: number
+        runway_months:
+          type: number
+        assumptions:
+          type: array
+          items:
+            type: string
+
+  created_at:
+    type: string
+    format: date-time
+
+  last_updated_at:
+    type: string
+    format: date-time
+
+  notes:
+    type: string

@@ -1,0 +1,89 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: MeetingDecision
+description: Schema for a decision captured during a meeting, stored in the knowledge graph.
+type: object
+required: [id, meeting_id, text, decided_at]
+additionalProperties: false
+
+properties:
+  id:
+    type: string
+    pattern: "^DEC-\\d{8}-\\d{3}$"
+    description: Unique decision identifier (DEC-YYYYMMDD-NNN)
+    example: "DEC-20260506-001"
+
+  meeting_id:
+    type: string
+    pattern: "^MTG-\\d{8}-\\d{3}$"
+    description: Meeting where this decision was made
+
+  text:
+    type: string
+    minLength: 1
+    maxLength: 2000
+    description: The decision stated clearly and precisely
+
+  decided_by:
+    type: string
+    description: Name or role of the decision authority
+
+  decided_at:
+    type: string
+    format: date-time
+    description: When the decision was made (ISO 8601)
+
+  rationale:
+    type: string
+    description: Why this decision was made — context and reasoning
+
+  alternatives_considered:
+    type: array
+    items:
+      type: string
+    description: Other options that were considered but not chosen
+
+  confidence:
+    type: number
+    minimum: 0.0
+    maximum: 1.0
+    description: Confidence level of the AI extraction (1.0 = explicitly stated)
+
+  extraction_method:
+    type: string
+    enum: [explicit, implicit, consensus]
+    description: How the decision was identified in the transcript
+
+  related_decisions:
+    type: array
+    items:
+      type: string
+      pattern: "^DEC-\\d{8}-\\d{3}$"
+    description: IDs of related decisions (for linking in knowledge graph)
+
+  reversibility:
+    type: string
+    enum: [reversible, partial, irreversible]
+    description: How easily this decision can be undone
+
+  review_date:
+    type: string
+    format: date
+    description: Date when this decision should be reviewed (for time-sensitive decisions)
+
+  outcome:
+    type: string
+    description: Actual outcome of the decision (filled in at review date)
+
+  outcome_date:
+    type: string
+    format: date
+    description: When the outcome was recorded
+
+  knowledge_graph_synced:
+    type: boolean
+    default: false
+    description: Whether this decision has been written to the knowledge graph
+
+  knowledge_graph_node_id:
+    type: string
+    description: Neo4j node ID for this decision in the knowledge graph

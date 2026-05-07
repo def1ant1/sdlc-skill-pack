@@ -1,0 +1,77 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: ActionItem
+description: Schema for a meeting action item tracked by meeting-intelligence.
+type: object
+required: [id, meeting_id, description, owner, due_date, status]
+additionalProperties: false
+
+properties:
+  id:
+    type: string
+    pattern: "^AI-\\d{8}-\\d{3}$"
+    description: Unique action item identifier (AI-YYYYMMDD-NNN)
+    example: "AI-20260506-001"
+
+  meeting_id:
+    type: string
+    pattern: "^MTG-\\d{8}-\\d{3}$"
+    description: Reference to the meeting where this action item was created
+
+  description:
+    type: string
+    minLength: 1
+    maxLength: 1000
+    description: What must be done — specific, actionable
+
+  owner:
+    type: string
+    description: Name of the person responsible for completing this action item
+
+  due_date:
+    type: string
+    format: date
+    description: Date by which the action item must be completed (YYYY-MM-DD)
+
+  priority:
+    type: string
+    enum: [high, medium, low]
+    default: medium
+
+  status:
+    type: string
+    enum: [open, in-progress, completed, cancelled, overdue]
+    default: open
+
+  created_at:
+    type: string
+    format: date-time
+
+  completed_at:
+    type: string
+    format: date-time
+    description: When the action item was marked complete
+
+  evidence:
+    type: string
+    description: Link or description of evidence that the action item was completed
+
+  escalated:
+    type: boolean
+    default: false
+    description: Whether this item has been escalated due to being overdue
+
+  escalated_at:
+    type: string
+    format: date-time
+
+  escalated_to:
+    type: string
+    description: Name or role of the person the item was escalated to
+
+  notes:
+    type: string
+    description: Free-text notes from the owner
+
+  related_ticket:
+    type: string
+    description: Link to related issue or ticket (if applicable)
