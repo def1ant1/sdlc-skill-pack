@@ -141,7 +141,60 @@ Infrastructure, and Self-Evolving Enterprise Cognition.
 - `skills/legal-hold-management` — Legal hold lifecycle from placement through release
 - `skills/residency-analysis` — Cross-boundary data flow analysis and compliant routing
 
-### New Reference Files
+### New Reference Files — Session 2 (2026-05-07)
+
+**Domain Skill Reference Files (34 files completing all MEDIUM gaps):**
+
+- `skills/adversarial-evaluation/references/adversarial-playbook.md` — 8 attack categories, templates, ASR thresholds, severity scoring
+- `skills/alignment-testing/references/alignment-test-suites.md` — 5 test suites (CC, BTC, SR, CB, UC), deployment gate protocol
+- `skills/benchmark-generation/references/benchmark-spec-format.md` — Package structure, metadata/item/rubric schemas, quality gates
+- `skills/business-simulation/references/simulation-methodology.md` — Monte Carlo, system dynamics, ABM, sensitivity analysis, output format
+- `skills/cache-placement-optimization/references/cache-optimization-strategies.md` — Prompt prefix, semantic, tiered cache, placement scoring
+- `skills/capacity-balancing/references/capacity-planning-model.md` — Demand forecasting, LP optimization, rebalancing triggers, capacity plan
+- `skills/causal-tracing/references/causal-attribution.md` — Activation patching, counterfactual, Shapley, causal graph methods
+- `skills/constraint-reasoning/references/constraint-catalog.md` — HC/SC/PR/IV taxonomy, YAML schema, standard library, CSP algorithm
+- `skills/dataset-curation/references/curation-thresholds.md` — Quality filters, dedup thresholds, IAA metrics, pipeline gates
+- `skills/discovery-synthesis/references/synthesis-framework.md` — Evidence integration, convergent/divergent synthesis, gap identification
+- `skills/evaluation-dataset-curation/references/evaluation-curation-standards.md` — 3-level verification, anti-gaming, contamination check, release criteria
+- `skills/execution-explanation/references/explanation-templates.md` — 4 audience tier templates (Executive, Manager, Engineer, Auditor)
+- `skills/goal-decomposition/references/goal-schema.md` — SMART criteria, MECE decomposition, AND-OR trees, progress tracking
+- `skills/gpu-cluster-optimization/references/cluster-topology.md` — Node types, NVLink specs, thermal/power constraints, placement rules
+- `skills/hierarchical-planning/references/htn-decomposition-rules.md` — Method format, HTN algorithm, selection heuristics, plan quality metrics
+- `skills/incident-simulation/references/game-day-scenarios.md` — 4 scenario categories (infra, security, data, capacity), scoring rubric
+- `skills/inference-batching-optimization/references/batching-policy.md` — Batching strategies, adaptive algorithm, continuous batching, metrics
+- `skills/lineage-analysis/references/lineage-graph-schema.md` — Node/edge types, JSON-LD format, upstream/downstream traversal, PII propagation
+- `skills/lora-management/references/adapter-registry-schema.md` — Registry YAML, query API, composition rules, serving config, deprecation
+- `skills/long-horizon-planning/references/rolling-horizon-methodology.md` — Horizon zones, promotion protocol, forecast locks, scenario integration
+- `skills/meta-reasoning/references/bias-catalog.md` — 5 bias categories, 18 biases, detection heuristics, debiasing prompts
+- `skills/model-benchmarking/references/evaluation-methodology.md` — 3 protocols (zero-shot/few-shot/CoT), metrics, capability profile, comparison
+- `skills/model-distillation/references/distillation-protocol.md` — 4 distillation methods, 6-step pipeline, quality gates, run record
+- `skills/model-placement-optimization/references/placement-scoring-algorithm.md` — 5 score components, scheduling algorithm, placement decision log
+- `skills/network-topology-analysis/references/topology-graph-schema.md` — Node/edge schemas, JSON-LD, Dijkstra/bottleneck/fault queries
+- `skills/patent-analysis/references/patent-analysis-methodology.md` — Prior art search, claim parsing, claim charts, FTO opinion, IPC codes
+- `skills/policy-justification/references/justification-templates.md` — 4 templates (regulatory, security, operational, AI safety)
+- `skills/policy-simulation/references/policy-simulation-model.md` — Behavioral model, impact categories, scenarios, consequence detection
+- `skills/reasoning-depth-estimation/references/depth-estimation-heuristics.md` — 8-level taxonomy, 3 heuristics, composite scoring, calibration
+- `skills/reasoning-visualization/references/visualization-formats.md` — 6 visualization types, Mermaid templates, rendering guidelines
+- `skills/research-analysis/references/analysis-methods-guide.md` — Method decision tree, quantitative/qualitative methods, reporting standards
+- `skills/runtime-simulation/references/runtime-simulation-models.md` — M/M/K queuing, DES workflow, load profile simulation, calibration
+- `skills/scenario-generation/references/scenario-space-taxonomy.md` — 3 classification dimensions, coverage requirements, narrative template
+- `skills/security-war-gaming/references/war-game-scenarios.md` — 4 scenario types (APT, insider, AI red team, ransomware), scoring rubric
+- `skills/self-reflection/references/quality-rubric.md` — 5 quality dimensions, composite score, threshold table, improvement protocol
+- `skills/state-restoration/references/restoration-validation-rules.md` — Consistency/completeness/safety rules, decision matrix, audit log
+- `skills/synthetic-dataset-generation/references/generation-prompt-templates.md` — 4 templates (instruction, code, Q&A, dialogue), batch config
+- `skills/workflow-replay/references/replay-protocol.md` — 5 replay modes, preconditions, determinism controls, step-by-step protocol
+
+### Validation Status (2026-05-07)
+
+- `validate_skill_structure.py`: **PASS** — `{"valid": true, "errors": []}`
+- `validate_frontmatter.py`: **PASS** — `{"valid": true, "errors": []}`
+- `detect_skill_gaps.py`: **1 gap (known false positive)** — CUR-003 for `alignment-testing` caused by `'test' in str(f)` path filter in gap detector; skill exists and is valid
+- All domain and core SKILL.md files: **complete**
+- All reference files: **complete**
+
+---
+
+### New Reference Files — Session 1 (2026-05-07)
 
 **Cognitive Runtime:**
 - `core/cognitive-runtime/references/goal-tree-schema.md` — Goal hierarchy data model, serialization, knowledge graph integration
