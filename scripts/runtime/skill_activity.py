@@ -22,6 +22,7 @@ import json
 import logging
 import os
 import sys
+import time
 from pathlib import Path
 from typing import Any
 
@@ -52,8 +53,20 @@ def load_skill_contract(skill_name: str) -> str:
 # Inference call
 # ---------------------------------------------------------------------------
 
+_RETRYABLE_HTTP_CODES: frozenset[int] = frozenset({429, 500, 502, 503, 504, 529})
+_MAX_CALL_RETRIES: int = 3
+_INITIAL_BACKOFF: float = 1.0
+_BACKOFF_MULTIPLIER: float = 2.0
+_MAX_BACKOFF: float = 60.0
+
+
 def call_claude(system_prompt: str, user_message: str) -> str:
-    """Call the Anthropic Messages API and return the assistant text."""
+    """Call the Anthropic Messages API and return the assistant text.
+
+    Retries on transient errors (429/5xx/network) with exponential backoff.
+    Raises RuntimeError on non-retryable errors or exhausted retries.
+    """
+    import urllib.error
     import urllib.request
 
     api_key = os.environ.get("ANTHROPIC_API_KEY", "")
@@ -67,24 +80,66 @@ def call_claude(system_prompt: str, user_message: str) -> str:
         "messages": [{"role": "user", "content": user_message}],
     }
     data = json.dumps(payload).encode()
-    req = urllib.request.Request(
-        "https://api.anthropic.com/v1/messages",
-        data=data,
-        headers={
-            "Content-Type": "application/json",
-            "x-api-key": api_key,
-            "anthropic-version": "2023-06-01",
-        },
-        method="POST",
-    )
-    with urllib.request.urlopen(req, timeout=120) as resp:
-        response = json.loads(resp.read())
+    headers = {
+        "Content-Type": "application/json",
+        "x-api-key": api_key,
+        "anthropic-version": "2023-06-01",
+    }
 
-    # Extract text from first content block
-    for block in response.get("content", []):
-        if block.get("type") == "text":
-            return block["text"]
-    raise RuntimeError(f"No text content in Claude response: {response}")
+    backoff = _INITIAL_BACKOFF
+    last_exc: Exception | None = None
+
+    for attempt in range(1, _MAX_CALL_RETRIES + 2):
+        req = urllib.request.Request(
+            "https://api.anthropic.com/v1/messages",
+            data=data,
+            headers=headers,
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=120) as resp:
+                try:
+                    response = json.loads(resp.read())
+                except json.JSONDecodeError as exc:
+                    raise RuntimeError(f"Claude API returned non-JSON response: {exc}") from exc
+
+            for block in response.get("content", []):
+                if block.get("type") == "text":
+                    return block["text"]
+            raise RuntimeError(f"No text content in Claude response: {response}")
+
+        except urllib.error.HTTPError as exc:
+            status = exc.code
+            if status not in _RETRYABLE_HTTP_CODES or attempt > _MAX_CALL_RETRIES:
+                body = ""
+                try:
+                    body = exc.read().decode(errors="replace")[:500]
+                except Exception:
+                    pass
+                raise RuntimeError(f"Claude API HTTP {status}: {body}") from exc
+
+            retry_after = float(exc.headers.get("retry-after", backoff))
+            wait = max(retry_after, backoff)
+            logger.warning(
+                "Claude API HTTP %s on attempt %d/%d — retrying in %.1fs",
+                status, attempt, _MAX_CALL_RETRIES, wait,
+            )
+            time.sleep(wait)
+            backoff = min(backoff * _BACKOFF_MULTIPLIER, _MAX_BACKOFF)
+            last_exc = exc
+
+        except OSError as exc:
+            if attempt > _MAX_CALL_RETRIES:
+                raise RuntimeError(f"Claude API network error after {_MAX_CALL_RETRIES} retries: {exc}") from exc
+            logger.warning(
+                "Claude API network error on attempt %d/%d: %s — retrying in %.1fs",
+                attempt, _MAX_CALL_RETRIES, exc, backoff,
+            )
+            time.sleep(backoff)
+            backoff = min(backoff * _BACKOFF_MULTIPLIER, _MAX_BACKOFF)
+            last_exc = exc
+
+    raise RuntimeError(f"Claude API: all retries exhausted. Last error: {last_exc}")
 
 
 # ---------------------------------------------------------------------------

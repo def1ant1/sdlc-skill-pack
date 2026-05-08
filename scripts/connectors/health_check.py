@@ -39,6 +39,10 @@ CONNECTOR_REGISTRY: dict[str, tuple[str, str]] = {
     "ga4": ("ga4_connector", "GA4Connector"),
     "slack": ("slack_connector", "SlackConnector"),
     "jira": ("jira_connector", "JiraConnector"),
+    "hubspot": ("hubspot_connector", "HubSpotConnector"),
+    "stripe": ("stripe_connector", "StripeConnector"),
+    "mixpanel": ("mixpanel_connector", "MixpanelConnector"),
+    "amplitude": ("amplitude_connector", "AmplitudeConnector"),
 }
 
 

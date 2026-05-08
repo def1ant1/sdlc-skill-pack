@@ -1,13 +1,65 @@
 [project]
 name = "apotheon-sdlc"
 version = "0.1.0"
-description = "Advanced SDLC skill platform foundation"
-requires-python = ">=3.10"
-dependencies = ["pyyaml>=6.0", "pytest>=8.0", "ruff>=0.6.0"]
+description = "Apotheon AI Company OS — autonomous SDLC and GTM orchestration platform"
+requires-python = ">=3.11"
+readme = "README.md"
+
+# Core dependencies — required for validation, planning, and local execution
+dependencies = [
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+# Durable workflow execution via Temporal
+temporal = [
+    "temporalio>=1.6.0",
+]
+# Google connectors (GA4)
+google = [
+    "google-auth>=2.29.0",
+]
+# Rich terminal UI (operator console)
+ui = [
+    "rich>=13.7.0",
+]
+# All runtime extras
+runtime = [
+    "temporalio>=1.6.0",
+    "google-auth>=2.29.0",
+    "rich>=13.7.0",
+]
+# Development and CI tools
+dev = [
+    "pytest>=8.0",
+    "pytest-timeout>=2.3.0",
+    "ruff>=0.6.0",
+    "pyyaml>=6.0",
+]
+
+[project.scripts]
+apotheon = "cli:main"
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["scripts*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.md", "*.yaml", "*.yml"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+timeout = 60
+addopts = "-q"
 
 [tool.ruff]
 line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]
