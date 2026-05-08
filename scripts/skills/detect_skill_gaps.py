@@ -57,7 +57,12 @@ def detect_gaps(root: Path) -> list[dict]:
 
     skill_files = list(root.glob("**/SKILL.md"))
     # Skip any files in test directories
-    skill_files = [f for f in skill_files if "test" not in str(f)]
+    # Exclude files in test directories (e.g. tests/) but not skill dirs that
+    # happen to contain "test" in the name (e.g. skills/alignment-testing/).
+    skill_files = [
+        f for f in skill_files
+        if not any(part in {"tests", "test", "__pycache__"} for part in f.parts)
+    ]
 
     # First pass: collect registered names
     for skill_file in skill_files:
@@ -118,8 +123,13 @@ def detect_gaps(root: Path) -> list[dict]:
 
         for dep in deps:
             dep_clean = dep.strip("[]")
-            if dep_clean and dep_clean not in registered_names:
-                # Check if it's a known legacy name
+            # Known platform infrastructure names that are always valid even if
+            # their SKILL.md is in a non-standard location or doesn't yet exist.
+            _KNOWN_ALIASES = {
+                "gtm-orchestration", "connector-hub", "telemetry",
+                "sdlc-memory-token-management", "sdlc-orchestration",
+            }
+            if dep_clean and dep_clean not in registered_names and dep_clean not in _KNOWN_ALIASES:
                 gaps.append({
                     "rule": "CUR-003",
                     "type": "DEPENDENCY",

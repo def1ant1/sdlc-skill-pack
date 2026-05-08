@@ -1410,3 +1410,405 @@ P2 -- Implement third (enhances sovereign and multi-modal capabilities):
   Phase 91: Multi-Modal Enterprise Processing
   Phase 92: Continuous Enterprise Compliance Runtime
 ```
+
+---
+
+---
+
+# V9 BACKLOG — OPERATIONALIZATION GAP CLOSURE
+
+**Analysis Date:** 2026-05-07
+**Basis:** Operational readiness review of all 92 phases — identifying gaps that prevent the repository from functioning as a complete autonomous OS.
+**Status:** 🔴 IDENTIFIED — Implementation required before production deployment
+
+---
+
+## V9 GAP SUMMARY
+
+| Gap Category | Severity | Blocking | Phase Range |
+|---|---|---|---|
+| Missing GTM skills | Critical | Yes — GTM orchestration routes to non-existent skills | 93–95 |
+| Naming mismatches (phases vs. skills) | High | Yes — routing/dependency resolution fails | Cross-cutting |
+| Missing analytics & CRM connectors | High | Yes — GTM and RevOps skills have no real integration | 96 |
+| Incomplete runtime components | Critical | Yes — platform cannot execute autonomously without them | 97–99 |
+| HITL governance gaps | High | No — degrades safety posture | 100 |
+| Script quality & testing | Medium | No — degrades reliability and maintainability | 101 |
+| Documentation & onboarding | Medium | No — blocks adoption and contribution | 102 |
+
+---
+
+## V9 WAVE MAP
+
+| Wave | Phases | Theme | Priority |
+|------|--------|-------|----------|
+| Wave 14 | 93–95 | Missing GTM Skills | P0 |
+| Wave 15 | 96 | Analytics & CRM Connector Registry | P0 |
+| Wave 16 | 97–99 | Runtime Component Implementation | P0 |
+| Wave 17 | 100 | HITL Governance Hardening | P1 |
+| Wave 18 | 101–102 | Script Quality & Documentation | P1 |
+
+---
+
+## WAVE 14 — MISSING GTM SKILLS
+
+### Phase 93 — GTM Skill Completeness: Launch, SEO & Paid Acquisition
+
+**Priority:** P0
+**Severity:** Critical — GTM orchestration (`plan_gtm_workflow.py` and GTM SKILL.md) references these as distinct phases with routing rules. No corresponding `SKILL.md` files exist. Routing fails at dependency resolution.
+
+**Root Cause:** The GTM Orchestration skill defines 8 GTM phases but only 3 matching skill directories exist. Five are absent.
+
+**New Skills Required:**
+
+- `skills/launch-planning` — Product and feature launch orchestration: launch readiness checklists, go/no-go criteria, launch calendar, press/analyst coordination, internal enablement, post-launch monitoring
+- `skills/seo-engineering` — Technical SEO automation: crawl analysis, sitemap management, Core Web Vitals monitoring, structured data implementation, canonical tag enforcement, keyword gap analysis, GSC/Ahrefs integration
+- `skills/paid-acquisition` — Paid media orchestration: Google Ads, LinkedIn Ads, and retargeting campaign management; budget pacing; bid strategy optimization; creative performance monitoring; ROAS reporting
+
+**Naming Resolution:**
+- `skills/analytics-intelligence` — Create as a new skill OR rename `skills/product-analytics` to `analytics-intelligence`. GA4/Mixpanel dashboard setup, funnel analysis, cohort analysis, event taxonomy management, attribution modeling. See also Phase 94 (naming alignment work item).
+- `skills/revenue-optimization` — Create as a new skill OR rename `skills/revenue-operations` to `revenue-optimization`. Pricing optimization, expansion revenue identification, churn prevention, net revenue retention analysis. See also Phase 94.
+
+**Each new skill must include:**
+- SKILL.md with valid frontmatter (name, description, metadata)
+- Role, Activation, Execution Protocol, Output Artifacts sections
+- `references/` directory with at least one reference document
+- Listed dependencies matching exact skill directory names
+
+---
+
+### Phase 94 — GTM Naming Alignment
+
+**Priority:** P0
+**Severity:** Critical — GTM orchestration routing table, `plan_gtm_workflow.py` classification logic, and dependency graphs reference skill names that do not match directory names. Every mismatch is a hard routing failure.
+
+**Mismatches to Resolve:**
+
+| GTM Phase References | Existing Directory | Resolution |
+|---------------------|-------------------|-----------|
+| `analytics-intelligence` | `skills/product-analytics` | Rename directory + update SKILL.md `name:` field |
+| `revenue-optimization` | `skills/revenue-operations` | Rename directory + update SKILL.md `name:` field |
+| `customer-success` | None identified | Audit GTM skill for exact routing target |
+
+**Work Items:**
+
+- [ ] Audit `skills/gtm-orchestration/SKILL.md` execution protocol for all skill name references
+- [ ] Audit `scripts/orchestration/plan_gtm_workflow.py` for all skill name strings
+- [ ] Audit `scripts/orchestration/plan_workflow.py` dependency graph for GTM nodes
+- [ ] For each mismatch: rename directory, update SKILL.md `name:` field, update all references in scripts
+- [ ] Re-run `validate_skill_structure.py` and `validate_frontmatter.py` after every rename
+- [ ] Re-run GTM planner with test objectives after all renames to confirm routing resolves
+
+---
+
+### Phase 95 — Content Marketing Skill
+
+**Priority:** P1
+**Severity:** High — GTM orchestration lists `content-marketing` as a required GTM phase between SEO and paid acquisition.
+
+**New Skills Required:**
+
+- `skills/content-marketing` — Content strategy execution: editorial calendar management, content brief generation, SEO-optimized content drafting, content distribution workflow, performance tracking (traffic, engagement, conversion attribution), content audit and refresh scheduling
+
+---
+
+## WAVE 15 — ANALYTICS & CRM CONNECTOR REGISTRY
+
+### Phase 96 — Analytics, CRM & Customer Platform Connectors
+
+**Priority:** P0
+**Severity:** High — `plan_gtm_workflow.py` GTM planner uses signals like `ga4`, `mixpanel`, `amplitude`, `segment`, `intercom`, and `zendesk` for classification and channel recommendations. The `integration-connectors.md` registry contains only GitHub, Jira, Linear, Slack, Sentry, Datadog, Vercel, and Cloudflare. Skills reference these platforms but cannot execute real integrations.
+
+**Connectors to Add to `shared/references/integration-connectors.md`:**
+
+| Connector | Category | Auth Method | Key Operations |
+|-----------|---------|-------------|---------------|
+| Google Analytics 4 (GA4) | Analytics | OAuth 2.0 + Service Account | pull metrics, create audiences, export events |
+| Mixpanel | Analytics | Service Account / API key | query events, create cohorts, export reports |
+| Amplitude | Analytics | API key + Secret | query events, export user properties, cohort sync |
+| Segment | CDP | Write key / OAuth | track events, identify users, create computed traits |
+| Intercom | Customer success | OAuth 2.0 | create conversations, tag contacts, assign tickets |
+| Zendesk | Customer support | OAuth 2.0 / API token | create/update tickets, search, bulk export |
+| HubSpot | CRM + Marketing | OAuth 2.0 / Private App | sync contacts, manage deals, track campaigns |
+| Stripe | Payments / RevOps | API key + webhooks | query charges, subscriptions, MRR metrics |
+| Salesforce Marketing Cloud | Email marketing | OAuth 2.0 | create sends, manage lists, pull engagement stats |
+| PostHog | Product analytics | API key | query events, feature flags, session recording metadata |
+
+**Each connector entry must specify:**
+- Authentication method and secret management reference
+- Base URL and API version
+- Rate limits and retry policy
+- Health check endpoint
+- Key operations with request/response schema sketches
+- Cache TTL policy for read-heavy operations
+
+**New Reference File Required:**
+- `shared/references/analytics-crm-connectors.md` — dedicated reference for analytics, CRM, and customer platform connectors (separate from `integration-connectors.md` which covers DevOps tooling)
+
+---
+
+## WAVE 16 — RUNTIME COMPONENT IMPLEMENTATION
+
+### Phase 97 — Persistent Memory Storage Implementation
+
+**Priority:** P0
+**Severity:** Critical — Memory schemas exist (`shared/references/memory-context-schema.md`, token budget specs). No actual persistence layer exists. Every session starts from zero; no cross-session organizational memory is retained. The platform cannot be "autonomous" without memory.
+
+**What Exists:** YAML schemas, token budget specifications, compression algorithms (Wave 10)
+**What Is Missing:** Executable persistence, retrieval, and embedding pipeline
+
+**Work Items:**
+
+- [ ] Select and integrate vector database backend: **Qdrant** (recommended; local-first, Docker-deployable, Python client) or pgvector as lightweight alternative
+- [ ] Implement embedding pipeline: `scripts/memory/embed_observation.py` — takes observation text, calls embedding model (configurable: local `nomic-embed-text` via Ollama or OpenAI `text-embedding-3-small`), upserts to vector DB with metadata
+- [ ] Implement retrieval pipeline: `scripts/memory/retrieve_context.py` — semantic search with metadata filters, returns top-k observations with scores
+- [ ] Implement `build_context_packet.py` retrieval path (currently stubs with placeholder logic)
+- [ ] Docker Compose service definition for Qdrant in `docker-compose.yml`
+- [ ] Collection schema initialization script: `scripts/memory/init_collections.py`
+- [ ] Integration test: write observation → retrieve by semantic query → assert retrieval
+
+**New Reference File Required:**
+- `core/sdlc-memory-token-management/references/vector-db-integration-guide.md` — Qdrant setup, collection schema, embedding pipeline, retrieval API
+
+---
+
+### Phase 98 — Orchestration Runtime DAG Execution Engine
+
+**Priority:** P0
+**Severity:** Critical — `plan_workflow.py` produces workflow plans as YAML/JSON. No engine executes them. Skills are described but cannot be called. The repository operates as a specification system; it cannot autonomously run tasks.
+
+**What Exists:** Workflow planning (`plan_workflow.py`), dependency resolution logic, skill definitions
+**What Is Missing:** Runtime execution, async task queuing, state management, parallel execution, gating
+
+**Recommended Integration:** Temporal.io (already specified in `core/temporal-integration` SKILL.md from Wave 9)
+
+**Work Items:**
+
+- [ ] Docker Compose service: Temporal server + PostgreSQL backend (`docker-compose.yml`)
+- [ ] Worker implementation: `scripts/runtime/temporal_worker.py` — registers all skill activities with the Temporal worker
+- [ ] Skill adapter: `scripts/runtime/skill_activity.py` — wraps each skill's handler as a Temporal Activity
+- [ ] Workflow executor: `scripts/runtime/execute_workflow.py` — reads plan YAML, creates Temporal workflow, monitors to completion
+- [ ] Signal handler for HITL gates: pause workflow at approval gate, resume on signal receipt
+- [ ] State persistence: workflow state written to Temporal (durable, survives restarts)
+- [ ] Namespace initialization script: `scripts/runtime/init_temporal_namespace.py`
+- [ ] Integration test: submit synthetic 3-skill workflow plan → verify execution via Temporal UI
+
+**New Reference Files Required:**
+- `core/temporal-integration/references/worker-implementation-guide.md`
+- `core/temporal-integration/references/skill-activity-adapter-spec.md`
+
+---
+
+### Phase 99 — Connector Execution Layer
+
+**Priority:** P0
+**Severity:** Critical — Enterprise integration connectors are defined in YAML (`integration-connectors.md`, `analytics-crm-connectors.md`). No Python client, auth flow, or request dispatcher exists. Skills that reference external APIs (ERP, CRM, ITSM, analytics) cannot execute calls.
+
+**What Exists:** Connector registry YAML, schema definitions
+**What Is Missing:** Auth clients, HTTP dispatcher, secret resolution, rate-limit handling, error handling
+
+**Work Items:**
+
+- [ ] Connector base class: `scripts/connectors/base_connector.py` — abstract class with auth, rate-limit, retry, and health check interface
+- [ ] Auth handlers:
+  - `scripts/connectors/auth/oauth2_client.py` — OAuth 2.0 client credentials + authorization code flows
+  - `scripts/connectors/auth/api_key_client.py` — API key injection (header / query param)
+  - `scripts/connectors/auth/mtls_client.py` — mTLS certificate-based auth
+- [ ] Secret resolution: integrate with HashiCorp Vault (`scripts/connectors/secret_resolver.py`); fall back to env vars for local dev
+- [ ] Connector implementations (one per registered connector):
+  - `scripts/connectors/salesforce_connector.py`
+  - `scripts/connectors/servicenow_connector.py`
+  - `scripts/connectors/ga4_connector.py`
+  - `scripts/connectors/slack_connector.py` (extend existing)
+  - `scripts/connectors/jira_connector.py` (extend existing)
+- [ ] Rate limit manager: `scripts/connectors/rate_limiter.py` — token bucket per connector, respects `rate_limits` from connector registry
+- [ ] Health check runner: `scripts/connectors/health_check.py` — pings all registered connectors, reports status
+- [ ] Unit tests for each connector: mock HTTP responses, assert correct auth headers, assert retry on 429
+
+---
+
+## WAVE 17 — HITL GOVERNANCE HARDENING
+
+### Phase 100 — HITL Gate Coverage Audit & Expansion
+
+**Priority:** P1
+**Severity:** High — The governance model (`shared/policies/ai-safety-policy.md`, `core/local-security`) defines safety levels and approval gates. Many domain skills execute high-risk or irreversible actions without embedded HITL gates. Cost-intensive operations (paid media budget allocation, model training runs, PO approval) and irreversible actions (data deletion, production deployments, security policy changes) currently lack explicit confirmation requirements.
+
+**Work Items — Audit:**
+
+- [ ] Read every domain skill's Execution Protocol section and classify each output action as: `read-only`, `reversible-write`, `irreversible-write`, `cost-incurring`, `security-sensitive`
+- [ ] Produce audit report: `docs/hitl-gate-audit.md` — table of skill → action → risk classification → current gate status → required gate status
+- [ ] Identify all skills with P0/P1 severity gaps (irreversible or cost-incurring actions without HITL gates)
+
+**Work Items — Implementation:**
+
+- [ ] For each P0/P1 gap: add HITL gate specification to the skill's Execution Protocol:
+  ```
+  ## HITL Gates
+  | Action | Gate Type | Approval Required From |
+  |--------|-----------|----------------------|
+  | Deploy to production | Explicit confirmation | SRE Lead |
+  | Budget allocation > $10K | Explicit confirmation | CFO Agent |
+  | Policy change | Dual approval | CISO + CTO |
+  ```
+- [ ] Update `core/local-security/SKILL.md` to reference external approval channels (Slack approval bot, email approval link)
+- [ ] Skills requiring mandatory gates: `paid-acquisition`, `erp-integration` (PO approval), `disaster-recovery-automation` (failover), `lateral-movement-detection` (auto-block actions), `zero-trust-policy-authoring` (broad grants), `distributed-training-orchestration` (GPU cost)
+- [ ] Add governance section to `shared/policies/ai-safety-policy.md`: cost threshold table, irreversibility classification, dual-approval requirements
+
+---
+
+## WAVE 18 — SCRIPT QUALITY & DOCUMENTATION
+
+### Phase 101 — Script Testing, Logging & Modularity
+
+**Priority:** P1
+**Severity:** Medium — Scripts (`validate_skill_structure.py`, `validate_frontmatter.py`, `plan_workflow.py`, `plan_gtm_workflow.py`, `detect_skill_gaps.py`, `scan_for_secrets.py`, `build_context_packet.py`) are functional but:
+- Have no unit test coverage
+- Use `print()` instead of structured logging
+- Are entry-point-only (cannot be imported as modules)
+- Lack robust error handling (crash on unexpected input)
+
+**Work Items:**
+
+- [ ] **Refactor into library modules:** Extract core logic from `if __name__ == "__main__":` blocks into importable functions. Example: `validate_skill_structure.py` → expose `validate_directory(path) -> ValidationResult` callable from tests and other scripts
+- [ ] **Add pytest test suite for each script:**
+  - `tests/scripts/test_validate_skill_structure.py` — valid directory passes, missing SKILL.md fails, non-kebab-case fails
+  - `tests/scripts/test_validate_frontmatter.py` — valid frontmatter passes, missing `name` fails, angle brackets fail, description over 1024 chars fails
+  - `tests/scripts/test_plan_workflow.py` — known objectives resolve to expected skills, unknown objective returns graceful fallback
+  - `tests/scripts/test_plan_gtm_workflow.py` — GTM signals classify to correct phase, all 8 GTM phases resolvable
+  - `tests/scripts/test_detect_skill_gaps.py` — known gap detected, known false positive filtered
+  - `tests/scripts/test_build_context_packet.py` — valid JSON input returns well-formed context packet
+- [ ] **Structured logging:** Replace `print()` with `logging` (stdlib). Log level configurable via `LOG_LEVEL` env var. Format: `%(asctime)s %(levelname)s %(name)s — %(message)s`
+- [ ] **Error handling:** All scripts must catch and log exceptions gracefully; exit with non-zero code on error (not uncaught exception traceback)
+- [ ] **CI integration:** Add `pytest tests/scripts/` to `.github/workflows/validate.yml` after existing validation steps
+- [ ] **False-positive fix:** `detect_skill_gaps.py` incorrectly filters `alignment-testing` due to `test` substring match. Fix the filter predicate to use exact exclusion list instead of substring matching
+
+---
+
+### Phase 102 — Developer Documentation & Onboarding
+
+**Priority:** P1
+**Severity:** Medium — The repository is structurally sound but opaque to new contributors and operators. No document explains the system end-to-end, how to run it locally, or how the components interact at runtime.
+
+**Work Items — New Documentation:**
+
+- [ ] **`docs/ONBOARDING.md`** — Contributor quickstart:
+  - Prerequisites (Python 3.11+, Docker, Ollama or API key)
+  - Installation steps (`pip install -r requirements.txt`, pre-commit hooks)
+  - Running validators locally
+  - Creating a new skill with `create_skill.py`
+  - Running the workflow planner with an example objective
+  - Running tests (`pytest`)
+
+- [ ] **`docs/ARCHITECTURE.md`** — System architecture overview:
+  - Macro-cycle diagram (Plan → Build → Ship → Grow → GTM)
+  - Component map: core skills, domain skills, agents, shared resources
+  - Runtime component diagram: memory layer (Qdrant), orchestration (Temporal), connector layer, inference fleet
+  - Data flow: how an objective becomes a workflow plan, gets executed, results stored in memory
+  - Governance layer: how HITL gates, OPA policies, and zero-trust fit in
+
+- [ ] **`docs/DEPLOYMENT.md`** — Deployment guide:
+  - Local development: Docker Compose stack (Temporal, Qdrant, Ollama, OPA)
+  - Environment variables reference
+  - Cloud deployment notes (GCP / AWS)
+  - Health check endpoints
+  - Secrets management (Vault vs. env vars)
+
+- [ ] **`docs/SKILL_AUTHORING_GUIDE.md`** — Skill author reference:
+  - SKILL.md structure with annotated example
+  - Frontmatter validation rules
+  - Reference file conventions
+  - How to declare dependencies
+  - How to embed HITL gates
+  - How to submit for marketplace certification
+
+- [ ] **`docs/GTM_PLANNER_GUIDE.md`** — GTM planner reference:
+  - The 8 GTM phases and their skill mappings
+  - How to run `plan_gtm_workflow.py` with examples
+  - How GTM signals are classified
+  - How to add new GTM channels or phases
+
+- [ ] **Architecture diagrams** (Mermaid or draw.io):
+  - `docs/diagrams/runtime-components.md` — Mermaid diagram of runtime stack
+  - `docs/diagrams/skill-dependency-graph.md` — Mermaid graph of core skill dependencies
+  - `docs/diagrams/agent-fleet.md` — Mermaid diagram of persistent agent fleet and their relationships
+
+---
+
+## V9 MASTER PHASE TABLE
+
+| Phase | Name | Wave | Priority | Blocking |
+|-------|------|------|----------|---------|
+| 93 | GTM Skill Completeness: Launch, SEO & Paid Acquisition | 14 | P0 | Yes |
+| 94 | GTM Naming Alignment | 14 | P0 | Yes |
+| 95 | Content Marketing Skill | 14 | P1 | No |
+| 96 | Analytics, CRM & Customer Platform Connectors | 15 | P0 | Yes |
+| 97 | Persistent Memory Storage Implementation | 16 | P0 | Yes |
+| 98 | Orchestration Runtime DAG Execution Engine | 16 | P0 | Yes |
+| 99 | Connector Execution Layer | 16 | P0 | Yes |
+| 100 | HITL Gate Coverage Audit & Expansion | 17 | P1 | No |
+| 101 | Script Testing, Logging & Modularity | 18 | P1 | No |
+| 102 | Developer Documentation & Onboarding | 18 | P1 | No |
+
+---
+
+## V9 DELIVERABLE TOTALS
+
+```text
+New phases:               10  (phases 93-102)
+New domain skills:         5  (launch-planning, seo-engineering, paid-acquisition,
+                               content-marketing, analytics-intelligence or revenue-optimization)
+New reference files:       6  (analytics-crm-connectors.md, vector-db-integration-guide.md,
+                               worker-implementation-guide.md, skill-activity-adapter-spec.md,
+                               hitl-gate-audit.md, docs/*.md)
+New scripts:              12+ (connectors, memory pipeline, runtime worker)
+New tests:                 6  (one test file per script)
+New docs:                  7  (onboarding, architecture, deployment, skill authoring,
+                               GTM planner, 2 diagram files)
+Skill renames:             2  (product-analytics → analytics-intelligence,
+                               revenue-operations → revenue-optimization)
+```
+
+---
+
+## V9 IMPLEMENTATION PRIORITY ORDER
+
+```text
+P0 — Implement first (blocking — platform cannot operate without these):
+  Phase 94: GTM Naming Alignment          (prevents routing failures immediately)
+  Phase 93: Missing GTM Skills            (completes GTM orchestration surface)
+  Phase 96: Analytics & CRM Connectors   (enables real integrations)
+  Phase 97: Persistent Memory Storage    (enables organizational memory)
+  Phase 98: Orchestration Runtime DAG    (enables autonomous execution)
+  Phase 99: Connector Execution Layer    (enables real API calls)
+
+P1 — Implement second (improves safety and maintainability):
+  Phase 95: Content Marketing Skill
+  Phase 100: HITL Gate Coverage Audit & Expansion
+  Phase 101: Script Testing, Logging & Modularity
+  Phase 102: Developer Documentation & Onboarding
+```
+
+---
+
+## POST-V9 PLATFORM STATE
+
+After completing V9, the repository transitions from **specification framework** to **operational autonomous OS**:
+
+```text
+Before V9:
+  Skills defined as behavioral contracts ✓
+  Workflows planned as YAML graphs ✓
+  Memory schemas documented ✓
+  Connectors listed in YAML ✓
+  Execution: manual / human-in-the-loop only ✗
+
+After V9:
+  Skills executable as Temporal Activities ✓
+  Workflows orchestrated by Temporal DAG engine ✓
+  Observations persisted in Qdrant vector store ✓
+  Connectors callable with real auth and rate limiting ✓
+  GTM phases fully routable end-to-end ✓
+  HITL gates enforced programmatically ✓
+  Scripts tested and observable ✓
+  New contributors can onboard in < 1 hour ✓
+```
