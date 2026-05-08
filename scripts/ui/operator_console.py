@@ -306,7 +306,7 @@ def print_status_table() -> None:
         print(f"{'Connector':<16} {'Status':<14} {'Latency'}")
         print("-" * 45)
         for r in connector_results:
-            latency = f"{r.get('latency_ms', '')}ms" if r.get("latency_ms") else "—"
+            latency = f"{r.get('latency_ms', '')}ms" if r.get("latency_ms") else "-"
             print(f"{r['connector']:<16} {r['status']:<14} {latency}")
 
 

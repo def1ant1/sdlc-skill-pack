@@ -1,0 +1,1024 @@
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-945
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:11:11.549944+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278271-91856289
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-716
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:11:11.562869+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278271-4152f982
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-809
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:11:11.564473+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278271-7b228bd3
+---
+anomalies: []
+artifacts_produced:
+- backend-engineering_output
+duration_ms: 0
+event_id: TEL-20260508-242
+gate_result: PASS
+phase: backend-engineering
+timestamp: '2026-05-08T22:11:11.566198+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278271-7b228bd3
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-379
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:11:11.568194+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278271-3c25dc1d
+---
+anomalies: []
+artifacts_produced:
+- backend-engineering_output
+duration_ms: 0
+event_id: TEL-20260508-848
+gate_result: PASS
+phase: backend-engineering
+timestamp: '2026-05-08T22:11:11.569510+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278271-3c25dc1d
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-525
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:11:11.572896+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278271-b3a92fc6
+---
+anomalies: []
+artifacts_produced:
+- backend-engineering_output
+duration_ms: 0
+event_id: TEL-20260508-955
+gate_result: PASS
+phase: backend-engineering
+timestamp: '2026-05-08T22:11:11.573930+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278271-b3a92fc6
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-885
+gate_result: FAIL
+phase: requirements-analysis
+timestamp: '2026-05-08T22:11:11.575418+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278271-a0e385ce
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-042
+gate_result: FAIL
+phase: requirements-analysis
+timestamp: '2026-05-08T22:11:11.576893+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278271-9750a635
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-553
+gate_result: FAIL
+phase: requirements-analysis
+timestamp: '2026-05-08T22:11:11.578311+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278271-94777af0
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-107
+gate_result: FAIL
+phase: requirements-analysis
+timestamp: '2026-05-08T22:11:11.580813+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278271-d1efc390
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-679
+gate_result: PASS_WITH_WARNINGS
+phase: devsecops
+timestamp: '2026-05-08T22:11:11.582316+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278271-bf0d35c2
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-160
+gate_result: PASS_WITH_WARNINGS
+phase: devsecops
+timestamp: '2026-05-08T22:11:11.583697+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278271-04815a1c
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-459
+gate_result: PASS_WITH_WARNINGS
+phase: devsecops
+timestamp: '2026-05-08T22:11:11.585114+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278271-3220e341
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-629
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:11:11.587114+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278271-3c063a03
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-231
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:11:11.592826+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278271-0539f93d
+---
+anomalies: []
+artifacts_produced:
+- backend-engineering_output
+duration_ms: 0
+event_id: TEL-20260508-911
+gate_result: PASS
+phase: backend-engineering
+timestamp: '2026-05-08T22:11:11.594183+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278271-0539f93d
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-149
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:11:11.597371+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278271-b4978e69
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-809
+gate_result: FAIL
+phase: requirements-analysis
+timestamp: '2026-05-08T22:11:11.599200+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278271-2c1aefec
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-751
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:11:11.601052+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278271-a7ef87c8
+---
+anomalies: []
+artifacts_produced:
+- backend-engineering_output
+duration_ms: 0
+event_id: TEL-20260508-233
+gate_result: PASS
+phase: backend-engineering
+timestamp: '2026-05-08T22:11:11.602404+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278271-a7ef87c8
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-248
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:11:11.603996+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278271-f2b54572
+---
+anomalies: []
+artifacts_produced:
+- backend-engineering_output
+duration_ms: 0
+event_id: TEL-20260508-719
+gate_result: PASS
+phase: backend-engineering
+timestamp: '2026-05-08T22:11:11.607004+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278271-48a02895
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-834
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:16:31.820500+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278591-60c99b3e
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-775
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:16:31.832312+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278591-9a0cc0ad
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-197
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:16:31.833752+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278591-025fe36b
+---
+anomalies: []
+artifacts_produced:
+- backend-engineering_output
+duration_ms: 0
+event_id: TEL-20260508-622
+gate_result: PASS
+phase: backend-engineering
+timestamp: '2026-05-08T22:16:31.834455+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278591-025fe36b
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-927
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:16:31.835744+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278591-9e138da2
+---
+anomalies: []
+artifacts_produced:
+- backend-engineering_output
+duration_ms: 0
+event_id: TEL-20260508-955
+gate_result: PASS
+phase: backend-engineering
+timestamp: '2026-05-08T22:16:31.836453+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278591-9e138da2
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-241
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:16:31.837893+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278591-73be21ff
+---
+anomalies: []
+artifacts_produced:
+- backend-engineering_output
+duration_ms: 0
+event_id: TEL-20260508-158
+gate_result: PASS
+phase: backend-engineering
+timestamp: '2026-05-08T22:16:31.838599+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278591-73be21ff
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-118
+gate_result: FAIL
+phase: requirements-analysis
+timestamp: '2026-05-08T22:16:31.841936+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278591-ac8abe1f
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-557
+gate_result: FAIL
+phase: requirements-analysis
+timestamp: '2026-05-08T22:16:31.844275+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278591-67e61d5c
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-257
+gate_result: FAIL
+phase: requirements-analysis
+timestamp: '2026-05-08T22:16:31.845733+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278591-d93a71cb
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-829
+gate_result: FAIL
+phase: requirements-analysis
+timestamp: '2026-05-08T22:16:31.848020+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278591-b4a03541
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-037
+gate_result: PASS_WITH_WARNINGS
+phase: devsecops
+timestamp: '2026-05-08T22:16:31.849441+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278591-7099d22d
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-553
+gate_result: PASS_WITH_WARNINGS
+phase: devsecops
+timestamp: '2026-05-08T22:16:31.850829+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278591-74c6e44f
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-376
+gate_result: PASS_WITH_WARNINGS
+phase: devsecops
+timestamp: '2026-05-08T22:16:31.852498+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278591-6f5ceaa9
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-737
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:16:31.854248+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278591-d2c1f0f8
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-945
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:16:31.859525+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278591-ca59bf58
+---
+anomalies: []
+artifacts_produced:
+- backend-engineering_output
+duration_ms: 0
+event_id: TEL-20260508-289
+gate_result: PASS
+phase: backend-engineering
+timestamp: '2026-05-08T22:16:31.860907+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278591-ca59bf58
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-401
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:16:31.863094+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278591-1d3dfac0
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-299
+gate_result: FAIL
+phase: requirements-analysis
+timestamp: '2026-05-08T22:16:31.864868+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278591-24bcca57
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-038
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:16:31.871611+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278591-4f5dab90
+---
+anomalies: []
+artifacts_produced:
+- backend-engineering_output
+duration_ms: 0
+event_id: TEL-20260508-140
+gate_result: PASS
+phase: backend-engineering
+timestamp: '2026-05-08T22:16:31.872688+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278591-4f5dab90
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-074
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:16:31.874276+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278591-1b99c557
+---
+anomalies: []
+artifacts_produced:
+- backend-engineering_output
+duration_ms: 0
+event_id: TEL-20260508-962
+gate_result: PASS
+phase: backend-engineering
+timestamp: '2026-05-08T22:16:31.875997+00:00'
+tokens_used: 0
+workflow_id: RUN-1778278591-e3721c2f
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-420
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:48:50.024288+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280530-335fcf4b
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-278
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:48:50.036840+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280530-dd5252ba
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-021
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:48:50.038316+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280530-d6cb5745
+---
+anomalies: []
+artifacts_produced:
+- backend-engineering_output
+duration_ms: 0
+event_id: TEL-20260508-140
+gate_result: PASS
+phase: backend-engineering
+timestamp: '2026-05-08T22:48:50.039045+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280530-d6cb5745
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-976
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:48:50.040418+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280530-126dca1f
+---
+anomalies: []
+artifacts_produced:
+- backend-engineering_output
+duration_ms: 0
+event_id: TEL-20260508-786
+gate_result: PASS
+phase: backend-engineering
+timestamp: '2026-05-08T22:48:50.041156+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280530-126dca1f
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-159
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:48:50.042699+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280530-0de96eae
+---
+anomalies: []
+artifacts_produced:
+- backend-engineering_output
+duration_ms: 0
+event_id: TEL-20260508-574
+gate_result: PASS
+phase: backend-engineering
+timestamp: '2026-05-08T22:48:50.043471+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280530-0de96eae
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-003
+gate_result: FAIL
+phase: requirements-analysis
+timestamp: '2026-05-08T22:48:50.044915+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280530-7de3a395
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-576
+gate_result: FAIL
+phase: requirements-analysis
+timestamp: '2026-05-08T22:48:50.046309+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280530-7390c575
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-135
+gate_result: FAIL
+phase: requirements-analysis
+timestamp: '2026-05-08T22:48:50.047837+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280530-2019c18a
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-282
+gate_result: FAIL
+phase: requirements-analysis
+timestamp: '2026-05-08T22:48:50.054634+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280530-371eac08
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-977
+gate_result: PASS_WITH_WARNINGS
+phase: devsecops
+timestamp: '2026-05-08T22:48:50.057661+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280530-1820c981
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-331
+gate_result: PASS_WITH_WARNINGS
+phase: devsecops
+timestamp: '2026-05-08T22:48:50.059137+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280530-e1b73dc3
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-996
+gate_result: PASS_WITH_WARNINGS
+phase: devsecops
+timestamp: '2026-05-08T22:48:50.060906+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280530-2f16d165
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-939
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:48:50.062652+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280530-ff155c9e
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-108
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:48:50.066951+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280530-81ba1a3c
+---
+anomalies: []
+artifacts_produced:
+- backend-engineering_output
+duration_ms: 0
+event_id: TEL-20260508-816
+gate_result: PASS
+phase: backend-engineering
+timestamp: '2026-05-08T22:48:50.069146+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280530-81ba1a3c
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-118
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:48:50.072224+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280530-99841038
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-118
+gate_result: FAIL
+phase: requirements-analysis
+timestamp: '2026-05-08T22:48:50.074064+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280530-832788e5
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-171
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:48:50.080587+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280530-e87e5e9e
+---
+anomalies: []
+artifacts_produced:
+- backend-engineering_output
+duration_ms: 0
+event_id: TEL-20260508-825
+gate_result: PASS
+phase: backend-engineering
+timestamp: '2026-05-08T22:48:50.081840+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280530-e87e5e9e
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-794
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:48:50.083720+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280530-9c86cbc0
+---
+anomalies: []
+artifacts_produced:
+- backend-engineering_output
+duration_ms: 0
+event_id: TEL-20260508-429
+gate_result: PASS
+phase: backend-engineering
+timestamp: '2026-05-08T22:48:50.085725+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280530-265e5feb
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-874
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:53:32.460204+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280812-13a8fdb8
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-333
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:53:32.471672+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280812-bdf99223
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-889
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:53:32.473088+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280812-e96afd42
+---
+anomalies: []
+artifacts_produced:
+- backend-engineering_output
+duration_ms: 0
+event_id: TEL-20260508-441
+gate_result: PASS
+phase: backend-engineering
+timestamp: '2026-05-08T22:53:32.473838+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280812-e96afd42
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-625
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:53:32.477164+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280812-12968ffc
+---
+anomalies: []
+artifacts_produced:
+- backend-engineering_output
+duration_ms: 0
+event_id: TEL-20260508-624
+gate_result: PASS
+phase: backend-engineering
+timestamp: '2026-05-08T22:53:32.478589+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280812-12968ffc
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-291
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:53:32.480407+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280812-6c273a7a
+---
+anomalies: []
+artifacts_produced:
+- backend-engineering_output
+duration_ms: 0
+event_id: TEL-20260508-428
+gate_result: PASS
+phase: backend-engineering
+timestamp: '2026-05-08T22:53:32.481203+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280812-6c273a7a
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-368
+gate_result: FAIL
+phase: requirements-analysis
+timestamp: '2026-05-08T22:53:32.483399+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280812-3bddc18b
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-781
+gate_result: FAIL
+phase: requirements-analysis
+timestamp: '2026-05-08T22:53:32.485540+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280812-76af061b
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-819
+gate_result: FAIL
+phase: requirements-analysis
+timestamp: '2026-05-08T22:53:32.487032+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280812-012d495f
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-043
+gate_result: FAIL
+phase: requirements-analysis
+timestamp: '2026-05-08T22:53:32.489663+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280812-00f2d4b9
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-709
+gate_result: PASS_WITH_WARNINGS
+phase: devsecops
+timestamp: '2026-05-08T22:53:32.491245+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280812-efd9e8de
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-486
+gate_result: PASS_WITH_WARNINGS
+phase: devsecops
+timestamp: '2026-05-08T22:53:32.492650+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280812-4701804e
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-452
+gate_result: PASS_WITH_WARNINGS
+phase: devsecops
+timestamp: '2026-05-08T22:53:32.494337+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280812-21b287f8
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-313
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:53:32.496142+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280812-4298411f
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-970
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:53:32.498862+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280812-c2975f38
+---
+anomalies: []
+artifacts_produced:
+- backend-engineering_output
+duration_ms: 0
+event_id: TEL-20260508-964
+gate_result: PASS
+phase: backend-engineering
+timestamp: '2026-05-08T22:53:32.499689+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280812-c2975f38
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-141
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:53:32.501897+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280812-cdb24958
+---
+anomalies: []
+artifacts_produced: []
+duration_ms: 0
+event_id: TEL-20260508-043
+gate_result: FAIL
+phase: requirements-analysis
+timestamp: '2026-05-08T22:53:32.504372+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280812-0c63e566
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-201
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:53:32.510867+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280812-75561906
+---
+anomalies: []
+artifacts_produced:
+- backend-engineering_output
+duration_ms: 0
+event_id: TEL-20260508-218
+gate_result: PASS
+phase: backend-engineering
+timestamp: '2026-05-08T22:53:32.512043+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280812-75561906
+---
+anomalies: []
+artifacts_produced:
+- requirements-analysis_output
+duration_ms: 0
+event_id: TEL-20260508-139
+gate_result: PASS
+phase: requirements-analysis
+timestamp: '2026-05-08T22:53:32.513841+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280812-686f162e
+---
+anomalies: []
+artifacts_produced:
+- backend-engineering_output
+duration_ms: 0
+event_id: TEL-20260508-175
+gate_result: PASS
+phase: backend-engineering
+timestamp: '2026-05-08T22:53:32.515761+00:00'
+tokens_used: 0
+workflow_id: RUN-1778280812-4fe73361

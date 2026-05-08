@@ -6,6 +6,7 @@ Each skill is exposed as a Temporal Activity. Activities handle:
   - Loading the skill's behavioral contract (SKILL.md)
   - Constructing the LLM prompt with context packet
   - Calling the inference API
+  - Detecting HITL gates (structured marker > risk-list > phrase fallback)
   - Returning the structured output
 
 This module is imported by temporal_worker.py to register activities.
@@ -15,12 +16,19 @@ Environment variables:
     CLAUDE_MODEL         Model to use (default: claude-sonnet-4-6)
     SKILLS_ROOT          Path to skills/ directory (default: auto-detected)
     MAX_TOKENS           Max output tokens per activity call (default: 4096)
+
+HITL gate detection (three-layer, in priority order):
+  1. Structured marker in output:
+         <!-- HITL_GATE: {"required": true, "level": "L3", "reason": "..."} -->
+  2. Skill name matches the known high-risk skill list (_HITL_REQUIRED_SKILLS)
+  3. Phrase matching fallback on output text (_HITL_PHRASES)
 """
 from __future__ import annotations
 
 import json
 import logging
 import os
+import re
 import sys
 import time
 from pathlib import Path
@@ -34,6 +42,90 @@ SKILLS_ROOT = Path(os.environ.get("SKILLS_ROOT", str(REPO_ROOT / "skills")))
 CORE_ROOT = REPO_ROOT / "core"
 CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-sonnet-4-6")
 MAX_TOKENS = int(os.environ.get("MAX_TOKENS", "4096"))
+
+
+# ---------------------------------------------------------------------------
+# HITL gate detection
+# ---------------------------------------------------------------------------
+
+# Regex to parse structured HITL marker the model may emit in its output:
+#   <!-- HITL_GATE: {"required": true, "level": "L3", "reason": "..."} -->
+_HITL_MARKER_RE = re.compile(
+    r"<!--\s*HITL_GATE:\s*(\{.*?\})\s*-->",
+    re.DOTALL | re.IGNORECASE,
+)
+
+# Skills that always require L3 human approval regardless of output content.
+# Source: docs/governance/hitl-gate-audit.md (P1 gaps — production-impact risks)
+_HITL_REQUIRED_SKILLS: frozenset[str] = frozenset({
+    "cloud-deployment",
+    "devsecops",
+    "release-management",
+    "compliance-automation",
+    "local-security",
+    "database-migration",
+    "infrastructure-provisioning",
+    "secret-rotation",
+    "incident-response",
+    "sre",
+})
+
+# Phrase-based fallback (backward compat)
+_HITL_PHRASES: tuple[str, ...] = (
+    "requires approval",
+    "level-3 approval",
+    "human approval",
+    "hitl gate",
+    "awaiting approval",
+    "l3 approval",
+)
+
+# Instruction appended to every user message so models can emit structured markers
+_HITL_GATE_INSTRUCTION = """\
+
+---
+**HITL Gate Protocol**: If this action requires blocking human approval before
+proceeding (e.g. production deployment, irreversible infrastructure change, or
+security policy exception), include the following marker at the very end of your
+response — otherwise omit it:
+<!-- HITL_GATE: {"required": true, "level": "L3", "reason": "<brief reason>"} -->"""
+
+
+def detect_hitl(skill_name: str, output_text: str) -> tuple[bool, str]:
+    """
+    Determine whether this skill output requires HITL approval.
+
+    Returns (requires_hitl, reason). Priority:
+      1. Structured <!-- HITL_GATE: {...} --> marker in output
+      2. Skill name in the known high-risk list
+      3. Phrase matching on output text (fallback)
+    """
+    # Layer 1: structured marker (authoritative — short-circuits lower layers if valid)
+    match = _HITL_MARKER_RE.search(output_text)
+    if match:
+        try:
+            marker = json.loads(match.group(1))
+            if marker.get("required"):
+                level = marker.get("level", "L3")
+                reason = marker.get("reason", "HITL marker present in output")
+                return True, f"[{level}] {reason}"
+            else:
+                # Marker explicitly says not required — trust it over risk-list
+                return False, ""
+        except (json.JSONDecodeError, AttributeError):
+            logger.debug("Malformed HITL_GATE marker in %s output — ignored", skill_name)
+
+    # Layer 2: risk-based lookup
+    if skill_name in _HITL_REQUIRED_SKILLS:
+        return True, f"Skill '{skill_name}' is classified as high-risk (always requires L3 approval)"
+
+    # Layer 3: phrase matching
+    lower = output_text.lower()
+    for phrase in _HITL_PHRASES:
+        if phrase in lower:
+            return True, f"Output contains approval gate phrase: '{phrase}'"
+
+    return False, ""
 
 
 # ---------------------------------------------------------------------------
@@ -243,24 +335,25 @@ def run_skill_activity(inp: SkillActivityInput) -> SkillActivityOutput:
     if inp.additional_context:
         parts.append(f"## Additional Context\n{inp.additional_context}")
 
+    # Append HITL gate protocol so the model can emit a structured marker
+    parts.append(_HITL_GATE_INSTRUCTION)
+
     user_message = "\n\n".join(parts)
 
     try:
         output_text = call_claude(system_prompt, user_message)
         logger.info("Skill %s completed successfully (%d chars)", inp.skill_name, len(output_text))
 
-        # Simple HITL detection: check if output mentions approval gates
-        requires_hitl = any(
-            phrase in output_text.lower()
-            for phrase in ["requires approval", "level-3 approval", "human approval", "hitl gate"]
-        )
+        requires_hitl, hitl_reason = detect_hitl(inp.skill_name, output_text)
+        if requires_hitl:
+            logger.info("HITL gate triggered for %s: %s", inp.skill_name, hitl_reason)
 
         return SkillActivityOutput(
             skill_name=inp.skill_name,
             success=True,
             output=output_text,
             requires_hitl=requires_hitl,
-            hitl_reason="Output flagged approval gate" if requires_hitl else "",
+            hitl_reason=hitl_reason,
         )
     except Exception as exc:
         logger.error("Skill %s failed: %s", inp.skill_name, exc, exc_info=True)

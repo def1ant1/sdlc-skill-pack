@@ -217,7 +217,7 @@ def cmd_logs(args: list[str]) -> int:
     print(f"Objective: {data.get('objective')}")
     print()
     for step in data.get("steps", []):
-        status_icon = {"completed": "✓", "failed": "✗", "error": "!", "pending_hitl": "⏸", "dry_run": "~"}.get(step.get("status", ""), "?")
+        status_icon = {"completed": "OK", "failed": "FAIL", "error": "ERR", "pending_hitl": "HITL", "dry_run": "~"}.get(step.get("status", ""), "?")
         print(f"  Step {step['step']:>2}: [{status_icon}] {step['skill']:<35} {step.get('duration_ms', 0)}ms")
         if step.get("error"):
             print(f"          Error: {step['error']}")
@@ -287,7 +287,7 @@ def cmd_validate(_args: list[str]) -> int:
     all_ok = True
     for name, cmd in checks:
         code, out = _capture(cmd)
-        icon = "✓" if code == 0 else "✗"
+        icon = "OK" if code == 0 else "FAIL"
         print(f"  [{icon}] {name}")
         if code != 0:
             print(f"      {out.strip()[:200]}")

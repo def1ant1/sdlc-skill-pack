@@ -1,0 +1,99 @@
+{
+  "plan_id": "WP-20260508-001",
+  "created": "2026-05-08",
+  "objective": "Build a payment service",
+  "complexity": "multi-phase",
+  "classification_confidence": "high",
+  "detected_phases": [
+    {
+      "phase": "architecture",
+      "skill": "system-architecture",
+      "confidence": "high",
+      "rationale": "Added automatically to satisfy dependency for requested skills."
+    },
+    {
+      "phase": "backend",
+      "skill": "backend-engineering",
+      "confidence": "high",
+      "rationale": "Matched primary signals: ['service']"
+    }
+  ],
+  "skill_chain": [
+    {
+      "step": 1,
+      "skill": "system-architecture",
+      "phase": "architecture",
+      "depends_on": [],
+      "gate_before_next": "architecture-approved"
+    },
+    {
+      "step": 2,
+      "skill": "backend-engineering",
+      "phase": "backend",
+      "depends_on": [
+        "system-architecture"
+      ],
+      "gate_before_next": null
+    }
+  ],
+  "execution_groups": [
+    {
+      "group": 1,
+      "parallel": false,
+      "skills": [
+        "system-architecture"
+      ]
+    },
+    {
+      "group": 2,
+      "parallel": false,
+      "skills": [
+        "backend-engineering"
+      ]
+    }
+  ],
+  "quality_gates": [
+    {
+      "gate_name": "architecture-approved",
+      "transition": "architecture \u2192 backend",
+      "fail_action": "block"
+    }
+  ],
+  "memory_strategy": {
+    "preserve": [
+      "user objective",
+      "accepted decisions and ADRs",
+      "all quality gate statuses",
+      "open questions and constraints",
+      "artifact names and locations",
+      "remediation tasks from failed gates"
+    ],
+    "compress_after": [
+      "Intermediate reasoning from architecture phase",
+      "Intermediate reasoning from backend phase",
+      "raw conversation turns after each phase completion",
+      "superseded design drafts"
+    ]
+  },
+  "token_budget": {
+    "total_estimated": 16000,
+    "allocation": {
+      "planning": 1280,
+      "source_context": 4000,
+      "reasoning": 4800,
+      "output": 4800,
+      "buffer": 1120
+    },
+    "compression_trigger": "75%"
+  },
+  "dependency_additions": [
+    "system-architecture"
+  ],
+  "unknown_skills": [],
+  "next_action": {
+    "description": "Load system-architecture skill and begin phase execution.",
+    "skill": "system-architecture",
+    "input_needed": null,
+    "gate_to_pass": "N/A"
+  }
+}

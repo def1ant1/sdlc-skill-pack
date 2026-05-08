@@ -101,7 +101,7 @@ def print_table(results: list[dict]) -> None:
     print(row_fmt.format(*header))
     print(sep)
     for r in results:
-        latency = f"{r['latency_ms']}ms" if r["latency_ms"] is not None else "—"
+        latency = f"{r['latency_ms']}ms" if r["latency_ms"] is not None else "-"
         error = (r["error"] or "")[:46]
         print(row_fmt.format(r["connector"], r["status"], latency, error))
 

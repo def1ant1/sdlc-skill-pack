@@ -19,12 +19,17 @@ Usage:
     # Dry run (print steps without executing)
     python scripts/runtime/execute_workflow.py --plan workflow_plan.json --dry-run
 
+    # Temporal mode (requires temporal_worker.py running)
+    python scripts/runtime/execute_workflow.py --mode temporal --plan workflow_plan.json
+
 Environment variables:
     EXECUTION_MODE       local | temporal (default: local)
     TEMPORAL_HOST        Temporal server host (default: localhost:7233)
     TEMPORAL_NAMESPACE   Temporal namespace (default: apotheon-dev)
     TEMPORAL_TASK_QUEUE  Task queue name (default: apotheon-sdlc)
+    TEMPORAL_TIMEOUT_HOURS  Hours to wait for Temporal workflow (default: 4)
     ANTHROPIC_API_KEY    Required for local mode skill execution
+    QDRANT_URL           Qdrant URL for context persistence (default: http://localhost:6333)
 """
 from __future__ import annotations
 
@@ -50,6 +55,72 @@ EXECUTION_MODE = os.environ.get("EXECUTION_MODE", "local")
 TEMPORAL_HOST = os.environ.get("TEMPORAL_HOST", "localhost:7233")
 TEMPORAL_NAMESPACE = os.environ.get("TEMPORAL_NAMESPACE", "apotheon-dev")
 TEMPORAL_TASK_QUEUE = os.environ.get("TEMPORAL_TASK_QUEUE", "apotheon-sdlc")
+TEMPORAL_TIMEOUT_HOURS = int(os.environ.get("TEMPORAL_TIMEOUT_HOURS", "4"))
+
+
+# ---------------------------------------------------------------------------
+# Context manager (graceful — Qdrant may not be running)
+# ---------------------------------------------------------------------------
+
+def _make_context_manager(run_id: str, objective: str):
+    """Return a ContextManager instance, or None if unavailable."""
+    try:
+        from context_manager import ContextManager
+        return ContextManager(run_id=run_id, objective=objective)
+    except Exception as exc:
+        logger.debug("ContextManager unavailable — memory persistence disabled: %s", exc)
+        return None
+
+
+# ---------------------------------------------------------------------------
+# Telemetry (graceful — emits to log file, fails silently)
+# ---------------------------------------------------------------------------
+
+_TELEMETRY_ROOT = Path(os.environ.get("TELEMETRY_LOG", "")).parent if os.environ.get("TELEMETRY_LOG") else None
+_TELEMETRY_LOG = os.environ.get("TELEMETRY_LOG", "telemetry.log.yaml")
+
+_TELEMETRY_PATH: list[str] = [str(Path(__file__).parent.parent / "telemetry")]
+
+
+def _emit_telemetry(
+    run_id: str,
+    phase: str,
+    gate_result: str,
+    duration_ms: int,
+    *,
+    tokens_used: int = 0,
+    artifacts: list[str] | None = None,
+    quality_score: float | None = None,
+) -> None:
+    """Emit a telemetry event. No-ops silently if the telemetry module is unavailable."""
+    try:
+        import sys as _sys
+        for _p in _TELEMETRY_PATH:
+            if _p not in _sys.path:
+                _sys.path.insert(0, _p)
+        from record_telemetry_event import append_to_log, build_event_record
+
+        event: dict = {
+            "workflow_id": run_id,
+            "phase": phase,
+            "gate_result": gate_result,
+            "tokens_used": tokens_used,
+            "duration_ms": duration_ms,
+            "artifacts_produced": artifacts or [],
+        }
+        if quality_score is not None:
+            event["quality_score"] = quality_score
+
+        record = build_event_record(event)
+        append_to_log(record, _TELEMETRY_LOG)
+        if record.get("anomalies"):
+            for a in record["anomalies"]:
+                logger.warning(
+                    "Telemetry anomaly [%s] %s=%s (threshold=%s)",
+                    a["severity"].upper(), a["metric"], a["value"], a["threshold"],
+                )
+    except Exception as exc:
+        logger.debug("Telemetry emit skipped: %s", exc)
 
 
 # ---------------------------------------------------------------------------
@@ -76,8 +147,9 @@ def execute_local(plan: dict, dry_run: bool = False) -> dict:
         "completed_at": None,
     }
 
-    # Build context packet from plan
-    context_packet = {
+    # Initialise context — restore from Qdrant snapshot if a prior run exists
+    cm = _make_context_manager(run_id, objective) if not dry_run else None
+    context_packet = cm.load() if cm else {
         "objective": objective,
         "phase": "",
         "decisions": [],
@@ -112,14 +184,28 @@ def execute_local(plan: dict, dry_run: bool = False) -> dict:
             execution_log["steps"].append(step_record)
             continue
 
-        # Build additional context from prior step outputs
-        additional_context = ""
+        # Build additional context: recent step outputs + semantically relevant observations
+        additional_context_parts: list[str] = []
+
         if prior_outputs:
-            recent = prior_outputs[-2:]  # last 2 outputs for context
-            additional_context = "\n\n---\n\n".join(
+            recent = prior_outputs[-2:]  # last 2 outputs for chain continuity
+            additional_context_parts.extend(
                 f"[Prior step output]\n{o[:2000]}" for o in recent
             )
 
+        if cm:
+            # Fetch semantically relevant observations from past runs
+            query = f"{objective} {skill_name}"
+            relevant = cm.retrieve_relevant(query, top_k=3)
+            for obs in relevant:
+                preview = obs.get("payload", {}).get("output_preview", "")
+                obs_skill = obs.get("payload", {}).get("skill", "")
+                if preview and obs_skill != skill_name:
+                    additional_context_parts.append(
+                        f"[Memory: {obs_skill}]\n{preview[:800]}"
+                    )
+
+        additional_context = "\n\n---\n\n".join(additional_context_parts)
         context_packet["phase"] = step.get("phase", skill_name)
 
         inp = SkillActivityInput(
@@ -135,7 +221,7 @@ def execute_local(plan: dict, dry_run: bool = False) -> dict:
             duration_ms = int((time.perf_counter() - t0) * 1000)
 
             step_record["status"] = "completed" if result.success else "failed"
-            step_record["output"] = result.output[:500] if result.output else None  # truncate for log
+            step_record["output"] = result.output[:500] if result.output else None
             step_record["error"] = result.error or None
             step_record["duration_ms"] = duration_ms
             step_record["hitl_required"] = result.requires_hitl
@@ -149,17 +235,42 @@ def execute_local(plan: dict, dry_run: bool = False) -> dict:
                 execution_log["steps"].append(step_record)
                 execution_log["status"] = "paused_for_hitl"
                 execution_log["paused_at_step"] = step_num
+                _emit_telemetry(
+                    run_id=run_id,
+                    phase=skill_name,
+                    gate_result="PASS_WITH_WARNINGS",
+                    duration_ms=duration_ms,
+                )
+                if cm:
+                    cm.save_context(context_packet)
                 break
 
             if result.success:
                 prior_outputs.append(result.output)
-                # Add any decisions/artifacts extracted from output to context
                 context_packet["artifacts"].append(f"{skill_name}_output")
+                if cm:
+                    cm.save_step(step=step_num, skill=skill_name, output=result.output)
+                    cm.save_context(context_packet)
+                _emit_telemetry(
+                    run_id=run_id,
+                    phase=skill_name,
+                    gate_result="PASS",
+                    duration_ms=duration_ms,
+                    artifacts=[f"{skill_name}_output"],
+                )
             else:
                 logger.error("Step %d (%s) failed: %s", step_num, skill_name, result.error)
+                _emit_telemetry(
+                    run_id=run_id,
+                    phase=skill_name,
+                    gate_result="FAIL",
+                    duration_ms=duration_ms,
+                )
                 execution_log["status"] = "failed"
                 execution_log["failed_at_step"] = step_num
                 execution_log["steps"].append(step_record)
+                if cm:
+                    cm.finalize("failed")
                 break
 
         except Exception as exc:
@@ -168,9 +279,12 @@ def execute_local(plan: dict, dry_run: bool = False) -> dict:
             step_record["error"] = str(exc)
             step_record["duration_ms"] = duration_ms
             logger.error("Step %d (%s) raised exception: %s", step_num, skill_name, exc, exc_info=True)
+            _emit_telemetry(run_id=run_id, phase=skill_name, gate_result="FAIL", duration_ms=duration_ms)
             execution_log["status"] = "failed"
             execution_log["failed_at_step"] = step_num
             execution_log["steps"].append(step_record)
+            if cm:
+                cm.finalize("failed")
             break
 
         # Gate check (informational in local mode — no blocking)
@@ -181,9 +295,11 @@ def execute_local(plan: dict, dry_run: bool = False) -> dict:
         execution_log["steps"].append(step_record)
 
     else:
-        # All steps completed
+        # All steps completed without a break
         if not dry_run:
             execution_log["status"] = "completed"
+            if cm:
+                cm.finalize("completed")
 
     execution_log["completed_at"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     if dry_run:
@@ -196,27 +312,55 @@ def execute_local(plan: dict, dry_run: bool = False) -> dict:
 # Temporal execution (requires temporalio package)
 # ---------------------------------------------------------------------------
 
+async def _submit_temporal(plan: dict) -> dict:
+    """Async implementation: connect to Temporal, start ApotheonWorkflow, await result."""
+    from datetime import timedelta
+    from temporalio.client import Client
+
+    run_id = f"RUN-{int(time.time())}-{uuid.uuid4().hex[:8]}"
+
+    logger.info(
+        "Connecting to Temporal at %s (namespace=%s, queue=%s)",
+        TEMPORAL_HOST, TEMPORAL_NAMESPACE, TEMPORAL_TASK_QUEUE,
+    )
+    client = await Client.connect(TEMPORAL_HOST, namespace=TEMPORAL_NAMESPACE)
+
+    logger.info("Starting ApotheonWorkflow: %s", run_id)
+    handle = await client.start_workflow(
+        "ApotheonWorkflow",
+        plan,
+        id=run_id,
+        task_queue=TEMPORAL_TASK_QUEUE,
+        execution_timeout=timedelta(hours=TEMPORAL_TIMEOUT_HOURS),
+    )
+
+    logger.info("Workflow submitted (id=%s). Waiting for result...", run_id)
+    result: dict = await handle.result()
+
+    # Ensure run_id from submission matches (the workflow generates its own internal ID)
+    if "run_id" not in result:
+        result["run_id"] = run_id
+    result["temporal_workflow_id"] = run_id
+
+    return result
+
+
 def execute_temporal(plan: dict) -> dict:
     """Submit workflow plan to Temporal for durable execution."""
     try:
         import temporalio  # noqa: F401
     except ImportError:
         raise RuntimeError(
-            "temporalio package not installed. Run: pip install temporalio\n"
+            "temporalio package not installed. Run: pip install 'apotheon[temporal]'\n"
             "Or use EXECUTION_MODE=local for in-process execution."
         )
 
-    logger.warning(
-        "Temporal execution requires temporal_worker.py to be running. "
-        "Submitting workflow to %s namespace=%s",
-        TEMPORAL_HOST, TEMPORAL_NAMESPACE,
+    import asyncio
+    logger.info(
+        "Temporal mode — requires temporal_worker.py to be running against %s",
+        TEMPORAL_HOST,
     )
-    # Full Temporal client implementation requires async context.
-    # See scripts/runtime/temporal_worker.py for the worker and workflow definitions.
-    raise NotImplementedError(
-        "Temporal submission requires async runner. "
-        "Use: python -m asyncio scripts/runtime/temporal_worker.py"
-    )
+    return asyncio.run(_submit_temporal(plan))
 
 
 # ---------------------------------------------------------------------------

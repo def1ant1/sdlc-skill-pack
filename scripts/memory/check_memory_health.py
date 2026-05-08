@@ -177,7 +177,7 @@ def run_checks(fix: bool = False) -> list[dict]:
 
 
 def print_table(checks: list[dict]) -> None:
-    icons = {"ok": "✓", "fail": "✗", "warn": "!", "skipped": "~", "fixed": "✓"}
+    icons = {"ok": "OK", "fail": "FAIL", "warn": "WARN", "skipped": "SKIP", "fixed": "FIXED"}
     print(f"  {'Check':<30} {'Status':<10} Detail")
     print("  " + "-" * 70)
     for c in checks:
