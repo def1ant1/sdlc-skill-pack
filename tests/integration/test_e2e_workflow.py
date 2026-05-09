@@ -214,8 +214,10 @@ class TestSkillActivity:
                 mock_open.return_value.__exit__ = mock.Mock(return_value=False)
                 mock_open.return_value.read = lambda: mock_response
 
-                result = call_claude("System prompt", "User message")
-                assert result == "This is the skill output."
+                text, input_tokens, output_tokens = call_claude("System prompt", "User message")
+                assert text == "This is the skill output."
+                assert input_tokens == 0   # mock response has no usage field
+                assert output_tokens == 0
 
     def test_call_claude_raises_on_missing_api_key(self):
         from skill_activity import call_claude

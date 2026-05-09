@@ -18,6 +18,8 @@ Usage:
     apotheon memory init                   Initialize Qdrant collections
     apotheon validate                      Run all validation checks
     apotheon bootstrap                     Full OS health check
+    apotheon init                          First-time setup: DB, Qdrant, env check
+    apotheon doctor                        Diagnose environment health
 
 Install:
     pip install -e .                       Installs 'apotheon' into PATH
@@ -306,6 +308,123 @@ def cmd_bootstrap(_args: list[str]) -> int:
     return _run([_python(), _script("scripts/orchestration/autonomous_os_bootstrap.py")])
 
 
+def cmd_init(_args: list[str]) -> int:
+    """Initialize Apotheon for first-time use: DB, Qdrant collections, env check."""
+    print("Apotheon init\n")
+    steps = []
+
+    # 1. Check required env vars
+    missing = [v for v in ("ANTHROPIC_API_KEY",) if not os.environ.get(v)]
+    if missing:
+        print(f"  [WARN] Missing env vars: {', '.join(missing)}")
+        print("         Set them in .env or export before running workflows.")
+    else:
+        print("  [OK]   Required env vars present")
+
+    # 2. Initialize Qdrant collections
+    code, _ = _capture([_python(), _script("scripts/memory/init_collections.py")])
+    steps.append(("Qdrant collections", code == 0))
+
+    # 3. Validate skill structure
+    code, _ = _capture([_python(), _script("scripts/validation/validate_skill_structure.py"), str(REPO_ROOT)])
+    steps.append(("Skill structure valid", code == 0))
+
+    # 4. Validate frontmatter
+    code, _ = _capture([_python(), _script("scripts/validation/validate_frontmatter.py"), str(REPO_ROOT)])
+    steps.append(("Frontmatter valid", code == 0))
+
+    for name, ok in steps:
+        icon = "OK" if ok else "FAIL"
+        print(f"  [{icon}]   {name}")
+
+    print()
+    all_ok = all(ok for _, ok in steps)
+    if all_ok:
+        print("Init complete. Run: apotheon dry-run \"<your objective>\"")
+    else:
+        print("Init completed with warnings. Check failures above.")
+    return 0 if all_ok else 1
+
+
+def cmd_doctor(_args: list[str]) -> int:
+    """Diagnose environment health: API keys, services, dependencies."""
+    print("Apotheon doctor\n")
+    checks = []
+
+    # Python version
+    import platform
+    py_ok = sys.version_info >= (3, 11)
+    checks.append(("Python >= 3.11", py_ok, platform.python_version()))
+
+    # ANTHROPIC_API_KEY
+    api_key = os.environ.get("ANTHROPIC_API_KEY", "")
+    checks.append(("ANTHROPIC_API_KEY set", bool(api_key), "set" if api_key else "missing"))
+
+    # Qdrant reachability
+    try:
+        import urllib.request
+        qdrant_url = os.environ.get("QDRANT_URL", "http://localhost:6333")
+        with urllib.request.urlopen(f"{qdrant_url}/readyz", timeout=3):
+            qdrant_ok = True
+            qdrant_detail = qdrant_url
+    except Exception as e:
+        qdrant_ok = False
+        qdrant_detail = str(e)[:60]
+    checks.append(("Qdrant reachable", qdrant_ok, qdrant_detail))
+
+    # Temporal reachability (optional)
+    temporal_host = os.environ.get("TEMPORAL_HOST", "localhost:7233")
+    import socket
+    try:
+        host, port = temporal_host.rsplit(":", 1)
+        sock = socket.create_connection((host, int(port)), timeout=2)
+        sock.close()
+        temporal_ok = True
+        temporal_detail = temporal_host
+    except Exception as e:
+        temporal_ok = False
+        temporal_detail = str(e)[:60]
+    checks.append(("Temporal reachable (optional)", temporal_ok, temporal_detail))
+
+    # Postgres (optional)
+    db_url = os.environ.get("DATABASE_URL", "")
+    if db_url:
+        try:
+            import asyncio
+            import sqlalchemy
+            engine = sqlalchemy.create_engine(db_url.replace("+asyncpg", "").replace("+aiosqlite", ""), pool_pre_ping=True)
+            with engine.connect() as conn:
+                conn.execute(sqlalchemy.text("SELECT 1"))
+            db_ok = True
+            db_detail = "connected"
+        except Exception as e:
+            db_ok = False
+            db_detail = str(e)[:60]
+        checks.append(("Database reachable", db_ok, db_detail))
+
+    # Key Python packages
+    for pkg in ("anthropic", "qdrant_client", "fastapi", "sqlalchemy", "prometheus_client"):
+        try:
+            __import__(pkg)
+            checks.append((f"Package: {pkg}", True, "installed"))
+        except ImportError:
+            checks.append((f"Package: {pkg}", False, "not installed"))
+
+    print(f"  {'Check':<40} {'Status':<6} Detail")
+    print("  " + "-" * 70)
+    for name, ok, detail in checks:
+        icon = "OK  " if ok else "WARN"
+        print(f"  [{icon}] {name:<38} {detail}")
+
+    print()
+    failures = [n for n, ok, _ in checks if not ok]
+    if not failures:
+        print("All checks passed. Apotheon is healthy.")
+    else:
+        print(f"{len(failures)} check(s) failed or warned. Review above for details.")
+    return 0
+
+
 # ---------------------------------------------------------------------------
 # Dispatch table
 # ---------------------------------------------------------------------------
@@ -324,6 +443,8 @@ _COMMANDS: dict[str, tuple] = {
     "memory":        (cmd_memory,           "Memory: search \"query\" | init"),
     "validate":      (cmd_validate,         "Run all validation checks"),
     "bootstrap":     (cmd_bootstrap,        "Full OS bootstrap health check"),
+    "init":          (cmd_init,             "First-time setup: DB, Qdrant, env check"),
+    "doctor":        (cmd_doctor,           "Diagnose environment health"),
 }
 
 
@@ -341,6 +462,8 @@ def _print_help() -> None:
     print("  apotheon connector health")
     print("  apotheon skill gaps")
     print('  apotheon memory search "authentication"')
+    print("  apotheon init")
+    print("  apotheon doctor")
 
 
 def main() -> int:

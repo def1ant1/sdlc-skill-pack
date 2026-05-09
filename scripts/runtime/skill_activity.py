@@ -37,6 +37,42 @@ from typing import Any
 logger = logging.getLogger("skill_activity")
 
 _HERE = Path(__file__).parent
+
+# ---------------------------------------------------------------------------
+# Observability helpers (graceful — no-ops when app/ package not available)
+# ---------------------------------------------------------------------------
+
+def _record_llm(model: str, duration_s: float, retry_count: int = 0, http_status: int = 200) -> None:
+    try:
+        sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+        from app.observability.metrics import record_llm_call
+        record_llm_call(model=model, duration_s=duration_s, retry_count=retry_count, http_status=http_status)
+    except Exception:
+        pass
+
+
+def _record_tokens(skill: str, model: str, input_tokens: int, output_tokens: int) -> None:
+    try:
+        from app.observability.metrics import record_token_usage
+        record_token_usage(skill_name=skill, model=model, input_tokens=input_tokens, output_tokens=output_tokens)
+    except Exception:
+        pass
+
+
+def _record_skill(skill: str, status: str, duration_s: float) -> None:
+    try:
+        from app.observability.metrics import record_skill_call
+        record_skill_call(skill_name=skill, status=status, duration_s=duration_s)
+    except Exception:
+        pass
+
+
+def _record_hitl(skill: str, outcome: str) -> None:
+    try:
+        from app.observability.metrics import record_hitl_event
+        record_hitl_event(skill_name=skill, outcome=outcome)
+    except Exception:
+        pass
 REPO_ROOT = _HERE.parent.parent
 SKILLS_ROOT = Path(os.environ.get("SKILLS_ROOT", str(REPO_ROOT / "skills")))
 CORE_ROOT = REPO_ROOT / "core"
@@ -152,8 +188,8 @@ _BACKOFF_MULTIPLIER: float = 2.0
 _MAX_BACKOFF: float = 60.0
 
 
-def call_claude(system_prompt: str, user_message: str) -> str:
-    """Call the Anthropic Messages API and return the assistant text.
+def call_claude(system_prompt: str, user_message: str) -> tuple[str, int, int]:
+    """Call the Anthropic Messages API and return (text, input_tokens, output_tokens).
 
     Retries on transient errors (429/5xx/network) with exponential backoff.
     Raises RuntimeError on non-retryable errors or exhausted retries.
@@ -180,6 +216,7 @@ def call_claude(system_prompt: str, user_message: str) -> str:
 
     backoff = _INITIAL_BACKOFF
     last_exc: Exception | None = None
+    retry_count = 0
 
     for attempt in range(1, _MAX_CALL_RETRIES + 2):
         req = urllib.request.Request(
@@ -188,6 +225,7 @@ def call_claude(system_prompt: str, user_message: str) -> str:
             headers=headers,
             method="POST",
         )
+        t0 = time.perf_counter()
         try:
             with urllib.request.urlopen(req, timeout=120) as resp:
                 try:
@@ -195,9 +233,15 @@ def call_claude(system_prompt: str, user_message: str) -> str:
                 except json.JSONDecodeError as exc:
                     raise RuntimeError(f"Claude API returned non-JSON response: {exc}") from exc
 
+            duration_s = time.perf_counter() - t0
+            usage = response.get("usage", {})
+            input_tokens = usage.get("input_tokens", 0)
+            output_tokens = usage.get("output_tokens", 0)
+            _record_llm(CLAUDE_MODEL, duration_s, retry_count=retry_count)
+
             for block in response.get("content", []):
                 if block.get("type") == "text":
-                    return block["text"]
+                    return block["text"], input_tokens, output_tokens
             raise RuntimeError(f"No text content in Claude response: {response}")
 
         except urllib.error.HTTPError as exc:
@@ -208,6 +252,7 @@ def call_claude(system_prompt: str, user_message: str) -> str:
                     body = exc.read().decode(errors="replace")[:500]
                 except Exception:
                     pass
+                _record_llm(CLAUDE_MODEL, time.perf_counter() - t0, retry_count=retry_count, http_status=status)
                 raise RuntimeError(f"Claude API HTTP {status}: {body}") from exc
 
             retry_after = float(exc.headers.get("retry-after", backoff))
@@ -218,6 +263,7 @@ def call_claude(system_prompt: str, user_message: str) -> str:
             )
             time.sleep(wait)
             backoff = min(backoff * _BACKOFF_MULTIPLIER, _MAX_BACKOFF)
+            retry_count += 1
             last_exc = exc
 
         except OSError as exc:
@@ -229,6 +275,7 @@ def call_claude(system_prompt: str, user_message: str) -> str:
             )
             time.sleep(backoff)
             backoff = min(backoff * _BACKOFF_MULTIPLIER, _MAX_BACKOFF)
+            retry_count += 1
             last_exc = exc
 
     raise RuntimeError(f"Claude API: all retries exhausted. Last error: {last_exc}")
@@ -340,13 +387,19 @@ def run_skill_activity(inp: SkillActivityInput) -> SkillActivityOutput:
 
     user_message = "\n\n".join(parts)
 
+    t0 = time.perf_counter()
     try:
-        output_text = call_claude(system_prompt, user_message)
+        output_text, input_tokens, output_tokens = call_claude(system_prompt, user_message)
+        duration_s = time.perf_counter() - t0
         logger.info("Skill %s completed successfully (%d chars)", inp.skill_name, len(output_text))
+
+        _record_tokens(inp.skill_name, CLAUDE_MODEL, input_tokens, output_tokens)
+        _record_skill(inp.skill_name, "completed", duration_s)
 
         requires_hitl, hitl_reason = detect_hitl(inp.skill_name, output_text)
         if requires_hitl:
             logger.info("HITL gate triggered for %s: %s", inp.skill_name, hitl_reason)
+            _record_hitl(inp.skill_name, "triggered")
 
         return SkillActivityOutput(
             skill_name=inp.skill_name,
@@ -356,7 +409,9 @@ def run_skill_activity(inp: SkillActivityInput) -> SkillActivityOutput:
             hitl_reason=hitl_reason,
         )
     except Exception as exc:
+        duration_s = time.perf_counter() - t0
         logger.error("Skill %s failed: %s", inp.skill_name, exc, exc_info=True)
+        _record_skill(inp.skill_name, "failed", duration_s)
         return SkillActivityOutput(
             skill_name=inp.skill_name,
             success=False,

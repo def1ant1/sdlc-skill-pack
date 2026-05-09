@@ -87,6 +87,7 @@ def create_app() -> FastAPI:
     from app.api.v1.telemetry import router as telemetry_router
     from app.api.v1.governance import router as governance_router
     from app.api.v1.cost import router as cost_router
+    from app.api.websocket.gateway import router as ws_router
 
     app.include_router(workflows_router)
     app.include_router(approvals_router)
@@ -95,6 +96,7 @@ def create_app() -> FastAPI:
     app.include_router(telemetry_router)
     app.include_router(governance_router)
     app.include_router(cost_router)
+    app.include_router(ws_router)
 
     # --- Prometheus metrics ---
     @app.get("/metrics", include_in_schema=False)

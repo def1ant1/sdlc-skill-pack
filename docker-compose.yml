@@ -93,6 +93,86 @@ services:
     #           count: all
     #           capabilities: [gpu]
 
+  # -------------------------------------------------------------------------
+  # PostgreSQL — structured storage, audit log, workflow runs
+  # Connection: postgresql://apotheon:apotheon@localhost:5432/apotheon
+  # -------------------------------------------------------------------------
+  postgres:
+    image: postgres:16-alpine
+    container_name: apotheon-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: apotheon
+      POSTGRES_USER: apotheon
+      POSTGRES_PASSWORD: apotheon
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U apotheon -d apotheon"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # -------------------------------------------------------------------------
+  # Redis — hot memory cache, rate limiting, pub/sub for WebSocket
+  # Connection: redis://localhost:6379
+  # -------------------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: apotheon-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # -------------------------------------------------------------------------
+  # Apotheon API — FastAPI application server
+  # API:       http://localhost:8000
+  # Docs:      http://localhost:8000/docs
+  # Metrics:   http://localhost:8000/metrics
+  # -------------------------------------------------------------------------
+  api:
+    image: apotheon:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: apotheon-api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql+asyncpg://apotheon:apotheon@postgres:5432/apotheon
+      REDIS_URL: redis://redis:6379
+      QDRANT_URL: http://qdrant:6333
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      JWT_SECRET: ${JWT_SECRET:-dev-secret-change-in-production}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      qdrant:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    profiles:
+      - full
+
 volumes:
   qdrant_data:
     driver: local
@@ -100,10 +180,15 @@ volumes:
     driver: local
   ollama_data:
     driver: local
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
 
 # -------------------------------------------------------------------------
 # Profiles:
-#   docker compose up -d                  # all services
-#   docker compose up -d qdrant temporal  # without Ollama (use OpenAI embeddings)
-#   docker compose up -d ollama           # embedding only
+#   docker compose up -d                        # infra only (qdrant, temporal, ollama, postgres, redis)
+#   docker compose --profile full up -d         # infra + API server
+#   docker compose up -d qdrant temporal        # without Ollama (use OpenAI embeddings)
+#   docker compose up -d postgres redis         # DB + cache only
 # -------------------------------------------------------------------------

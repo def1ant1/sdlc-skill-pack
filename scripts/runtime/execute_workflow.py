@@ -80,6 +80,18 @@ _TELEMETRY_ROOT = Path(os.environ.get("TELEMETRY_LOG", "")).parent if os.environ
 _TELEMETRY_LOG = os.environ.get("TELEMETRY_LOG", "telemetry.log.yaml")
 
 _TELEMETRY_PATH: list[str] = [str(Path(__file__).parent.parent / "telemetry")]
+_APP_PATH = str(Path(__file__).parent.parent.parent)
+
+
+def _record_workflow(status: str, mode: str, duration_s: float) -> None:
+    """Record workflow run Prometheus metric. No-ops if app/ not available."""
+    try:
+        if _APP_PATH not in sys.path:
+            sys.path.insert(0, _APP_PATH)
+        from app.observability.metrics import record_workflow_run
+        record_workflow_run(status=status, mode=mode, duration_s=duration_s)
+    except Exception:
+        pass
 
 
 def _emit_telemetry(
@@ -304,6 +316,10 @@ def execute_local(plan: dict, dry_run: bool = False) -> dict:
     execution_log["completed_at"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     if dry_run:
         execution_log["status"] = "dry_run"
+
+    # Record workflow-level Prometheus metric
+    total_duration_s = sum(s.get("duration_ms", 0) for s in execution_log["steps"]) / 1000.0
+    _record_workflow(execution_log["status"], "local", total_duration_s)
 
     return execution_log
 
