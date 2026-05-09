@@ -1,0 +1,184 @@
+{
+  "name": "apotheon-sdlc",
+  "displayName": "Apotheon SDLC Skills",
+  "description": "AI-powered SDLC orchestration directly from VS Code — run skills, monitor workflows, and approve HITL gates without leaving your editor.",
+  "version": "1.0.0",
+  "publisher": "apotheon",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/sdlc-skill-pack"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "AI",
+    "Other"
+  ],
+  "keywords": [
+    "ai",
+    "sdlc",
+    "claude",
+    "anthropic",
+    "workflow",
+    "code-review",
+    "devops"
+  ],
+  "icon": "media/icon.png",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "apotheon.runSkill",
+        "title": "Apotheon: Run Skill",
+        "icon": "$(run)"
+      },
+      {
+        "command": "apotheon.planWorkflow",
+        "title": "Apotheon: Plan Workflow",
+        "icon": "$(list-ordered)"
+      },
+      {
+        "command": "apotheon.openDashboard",
+        "title": "Apotheon: Open Dashboard",
+        "icon": "$(dashboard)"
+      },
+      {
+        "command": "apotheon.approveHITL",
+        "title": "Apotheon: Approve HITL Gate",
+        "icon": "$(pass)"
+      },
+      {
+        "command": "apotheon.rejectHITL",
+        "title": "Apotheon: Reject HITL Gate",
+        "icon": "$(error)"
+      },
+      {
+        "command": "apotheon.refreshRuns",
+        "title": "Apotheon: Refresh Runs",
+        "icon": "$(refresh)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "apotheon",
+          "title": "Apotheon SDLC",
+          "icon": "media/sidebar-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "apotheon": [
+        {
+          "id": "apotheon.workflowRuns",
+          "name": "Workflow Runs"
+        },
+        {
+          "id": "apotheon.hitlQueue",
+          "name": "HITL Approval Queue"
+        },
+        {
+          "id": "apotheon.skills",
+          "name": "Available Skills"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Apotheon SDLC",
+      "properties": {
+        "apotheon.apiUrl": {
+          "type": "string",
+          "default": "http://localhost:8000",
+          "description": "Apotheon API base URL"
+        },
+        "apotheon.apiToken": {
+          "type": "string",
+          "default": "",
+          "description": "Bearer token for authentication (store in VS Code secrets instead)",
+          "markdownDescription": "Bearer token. Prefer using **Store Token in Secret Storage** command to avoid saving to settings.json."
+        },
+        "apotheon.defaultModel": {
+          "type": "string",
+          "default": "claude-sonnet-4-6",
+          "enum": [
+            "claude-opus-4-6",
+            "claude-sonnet-4-6",
+            "claude-haiku-4-5-20251001"
+          ],
+          "description": "Default Claude model for skill execution"
+        },
+        "apotheon.autoRefreshInterval": {
+          "type": "number",
+          "default": 5,
+          "description": "Seconds between automatic run status refresh (0 to disable)"
+        },
+        "apotheon.showCostEstimates": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show cost estimates before executing workflows"
+        }
+      }
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "apotheon.refreshRuns",
+          "when": "view == apotheon.workflowRuns",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "apotheon.approveHITL",
+          "when": "viewItem == hitlPending",
+          "group": "inline"
+        },
+        {
+          "command": "apotheon.rejectHITL",
+          "when": "viewItem == hitlPending",
+          "group": "inline"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "apotheon.runSkill",
+          "group": "apotheon"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "apotheon.runSkill",
+        "key": "ctrl+shift+a r",
+        "mac": "cmd+shift+a r"
+      },
+      {
+        "command": "apotheon.planWorkflow",
+        "key": "ctrl+shift+a p",
+        "mac": "cmd+shift+a p"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.x",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.x",
+    "@typescript-eslint/parser": "^6.x",
+    "eslint": "^8.x",
+    "typescript": "^5.x",
+    "@vscode/vsce": "^2.x"
+  },
+  "dependencies": {}
+}

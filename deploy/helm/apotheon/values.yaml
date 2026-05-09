@@ -1,0 +1,113 @@
+## Apotheon Helm Chart — Default Values
+
+replicaCount: 2
+
+image:
+  repository: ghcr.io/your-org/apotheon
+  pullPolicy: IfNotPresent
+  tag: ""  # Overridden by CI with the image digest
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/path: "/metrics"
+  prometheus.io/port: "8000"
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop: [ALL]
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8000
+
+ingress:
+  enabled: false
+  className: "nginx"
+  annotations: {}
+  hosts:
+    - host: apotheon.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 512Mi
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+
+env:
+  ANTHROPIC_API_KEY: ""          # Set via secret
+  DATABASE_URL: ""               # Set via secret
+  REDIS_URL: ""                  # Set via secret
+  JWT_SECRET: ""                 # Set via secret
+  OTEL_EXPORTER_OTLP_ENDPOINT: ""
+  LOG_LEVEL: "INFO"
+  CORS_ORIGINS: "*"
+
+# Existing secret containing sensitive env vars
+# Keys: ANTHROPIC_API_KEY, DATABASE_URL, REDIS_URL, JWT_SECRET
+existingSecret: ""
+
+postgresql:
+  enabled: true
+  auth:
+    database: apotheon
+    username: apotheon
+    existingSecret: ""
+  primary:
+    persistence:
+      size: 10Gi
+
+redis:
+  enabled: true
+  auth:
+    enabled: false
+  master:
+    persistence:
+      size: 2Gi
+
+livenessProbe:
+  httpGet:
+    path: /health
+    port: 8000
+  initialDelaySeconds: 10
+  periodSeconds: 30
+
+readinessProbe:
+  httpGet:
+    path: /ready
+    port: 8000
+  initialDelaySeconds: 15
+  periodSeconds: 10
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
