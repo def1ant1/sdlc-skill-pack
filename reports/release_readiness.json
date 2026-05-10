@@ -1,0 +1,16 @@
+{
+  "generated_from": {
+    "skill_inventory": "reports/skill_inventory.json",
+    "repo_truth": "reports/repo_truth_report.json",
+    "pytest_collect": "/root/.pyenv/versions/3.12.13/bin/python -m pytest --collect-only -q"
+  },
+  "totals": {
+    "skills_total": 284,
+    "core_total": 70,
+    "skills_pack_total": 214,
+    "agents_total": 0,
+    "skills_with_hitl_markers": 0,
+    "business_skill_total": 31,
+    "tests_collected": 0
+  }
+}

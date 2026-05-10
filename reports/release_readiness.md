@@ -1,13 +1,12 @@
-# Release Readiness (Canonical)
+# Release Readiness
 
-This file is the canonical release-time status source of truth.
+All numeric claims here are generated from repository state and test collection output.
 
-Generated: `2026-05-10T20:00:23Z`
-Status: **FAIL**
+- Total skills indexed: **284**
+- Core skills: **70**
+- Domain skills: **214**
+- Agent packs: **0**
+- Skills with HITL markers: **0**
+- Tests collected (`pytest --collect-only -q`): **0**
 
-## Repo Truth Summary
-- References checked: **179**
-- Existing deliverables: **149**
-- Missing deliverables: **30**
-- Stale completion claims: **0**
-- Phase completion: **24/32**
+Sources: `reports/skill_inventory.json`, `reports/release_readiness.json`.
