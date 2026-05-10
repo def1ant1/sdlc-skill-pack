@@ -53,10 +53,21 @@ def validate_manifest_schema(manifest: dict) -> list[str]:
     return reasons
 
 
-def certify(skill_dir: Path, eval_passed: bool, security_passed: bool, context_passed: bool,
-            telemetry_passed: bool, unresolved_routing_collisions: int,
-            production_mutation_requested: bool, approval_status: str,
-            approval_actor: str | None, policy_id: str | None, policy_version: str | None) -> dict:
+def certify(
+    skill_dir: Path,
+    eval_passed: bool,
+    security_passed: bool,
+    context_passed: bool,
+    telemetry_passed: bool,
+    unresolved_routing_collisions: int,
+    production_mutation_requested: bool,
+    approval_status: str,
+    approval_actor: str | None,
+    approval_timestamp: str | None,
+    policy_id: str | None,
+    policy_version: str | None,
+    audit_event_emitted: bool,
+) -> dict:
     reasons: list[str] = []
     manifest_path = skill_dir / "manifest.v9.json"
 
@@ -90,10 +101,15 @@ def certify(skill_dir: Path, eval_passed: bool, security_passed: bool, context_p
             governance_missing.append("approval_status")
         if not approval_actor:
             governance_missing.append("approval_actor")
+        if not approval_timestamp:
+            governance_missing.append("approval_timestamp")
         if not policy_id:
             governance_missing.append("policy_id")
         if not policy_version:
             governance_missing.append("policy_version")
+        if not audit_event_emitted:
+            governance_missing.append("audit_event")
+
         if governance_missing:
             governance_status = "approval_required"
             reasons.append("governance_gate_blocked:" + ",".join(governance_missing))
@@ -121,8 +137,10 @@ def main() -> int:
     p.add_argument("--production-mutation-requested", action="store_true")
     p.add_argument("--approval-status", default="pending")
     p.add_argument("--approval-actor")
+    p.add_argument("--approval-timestamp")
     p.add_argument("--policy-id")
     p.add_argument("--policy-version")
+    p.add_argument("--audit-event-emitted", action="store_true")
     args = p.parse_args()
 
     result = certify(
@@ -135,8 +153,10 @@ def main() -> int:
         production_mutation_requested=args.production_mutation_requested,
         approval_status=args.approval_status,
         approval_actor=args.approval_actor,
+        approval_timestamp=args.approval_timestamp,
         policy_id=args.policy_id,
         policy_version=args.policy_version,
+        audit_event_emitted=args.audit_event_emitted,
     )
     print(json.dumps(result, indent=2))
     return 0 if result["certification_status"] == "certified" else 1
