@@ -25,3 +25,9 @@ Provide structured execution for prompt variant testing workflows.
 3. Execute skill-specific analysis and recommendation steps.
 4. Enforce governance and safety controls before mutation.
 5. Emit outcome, telemetry, and next actions.
+
+
+## Certification & Governance Gates
+
+- Enforce marketplace prerequisites before certifying or promoting outcomes: valid `manifest.v9.json`, eval pass, security/context/telemetry pass, and zero unresolved routing collisions.
+- Autonomous optimization outputs are advisory only until policy-defined approval is recorded (approval decision, actor, timestamp, policy id/version, and audit event).
