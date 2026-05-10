@@ -449,6 +449,14 @@
   },
   {
     "category": "core",
+    "id": "semantic-cache",
+    "name": "sdlc-semantic-cache",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
     "id": "semantic-layer",
     "name": "semantic-layer",
     "version": null,
@@ -467,6 +475,14 @@
     "category": "core",
     "id": "skill-gap-engine",
     "name": "skill-gap-engine",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "skill-router",
+    "name": "sdlc-skill-router",
     "version": null,
     "owner": null,
     "maturity": null
@@ -545,8 +561,40 @@
   },
   {
     "category": "skills",
+    "id": "account-expansion-intelligence",
+    "name": "account-expansion-intelligence",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "accounting-automation",
     "name": "accounting-automation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "accounting-operations",
+    "name": "accounting-operations",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "accounts-payable-automation",
+    "name": "accounts-payable-automation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "accounts-receivable-automation",
+    "name": "accounts-receivable-automation",
     "version": null,
     "owner": null,
     "maturity": null
@@ -593,8 +641,24 @@
   },
   {
     "category": "skills",
+    "id": "arbitrage-opportunity-detection",
+    "name": "arbitrage-opportunity-detection",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "audio-video-processing",
     "name": "audio-video-processing",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "audit-trail-analysis",
+    "name": "audit-trail-analysis",
     "version": null,
     "owner": null,
     "maturity": null
@@ -625,6 +689,22 @@
   },
   {
     "category": "skills",
+    "id": "bookkeeping-automation",
+    "name": "bookkeeping-automation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "brand-sentiment-analysis",
+    "name": "brand-sentiment-analysis",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "budget-planning",
     "name": "budget-planning",
     "version": null,
@@ -633,8 +713,24 @@
   },
   {
     "category": "skills",
+    "id": "budget-variance-analysis",
+    "name": "budget-variance-analysis",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "business-continuity-planning",
     "name": "business-continuity-planning",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "business-process-optimization",
+    "name": "business-process-optimization",
     "version": null,
     "owner": null,
     "maturity": null
@@ -657,8 +753,24 @@
   },
   {
     "category": "skills",
+    "id": "campaign-optimization",
+    "name": "campaign-optimization",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "capacity-balancing",
     "name": "capacity-balancing",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "cash-flow-forecasting",
+    "name": "cash-flow-forecasting",
     "version": null,
     "owner": null,
     "maturity": null
@@ -681,8 +793,24 @@
   },
   {
     "category": "skills",
+    "id": "chart-of-accounts-management",
+    "name": "chart-of-accounts-management",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "checkpoint-management",
     "name": "checkpoint-management",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "churn-risk-detection",
+    "name": "churn-risk-detection",
     "version": null,
     "owner": null,
     "maturity": null
@@ -705,8 +833,24 @@
   },
   {
     "category": "skills",
+    "id": "collections-prioritization",
+    "name": "collections-prioritization",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "communication-analytics",
     "name": "communication-analytics",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "competitor-price-scraping",
+    "name": "competitor-price-scraping",
     "version": null,
     "owner": null,
     "maturity": null
@@ -753,6 +897,22 @@
   },
   {
     "category": "skills",
+    "id": "content-strategy",
+    "name": "content-strategy",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "context-reuse-optimization",
+    "name": "context-reuse-optimization",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "continuous-control-monitoring",
     "name": "continuous-control-monitoring",
     "version": null,
@@ -761,8 +921,32 @@
   },
   {
     "category": "skills",
+    "id": "conversion-funnel-analysis",
+    "name": "conversion-funnel-analysis",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "crm-integration",
     "name": "crm-integration",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "customer-health-scoring",
+    "name": "customer-health-scoring",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "customer-journey-mapping",
+    "name": "customer-journey-mapping",
     "version": null,
     "owner": null,
     "maturity": null
@@ -779,6 +963,14 @@
     "category": "skills",
     "id": "data-contract-management",
     "name": "data-contract-management",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "data-quality-scoring",
+    "name": "data-quality-scoring",
     "version": null,
     "owner": null,
     "maturity": null
@@ -811,6 +1003,14 @@
     "category": "skills",
     "id": "decision-intelligence",
     "name": "decision-intelligence",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "demand-planning",
+    "name": "demand-planning",
     "version": null,
     "owner": null,
     "maturity": null
@@ -873,6 +1073,14 @@
   },
   {
     "category": "skills",
+    "id": "entity-resolution",
+    "name": "entity-resolution",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "erp-integration",
     "name": "erp-integration",
     "version": null,
@@ -881,8 +1089,24 @@
   },
   {
     "category": "skills",
+    "id": "escalation-prediction",
+    "name": "escalation-prediction",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "evaluation-dataset-curation",
     "name": "evaluation-dataset-curation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "evidence-pack-generation",
+    "name": "evidence-pack-generation",
     "version": null,
     "owner": null,
     "maturity": null
@@ -905,8 +1129,32 @@
   },
   {
     "category": "skills",
+    "id": "feature-prioritization",
+    "name": "feature-prioritization",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "financial-scenario-modeling",
+    "name": "financial-scenario-modeling",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "forecasting",
     "name": "forecasting",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "fpa-analysis",
+    "name": "fpa-analysis",
     "version": null,
     "owner": null,
     "maturity": null
@@ -923,6 +1171,14 @@
     "category": "skills",
     "id": "goal-decomposition",
     "name": "goal-decomposition",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "golden-record-management",
+    "name": "golden-record-management",
     "version": null,
     "owner": null,
     "maturity": null
@@ -947,6 +1203,14 @@
     "category": "skills",
     "id": "hierarchical-planning",
     "name": "hierarchical-planning",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "hr-policy-guidance-support",
+    "name": "hr-policy-guidance-support",
     "version": null,
     "owner": null,
     "maturity": null
@@ -1017,6 +1281,22 @@
   },
   {
     "category": "skills",
+    "id": "inventory-forecasting",
+    "name": "inventory-forecasting",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "invoice-processing",
+    "name": "invoice-processing",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "iot-data-ingestion",
     "name": "iot-data-ingestion",
     "version": null,
@@ -1027,6 +1307,14 @@
     "category": "skills",
     "id": "itsm-integration",
     "name": "itsm-integration",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "journal-entry-review",
+    "name": "journal-entry-review",
     "version": null,
     "owner": null,
     "maturity": null
@@ -1049,8 +1337,24 @@
   },
   {
     "category": "skills",
+    "id": "lead-scoring",
+    "name": "lead-scoring",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "legal-hold-management",
     "name": "legal-hold-management",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "legal-intake-triage-support",
+    "name": "legal-intake-triage-support",
     "version": null,
     "owner": null,
     "maturity": null
@@ -1089,6 +1393,14 @@
   },
   {
     "category": "skills",
+    "id": "local-market-data-collection",
+    "name": "local-market-data-collection",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "long-horizon-planning",
     "name": "long-horizon-planning",
     "version": null,
@@ -1099,6 +1411,46 @@
     "category": "skills",
     "id": "lora-management",
     "name": "lora-management",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "low-stock-detection",
+    "name": "low-stock-detection",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "market-data-quality-scoring",
+    "name": "market-data-quality-scoring",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "market-pricing-intelligence",
+    "name": "market-pricing-intelligence",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "marketing-attribution",
+    "name": "marketing-attribution",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "marketplace-certification",
+    "name": "marketplace-certification",
     "version": null,
     "owner": null,
     "maturity": null
@@ -1161,6 +1513,14 @@
   },
   {
     "category": "skills",
+    "id": "month-end-close-support",
+    "name": "month-end-close-support",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "network-topology-analysis",
     "name": "network-topology-analysis",
     "version": null,
@@ -1177,6 +1537,22 @@
   },
   {
     "category": "skills",
+    "id": "opportunity-risk-analysis",
+    "name": "opportunity-risk-analysis",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "outcome-feedback-analysis",
+    "name": "outcome-feedback-analysis",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "paid-acquisition",
     "name": "paid-acquisition",
     "version": null,
@@ -1187,6 +1563,30 @@
     "category": "skills",
     "id": "patent-analysis",
     "name": "patent-analysis",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "payment-matching",
+    "name": "payment-matching",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "payroll-audit",
+    "name": "payroll-audit",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "persona-modeling",
+    "name": "persona-modeling",
     "version": null,
     "owner": null,
     "maturity": null
@@ -1225,8 +1625,48 @@
   },
   {
     "category": "skills",
+    "id": "pricing-optimization",
+    "name": "pricing-optimization",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "procurement-kpi-optimization-support",
+    "name": "procurement-kpi-optimization-support",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "product-analytics",
     "name": "product-analytics",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "product-feedback-analysis",
+    "name": "product-feedback-analysis",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "product-lifecycle-intelligence",
+    "name": "product-lifecycle-intelligence",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "product-market-fit-analysis",
+    "name": "product-market-fit-analysis",
     "version": null,
     "owner": null,
     "maturity": null
@@ -1243,6 +1683,30 @@
     "category": "skills",
     "id": "prompt-optimization",
     "name": "prompt-optimization",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "prompt-variant-testing",
+    "name": "prompt-variant-testing",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "proposal-automation",
+    "name": "proposal-automation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "purchase-order-optimization",
+    "name": "purchase-order-optimization",
     "version": null,
     "owner": null,
     "maturity": null
@@ -1289,8 +1753,24 @@
   },
   {
     "category": "skills",
+    "id": "reconciliation-automation",
+    "name": "reconciliation-automation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "release-management",
     "name": "release-management",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "reorder-point-optimization",
+    "name": "reorder-point-optimization",
     "version": null,
     "owner": null,
     "maturity": null
@@ -1329,6 +1809,14 @@
   },
   {
     "category": "skills",
+    "id": "revenue-leakage-detection",
+    "name": "revenue-leakage-detection",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "revenue-operations",
     "name": "revenue-operations",
     "version": null,
@@ -1345,6 +1833,38 @@
   },
   {
     "category": "skills",
+    "id": "roadmap-impact-analysis",
+    "name": "roadmap-impact-analysis",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "roi-estimation",
+    "name": "roi-estimation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "routing-collision-analysis",
+    "name": "routing-collision-analysis",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "routing-policy-optimization",
+    "name": "routing-policy-optimization",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "runtime-recovery",
     "name": "runtime-recovery",
     "version": null,
@@ -1355,6 +1875,30 @@
     "category": "skills",
     "id": "runtime-simulation",
     "name": "runtime-simulation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "runway-analysis",
+    "name": "runway-analysis",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "sales-pipeline-forecasting",
+    "name": "sales-pipeline-forecasting",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "scarcity-analysis",
+    "name": "scarcity-analysis",
     "version": null,
     "owner": null,
     "maturity": null
@@ -1409,6 +1953,62 @@
   },
   {
     "category": "skills",
+    "id": "seo-intelligence",
+    "name": "seo-intelligence",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "skill-composition",
+    "name": "skill-composition",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "skill-factory-v9",
+    "name": "skill-factory-v9",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "skill-gap-detection",
+    "name": "skill-gap-detection",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "skill-refactoring",
+    "name": "skill-refactoring",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "sku-margin-analysis",
+    "name": "sku-margin-analysis",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "sla-risk-detection",
+    "name": "sla-risk-detection",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "sre-incident-response",
     "name": "sre-incident-response",
     "version": null,
@@ -1419,6 +2019,22 @@
     "category": "skills",
     "id": "state-restoration",
     "name": "state-restoration",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "supplier-risk-intelligence",
+    "name": "supplier-risk-intelligence",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "support-ticket-intelligence",
+    "name": "support-ticket-intelligence",
     "version": null,
     "owner": null,
     "maturity": null
@@ -1441,6 +2057,22 @@
   },
   {
     "category": "skills",
+    "id": "talent-risk-screening-support",
+    "name": "talent-risk-screening-support",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "tax-planning-support",
+    "name": "tax-planning-support",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "temporal-memory-replay",
     "name": "temporal-memory-replay",
     "version": null,
@@ -1449,8 +2081,24 @@
   },
   {
     "category": "skills",
+    "id": "token-cost-analysis",
+    "name": "token-cost-analysis",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "uncertainty-aware-routing",
     "name": "uncertainty-aware-routing",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "vendor-obligation-tracking",
+    "name": "vendor-obligation-tracking",
     "version": null,
     "owner": null,
     "maturity": null
@@ -1473,8 +2121,40 @@
   },
   {
     "category": "skills",
+    "id": "voice-of-customer-analysis",
+    "name": "voice-of-customer-analysis",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "warehouse-optimization",
+    "name": "warehouse-optimization",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "win-loss-analysis",
+    "name": "win-loss-analysis",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
     "id": "workflow-ab-testing",
     "name": "workflow-ab-testing",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "workflow-optimization-loop",
+    "name": "workflow-optimization-loop",
     "version": null,
     "owner": null,
     "maturity": null

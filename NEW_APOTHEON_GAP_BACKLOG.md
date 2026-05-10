@@ -1812,3 +1812,16 @@ After V9:
   Scripts tested and observable ✓
   New contributors can onboard in < 1 hour ✓
 ```
+
+## Phase 94 Completion Update (2026-05-10)
+
+Implemented and wired:
+- `scripts/extract_backlog_paths.py`
+- `scripts/validate_backlog_truth.py` with `.backlog-truth-ignore.yaml` support
+- `scripts/generate_repo_truth_report.py` (MD + JSON output)
+- `schemas/skill-manifest-v9.schema.json` contract consumption in validators
+- `references/skill-contract-v9.md` guidance
+- `scripts/validate_skill_contracts.py` across `core/`, `skills/`, `agents/`
+- `scripts/migrate_frontmatter_to_manifest.py`
+- `scripts/generate_skill_inventory.py` deterministic JSON/MD/CSV outputs
+- test coverage in `tests/scripts/` for parser accuracy, contract enforcement, and inventory determinism

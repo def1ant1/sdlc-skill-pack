@@ -1,3 +1,13 @@
+## [8.0.3] — 2026-05-10 — Backlog Truth + Skill Contract V9 Tooling
+
+- Implemented backlog reference extraction/validation/reporting scripts with phase-aware parsing and ignore-list support.
+- Implemented skill contract enforcement and bulk frontmatter migration tooling aligned to the V9 manifest schema.
+- Added deterministic skill inventory generation outputs (`reports/skill_inventory.json`, `.md`, `.csv`).
+- Added/updated script tests for backlog-truth and contract/inventory validation workflows.
+- Added `references/skill-contract-v9.md` implementation guidance.
+
+---
+
 
 ## 2026-05-10
 
