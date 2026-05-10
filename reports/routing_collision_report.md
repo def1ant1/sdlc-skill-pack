@@ -1,10 +1,10 @@
 # Routing Collision Report
 
 ## Summary
-- Skills scanned: 273
-- Trigger overlaps: 20666
+- Skills scanned: 277
+- Trigger overlaps: 20456
 - Dependency cycles: 17
-- Unknown domain ownership: 6
+- Unknown domain ownership: 13
 - Missing exclusion rules: 0
 
 ## Trigger Overlap
@@ -183,8 +183,15 @@
 - `sdlc-skill-router` has `metadata.category: unknown`.
 - `audit-trail-analysis` has `metadata.category: unknown`.
 - `context-reuse-optimization` has `metadata.category: unknown`.
+- `data-quality-scoring` has `metadata.category: unknown`.
+- `entity-resolution` has `metadata.category: unknown`.
 - `evidence-pack-generation` has `metadata.category: unknown`.
+- `golden-record-management` has `metadata.category: unknown`.
+- `hr-case-management-support` has `metadata.category: unknown`.
+- `legal-obligation-management-support` has `metadata.category: unknown`.
+- `process-optimization-governance-support` has `metadata.category: unknown`.
 - `routing-collision-analysis` has `metadata.category: unknown`.
+- `vendor-procurement-risk-support` has `metadata.category: unknown`.
 
 ## Remediation Recommendations
 1. Strengthen `use_when` with unique trigger language per domain.

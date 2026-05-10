@@ -1,6 +1,10 @@
 ---
 name: data-quality-scoring
 description: Support workflow for data quality scoring with mandatory human approval gates.
+use_when:
+  - Use when task intent directly matches this skill's domain and required outputs.
+do_not_use_when:
+  - Do not use when a specialized neighboring skill owns the request domain more precisely.
 ---
 
 ## Disclaimer

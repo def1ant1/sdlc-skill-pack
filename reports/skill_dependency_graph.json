@@ -1426,6 +1426,12 @@
       ]
     },
     {
+      "name": "hr-case-management-support",
+      "path": "skills/hr-case-management-support",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
       "name": "hr-policy-guidance-support",
       "path": "skills/hr-policy-guidance-support",
       "type": "skill",
@@ -1582,6 +1588,12 @@
     {
       "name": "legal-intake-triage-support",
       "path": "skills/legal-intake-triage-support",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "legal-obligation-management-support",
+      "path": "skills/legal-obligation-management-support",
       "type": "skill",
       "dependencies": []
     },
@@ -1878,6 +1890,12 @@
     {
       "name": "pricing-optimization",
       "path": "skills/pricing-optimization",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "process-optimization-governance-support",
+      "path": "skills/process-optimization-governance-support",
       "type": "skill",
       "dependencies": []
     },
@@ -2377,6 +2395,12 @@
         "legal-ops",
         "hitl-dashboard"
       ]
+    },
+    {
+      "name": "vendor-procurement-risk-support",
+      "path": "skills/vendor-procurement-risk-support",
+      "type": "skill",
+      "dependencies": []
     },
     {
       "name": "visual-analytics",
@@ -5579,7 +5603,7 @@
     }
   ],
   "stats": {
-    "node_count": 273,
+    "node_count": 277,
     "edge_count": 625,
     "unresolved_dependencies": 0
   }

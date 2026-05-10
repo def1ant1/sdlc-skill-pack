@@ -6,7 +6,7 @@
 - `reports/orchestration_map.md`
 
 ## Summary
-- Total nodes: 273 (core: 70, skills: 203)
+- Total nodes: 277 (core: 70, skills: 207)
 - Total dependencies: 625
 - Unresolved dependencies: 0
 
