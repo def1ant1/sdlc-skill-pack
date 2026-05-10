@@ -6,7 +6,7 @@ metadata:
   category: core
   owner: Apotheon.ai
   maturity: alpha
-  dependencies: [sdlc-memory-token-management, local-runtime, telemetry, connector-hub]
+  dependencies: [sdlc-memory-token-management, local-runtime, telemetry, connector-hub, token-cost-analysis, roi-estimation]
 
 use_when:
   - Follow description activation criteria.

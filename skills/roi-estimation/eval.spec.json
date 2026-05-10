@@ -1,0 +1,9 @@
+{
+  "skill_name": "roi-estimation",
+  "priority": "P1",
+  "owner": "Apotheon.ai",
+  "last_updated": "2026-05-10",
+  "datasets": [{"id": "value-cost-sample", "description": "Historical value and cost outcomes"}],
+  "metrics": [{"name": "value_to_cost_rank_consistency", "target": 0.95, "direction": "gte"}],
+  "acceptance_gates": ["ranking_kendall_tau >= 0.9"]
+}

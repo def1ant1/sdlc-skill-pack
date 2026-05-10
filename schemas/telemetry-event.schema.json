@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Telemetry Event",
+  "type": "object",
+  "required": ["event_id", "event_type", "event_category", "timestamp", "correlation_id", "payload"],
+  "properties": {
+    "event_id": {"type": "string"},
+    "event_type": {"type": "string"},
+    "event_category": {"type": "string", "enum": ["runtime", "business"]},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "correlation_id": {"type": "string", "minLength": 8},
+    "workflow_id": {"type": "string"},
+    "tenant_id": {"type": "string"},
+    "payload": {"type": "object"}
+  },
+  "additionalProperties": true
+}
