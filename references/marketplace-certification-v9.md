@@ -10,14 +10,17 @@ Define deterministic certification rules for publishing and operating skills in 
 - **Eval pass**: `eval_passed=true` and score meets threshold.
 - **Security check**: no high-severity unresolved findings.
 - **Context check**: required context contract is complete.
+- **Context-budget check**: token/context budget constraints are validated and pass.
 - **Telemetry check**: required telemetry events declared.
 - **Routing collision check**: unresolved collisions count equals zero.
+
+Certification must be rejected when any prerequisite is not satisfied.
 
 ## Production Mutation Governance
 
 Autonomous optimization outputs are advisory unless policy approval is granted.
 
-Required controls before production mutation:
+Required controls before production mutation or autonomous optimization changes:
 
 1. Policy identifier and version are supplied.
 2. Approval decision equals `approved`.
