@@ -1,0 +1,9 @@
+trigger_id: hr_policy_guidance_support_trigger
+skill: hr-policy-guidance-support
+use_when:
+  - "intent mentions hr or phase-113"
+  - "canonical context and policy profile available"
+do_not_use_when:
+  - "request asks for final autonomous determination"
+  - "human reviewer unavailable for required gate"
+collision_strategy: "prefer higher confidence then lexicographic skill name"

@@ -478,3 +478,11 @@ Added local-security, mcp-integrations, and initial CI pipeline.
 - Created initial repository structure
 - Added orchestration and memory-control skills
 - Added governance, standards, policies, schemas, docs, and validation scripts
+
+## [8.0.2] — 2026-05-10 — MDM Expansion and Support-Only Governance
+
+- Added MDM-integrated skills: `skills/entity-resolution`, `skills/golden-record-management`, and `skills/data-quality-scoring`.
+- Added Phase 106 support-only skills: `skills/payroll-audit`, `skills/tax-planning-support` with explicit compliance messaging and human-review gates.
+- Added Phase 113–116 skills for HR, vendor/procurement, legal, and business process optimization with high-impact review markers.
+- Added guardrail policies for bias/human-sensitive workflows and mandatory review fields in phase manifests.
+- Added acceptance tests for approval thresholds, obligation tracking, and KPI-linked recommendations: `tests/skills/test_phase106_116_policy_controls.py`.

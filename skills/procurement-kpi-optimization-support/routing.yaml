@@ -1,0 +1,9 @@
+trigger_id: procurement_kpi_optimization_support_trigger
+skill: procurement-kpi-optimization-support
+use_when:
+  - "intent mentions procurement or phase-114"
+  - "canonical context and policy profile available"
+do_not_use_when:
+  - "request asks for final autonomous determination"
+  - "human reviewer unavailable for required gate"
+collision_strategy: "prefer higher confidence then lexicographic skill name"

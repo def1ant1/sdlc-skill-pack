@@ -1,0 +1,9 @@
+trigger_id: entity_resolution_trigger
+skill: entity-resolution
+use_when:
+  - "intent mentions entity or phase-105"
+  - "canonical context and policy profile available"
+do_not_use_when:
+  - "request asks for final autonomous determination"
+  - "human reviewer unavailable for required gate"
+collision_strategy: "prefer higher confidence then lexicographic skill name"

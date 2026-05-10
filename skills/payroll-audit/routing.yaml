@@ -1,0 +1,9 @@
+trigger_id: payroll_audit_trigger
+skill: payroll-audit
+use_when:
+  - "intent mentions payroll or phase-106"
+  - "canonical context and policy profile available"
+do_not_use_when:
+  - "request asks for final autonomous determination"
+  - "human reviewer unavailable for required gate"
+collision_strategy: "prefer higher confidence then lexicographic skill name"

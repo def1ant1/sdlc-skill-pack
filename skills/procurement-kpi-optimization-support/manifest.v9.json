@@ -1,0 +1,71 @@
+{
+  "name": "procurement-kpi-optimization-support",
+  "type": "skill",
+  "domain": "business-operations",
+  "subdomain": "phase-114",
+  "version": "9.0.0",
+  "owner": "Apotheon",
+  "maturity": "beta",
+  "dependencies": [
+    "core/master-data-management",
+    "core/policy-engine",
+    "core/business-approval-gateway",
+    "core/audit-trail"
+  ],
+  "activation_triggers": [
+    "phase_114",
+    "procurement_kpi_optimization_support"
+  ],
+  "required_context": [
+    "tenant_profile",
+    "canonical_entities",
+    "policy_profile",
+    "approval_thresholds"
+  ],
+  "optional_context": [
+    "historical_events",
+    "benchmark_data",
+    "obligation_register",
+    "kpi_baselines"
+  ],
+  "governance_level": "L2",
+  "human_approval_required": true,
+  "execution_mode": "support-only",
+  "compliance_messaging": [
+    "support-only",
+    "no-final-determination",
+    "human-review-required"
+  ],
+  "approval_policy": {
+    "threshold_field": "impact_score",
+    "auto_block_if_gte": 80,
+    "mandatory_review_if_gte": 60
+  },
+  "obligation_tracking": {
+    "required": true,
+    "fields": [
+      "obligation_id",
+      "owner",
+      "due_date",
+      "status",
+      "evidence_link"
+    ]
+  },
+  "kpi_recommendation_policy": {
+    "link_to_baseline": true,
+    "require_metric_owner": true,
+    "forbid_unattributed_targets": true
+  },
+  "high_impact_markers": {
+    "mandatory_review": true,
+    "required_fields": [
+      "review_owner",
+      "review_due_by",
+      "impact_scope"
+    ]
+  },
+  "bias_guardrails": {
+    "enabled": false,
+    "require_human_sensitive_review": false
+  }
+}

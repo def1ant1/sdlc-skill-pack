@@ -1,0 +1,9 @@
+trigger_id: talent_risk_screening_support_trigger
+skill: talent-risk-screening-support
+use_when:
+  - "intent mentions talent or phase-113"
+  - "canonical context and policy profile available"
+do_not_use_when:
+  - "request asks for final autonomous determination"
+  - "human reviewer unavailable for required gate"
+collision_strategy: "prefer higher confidence then lexicographic skill name"
