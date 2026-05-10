@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from collections import defaultdict
 from pathlib import Path
 
 import yaml
@@ -25,16 +26,40 @@ def validate_event_payload(path: Path) -> int:
     events = payload if isinstance(payload, list) else [payload]
 
     errors: list[str] = []
+    by_corr: dict[str, list[dict]] = defaultdict(list)
+
     for idx, event in enumerate(events):
         category = str(event.get("event_category", "")).lower()
-        if category in REQUIRED_CATEGORIES and not str(event.get("correlation_id", "")).strip():
+        corr_id = str(event.get("correlation_id", "")).strip()
+        if category in REQUIRED_CATEGORIES and not corr_id:
             errors.append(f"event[{idx}] missing correlation_id for category '{category}'")
+        if corr_id:
+            by_corr[corr_id].append(event)
+
+    for corr_id, corr_events in by_corr.items():
+        categories = {str(evt.get("event_category", "")).lower() for evt in corr_events}
+        if "runtime" in categories and "business" in categories:
+            runtime_tenants = {str(evt.get("tenant_id", "")).strip() for evt in corr_events if str(evt.get("event_category", "")).lower() == "runtime"}
+            business_tenants = {str(evt.get("tenant_id", "")).strip() for evt in corr_events if str(evt.get("event_category", "")).lower() == "business"}
+            if runtime_tenants != business_tenants:
+                errors.append(
+                    f"correlation_id '{corr_id}' tenant_id mismatch between runtime and business events: "
+                    f"runtime={sorted(runtime_tenants)} business={sorted(business_tenants)}"
+                )
+
+            runtime_wfs = {str(evt.get("workflow_id", "")).strip() for evt in corr_events if str(evt.get("event_category", "")).lower() == "runtime"}
+            business_wfs = {str(evt.get("workflow_id", "")).strip() for evt in corr_events if str(evt.get("event_category", "")).lower() == "business"}
+            if runtime_wfs != business_wfs:
+                errors.append(
+                    f"correlation_id '{corr_id}' workflow_id mismatch between runtime and business events: "
+                    f"runtime={sorted(runtime_wfs)} business={sorted(business_wfs)}"
+                )
 
     if errors:
         print("\n".join(errors))
         return 1
 
-    print("Telemetry events valid: correlation_id present for runtime/business events.")
+    print("Telemetry events valid: correlation_id present and cross-category context is consistent.")
     return 0
 
 

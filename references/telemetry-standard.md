@@ -12,3 +12,11 @@ Events should conform to `schemas/telemetry-event.schema.json`.
 
 ## Enforcement
 Use `scripts/validate_telemetry_events.py` to validate event streams and reject events without `correlation_id` for runtime/business categories.
+
+
+## Consistency Rules
+For any correlation id that appears in both runtime and business events:
+- `tenant_id` must match across categories.
+- `workflow_id` must match across categories.
+
+These checks prevent mis-attribution of cost and value signals.
