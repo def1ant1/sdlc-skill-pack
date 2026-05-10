@@ -27,6 +27,12 @@ def load_ignore(path: Path) -> set[str]:
     return set(data.get("ignore_paths", []))
 
 
+def is_completed_claim(backlog_path: Path, line_no: int) -> bool:
+    lines = backlog_path.read_text(encoding="utf-8").splitlines()
+    line = lines[line_no - 1] if 0 < line_no <= len(lines) else ""
+    return "[x]" in line.lower() or "✅" in line
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", type=Path, default=Path.cwd())
@@ -38,21 +44,31 @@ def main() -> int:
     ignored = load_ignore(root / args.ignore_file)
 
     missing: list[dict] = []
+    stale_claims: list[dict] = []
+
     for ref in refs:
         if ref["path"] in ignored:
             continue
-        if not (root / ref["path"]).exists():
+        target = root / ref["path"]
+        if not target.exists():
             missing.append(ref)
+            continue
+        backlog_file = root / ref["backlog_file"]
+        if is_completed_claim(backlog_file, ref["line"]) and target.stat().st_size == 0:
+            stale_claims.append(ref)
 
-    if missing:
-        print(f"Missing required referenced paths: {len(missing)}")
-        for ref in missing[:200]:
-            print(
-                f"- {ref['path']} ({ref['backlog_file']}:{ref['line']}, {ref['phase']})"
-            )
+    if missing or stale_claims:
+        if missing:
+            print(f"Missing required referenced paths: {len(missing)}")
+            for ref in missing[:200]:
+                print(f"- {ref['path']} ({ref['backlog_file']}:{ref['line']}, {ref['phase']})")
+        if stale_claims:
+            print(f"Stale completion claims: {len(stale_claims)}")
+            for ref in stale_claims[:200]:
+                print(f"- {ref['path']} ({ref['backlog_file']}:{ref['line']}, {ref['phase']})")
         return 2
 
-    print(f"All referenced backlog paths exist ({len(refs)} references checked).")
+    print(f"Backlog truth valid ({len(refs)} references checked).")
     return 0
 
 
