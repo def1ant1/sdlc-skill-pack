@@ -466,3 +466,13 @@ Full reference: `docs/onboarding/DEPLOYMENT.md`
 | Agent fleet | `docs/architecture/agent-fleet.md` |
 | HITL gate audit | `docs/governance/hitl-gate-audit.md` |
 | System overview | `docs/architecture/system-overview.md` |
+## Repo Truth and Skill Contract Tooling
+
+- `python scripts/extract_backlog_paths.py --root . --grouped`
+- `python scripts/validate_backlog_truth.py --root .`
+- `python scripts/generate_repo_truth_report.py --root .`
+- `python scripts/validate_skill_contracts.py .`
+- `python scripts/migrate_frontmatter_to_manifest.py --root . --dry-run`
+- `python scripts/generate_skill_inventory.py --root .`
+
+Contract specification reference: `references/skill-contract-v9.md`.
