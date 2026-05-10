@@ -1,16 +1,56 @@
 #!/usr/bin/env python3
 from __future__ import annotations
+
 import argparse
 import json
 from pathlib import Path
 
-REQUIRED_MANIFEST_KEYS = [
-    "name", "type", "version", "dependencies", "required_context", "telemetry_events"
-]
+SCHEMA_PATH = Path(__file__).resolve().parent.parent / "schemas" / "skill-manifest-v9.schema.json"
 
 
-def load_json(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
+def _python_type_for_json_type(type_name: str):
+    return {
+        "string": str,
+        "number": (int, float),
+        "integer": int,
+        "object": dict,
+        "array": list,
+        "boolean": bool,
+        "null": type(None),
+    }.get(type_name)
+
+
+def validate_manifest_schema(manifest: dict) -> list[str]:
+    schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
+    reasons: list[str] = []
+
+    required = schema.get("required", [])
+    missing_required = [key for key in required if key not in manifest]
+    if missing_required:
+        reasons.append("invalid_manifest:missing_required=" + ",".join(missing_required))
+
+    properties = schema.get("properties", {})
+    for key, rules in properties.items():
+        if key not in manifest:
+            continue
+
+        value = manifest[key]
+
+        allowed_types = rules.get("type")
+        if allowed_types is not None:
+            types = allowed_types if isinstance(allowed_types, list) else [allowed_types]
+            if not any(
+                isinstance(value, _python_type_for_json_type(t))
+                and not (t == "boolean" and isinstance(value, bool) is False)
+                for t in types
+            ):
+                reasons.append(f"invalid_manifest:type_mismatch:{key}")
+
+        allowed_enum = rules.get("enum")
+        if allowed_enum is not None and value not in allowed_enum:
+            reasons.append(f"invalid_manifest:enum_violation:{key}")
+
+    return reasons
 
 
 def certify(skill_dir: Path, eval_passed: bool, security_passed: bool, context_passed: bool,
@@ -22,12 +62,13 @@ def certify(skill_dir: Path, eval_passed: bool, security_passed: bool, context_p
 
     if not manifest_path.exists():
         reasons.append("missing_manifest")
-        manifest = {}
     else:
-        manifest = load_json(manifest_path)
-        missing_keys = [k for k in REQUIRED_MANIFEST_KEYS if k not in manifest]
-        if missing_keys:
-            reasons.append(f"invalid_manifest:missing_keys={','.join(missing_keys)}")
+        try:
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            reasons.append(f"invalid_manifest_json:{exc.msg}")
+        else:
+            reasons.extend(validate_manifest_schema(manifest))
 
     if not eval_passed:
         reasons.append("eval_failed")
