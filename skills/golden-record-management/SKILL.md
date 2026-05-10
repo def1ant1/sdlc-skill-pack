@@ -1,12 +1,17 @@
 ---
 name: golden-record-management
-description: Assemble and steward golden records with survivorship and lineage controls integrated with master data management.
+description: Assemble and steward golden records with survivorship and lineage controls
+  integrated with master data management.
 metadata:
-  version: "9.0.0"
+  version: 9.0.0
   category: sdlc
   owner: Apotheon
   maturity: beta
   manifest: manifest.v9.json
+use_when:
+- Request clearly matches this skill's domain capabilities.
+do_not_use_when:
+- Request is outside this skill's domain or lacks required context.
 ---
 
 # Golden Record Management

@@ -1,11 +1,16 @@
 ---
 name: marketplace-certification
-description: Certifies skills for marketplace release with strict prerequisite and governance gates.
+description: Certifies skills for marketplace release with strict prerequisite and
+  governance gates.
 metadata:
   version: 0.1.0
   category: governance
   owner: Apotheon.ai
   maturity: beta
+use_when:
+- Request clearly matches this skill's domain capabilities.
+do_not_use_when:
+- Request is outside this skill's domain or lacks required context.
 ---
 
 # Marketplace Certification

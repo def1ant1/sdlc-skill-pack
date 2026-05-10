@@ -1,12 +1,17 @@
 ---
 name: payroll-audit
-description: Support-only payroll variance and compliance audit preparation with explicit human approval requirements.
+description: Support-only payroll variance and compliance audit preparation with explicit
+  human approval requirements.
 metadata:
-  version: "9.0.0"
+  version: 9.0.0
   category: sdlc
   owner: Apotheon
   maturity: beta
   manifest: manifest.v9.json
+use_when:
+- Request clearly matches this skill's domain capabilities.
+do_not_use_when:
+- Request is outside this skill's domain or lacks required context.
 ---
 
 # Payroll Audit

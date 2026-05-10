@@ -1,126 +1,193 @@
 # Routing Collision Report
 
-- Skills scanned: 192
-- Trigger collisions: 17584
-- Dependency cycles: 13
+## Summary
+- Skills scanned: 273
+- Trigger overlaps: 20666
+- Dependency cycles: 17
+- Unknown domain ownership: 6
+- Missing exclusion rules: 0
 
-## Trigger Collisions
-- `cluster-management` vs `tenant-management` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `autonomous-os` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `multi-agent` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `api-gateway` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `cognitive-runtime` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `runtime-economics` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `research-runtime` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `notification-orchestration` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `enterprise-integration-hub` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `multimodal-runtime` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `inference-engine-fleet` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `meeting-intelligence` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `enterprise-search` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `synthetic-data` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `zero-trust-runtime` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `model-evaluation` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `knowledge-graph` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `connector-hub` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `local-security` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `agent-kernel` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `lora-lifecycle` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `event-bus` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `workflow-engine` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `retrieval-engine` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `observability-platform` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `kv-cache-management` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `local-runtime` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `operator-console` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `benchmark-factory` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `sdlc-orchestration` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `policy-engine` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `predictive-reasoning` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `federated-runtime` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `distributed-agent-runtime` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `gtm-orchestration` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `sdlc-memory-token-management` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `privacy-runtime` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `telemetry` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `economic-coordination` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `skill-gap-engine` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `agent-identity` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `model-lifecycle` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `compliance-runtime` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `reinforcement-optimizer` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `governance` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `sdk-runtime` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `developer-portal` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `semantic-layer` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `billing-runtime` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `audit-trail` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `workflow-runtime` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `hitl-dashboard` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `data-fabric` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `persistent-agent-runtime` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `evolution-engine` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `temporal-integration` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `strategic-planning` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `business-orchestration` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `world-model` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `master-data-management` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `explainability` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `alignment-engine` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `mcp-integrations` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `simulation-engine` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `ray-runtime` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `sandbox-execution` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `model-routing` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `code-review` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `execution-explanation` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `document-intelligence` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `gpu-cluster-optimization` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `hierarchical-planning` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `paid-acquisition` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `lora-management` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `causal-tracing` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `program-governance` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `ai-engineering` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `policy-simulation` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `security-war-gaming` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `frontend-engineering` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `quantization-optimization` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `system-architecture` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `release-management` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `inference-batching-optimization` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `discovery-synthesis` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `revenue-operations` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `business-continuity-planning` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `capacity-balancing` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `devsecops` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `evaluation-dataset-curation` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `launch-planning` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `constraint-reasoning` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `schema-evolution` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `product-analytics` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `pii-detection` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `goal-decomposition` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `network-topology-analysis` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `cloud-deployment` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `model-selection-optimization` overlap on ['follow description activation criteria.']
-- `cluster-management` vs `marketplace-publishing` overlap on ['follow description activation criteria.']
-## Duplicate Capabilities
-- Heuristic: trigger collisions approximate duplicate capabilities.
+## Trigger Overlap
+- `agent-identity` vs `agent-kernel` overlap on: follow description activation criteria.
+- `agent-identity` vs `alignment-engine` overlap on: follow description activation criteria.
+- `agent-identity` vs `api-gateway` overlap on: follow description activation criteria.
+- `agent-identity` vs `audit-trail` overlap on: follow description activation criteria.
+- `agent-identity` vs `autonomous-os` overlap on: follow description activation criteria.
+- `agent-identity` vs `benchmark-factory` overlap on: follow description activation criteria.
+- `agent-identity` vs `billing-runtime` overlap on: follow description activation criteria.
+- `agent-identity` vs `business-orchestration` overlap on: follow description activation criteria.
+- `agent-identity` vs `cluster-management` overlap on: follow description activation criteria.
+- `agent-identity` vs `cognitive-runtime` overlap on: follow description activation criteria.
+- `agent-identity` vs `compliance-runtime` overlap on: follow description activation criteria.
+- `agent-identity` vs `connector-hub` overlap on: follow description activation criteria.
+- `agent-identity` vs `data-fabric` overlap on: follow description activation criteria.
+- `agent-identity` vs `developer-portal` overlap on: follow description activation criteria.
+- `agent-identity` vs `distributed-agent-runtime` overlap on: follow description activation criteria.
+- `agent-identity` vs `economic-coordination` overlap on: follow description activation criteria.
+- `agent-identity` vs `enterprise-integration-hub` overlap on: follow description activation criteria.
+- `agent-identity` vs `enterprise-search` overlap on: follow description activation criteria.
+- `agent-identity` vs `event-bus` overlap on: follow description activation criteria.
+- `agent-identity` vs `evolution-engine` overlap on: follow description activation criteria.
+- `agent-identity` vs `explainability` overlap on: follow description activation criteria.
+- `agent-identity` vs `federated-runtime` overlap on: follow description activation criteria.
+- `agent-identity` vs `governance` overlap on: follow description activation criteria.
+- `agent-identity` vs `gtm-orchestration` overlap on: follow description activation criteria.
+- `agent-identity` vs `hitl-dashboard` overlap on: follow description activation criteria.
+- `agent-identity` vs `inference-engine-fleet` overlap on: follow description activation criteria.
+- `agent-identity` vs `knowledge-graph` overlap on: follow description activation criteria.
+- `agent-identity` vs `kv-cache-management` overlap on: follow description activation criteria.
+- `agent-identity` vs `local-runtime` overlap on: follow description activation criteria.
+- `agent-identity` vs `local-security` overlap on: follow description activation criteria.
+- `agent-identity` vs `lora-lifecycle` overlap on: follow description activation criteria.
+- `agent-identity` vs `master-data-management` overlap on: follow description activation criteria.
+- `agent-identity` vs `mcp-integrations` overlap on: follow description activation criteria.
+- `agent-identity` vs `meeting-intelligence` overlap on: follow description activation criteria.
+- `agent-identity` vs `sdlc-memory-token-management` overlap on: follow description activation criteria.
+- `agent-identity` vs `model-evaluation` overlap on: follow description activation criteria.
+- `agent-identity` vs `model-lifecycle` overlap on: follow description activation criteria.
+- `agent-identity` vs `model-routing` overlap on: follow description activation criteria.
+- `agent-identity` vs `multi-agent` overlap on: follow description activation criteria.
+- `agent-identity` vs `multimodal-runtime` overlap on: follow description activation criteria.
+- `agent-identity` vs `notification-orchestration` overlap on: follow description activation criteria.
+- `agent-identity` vs `observability-platform` overlap on: follow description activation criteria.
+- `agent-identity` vs `operator-console` overlap on: follow description activation criteria.
+- `agent-identity` vs `sdlc-orchestration` overlap on: follow description activation criteria.
+- `agent-identity` vs `persistent-agent-runtime` overlap on: follow description activation criteria.
+- `agent-identity` vs `policy-engine` overlap on: follow description activation criteria.
+- `agent-identity` vs `predictive-reasoning` overlap on: follow description activation criteria.
+- `agent-identity` vs `privacy-runtime` overlap on: follow description activation criteria.
+- `agent-identity` vs `ray-runtime` overlap on: follow description activation criteria.
+- `agent-identity` vs `reinforcement-optimizer` overlap on: follow description activation criteria.
+- `agent-identity` vs `research-runtime` overlap on: follow description activation criteria.
+- `agent-identity` vs `retrieval-engine` overlap on: follow description activation criteria.
+- `agent-identity` vs `runtime-economics` overlap on: follow description activation criteria.
+- `agent-identity` vs `sandbox-execution` overlap on: follow description activation criteria.
+- `agent-identity` vs `sdk-runtime` overlap on: follow description activation criteria.
+- `agent-identity` vs `semantic-layer` overlap on: follow description activation criteria.
+- `agent-identity` vs `simulation-engine` overlap on: follow description activation criteria.
+- `agent-identity` vs `skill-gap-engine` overlap on: follow description activation criteria.
+- `agent-identity` vs `strategic-planning` overlap on: follow description activation criteria.
+- `agent-identity` vs `synthetic-data` overlap on: follow description activation criteria.
+- `agent-identity` vs `telemetry` overlap on: follow description activation criteria.
+- `agent-identity` vs `temporal-integration` overlap on: follow description activation criteria.
+- `agent-identity` vs `tenant-management` overlap on: follow description activation criteria.
+- `agent-identity` vs `workflow-engine` overlap on: follow description activation criteria.
+- `agent-identity` vs `workflow-runtime` overlap on: follow description activation criteria.
+- `agent-identity` vs `world-model` overlap on: follow description activation criteria.
+- `agent-identity` vs `zero-trust-runtime` overlap on: follow description activation criteria.
+- `agent-identity` vs `accounting-automation` overlap on: follow description activation criteria.
+- `agent-identity` vs `adversarial-evaluation` overlap on: follow description activation criteria.
+- `agent-identity` vs `ai-engineering` overlap on: follow description activation criteria.
+- `agent-identity` vs `ai-search-optimization` overlap on: follow description activation criteria.
+- `agent-identity` vs `alignment-testing` overlap on: follow description activation criteria.
+- `agent-identity` vs `analytics-intelligence` overlap on: follow description activation criteria.
+- `agent-identity` vs `audio-video-processing` overlap on: follow description activation criteria.
+- `agent-identity` vs `backend-engineering` overlap on: follow description activation criteria.
+- `agent-identity` vs `belief-state-management` overlap on: follow description activation criteria.
+- `agent-identity` vs `benchmark-generation` overlap on: follow description activation criteria.
+- `agent-identity` vs `budget-planning` overlap on: follow description activation criteria.
+- `agent-identity` vs `business-continuity-planning` overlap on: follow description activation criteria.
+- `agent-identity` vs `business-simulation` overlap on: follow description activation criteria.
+- `agent-identity` vs `cache-placement-optimization` overlap on: follow description activation criteria.
+- `agent-identity` vs `capacity-balancing` overlap on: follow description activation criteria.
+- `agent-identity` vs `causal-analysis` overlap on: follow description activation criteria.
+- `agent-identity` vs `causal-tracing` overlap on: follow description activation criteria.
+- `agent-identity` vs `checkpoint-management` overlap on: follow description activation criteria.
+- `agent-identity` vs `cloud-deployment` overlap on: follow description activation criteria.
+- `agent-identity` vs `code-review` overlap on: follow description activation criteria.
+- `agent-identity` vs `communication-analytics` overlap on: follow description activation criteria.
+- `agent-identity` vs `compliance-automation` overlap on: follow description activation criteria.
+- `agent-identity` vs `compliance-governance` overlap on: follow description activation criteria.
+- `agent-identity` vs `compliance-posture-reporting` overlap on: follow description activation criteria.
+- `agent-identity` vs `constraint-reasoning` overlap on: follow description activation criteria.
+- `agent-identity` vs `content-marketing` overlap on: follow description activation criteria.
+- `agent-identity` vs `continuous-control-monitoring` overlap on: follow description activation criteria.
+- `agent-identity` vs `crm-integration` overlap on: follow description activation criteria.
+- `agent-identity` vs `customer-success` overlap on: follow description activation criteria.
+- `agent-identity` vs `data-contract-management` overlap on: follow description activation criteria.
+- `agent-identity` vs `data-redaction` overlap on: follow description activation criteria.
+- `agent-identity` vs `dataset-curation` overlap on: follow description activation criteria.
+- `agent-identity` vs `deception-detection` overlap on: follow description activation criteria.
+- `agent-identity` vs `decision-intelligence` overlap on: follow description activation criteria.
+- `agent-identity` vs `developer-experience` overlap on: follow description activation criteria.
+- `agent-identity` vs `devsecops` overlap on: follow description activation criteria.
+- `agent-identity` vs `disaster-recovery-automation` overlap on: follow description activation criteria.
+- `agent-identity` vs `discovery-synthesis` overlap on: follow description activation criteria.
+- `agent-identity` vs `distributed-training-orchestration` overlap on: follow description activation criteria.
+- `agent-identity` vs `document-intelligence` overlap on: follow description activation criteria.
+- `agent-identity` vs `edge-runtime-management` overlap on: follow description activation criteria.
+- `agent-identity` vs `erp-integration` overlap on: follow description activation criteria.
+- `agent-identity` vs `evaluation-dataset-curation` overlap on: follow description activation criteria.
+- `agent-identity` vs `execution-explanation` overlap on: follow description activation criteria.
+- `agent-identity` vs `executive-reporting` overlap on: follow description activation criteria.
+- `agent-identity` vs `forecasting` overlap on: follow description activation criteria.
+- `agent-identity` vs `frontend-engineering` overlap on: follow description activation criteria.
+- `agent-identity` vs `goal-decomposition` overlap on: follow description activation criteria.
+- `agent-identity` vs `gpu-cluster-optimization` overlap on: follow description activation criteria.
+- `agent-identity` vs `harm-classification` overlap on: follow description activation criteria.
+- `agent-identity` vs `hierarchical-planning` overlap on: follow description activation criteria.
+- `agent-identity` vs `hypothesis-generation` overlap on: follow description activation criteria.
+- `agent-identity` vs `inbox-automation` overlap on: follow description activation criteria.
+- `agent-identity` vs `incident-simulation` overlap on: follow description activation criteria.
+- `agent-identity` vs `inference-batching-optimization` overlap on: follow description activation criteria.
+- `agent-identity` vs `inference-engine-benchmarking` overlap on: follow description activation criteria.
+- `agent-identity` vs `inference-engine-deployment` overlap on: follow description activation criteria.
+- `agent-identity` vs `initiative-prioritization` overlap on: follow description activation criteria.
+- `agent-identity` vs `institutional-knowledge-query` overlap on: follow description activation criteria.
+- `agent-identity` vs `iot-data-ingestion` overlap on: follow description activation criteria.
+- `agent-identity` vs `itsm-integration` overlap on: follow description activation criteria.
+- `agent-identity` vs `lateral-movement-detection` overlap on: follow description activation criteria.
+- `agent-identity` vs `launch-planning` overlap on: follow description activation criteria.
+- `agent-identity` vs `legal-hold-management` overlap on: follow description activation criteria.
+- `agent-identity` vs `legal-ops` overlap on: follow description activation criteria.
+- `agent-identity` vs `lessons-learned-extraction` overlap on: follow description activation criteria.
+- `agent-identity` vs `lineage-analysis` overlap on: follow description activation criteria.
+- `agent-identity` vs `literature-review` overlap on: follow description activation criteria.
+- `agent-identity` vs `long-horizon-planning` overlap on: follow description activation criteria.
+- `agent-identity` vs `lora-management` overlap on: follow description activation criteria.
+- `agent-identity` vs `marketplace-publishing` overlap on: follow description activation criteria.
+- `agent-identity` vs `memory-compression` overlap on: follow description activation criteria.
+- `agent-identity` vs `meta-reasoning` overlap on: follow description activation criteria.
+- `agent-identity` vs `model-benchmarking` overlap on: follow description activation criteria.
+- `agent-identity` vs `model-distillation` overlap on: follow description activation criteria.
+- `agent-identity` vs `model-placement-optimization` overlap on: follow description activation criteria.
+- `agent-identity` vs `model-selection-optimization` overlap on: follow description activation criteria.
+- `agent-identity` vs `network-topology-analysis` overlap on: follow description activation criteria.
+- `agent-identity` vs `observability` overlap on: follow description activation criteria.
+- `agent-identity` vs `paid-acquisition` overlap on: follow description activation criteria.
+- `agent-identity` vs `patent-analysis` overlap on: follow description activation criteria.
+- `agent-identity` vs `pii-detection` overlap on: follow description activation criteria.
+- `agent-identity` vs `policy-justification` overlap on: follow description activation criteria.
 
 ## Dependency Cycles
+- runtime-economics -> token-cost-analysis -> runtime-economics -> runtime-economics
+- runtime-economics -> roi-estimation -> runtime-economics -> runtime-economics
+- agent-kernel -> economic-coordination -> agent-kernel -> agent-kernel
 - lora-lifecycle -> synthetic-data -> lora-lifecycle -> lora-lifecycle
+- workflow-runtime -> checkpoint-management -> workflow-runtime -> workflow-runtime
+- event-bus -> workflow-runtime -> checkpoint-management -> event-bus -> event-bus
+- event-bus -> workflow-runtime -> event-bus -> event-bus
+- agent-kernel -> event-bus -> distributed-agent-runtime -> agent-kernel -> agent-kernel
+- event-bus -> distributed-agent-runtime -> event-bus -> event-bus
 - cloud-deployment -> release-management -> cloud-deployment -> cloud-deployment
 - observability -> sre-incident-response -> observability -> observability
-- workflow-runtime -> checkpoint-management -> workflow-runtime -> workflow-runtime
-- workflow-runtime -> checkpoint-management -> event-bus -> workflow-runtime -> workflow-runtime
-- agent-kernel -> economic-coordination -> agent-kernel -> agent-kernel
-- event-bus -> distributed-agent-runtime -> agent-kernel -> event-bus -> event-bus
-- event-bus -> distributed-agent-runtime -> event-bus -> event-bus
 - data-fabric -> semantic-layer -> data-fabric -> data-fabric
 - data-fabric -> master-data-management -> data-fabric -> data-fabric
 - portfolio-optimization -> initiative-prioritization -> portfolio-optimization -> portfolio-optimization
-- portfolio-optimization -> initiative-prioritization -> capacity-balancing -> portfolio-optimization -> portfolio-optimization
-- schema-evolution -> data-contract-management -> schema-evolution -> schema-evolution
-## Ambiguous Domain Ownership
-- Skills with `metadata.category: unknown` require explicit ownership review.
+- capacity-balancing -> portfolio-optimization -> initiative-prioritization -> capacity-balancing -> capacity-balancing
+- capacity-balancing -> portfolio-optimization -> capacity-balancing -> capacity-balancing
+- data-contract-management -> schema-evolution -> data-contract-management -> data-contract-management
+
+## Ambiguity Signals
+- `sdlc-semantic-cache` has `metadata.category: unknown`.
+- `sdlc-skill-router` has `metadata.category: unknown`.
+- `audit-trail-analysis` has `metadata.category: unknown`.
+- `context-reuse-optimization` has `metadata.category: unknown`.
+- `evidence-pack-generation` has `metadata.category: unknown`.
+- `routing-collision-analysis` has `metadata.category: unknown`.
+
+## Remediation Recommendations
+1. Strengthen `use_when` with unique trigger language per domain.
+2. Add negative routing constraints in `do_not_use_when` for neighboring skills.
+3. Resolve dependency cycles by introducing orchestrator nodes or splitting responsibilities.
+4. Assign explicit `metadata.category` ownership for all unknown domains.
