@@ -419,7 +419,7 @@ All SKILL.md files must pass:
 - Recommended fields: `metadata.version`, `metadata.category`, `metadata.owner`, `metadata.maturity`, `metadata.dependencies`
 - High-risk skills: must declare `hitl_gates` in frontmatter
 
-CI runs on every push/PR: `validate_skill_structure.py` → `validate_frontmatter.py` → `scripts/run_premerge_checks.py` → `pytest`.
+CI runs on every push/PR: `validate_skill_structure.py` → `validate_frontmatter.py` → `pytest` → V9 required-field gates (`validate_backlog_truth.py`, `validate_skill_contracts.py`, `check_context_budget.py`, `generate_skill_inventory.py`, `generate_dependency_graph.py`, `detect_skill_overlap.py`, `validate_skill_evals.py`, `validate_telemetry_events.py`) → `scripts/run_premerge_checks.py`. Any missing required V9 contract/eval/telemetry/context-budget field fails the workflow and blocks merges.
 
 Run the same local pre-merge gates before opening a PR:
 
