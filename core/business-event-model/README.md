@@ -1,3 +1,12 @@
 # Business Event Model
 
-Business event model and event taxonomy.
+Defines mandatory event envelope fields for business events:
+
+- actor
+- timestamp
+- source
+- confidence
+- lineage
+- policy_context
+
+These fields are enforced in the event schemas under `schemas/events/`.
