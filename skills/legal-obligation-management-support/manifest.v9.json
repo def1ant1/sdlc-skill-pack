@@ -57,14 +57,21 @@
     ]
   },
   "bias_guardrails": {
-    "enabled": false,
-    "require_human_sensitive_review": false
+    "enabled": true,
+    "require_human_sensitive_review": true,
+    "protected_attributes": [
+      "age",
+      "race",
+      "sex",
+      "disability",
+      "religion"
+    ]
   },
-  "name": "golden-record-management",
-  "domain": "master-data",
-  "subdomain": "phase-109",
+  "name": "legal-obligation-management-support",
+  "domain": "business-operations",
+  "subdomain": "phase-115",
   "activation_triggers": [
-    "phase_109",
-    "golden_record_management"
+    "phase_115",
+    "legal_obligation_management"
   ]
 }

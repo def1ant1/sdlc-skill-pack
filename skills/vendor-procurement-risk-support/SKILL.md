@@ -1,6 +1,6 @@
 ---
-name: entity-resolution
-description: Support workflow for entity resolution with mandatory human approval gates.
+name: vendor-procurement-risk-support
+description: Support workflow for vendor procurement risk support with mandatory human approval gates.
 ---
 
 ## Disclaimer

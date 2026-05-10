@@ -13,6 +13,10 @@ SKILLS = [
     "procurement-kpi-optimization-support",
     "legal-intake-triage-support",
     "business-process-optimization",
+    "hr-case-management-support",
+    "vendor-procurement-risk-support",
+    "legal-obligation-management-support",
+    "process-optimization-governance-support",
 ]
 
 def _manifest(skill: str) -> dict:
@@ -36,3 +40,17 @@ def test_kpi_recommendations_are_baseline_linked():
         assert kpi["link_to_baseline"] is True
         assert kpi["require_metric_owner"] is True
         assert kpi["forbid_unattributed_targets"] is True
+
+
+def test_hr_and_legal_bias_safeguards_enabled():
+    sensitive = [
+        "hr-policy-guidance-support",
+        "talent-risk-screening-support",
+        "legal-intake-triage-support",
+        "hr-case-management-support",
+        "legal-obligation-management-support",
+    ]
+    for skill in sensitive:
+        guardrails = _manifest(skill)["bias_guardrails"]
+        assert guardrails["enabled"] is True
+        assert guardrails["require_human_sensitive_review"] is True

@@ -1,6 +1,6 @@
 ---
-name: entity-resolution
-description: Support workflow for entity resolution with mandatory human approval gates.
+name: hr-case-management-support
+description: Support workflow for hr case management support with mandatory human approval gates.
 ---
 
 ## Disclaimer

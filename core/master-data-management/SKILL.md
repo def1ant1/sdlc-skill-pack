@@ -69,3 +69,9 @@ confidence, contributing source records list, and propagation event confirmation
 ## References
 
 - `references/survivorship-rules.md` — per-attribute survivorship logic, source priority hierarchy, entity type configurations
+
+## Integrated Skills
+
+- `skills/entity-resolution` for duplicate clustering and identity linkage.
+- `skills/golden-record-management` for canonical record lifecycle control.
+- `skills/data-quality-scoring` for confidence/quality signals used in survivorship.

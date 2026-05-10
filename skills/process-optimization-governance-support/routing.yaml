@@ -1,0 +1,4 @@
+skill: process-optimization-governance-support
+routes:
+  - condition: task.phase in ['phase-116']
+    priority: high

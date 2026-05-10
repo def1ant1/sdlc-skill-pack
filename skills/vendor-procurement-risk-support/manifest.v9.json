@@ -60,11 +60,11 @@
     "enabled": false,
     "require_human_sensitive_review": false
   },
-  "name": "golden-record-management",
-  "domain": "master-data",
-  "subdomain": "phase-109",
+  "name": "vendor-procurement-risk-support",
+  "domain": "business-operations",
+  "subdomain": "phase-114",
   "activation_triggers": [
-    "phase_109",
-    "golden_record_management"
+    "phase_114",
+    "vendor_procurement_risk"
   ]
 }

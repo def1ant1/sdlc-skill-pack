@@ -484,3 +484,5 @@ Contract specification reference: `references/skill-contract-v9.md`.
 - Canonical business event schemas: `schemas/events/` for `invoice.created`, `workflow.completed`, `business_policy.violation`, and approval flow events.
 - Business policy standard: `schemas/business-policy.schema.json` + `references/business-policy-standard.md`.
 - Approval and audit coverage: `core/business-approval-gateway/approval-decision.model.json`, `core/business-audit-ledger/`, `skills/evidence-pack-generation/`, `skills/audit-trail-analysis/`.
+
+- Phase 108-116 business operations packs now include MDM entity resolution, golden record management, data quality scoring, and support-only governance controls.

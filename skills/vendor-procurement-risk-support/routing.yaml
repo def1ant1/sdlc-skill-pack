@@ -1,0 +1,4 @@
+skill: vendor-procurement-risk-support
+routes:
+  - condition: task.phase in ['phase-114']
+    priority: high

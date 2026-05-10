@@ -1,0 +1,4 @@
+skill: hr-case-management-support
+routes:
+  - condition: task.phase in ['phase-113']
+    priority: high
