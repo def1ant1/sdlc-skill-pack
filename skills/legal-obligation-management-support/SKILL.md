@@ -1,6 +1,6 @@
 ---
-name: entity-resolution
-description: Support workflow for entity resolution with mandatory human approval gates.
+name: legal-obligation-management-support
+description: Support workflow for legal obligation management support with mandatory human approval gates.
 ---
 
 ## Disclaimer

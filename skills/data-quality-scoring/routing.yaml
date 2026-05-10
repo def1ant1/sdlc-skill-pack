@@ -1,9 +1,4 @@
-trigger_id: data_quality_scoring_trigger
 skill: data-quality-scoring
-use_when:
-  - "intent mentions data or phase-105"
-  - "canonical context and policy profile available"
-do_not_use_when:
-  - "request asks for final autonomous determination"
-  - "human reviewer unavailable for required gate"
-collision_strategy: "prefer higher confidence then lexicographic skill name"
+routes:
+  - condition: task.phase in ['phase-110']
+    priority: high

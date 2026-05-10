@@ -66,6 +66,13 @@
   },
   "bias_guardrails": {
     "enabled": true,
-    "require_human_sensitive_review": true
+    "require_human_sensitive_review": true,
+    "protected_attributes": [
+      "age",
+      "race",
+      "sex",
+      "disability",
+      "religion"
+    ]
   }
 }

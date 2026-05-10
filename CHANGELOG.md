@@ -506,3 +506,5 @@ Added local-security, mcp-integrations, and initial CI pipeline.
 - Added Phase 113–116 skills for HR, vendor/procurement, legal, and business process optimization with high-impact review markers.
 - Added guardrail policies for bias/human-sensitive workflows and mandatory review fields in phase manifests.
 - Added acceptance tests for approval thresholds, obligation tracking, and KPI-linked recommendations: `tests/skills/test_phase106_116_policy_controls.py`.
+
+- Added Phase 108-116 skill expansion with MDM integrations, support-only disclaimers, HR/legal bias safeguards, and policy-control tests.

@@ -1,20 +1,12 @@
 {
-  "name": "entity-resolution",
   "type": "skill",
-  "domain": "business-operations",
-  "subdomain": "phase-105",
   "version": "9.0.0",
   "owner": "Apotheon",
   "maturity": "beta",
   "dependencies": [
     "core/master-data-management",
     "core/policy-engine",
-    "core/business-approval-gateway",
     "core/audit-trail"
-  ],
-  "activation_triggers": [
-    "phase_105",
-    "entity_resolution"
   ],
   "required_context": [
     "tenant_profile",
@@ -67,5 +59,12 @@
   "bias_guardrails": {
     "enabled": false,
     "require_human_sensitive_review": false
-  }
+  },
+  "name": "entity-resolution",
+  "domain": "master-data",
+  "subdomain": "phase-108",
+  "activation_triggers": [
+    "phase_108",
+    "entity_resolution"
+  ]
 }

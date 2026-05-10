@@ -1825,3 +1825,5 @@ Implemented and wired:
 - `scripts/migrate_frontmatter_to_manifest.py`
 - `scripts/generate_skill_inventory.py` deterministic JSON/MD/CSV outputs
 - test coverage in `tests/scripts/` for parser accuracy, contract enforcement, and inventory determinism
+
+- [x] Phase 108-116 expansion: MDM-linked entity resolution/golden record/data quality skills, payroll/tax/compliance support disclaimers, and HR/vendor/legal/process support packs with bias safeguards.

@@ -60,11 +60,11 @@
     "enabled": false,
     "require_human_sensitive_review": false
   },
-  "name": "golden-record-management",
-  "domain": "master-data",
-  "subdomain": "phase-109",
+  "name": "process-optimization-governance-support",
+  "domain": "business-operations",
+  "subdomain": "phase-116",
   "activation_triggers": [
-    "phase_109",
-    "golden_record_management"
+    "phase_116",
+    "process_optimization_governance"
   ]
 }

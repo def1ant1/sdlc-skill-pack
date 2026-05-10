@@ -1,6 +1,6 @@
 ---
-name: entity-resolution
-description: Support workflow for entity resolution with mandatory human approval gates.
+name: process-optimization-governance-support
+description: Support workflow for process optimization governance support with mandatory human approval gates.
 ---
 
 ## Disclaimer

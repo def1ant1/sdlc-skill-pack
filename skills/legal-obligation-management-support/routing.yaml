@@ -1,0 +1,4 @@
+skill: legal-obligation-management-support
+routes:
+  - condition: task.phase in ['phase-115']
+    priority: high
