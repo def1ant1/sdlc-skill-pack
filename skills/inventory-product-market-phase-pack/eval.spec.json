@@ -1,0 +1,9 @@
+{
+  "skill_name": "inventory-product-market-phase-pack",
+  "priority": "P1",
+  "owner": "Apotheon.ai",
+  "last_updated": "2026-05-10",
+  "datasets": [{"id": "inventory-product-market-pack-smoke", "description": "Canonical inventory/product/market workflow scenarios"}],
+  "metrics": [{"name": "fallback_recovery_rate", "target": 0.95, "direction": "gte"}],
+  "acceptance_gates": ["external_side_effects_require_approval == true"]
+}

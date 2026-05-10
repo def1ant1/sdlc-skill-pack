@@ -1,0 +1,37 @@
+---
+name: inventory-product-market-phase-pack
+description: Phase-pack skill for inventory, product, and market intelligence operations using canonical entity/event contracts.
+metadata:
+  version: 9.0.0
+  category: business-operations
+  owner: Apotheon
+  maturity: beta
+  manifest: manifest.v9.json
+use_when:
+- Request spans inventory/product/market phases and requires governed recommendations.
+do_not_use_when:
+- Request is outside supply, product, or market decision support scope.
+---
+
+# Inventory, Product & Market Phase Pack
+
+## Role
+Drive phase 110-112 workflows with schema-valid canonical outputs and approval-gated side effects.
+
+## Contracts & Context Loading
+- Use canonical schemas for product/order/workflow/decision/task and approval/workflow events.
+- Load context progressively: product and order entities, policy context, then market signals.
+- Enforce token budgets to preserve room for rationale and fallback instructions.
+
+## Governance
+- Human approval is mandatory for any customer-facing update.
+- Human approval is mandatory for external mutations (supplier portal updates, catalog repricing, PO changes).
+- If approval is absent, emit approval_requested and hold execution.
+
+## Failure & Fallback
+- Missing data contracts -> emit safe summary and request remediation.
+- Schema non-compliance -> reject mutation and generate corrected artifact template.
+- External system unavailable -> defer with retry ticket and operator handoff.
+
+## Example workflow
+See `examples/workflow.yaml`.

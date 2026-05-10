@@ -1,0 +1,9 @@
+{
+  "skill_name": "finance-accounting-phase-pack",
+  "priority": "P1",
+  "owner": "Apotheon.ai",
+  "last_updated": "2026-05-10",
+  "datasets": [{"id": "finance-accounting-pack-smoke", "description": "Canonical finance/accounting workflow scenarios"}],
+  "metrics": [{"name": "canonical_schema_compliance", "target": 0.99, "direction": "gte"}],
+  "acceptance_gates": ["human_approval_required_for_external_actions == true"]
+}

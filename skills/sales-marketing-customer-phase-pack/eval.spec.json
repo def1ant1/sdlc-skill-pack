@@ -1,0 +1,9 @@
+{
+  "skill_name": "sales-marketing-customer-phase-pack",
+  "priority": "P1",
+  "owner": "Apotheon.ai",
+  "last_updated": "2026-05-10",
+  "datasets": [{"id": "gtm-customer-pack-smoke", "description": "Canonical sales/marketing/customer workflow scenarios"}],
+  "metrics": [{"name": "approval_gate_coverage", "target": 1.0, "direction": "gte"}],
+  "acceptance_gates": ["customer_facing_actions_require_approval == true"]
+}
