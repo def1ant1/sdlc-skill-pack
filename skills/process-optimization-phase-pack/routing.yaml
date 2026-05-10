@@ -1,0 +1,4 @@
+skill: process-optimization-phase-pack
+routes:
+  - condition: task.phase in ['phase-120']
+    priority: high

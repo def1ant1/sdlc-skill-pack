@@ -73,5 +73,20 @@
   "activation_triggers": [
     "phase_115",
     "legal_obligation_management"
-  ]
+  ],
+  "expert_review_boundaries": {
+    "required": true,
+    "review_domains": [
+      "legal",
+      "compliance"
+    ],
+    "required_reviewers": [
+      "licensed_counsel"
+    ],
+    "prohibited_actions_without_review": [
+      "final_determination",
+      "external_filing",
+      "policy_override"
+    ]
+  }
 }

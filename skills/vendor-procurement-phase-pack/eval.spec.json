@@ -1,0 +1,9 @@
+{
+  "skill": "vendor-procurement-phase-pack",
+  "checks": [
+    "approval_thresholds",
+    "obligation_tracking",
+    "kpi_linkage",
+    "bias_guardrails"
+  ]
+}

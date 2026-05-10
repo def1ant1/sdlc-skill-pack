@@ -17,6 +17,9 @@ SKILLS = [
     "vendor-procurement-risk-support",
     "legal-obligation-management-support",
     "process-optimization-governance-support",
+    "entity-resolution",
+    "golden-record-management",
+    "data-quality-scoring",
 ]
 
 def _manifest(skill: str) -> dict:
@@ -54,3 +57,16 @@ def test_hr_and_legal_bias_safeguards_enabled():
         guardrails = _manifest(skill)["bias_guardrails"]
         assert guardrails["enabled"] is True
         assert guardrails["require_human_sensitive_review"] is True
+
+
+def test_expert_review_boundaries_for_payroll_tax_compliance():
+    expected = [
+        "payroll-audit",
+        "tax-planning-support",
+        "legal-obligation-management-support",
+    ]
+    for skill in expected:
+        boundaries = _manifest(skill)["expert_review_boundaries"]
+        assert boundaries["required"] is True
+        assert len(boundaries["required_reviewers"]) >= 1
+        assert "final_determination" in boundaries["prohibited_actions_without_review"]

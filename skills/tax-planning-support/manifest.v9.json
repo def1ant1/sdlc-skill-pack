@@ -67,5 +67,22 @@
   "bias_guardrails": {
     "enabled": false,
     "require_human_sensitive_review": false
+  },
+  "expert_review_boundaries": {
+    "required": true,
+    "review_domains": [
+      "payroll",
+      "tax",
+      "compliance"
+    ],
+    "required_reviewers": [
+      "tax_professional",
+      "finance_controller"
+    ],
+    "prohibited_actions_without_review": [
+      "final_determination",
+      "external_filing",
+      "policy_override"
+    ]
   }
 }

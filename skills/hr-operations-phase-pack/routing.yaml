@@ -1,0 +1,4 @@
+skill: hr-operations-phase-pack
+routes:
+  - condition: task.phase in ['phase-117']
+    priority: high

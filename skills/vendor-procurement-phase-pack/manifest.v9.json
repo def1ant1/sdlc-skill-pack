@@ -1,0 +1,98 @@
+{
+  "type": "skill",
+  "version": "9.0.0",
+  "owner": "Apotheon",
+  "maturity": "beta",
+  "dependencies": [
+    "core/master-data-management",
+    "core/policy-engine",
+    "core/audit-trail",
+    "core/business-approval-gateway"
+  ],
+  "required_context": [
+    "tenant_profile",
+    "canonical_entities",
+    "policy_profile",
+    "approval_thresholds"
+  ],
+  "optional_context": [
+    "historical_events",
+    "benchmark_data",
+    "obligation_register",
+    "kpi_baselines"
+  ],
+  "governance_level": "L2",
+  "human_approval_required": true,
+  "execution_mode": "support-only",
+  "approval_controls": {
+    "required_for_outbound_customer_communication": true,
+    "required_for_external_mutations": true
+  },
+  "approval_policy": {
+    "threshold_field": "impact_score",
+    "auto_block_if_gte": 80,
+    "mandatory_review_if_gte": 60
+  },
+  "obligation_tracking": {
+    "required": true,
+    "fields": [
+      "obligation_id",
+      "owner",
+      "due_date",
+      "status",
+      "evidence_link"
+    ]
+  },
+  "kpi_recommendation_policy": {
+    "link_to_baseline": true,
+    "require_metric_owner": true,
+    "forbid_unattributed_targets": true
+  },
+  "bias_guardrails": {
+    "enabled": true,
+    "require_human_sensitive_review": true,
+    "protected_attributes": [
+      "age",
+      "race",
+      "sex",
+      "disability",
+      "religion"
+    ]
+  },
+  "name": "vendor-procurement-phase-pack",
+  "domain": "business-operations",
+  "subdomain": "phase-118",
+  "activation_triggers": [
+    "phase-118",
+    "vendor_procurement"
+  ],
+  "canonical_schema_refs": {
+    "events": [
+      "schemas/events/approval_requested.schema.json",
+      "schemas/events/approval_decided.schema.json",
+      "schemas/events/workflow_completed.schema.json",
+      "schemas/events/business_policy_violation.schema.json"
+    ],
+    "entities": [
+      "schemas/entities/customer.schema.json"
+    ]
+  },
+  "input_contract": {
+    "schema_refs": [
+      "schemas/events/approval_requested.schema.json",
+      "schemas/events/approval_decided.schema.json",
+      "schemas/events/workflow_completed.schema.json",
+      "schemas/events/business_policy_violation.schema.json",
+      "schemas/entities/customer.schema.json"
+    ]
+  },
+  "output_contract": {
+    "schema_refs": [
+      "schemas/events/approval_requested.schema.json",
+      "schemas/events/approval_decided.schema.json",
+      "schemas/events/workflow_completed.schema.json",
+      "schemas/events/business_policy_violation.schema.json",
+      "schemas/entities/customer.schema.json"
+    ]
+  }
+}
