@@ -58,6 +58,12 @@ jobs:
       - name: Run tests
         run: pytest --tb=short -q
 
+      - name: Build release package
+        run: python scripts/package_release.py --version 0.0.0-ci
+
+      - name: Validate release package contents
+        run: python scripts/validate_release_package.py --zip-path dist/apotheon-skill-pack-v0.0.0-ci.zip
+
       - name: Run pre-merge contracts phase gates
         run: python scripts/run_premerge_checks.py --phase contracts
 
