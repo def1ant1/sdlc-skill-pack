@@ -1,0 +1,11 @@
+workflow_id: wf-example-001
+objective: Governed phase-pack execution with canonical outputs
+steps:
+  - step: 1
+    action: validate-context-and-policy
+  - step: 2
+    action: generate-canonical-entities-and-events
+  - step: 3
+    action: request-human-approval-for-external-or-customer-facing-actions
+  - step: 4
+    action: emit-workflow_completed-event
