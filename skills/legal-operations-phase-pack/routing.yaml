@@ -1,0 +1,4 @@
+skill: legal-operations-phase-pack
+routes:
+  - condition: task.phase in ['phase-119']
+    priority: high

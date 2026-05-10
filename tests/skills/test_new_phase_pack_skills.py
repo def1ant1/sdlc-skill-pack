@@ -8,6 +8,10 @@ SKILLS = [
     "finance-accounting-phase-pack",
     "sales-marketing-customer-phase-pack",
     "inventory-product-market-phase-pack",
+    "hr-operations-phase-pack",
+    "vendor-procurement-phase-pack",
+    "legal-operations-phase-pack",
+    "process-optimization-phase-pack",
 ]
 REQUIRED_EVENTS = {
     "schemas/events/approval_requested.schema.json",

@@ -1,0 +1,4 @@
+skill: vendor-procurement-phase-pack
+routes:
+  - condition: task.phase in ['phase-118']
+    priority: high
