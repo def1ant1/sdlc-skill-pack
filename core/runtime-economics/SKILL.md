@@ -153,6 +153,15 @@ Full routing policy: `references/routing-economics.md`
 
 ---
 
+
+## Integrations
+
+Runtime economics integrates directly with:
+
+- `skills/token-cost-analysis` for token and unit-cost attribution by skill/workflow/agent/tenant/domain.
+- `skills/roi-estimation` for value rollups and value-to-cost ranking across correlated workflows.
+- `scripts/validate_telemetry_events.py` to enforce correlation-id consistency across runtime/business streams before economics aggregation.
+
 ## Optimization Levers
 
 | Lever | Expected Saving | When to Apply |
