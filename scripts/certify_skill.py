@@ -58,9 +58,11 @@ def certify(
     eval_passed: bool,
     security_passed: bool,
     context_passed: bool,
+    context_budget_passed: bool,
     telemetry_passed: bool,
     unresolved_routing_collisions: int,
     production_mutation_requested: bool,
+    autonomous_optimization_requested: bool,
     approval_status: str,
     approval_actor: str | None,
     approval_timestamp: str | None,
@@ -87,6 +89,8 @@ def certify(
         reasons.append("security_check_failed")
     if not context_passed:
         reasons.append("context_check_failed")
+    if not context_budget_passed:
+        reasons.append("context_budget_check_failed")
     if not telemetry_passed:
         reasons.append("telemetry_check_failed")
     if unresolved_routing_collisions > 0:
@@ -95,7 +99,7 @@ def certify(
     certification_status = "certified" if not reasons else "rejected"
     governance_status = "not_required"
 
-    if production_mutation_requested:
+    if production_mutation_requested or autonomous_optimization_requested:
         governance_missing = []
         if approval_status != "approved":
             governance_missing.append("approval_status")
@@ -133,8 +137,10 @@ def main() -> int:
     p.add_argument("--security-passed", action="store_true")
     p.add_argument("--context-passed", action="store_true")
     p.add_argument("--telemetry-passed", action="store_true")
+    p.add_argument("--context-budget-passed", action="store_true")
     p.add_argument("--unresolved-routing-collisions", type=int, default=0)
     p.add_argument("--production-mutation-requested", action="store_true")
+    p.add_argument("--autonomous-optimization-requested", action="store_true")
     p.add_argument("--approval-status", default="pending")
     p.add_argument("--approval-actor")
     p.add_argument("--approval-timestamp")
@@ -148,9 +154,11 @@ def main() -> int:
         eval_passed=args.eval_passed,
         security_passed=args.security_passed,
         context_passed=args.context_passed,
+        context_budget_passed=args.context_budget_passed,
         telemetry_passed=args.telemetry_passed,
         unresolved_routing_collisions=args.unresolved_routing_collisions,
         production_mutation_requested=args.production_mutation_requested,
+        autonomous_optimization_requested=args.autonomous_optimization_requested,
         approval_status=args.approval_status,
         approval_actor=args.approval_actor,
         approval_timestamp=args.approval_timestamp,
