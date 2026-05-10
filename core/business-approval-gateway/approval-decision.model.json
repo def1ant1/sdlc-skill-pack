@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Approval Decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "approval_id",
+    "decision",
+    "decided_at",
+    "decider",
+    "evidence"
+  ],
+  "properties": {
+    "approval_id": {
+      "type": "string"
+    },
+    "decision": {
+      "type": "string",
+      "enum": [
+        "approve",
+        "reject",
+        "request-info"
+      ]
+    },
+    "decided_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "decider": {
+      "type": "object",
+      "required": [
+        "id",
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "comments": {
+      "type": "string"
+    },
+    "evidence": {
+      "type": "object",
+      "required": [
+        "evidence_id",
+        "artifact_uri",
+        "hash",
+        "collected_at"
+      ],
+      "properties": {
+        "evidence_id": {
+          "type": "string"
+        },
+        "artifact_uri": {
+          "type": "string"
+        },
+        "hash": {
+          "type": "string"
+        },
+        "collected_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
