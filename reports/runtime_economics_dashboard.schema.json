@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Runtime Economics Dashboard",
+  "type": "object",
+  "required": ["generated_at", "attribution"],
+  "properties": {
+    "generated_at": {"type": "string", "format": "date-time"},
+    "attribution": {
+      "type": "object",
+      "required": ["skill", "workflow", "agent", "tenant", "domain"],
+      "properties": {
+        "skill": {"type": "array", "items": {"$ref": "#/$defs/entry"}},
+        "workflow": {"type": "array", "items": {"$ref": "#/$defs/entry"}},
+        "agent": {"type": "array", "items": {"$ref": "#/$defs/entry"}},
+        "tenant": {"type": "array", "items": {"$ref": "#/$defs/entry"}},
+        "domain": {"type": "array", "items": {"$ref": "#/$defs/entry"}}
+      }
+    }
+  },
+  "$defs": {
+    "entry": {
+      "type": "object",
+      "required": ["id", "cost_usd", "value_usd", "value_to_cost_ratio"],
+      "properties": {
+        "id": {"type": "string"},
+        "cost_usd": {"type": "number", "minimum": 0},
+        "value_usd": {"type": "number"},
+        "value_to_cost_ratio": {"type": "number"}
+      }
+    }
+  }
+}

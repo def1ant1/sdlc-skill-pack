@@ -1,0 +1,9 @@
+{
+  "skill_name": "token-cost-analysis",
+  "priority": "P1",
+  "owner": "Apotheon.ai",
+  "last_updated": "2026-05-10",
+  "datasets": [{"id": "token-usage-sample", "description": "Representative token usage across skills"}],
+  "metrics": [{"name": "cost_rollup_accuracy", "target": 0.99, "direction": "gte"}],
+  "acceptance_gates": ["rollup_error_rate <= 1%"]
+}
