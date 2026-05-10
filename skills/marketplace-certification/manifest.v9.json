@@ -1,0 +1,22 @@
+{
+  "name": "marketplace-certification",
+  "type": "skill",
+  "version": "9.0.0",
+  "dependencies": [
+    "core/policy-engine",
+    "core/business-approval-gateway",
+    "core/telemetry"
+  ],
+  "required_context": [
+    "skill_manifest",
+    "eval_report",
+    "security_report",
+    "routing_collision_report"
+  ],
+  "telemetry_events": [
+    "certification_started",
+    "certification_prerequisite_checked",
+    "certification_decision_recorded",
+    "production_mutation_approved"
+  ]
+}
