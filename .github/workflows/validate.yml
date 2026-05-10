@@ -58,29 +58,11 @@ jobs:
       - name: Run tests
         run: pytest --tb=short -q
 
-      - name: Run V9 contract/eval/telemetry/context checks
-        run: |
-          python scripts/validate_backlog_truth.py
-          python scripts/validate_skill_contracts.py
-          python scripts/check_context_budget.py
-          python scripts/generate_skill_inventory.py
-          python scripts/generate_dependency_graph.py
-          python scripts/detect_skill_overlap.py
-          python scripts/validate_skill_evals.py
-          python scripts/validate_telemetry_events.py
-          python scripts/check_work_tasks_snapshot_freshness.py
-          python scripts/validate_hitl_coverage.py
-          python scripts/grade_skill_maturity.py
+      - name: Run pre-merge contracts phase gates
+        run: python scripts/run_premerge_checks.py --phase contracts
 
-      - name: Enforce documentation governance
-        run: |
-          python scripts/docs/validate_doc_uniqueness.py
-          python scripts/docs/check_backlog_changelog_sync.py
-          python scripts/docs/enforce_doc_freshness.py
-          python scripts/docs/validate_readme_claims.py
-
-      - name: Validate release readiness (P0/P1 gates)
-        run: python scripts/run_premerge_checks.py
+      - name: Run release phase gates
+        run: python scripts/run_premerge_checks.py --phase release
 
       - name: Generate reports
         run: |
