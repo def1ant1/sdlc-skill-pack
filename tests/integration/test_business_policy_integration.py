@@ -52,7 +52,7 @@ def evaluate_policy(policy: dict, context: dict) -> tuple[bool, dict]:
         "event_type": "business_policy.violation",
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "actor": {"actor_id": "system", "actor_type": "service", "display_name": "Policy Engine"},
-        "source_system": "business-policy-engine",
+        "source": "business-policy-engine",
         "confidence": 1.0,
         "lineage": {"correlation_id": "corr-001", "causation_id": "cause-001", "parent_event_ids": []},
         "policy_context": {
@@ -64,6 +64,12 @@ def evaluate_policy(policy: dict, context: dict) -> tuple[bool, dict]:
         "payload": {"amount": context.get("amount"), "blocked": blocked},
     }
     return blocked, event
+
+
+def _trigger_external_side_effect(amount: int, blocked: bool, approval_decision: str | None) -> bool:
+    if blocked and approval_decision != "approve":
+        return False
+    return amount > 0
 
 
 def test_policy_violation_event_and_side_effect_blocked_pending_approval():
@@ -87,3 +93,22 @@ def test_policy_violation_event_and_side_effect_blocked_pending_approval():
     validate_against_schema(event, event_schema)
     assert blocked is True
     assert event["policy_context"]["violations"] == ["r1"]
+    assert _trigger_external_side_effect(amount=12000, blocked=blocked, approval_decision=None) is False
+
+
+def test_approved_flow_allows_external_side_effect_after_policy_gate():
+    blocked, _ = evaluate_policy(
+        {
+            "policy_id": "pol-002",
+            "name": "High value transfer check",
+            "version": "1.0.0",
+            "status": "active",
+            "scope": {"entities": ["payment"], "events": ["invoice.created"]},
+            "rules": [{"rule_id": "r1", "condition": "amount_gt_10000", "action": "require_approval", "severity": "high"}],
+            "enforcement": {"mode": "enforced", "owner": "finance"},
+        },
+        {"amount": 12500},
+    )
+
+    assert blocked is True
+    assert _trigger_external_side_effect(amount=12500, blocked=blocked, approval_decision="approve") is True

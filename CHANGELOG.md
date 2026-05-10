@@ -1,3 +1,13 @@
+## [8.0.4] — 2026-05-10 — Canonical Business Governance Models
+
+- Added canonical entity and business event schema coverage, including `lead` entity and required governance envelope fields across event contracts.
+- Added `schemas/business-policy.schema.json` and `references/business-policy-standard.md` for policy normalization.
+- Expanded approval decision schema with approve/reject/request-more-info and full evidence metadata.
+- Added integration tests validating policy violations emit compliant events and that external side effects are gated behind approval.
+
+---
+
+
 ## [8.0.3] — 2026-05-10 — Backlog Truth + Skill Contract V9 Tooling
 
 - Implemented backlog reference extraction/validation/reporting scripts with phase-aware parsing and ignore-list support.

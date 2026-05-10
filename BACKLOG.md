@@ -2113,3 +2113,24 @@ A phase is DONE when:
 ================================================================================
 END OF BACKLOG
 ================================================================================
+
+
+[P9-021] FEATURE | P0 CRITICAL | DONE
+Title: Canonical business governance stack
+Phase: 9
+Epic: AI Governance and Compliance
+Description:
+Implemented canonical entity/event contracts, policy schema standardization, approval gateway evidence model, and audit-ready integration tests for violation/approval control flow.
+Dependencies:
+P0-001
+Deliverables:
+- `schemas/entities/*` and `schemas/events/*` governance contracts
+- `schemas/business-policy.schema.json` and `references/business-policy-standard.md`
+- `core/business-approval-gateway/approval-decision.model.json`
+- integration tests for violation events and approval-gated side effects
+Acceptance Criteria:
+- Violation events always include actor, timestamp, source, confidence, lineage, and policy context
+- Side effects blocked until explicit approval
+Quality Gate:
+`pytest tests/integration/test_business_policy_integration.py` passes.
+

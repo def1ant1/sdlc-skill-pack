@@ -1,13 +1,15 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Approval Decision",
+  "$id": "https://apotheon.dev/schemas/approval-decision.model.json",
+  "title": "Business Approval Decision",
   "type": "object",
   "additionalProperties": false,
   "required": [
     "approval_id",
     "decision",
-    "decided_at",
-    "decider",
+    "decision_timestamp",
+    "actor",
+    "justification",
     "evidence"
   ],
   "properties": {
@@ -19,57 +21,115 @@
       "enum": [
         "approve",
         "reject",
-        "request-info"
+        "request_more_info"
       ]
     },
-    "decided_at": {
+    "decision_timestamp": {
       "type": "string",
       "format": "date-time"
     },
-    "decider": {
+    "actor": {
       "type": "object",
       "required": [
-        "id",
-        "type"
+        "actor_id",
+        "actor_type"
       ],
       "properties": {
-        "id": {
+        "actor_id": {
           "type": "string"
         },
-        "type": {
+        "actor_type": {
+          "type": "string"
+        },
+        "display_name": {
           "type": "string"
         }
       },
       "additionalProperties": false
     },
-    "comments": {
+    "justification": {
       "type": "string"
     },
     "evidence": {
       "type": "object",
       "required": [
-        "evidence_id",
-        "artifact_uri",
-        "hash",
-        "collected_at"
+        "evidence_pack_id",
+        "artifacts",
+        "lineage",
+        "integrity"
       ],
       "properties": {
-        "evidence_id": {
+        "evidence_pack_id": {
           "type": "string"
         },
-        "artifact_uri": {
-          "type": "string"
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "artifact_id",
+              "artifact_type",
+              "uri",
+              "hash"
+            ],
+            "properties": {
+              "artifact_id": {
+                "type": "string"
+              },
+              "artifact_type": {
+                "type": "string"
+              },
+              "uri": {
+                "type": "string"
+              },
+              "hash": {
+                "type": "string"
+              },
+              "captured_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "additionalProperties": false
+          }
         },
-        "hash": {
-          "type": "string"
-        },
-        "collected_at": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "metadata": {
+        "lineage": {
           "type": "object",
-          "additionalProperties": true
+          "required": [
+            "correlation_id",
+            "causation_id"
+          ],
+          "properties": {
+            "correlation_id": {
+              "type": "string"
+            },
+            "causation_id": {
+              "type": "string"
+            },
+            "parent_event_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "integrity": {
+          "type": "object",
+          "required": [
+            "signature",
+            "algorithm"
+          ],
+          "properties": {
+            "signature": {
+              "type": "string"
+            },
+            "algorithm": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
         }
       },
       "additionalProperties": false
