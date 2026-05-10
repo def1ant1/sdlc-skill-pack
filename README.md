@@ -296,7 +296,7 @@ docs/
     governance-model.md            Approval authority matrix and policy registry
 
   governance/
-    hitl-gate-audit.md             183-skill HITL audit: 41 covered, 20 gaps with roadmap
+    hitl-gate-audit.md             HITL policy audit details (see generated HITL coverage report)
 
   onboarding/
     getting-started.md             First-run guide for new contributors
@@ -304,7 +304,7 @@ docs/
     SKILL_AUTHORING_GUIDE.md       Complete guide: scaffold → write → validate → publish
     GTM_PLANNER_GUIDE.md           GTM planner usage, skill routing, and extension guide
 
-tests/                             12 test files, 190+ passing tests
+tests/                             Test suite (see generated test summary report)
   validation/                      Skill structure and frontmatter tests
   orchestration/                   Workflow planning and routing regression tests
   skills/                          Skill file content tests
@@ -368,8 +368,9 @@ Every skill action is classified by risk level:
 | **Medium (L1)** | Internal state changes, non-production deployments | Async notification, 30-min veto |
 | **Low** | Read-only operations, analysis, planning | No gate |
 
-41 of 183 skills have HITL gates declared. The V9 roadmap targets 85%+ coverage
-for all critical and high-risk skills. See `docs/governance/hitl-gate-audit.md`.
+HITL coverage is generated from repository metadata and published in
+`reports/hitl_coverage_report.md`. Test inventory is published in
+`reports/test_summary.md`. See `docs/governance/hitl-gate-audit.md` for policy context.
 
 ---
 
@@ -466,6 +467,16 @@ Full reference: `docs/onboarding/DEPLOYMENT.md`
 | Agent fleet | `docs/architecture/agent-fleet.md` |
 | HITL gate audit | `docs/governance/hitl-gate-audit.md` |
 | System overview | `docs/architecture/system-overview.md` |
+## Generated Release Reports
+
+- Release readiness (canonical): `reports/release_readiness.md` and `reports/release_readiness.json`
+- Skill inventory: `reports/skill_inventory.md` and `reports/skill_inventory.json`
+- HITL coverage: `reports/hitl_coverage_report.md`
+- Test summary: `reports/test_summary.md`
+- Business skill coverage: `reports/business_skill_coverage.md`
+
+All numeric claims in this README should refer to these generated report artifacts, not hard-coded values.
+
 ## Repo Truth and Skill Contract Tooling
 
 - `python scripts/extract_backlog_paths.py --root . --grouped`

@@ -75,6 +75,7 @@ jobs:
           python scripts/docs/validate_doc_uniqueness.py
           python scripts/docs/check_backlog_changelog_sync.py
           python scripts/docs/enforce_doc_freshness.py
+          python scripts/docs/validate_readme_claims.py
 
       - name: Validate release readiness (P0/P1 gates)
         run: python scripts/run_premerge_checks.py
