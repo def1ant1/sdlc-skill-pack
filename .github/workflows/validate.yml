@@ -70,6 +70,9 @@ jobs:
       - name: Run release phase gates
         run: python scripts/run_premerge_checks.py --phase release
 
+      - name: Validate release artifacts
+        run: python scripts/validate_release_artifacts.py
+
       - name: Generate reports
         run: |
           python scripts/generate_release_reports.py

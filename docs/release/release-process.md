@@ -31,3 +31,19 @@ This avoids drift between CI command lists and local pre-merge command lists.
 ## Failure output behavior
 
 `run_premerge_checks.py` groups failures by phase and gate name, and deduplicates repeated error lines in captured command output to reduce repeated noise in CI logs.
+
+
+## Release artifact consistency checks
+
+Before merge and at release time, CI must validate:
+
+- `README.md` declared version equals `VERSION`.
+- `CHANGELOG.md` contains the current release entry from `VERSION`.
+- `RELEASE_NOTES.md` contains a matching release-notes section for that version.
+- Generated files in `reports/` embed current commit SHA traceability metadata.
+
+Use:
+
+- `python scripts/validate_release_artifacts.py`
+
+The validator emits mismatch messages with exact file and line references to accelerate correction.

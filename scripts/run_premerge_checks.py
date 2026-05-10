@@ -34,6 +34,7 @@ GATES: tuple[Gate, ...] = (
     Gate("HITL coverage", "contracts", ["python", "scripts/validate_hitl_coverage.py"]),
     Gate("Skill maturity", "contracts", ["python", "scripts/grade_skill_maturity.py"]),
     Gate("Release reports", "release", ["python", "scripts/generate_release_reports.py"]),
+    Gate("Release artifacts", "release", ["python", "scripts/validate_release_artifacts.py"]),
     Gate("Release HITL coverage", "release", ["python", "scripts/validate_hitl_coverage.py"]),
     Gate("Release skill maturity", "release", ["python", "scripts/grade_skill_maturity.py"]),
 )

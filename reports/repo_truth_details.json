@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-05-10T20:36:47Z",
+  "generated_at": "2026-05-10T21:13:55Z",
   "status": "fail",
-  "reference_count": 179,
-  "checked_count": 179,
-  "existing_count": 149,
-  "missing_count": 30,
+  "reference_count": 255,
+  "checked_count": 255,
+  "existing_count": 196,
+  "missing_count": 59,
   "stale_claim_count": 0,
-  "phase_count": 32,
+  "phase_count": 33,
   "phase_completion_count": 24,
   "phase_stats": [
     {
@@ -232,9 +232,190 @@
       "existing": 23,
       "missing": 1,
       "complete": false
+    },
+    {
+      "phase": "Unscoped",
+      "total": 76,
+      "existing": 47,
+      "missing": 29,
+      "complete": false
     }
   ],
   "missing": [
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 30,
+      "phase": "Unscoped",
+      "path": "scripts/smoke_test_release.py"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 31,
+      "phase": "Unscoped",
+      "path": "scripts/orchestration/plan_business_workflow.py"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 82,
+      "phase": "Unscoped",
+      "path": "schemas/release-readiness.schema.json"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 148,
+      "phase": "Unscoped",
+      "path": "schemas/release-readiness.schema.json"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 252,
+      "phase": "Unscoped",
+      "path": "scripts/validate_version_consistency.py"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 253,
+      "phase": "Unscoped",
+      "path": "scripts/generate_release_notes.py"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 267,
+      "phase": "Unscoped",
+      "path": "scripts/validate_version_consistency.py"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 269,
+      "phase": "Unscoped",
+      "path": "scripts/generate_release_notes.py"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 283,
+      "phase": "Unscoped",
+      "path": "scripts/smoke_test_release.py"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 284,
+      "phase": "Unscoped",
+      "path": "tests/release/test_release_smoke.py"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 285,
+      "phase": "Unscoped",
+      "path": "reports/release_smoke_test_report.md"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 286,
+      "phase": "Unscoped",
+      "path": "reports/release_smoke_test_report.json"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 306,
+      "phase": "Unscoped",
+      "path": "scripts/smoke_test_release.py"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 322,
+      "phase": "Unscoped",
+      "path": "scripts/orchestration/plan_business_workflow.py"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 323,
+      "phase": "Unscoped",
+      "path": "scripts/orchestration/plan_finance_workflow.py"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 324,
+      "phase": "Unscoped",
+      "path": "scripts/orchestration/plan_customer_workflow.py"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 325,
+      "phase": "Unscoped",
+      "path": "scripts/orchestration/plan_inventory_workflow.py"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 326,
+      "phase": "Unscoped",
+      "path": "tests/orchestration/test_plan_business_workflow.py"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 327,
+      "phase": "Unscoped",
+      "path": "tests/orchestration/test_plan_finance_workflow.py"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 328,
+      "phase": "Unscoped",
+      "path": "tests/orchestration/test_plan_customer_workflow.py"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 329,
+      "phase": "Unscoped",
+      "path": "tests/orchestration/test_plan_inventory_workflow.py"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 461,
+      "phase": "Unscoped",
+      "path": "reports/doc_freshness_report.md"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 462,
+      "phase": "Unscoped",
+      "path": "reports/doc_freshness_report.json"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 494,
+      "phase": "Unscoped",
+      "path": "scripts/validate_version_consistency.py"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 495,
+      "phase": "Unscoped",
+      "path": "scripts/smoke_test_release.py"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 537,
+      "phase": "Unscoped",
+      "path": "reports/release_smoke_test_report.md"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 538,
+      "phase": "Unscoped",
+      "path": "reports/release_smoke_test_report.json"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 539,
+      "phase": "Unscoped",
+      "path": "reports/doc_freshness_report.md"
+    },
+    {
+      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
+      "line": 540,
+      "phase": "Unscoped",
+      "path": "reports/doc_freshness_report.json"
+    },
     {
       "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
       "line": 383,
@@ -418,8 +599,8 @@
   ],
   "stale_claims": [],
   "_traceability": {
-    "commit_sha": "8f5d1d079a1114123bb53dd06f2cc3f29ccd13b3",
-    "generated_at_utc": "2026-05-10T16:35:03-04:00",
+    "commit_sha": "380eb7097bbf460740fab6c25564091bb4ddb3f6",
+    "generated_at_utc": "2026-05-10T17:12:06-04:00",
     "generator": "scripts/generate_release_reports.py"
   }
 }

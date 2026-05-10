@@ -2,6 +2,15 @@
 last_updated: 2026-05-10
 ---
 
+## [8.0.5] — 2026-05-10 — Release Artifact Validation and CI Consistency
+
+- Added canonical `VERSION` file and aligned release artifacts to it.
+- Added release artifact validation checks for README version parity, changelog entry presence, release notes coverage, and commit SHA traceability in reports.
+- Added failure output with exact file/line mismatch hints for rapid remediation in CI.
+
+---
+
+
 ## [8.0.4] — 2026-05-10 — Canonical Business Governance Models
 
 - Added canonical entity and business event schema coverage, including `lead` entity and required governance envelope fields across event contracts.
