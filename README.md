@@ -419,7 +419,13 @@ All SKILL.md files must pass:
 - Recommended fields: `metadata.version`, `metadata.category`, `metadata.owner`, `metadata.maturity`, `metadata.dependencies`
 - High-risk skills: must declare `hitl_gates` in frontmatter
 
-CI runs on every push/PR: `validate_skill_structure.py` → `validate_frontmatter.py` → `pytest`.
+CI runs on every push/PR: `validate_skill_structure.py` → `validate_frontmatter.py` → `scripts/run_premerge_checks.py` → `pytest`.
+
+Run the same local pre-merge gates before opening a PR:
+
+```bash
+python scripts/run_premerge_checks.py
+```
 
 ---
 
