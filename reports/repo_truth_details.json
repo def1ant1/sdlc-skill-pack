@@ -1,0 +1,425 @@
+{
+  "generated_at": "2026-05-10T20:36:47Z",
+  "status": "fail",
+  "reference_count": 179,
+  "checked_count": 179,
+  "existing_count": 149,
+  "missing_count": 30,
+  "stale_claim_count": 0,
+  "phase_count": 32,
+  "phase_completion_count": 24,
+  "phase_stats": [
+    {
+      "phase": "Phase 93",
+      "total": 11,
+      "existing": 11,
+      "missing": 0,
+      "complete": true
+    },
+    {
+      "phase": "Phase 94",
+      "total": 5,
+      "existing": 5,
+      "missing": 0,
+      "complete": true
+    },
+    {
+      "phase": "Phase 95",
+      "total": 4,
+      "existing": 4,
+      "missing": 0,
+      "complete": true
+    },
+    {
+      "phase": "Phase 96",
+      "total": 3,
+      "existing": 3,
+      "missing": 0,
+      "complete": true
+    },
+    {
+      "phase": "Phase 97",
+      "total": 4,
+      "existing": 4,
+      "missing": 0,
+      "complete": true
+    },
+    {
+      "phase": "Phase 98",
+      "total": 3,
+      "existing": 3,
+      "missing": 0,
+      "complete": true
+    },
+    {
+      "phase": "Phase 99",
+      "total": 4,
+      "existing": 4,
+      "missing": 0,
+      "complete": true
+    },
+    {
+      "phase": "Phase 100",
+      "total": 6,
+      "existing": 5,
+      "missing": 1,
+      "complete": false
+    },
+    {
+      "phase": "Phase 102",
+      "total": 4,
+      "existing": 4,
+      "missing": 0,
+      "complete": true
+    },
+    {
+      "phase": "Phase 103",
+      "total": 6,
+      "existing": 6,
+      "missing": 0,
+      "complete": true
+    },
+    {
+      "phase": "Phase 104",
+      "total": 5,
+      "existing": 5,
+      "missing": 0,
+      "complete": true
+    },
+    {
+      "phase": "Phase 105",
+      "total": 6,
+      "existing": 6,
+      "missing": 0,
+      "complete": true
+    },
+    {
+      "phase": "Phase 106",
+      "total": 4,
+      "existing": 2,
+      "missing": 2,
+      "complete": false
+    },
+    {
+      "phase": "Phase 107",
+      "total": 7,
+      "existing": 7,
+      "missing": 0,
+      "complete": true
+    },
+    {
+      "phase": "Phase 108",
+      "total": 7,
+      "existing": 7,
+      "missing": 0,
+      "complete": true
+    },
+    {
+      "phase": "Phase 109",
+      "total": 7,
+      "existing": 7,
+      "missing": 0,
+      "complete": true
+    },
+    {
+      "phase": "Phase 110",
+      "total": 7,
+      "existing": 7,
+      "missing": 0,
+      "complete": true
+    },
+    {
+      "phase": "Phase 111",
+      "total": 6,
+      "existing": 6,
+      "missing": 0,
+      "complete": true
+    },
+    {
+      "phase": "Phase 112",
+      "total": 6,
+      "existing": 6,
+      "missing": 0,
+      "complete": true
+    },
+    {
+      "phase": "Phase 113",
+      "total": 7,
+      "existing": 0,
+      "missing": 7,
+      "complete": false
+    },
+    {
+      "phase": "Phase 114",
+      "total": 6,
+      "existing": 0,
+      "missing": 6,
+      "complete": false
+    },
+    {
+      "phase": "Phase 115",
+      "total": 5,
+      "existing": 0,
+      "missing": 5,
+      "complete": false
+    },
+    {
+      "phase": "Phase 116",
+      "total": 6,
+      "existing": 0,
+      "missing": 6,
+      "complete": false
+    },
+    {
+      "phase": "Phase 117",
+      "total": 3,
+      "existing": 3,
+      "missing": 0,
+      "complete": true
+    },
+    {
+      "phase": "Phase 118",
+      "total": 3,
+      "existing": 1,
+      "missing": 2,
+      "complete": false
+    },
+    {
+      "phase": "Phase 119",
+      "total": 3,
+      "existing": 3,
+      "missing": 0,
+      "complete": true
+    },
+    {
+      "phase": "Phase 120",
+      "total": 3,
+      "existing": 3,
+      "missing": 0,
+      "complete": true
+    },
+    {
+      "phase": "Phase 121",
+      "total": 3,
+      "existing": 3,
+      "missing": 0,
+      "complete": true
+    },
+    {
+      "phase": "Phase 122",
+      "total": 4,
+      "existing": 4,
+      "missing": 0,
+      "complete": true
+    },
+    {
+      "phase": "Phase 123",
+      "total": 4,
+      "existing": 4,
+      "missing": 0,
+      "complete": true
+    },
+    {
+      "phase": "Phase 124",
+      "total": 3,
+      "existing": 3,
+      "missing": 0,
+      "complete": true
+    },
+    {
+      "phase": "Phase 125",
+      "total": 24,
+      "existing": 23,
+      "missing": 1,
+      "complete": false
+    }
+  ],
+  "missing": [
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 383,
+      "phase": "Phase 100",
+      "path": "references/enterprise-ontology.md"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 576,
+      "phase": "Phase 106",
+      "path": "skills/expense-policy-compliance/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 577,
+      "phase": "Phase 106",
+      "path": "skills/financial-control-monitoring/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 750,
+      "phase": "Phase 113",
+      "path": "skills/workforce-planning/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 751,
+      "phase": "Phase 113",
+      "path": "skills/hiring-pipeline-intelligence/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 752,
+      "phase": "Phase 113",
+      "path": "skills/interview-scorecard-analysis/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 753,
+      "phase": "Phase 113",
+      "path": "skills/employee-performance-coaching/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 754,
+      "phase": "Phase 113",
+      "path": "skills/burnout-risk-detection/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 755,
+      "phase": "Phase 113",
+      "path": "skills/learning-path-optimization/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 756,
+      "phase": "Phase 113",
+      "path": "skills/org-design-analysis/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 774,
+      "phase": "Phase 114",
+      "path": "skills/procurement-automation/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 775,
+      "phase": "Phase 114",
+      "path": "skills/vendor-scorecarding/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 776,
+      "phase": "Phase 114",
+      "path": "skills/vendor-risk-analysis/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 777,
+      "phase": "Phase 114",
+      "path": "skills/contract-renewal-intelligence/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 778,
+      "phase": "Phase 114",
+      "path": "skills/spend-analysis/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 779,
+      "phase": "Phase 114",
+      "path": "skills/purchase-approval-routing/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 797,
+      "phase": "Phase 115",
+      "path": "skills/contract-review-support/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 798,
+      "phase": "Phase 115",
+      "path": "skills/clause-risk-analysis/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 799,
+      "phase": "Phase 115",
+      "path": "skills/legal-obligation-tracking/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 800,
+      "phase": "Phase 115",
+      "path": "skills/compliance-evidence-collection/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 801,
+      "phase": "Phase 115",
+      "path": "skills/policy-document-analysis/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 819,
+      "phase": "Phase 116",
+      "path": "skills/process-mining/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 820,
+      "phase": "Phase 116",
+      "path": "skills/workflow-optimization/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 821,
+      "phase": "Phase 116",
+      "path": "skills/sop-generation/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 822,
+      "phase": "Phase 116",
+      "path": "skills/kpi-design/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 823,
+      "phase": "Phase 116",
+      "path": "skills/operational-bottleneck-analysis/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 824,
+      "phase": "Phase 116",
+      "path": "skills/root-cause-analysis/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 880,
+      "phase": "Phase 118",
+      "path": "skills/approval-policy-authoring/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 881,
+      "phase": "Phase 118",
+      "path": "skills/approval-queue-management/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 1150,
+      "phase": "Phase 125",
+      "path": "core/skills"
+    }
+  ],
+  "stale_claims": [],
+  "_traceability": {
+    "commit_sha": "8f5d1d079a1114123bb53dd06f2cc3f29ccd13b3",
+    "generated_at_utc": "2026-05-10T16:35:03-04:00",
+    "generator": "scripts/generate_release_reports.py"
+  }
+}

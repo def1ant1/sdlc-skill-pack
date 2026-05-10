@@ -90,10 +90,10 @@ jobs:
 
       - name: Enforce regenerated reports are committed
         run: |
-          git add reports/
-          git diff --cached --quiet -- reports/ || {
+          git status --short -- reports/
+          test -z "$(git status --short -- reports/)" || {
             echo "Generated reports changed. Commit updated files in reports/."
-            git diff --cached -- reports/
+            git diff -- reports/
             exit 1
           }
 
@@ -156,6 +156,15 @@ jobs:
           python scripts/generate_release_reports.py
           python scripts/validate_hitl_coverage.py
           python scripts/grade_skill_maturity.py
+
+      - name: Enforce release report drift check
+        run: |
+          git status --short -- reports/
+          test -z "$(git status --short -- reports/)" || {
+            echo "Release report drift detected in reports/."
+            git diff -- reports/
+            exit 1
+          }
 
       - name: Upload release candidate reports
         uses: actions/upload-artifact@v4

@@ -1,11 +1,12 @@
+<!-- traceability: commit_sha=8f5d1d079a1114123bb53dd06f2cc3f29ccd13b3 generated_at_utc=2026-05-10T16:35:03-04:00 generator=scripts/generate_release_reports.py -->
 # Routing Collision Report
 
 ## Summary
-- Skills scanned: 277
+- Skills scanned: 284
 - Trigger overlaps: 20456
 - Dependency cycles: 17
-- Unknown domain ownership: 13
-- Missing exclusion rules: 0
+- Unknown domain ownership: 17
+- Missing exclusion rules: 4
 
 ## Trigger Overlap
 - `agent-identity` vs `agent-kernel` overlap on: follow description activation criteria.
@@ -188,10 +189,18 @@
 - `evidence-pack-generation` has `metadata.category: unknown`.
 - `golden-record-management` has `metadata.category: unknown`.
 - `hr-case-management-support` has `metadata.category: unknown`.
+- `hr-operations-phase-pack` has `metadata.category: unknown`.
 - `legal-obligation-management-support` has `metadata.category: unknown`.
+- `legal-operations-phase-pack` has `metadata.category: unknown`.
 - `process-optimization-governance-support` has `metadata.category: unknown`.
+- `process-optimization-phase-pack` has `metadata.category: unknown`.
 - `routing-collision-analysis` has `metadata.category: unknown`.
+- `vendor-procurement-phase-pack` has `metadata.category: unknown`.
 - `vendor-procurement-risk-support` has `metadata.category: unknown`.
+- `hr-operations-phase-pack` missing `do_not_use_when` guidance.
+- `legal-operations-phase-pack` missing `do_not_use_when` guidance.
+- `process-optimization-phase-pack` missing `do_not_use_when` guidance.
+- `vendor-procurement-phase-pack` missing `do_not_use_when` guidance.
 
 ## Remediation Recommendations
 1. Strengthen `use_when` with unique trigger language per domain.

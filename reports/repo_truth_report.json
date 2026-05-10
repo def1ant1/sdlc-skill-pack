@@ -1,6 +1,6 @@
 {
   "status": "fail",
-  "generated_at": "2026-05-10T20:00:23Z",
+  "generated_at": "2026-05-10T20:36:47Z",
   "reference_count": 179,
   "phase_count": 32,
   "phase_completion_count": 24,
@@ -38,5 +38,10 @@
     "skills/approval-policy-authoring/ (APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md:880, Phase 118)",
     "skills/approval-queue-management/ (APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md:881, Phase 118)",
     "core/skills (APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md:1150, Phase 125)"
-  ]
+  ],
+  "_traceability": {
+    "commit_sha": "8f5d1d079a1114123bb53dd06f2cc3f29ccd13b3",
+    "generated_at_utc": "2026-05-10T16:35:03-04:00",
+    "generator": "scripts/generate_release_reports.py"
+  }
 }

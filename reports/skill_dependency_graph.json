@@ -1345,6 +1345,12 @@
       "dependencies": []
     },
     {
+      "name": "finance-accounting-phase-pack",
+      "path": "skills/finance-accounting-phase-pack",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
       "name": "financial-scenario-modeling",
       "path": "skills/financial-scenario-modeling",
       "type": "skill",
@@ -1428,6 +1434,12 @@
     {
       "name": "hr-case-management-support",
       "path": "skills/hr-case-management-support",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "hr-operations-phase-pack",
+      "path": "skills/hr-operations-phase-pack",
       "type": "skill",
       "dependencies": []
     },
@@ -1521,6 +1533,12 @@
       "dependencies": []
     },
     {
+      "name": "inventory-product-market-phase-pack",
+      "path": "skills/inventory-product-market-phase-pack",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
       "name": "invoice-processing",
       "path": "skills/invoice-processing",
       "type": "skill",
@@ -1594,6 +1612,12 @@
     {
       "name": "legal-obligation-management-support",
       "path": "skills/legal-obligation-management-support",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "legal-operations-phase-pack",
+      "path": "skills/legal-operations-phase-pack",
       "type": "skill",
       "dependencies": []
     },
@@ -1900,6 +1924,12 @@
       "dependencies": []
     },
     {
+      "name": "process-optimization-phase-pack",
+      "path": "skills/process-optimization-phase-pack",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
       "name": "procurement-kpi-optimization-support",
       "path": "skills/procurement-kpi-optimization-support",
       "type": "skill",
@@ -2170,6 +2200,12 @@
       "dependencies": []
     },
     {
+      "name": "sales-marketing-customer-phase-pack",
+      "path": "skills/sales-marketing-customer-phase-pack",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
       "name": "sales-pipeline-forecasting",
       "path": "skills/sales-pipeline-forecasting",
       "type": "skill",
@@ -2395,6 +2431,12 @@
         "legal-ops",
         "hitl-dashboard"
       ]
+    },
+    {
+      "name": "vendor-procurement-phase-pack",
+      "path": "skills/vendor-procurement-phase-pack",
+      "type": "skill",
+      "dependencies": []
     },
     {
       "name": "vendor-procurement-risk-support",
@@ -5603,8 +5645,13 @@
     }
   ],
   "stats": {
-    "node_count": 277,
+    "node_count": 284,
     "edge_count": 625,
     "unresolved_dependencies": 0
+  },
+  "_traceability": {
+    "commit_sha": "8f5d1d079a1114123bb53dd06f2cc3f29ccd13b3",
+    "generated_at_utc": "2026-05-10T16:35:03-04:00",
+    "generator": "scripts/generate_release_reports.py"
   }
 }
