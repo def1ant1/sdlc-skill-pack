@@ -22,7 +22,7 @@ services:
     environment:
       QDRANT__LOG_LEVEL: INFO
     healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost:6333/readyz || exit 1"]
+      test: ["CMD-SHELL", "bash -c 'echo > /dev/tcp/localhost/6333' 2>/dev/null || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -49,6 +49,7 @@ services:
       - TEMPORAL_ADDRESS=temporal:7233
       - TEMPORAL_BROADCAST_ADDRESS=127.0.0.1
       - BIND_ON_IP=0.0.0.0
+      - TEMPORAL_NAMESPACES=apotheon-dev
     depends_on:
       postgres:
         condition: service_healthy
