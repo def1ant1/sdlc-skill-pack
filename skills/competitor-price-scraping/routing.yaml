@@ -1,0 +1,9 @@
+trigger_id: competitor_price_scraping_trigger
+skill: competitor-price-scraping
+use_when:
+  - "intent contains competitor"
+  - "canonical context available"
+do_not_use_when:
+  - "request requires prohibited autonomous external mutation"
+  - "policy profile missing"
+collision_strategy: "prefer higher confidence then lexicographic skill name"

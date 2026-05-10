@@ -1,0 +1,9 @@
+trigger_id: market_data_quality_scoring_trigger
+skill: market-data-quality-scoring
+use_when:
+  - "intent contains market"
+  - "canonical context available"
+do_not_use_when:
+  - "request requires prohibited autonomous external mutation"
+  - "policy profile missing"
+collision_strategy: "prefer higher confidence then lexicographic skill name"

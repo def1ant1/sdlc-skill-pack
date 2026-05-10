@@ -1,0 +1,9 @@
+trigger_id: accounts_payable_automation_trigger
+skill: accounts-payable-automation
+use_when:
+  - "intent contains accounts"
+  - "canonical context available"
+do_not_use_when:
+  - "request requires prohibited autonomous external mutation"
+  - "policy profile missing"
+collision_strategy: "prefer higher confidence then lexicographic skill name"

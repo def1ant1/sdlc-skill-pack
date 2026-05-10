@@ -1,0 +1,9 @@
+trigger_id: escalation_prediction_trigger
+skill: escalation-prediction
+use_when:
+  - "intent contains escalation"
+  - "canonical context available"
+do_not_use_when:
+  - "request requires prohibited autonomous external mutation"
+  - "policy profile missing"
+collision_strategy: "prefer higher confidence then lexicographic skill name"

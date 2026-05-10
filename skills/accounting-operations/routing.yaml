@@ -1,0 +1,9 @@
+trigger_id: accounting_operations_trigger
+skill: accounting-operations
+use_when:
+  - "intent contains accounting"
+  - "canonical context available"
+do_not_use_when:
+  - "request requires prohibited autonomous external mutation"
+  - "policy profile missing"
+collision_strategy: "prefer higher confidence then lexicographic skill name"

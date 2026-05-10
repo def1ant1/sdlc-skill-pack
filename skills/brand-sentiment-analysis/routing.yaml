@@ -1,0 +1,9 @@
+trigger_id: brand_sentiment_analysis_trigger
+skill: brand-sentiment-analysis
+use_when:
+  - "intent contains brand"
+  - "canonical context available"
+do_not_use_when:
+  - "request requires prohibited autonomous external mutation"
+  - "policy profile missing"
+collision_strategy: "prefer higher confidence then lexicographic skill name"

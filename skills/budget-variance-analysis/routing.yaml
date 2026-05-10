@@ -1,0 +1,9 @@
+trigger_id: budget_variance_analysis_trigger
+skill: budget-variance-analysis
+use_when:
+  - "intent contains budget"
+  - "canonical context available"
+do_not_use_when:
+  - "request requires prohibited autonomous external mutation"
+  - "policy profile missing"
+collision_strategy: "prefer higher confidence then lexicographic skill name"

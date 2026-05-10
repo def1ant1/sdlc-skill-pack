@@ -1,0 +1,9 @@
+trigger_id: demand_planning_trigger
+skill: demand-planning
+use_when:
+  - "intent contains demand"
+  - "canonical context available"
+do_not_use_when:
+  - "request requires prohibited autonomous external mutation"
+  - "policy profile missing"
+collision_strategy: "prefer higher confidence then lexicographic skill name"

@@ -1,0 +1,97 @@
+{
+  "name": "revenue-leakage-detection",
+  "type": "skill",
+  "domain": "business-operations",
+  "subdomain": "phase-105",
+  "version": "9.0.0",
+  "owner": "Apotheon",
+  "maturity": "beta",
+  "dependencies": [
+    "core/policy-engine",
+    "core/business-approval-gateway"
+  ],
+  "activation_triggers": [
+    "phase_105",
+    "revenue_leakage_detection"
+  ],
+  "required_context": [
+    "tenant_profile",
+    "canonical_entities",
+    "policy_profile"
+  ],
+  "optional_context": [
+    "historical_events",
+    "benchmark_data"
+  ],
+  "input_contract": {
+    "format": "canonical-entity-event-bundle",
+    "schema_refs": [
+      "core/canonical-entity-model/README.md",
+      "core/business-event-model/README.md"
+    ]
+  },
+  "output_contract": {
+    "format": "canonical-entity-event-bundle",
+    "schema_refs": [
+      "core/canonical-entity-model/README.md",
+      "core/business-event-model/README.md"
+    ],
+    "approval_gate": "required-for-high-risk-actions"
+  },
+  "memory_policy": {
+    "retention": "session+artifact",
+    "pii": "minimize-and-redact"
+  },
+  "token_budget": {
+    "max_input_tokens": 12000,
+    "max_output_tokens": 2500,
+    "reserve_reasoning_tokens": 1500
+  },
+  "context_loading": {
+    "strategy": "progressive-disclosure",
+    "order": [
+      "required_context",
+      "optional_context"
+    ],
+    "max_chunks": 24
+  },
+  "governance_level": "L1",
+  "human_approval_required": false,
+  "execution_mode": "semi-autonomous",
+  "latency_target": "p95<=8s",
+  "cost_target": "<$0.08/run",
+  "determinism_level": "medium",
+  "telemetry_events": [
+    "skill_invoked",
+    "policy_gate_checked",
+    "risk_scored",
+    "output_emitted"
+  ],
+  "eval_metrics": [
+    "schema_compliance_rate",
+    "policy_gate_invocation_rate",
+    "groundedness_score",
+    "fallback_recovery_rate"
+  ],
+  "security_classification": "internal-confidential",
+  "integration_targets": [
+    "crm",
+    "erp",
+    "data-warehouse"
+  ],
+  "data_contracts": [
+    "core/canonical-entity-model/README.md",
+    "core/business-event-model/README.md"
+  ],
+  "failure_modes": [
+    "missing_required_context",
+    "schema_validation_failure",
+    "policy_gate_denied",
+    "upstream_connector_timeout"
+  ],
+  "fallbacks": [
+    "emit_safe_summary",
+    "request_human_approval",
+    "defer_with_retry_ticket"
+  ]
+}

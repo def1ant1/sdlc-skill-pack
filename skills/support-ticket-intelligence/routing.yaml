@@ -1,0 +1,9 @@
+trigger_id: support_ticket_intelligence_trigger
+skill: support-ticket-intelligence
+use_when:
+  - "intent contains support"
+  - "canonical context available"
+do_not_use_when:
+  - "request requires prohibited autonomous external mutation"
+  - "policy profile missing"
+collision_strategy: "prefer higher confidence then lexicographic skill name"

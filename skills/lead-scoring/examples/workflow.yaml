@@ -1,0 +1,15 @@
+workflow_id: lead_scoring_example
+skill: lead-scoring
+input_bundle:
+  entity_schema: canonical_entity_v1
+  event_schema: canonical_event_v1
+steps:
+  - load_context
+  - evaluate_policy_gates
+  - generate_recommendation
+  - emit_canonical_output
+output_bundle:
+  entities: []
+  events:
+    - type: lead.scoring.completed
+      approval_required: false

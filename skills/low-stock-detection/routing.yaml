@@ -1,0 +1,9 @@
+trigger_id: low_stock_detection_trigger
+skill: low-stock-detection
+use_when:
+  - "intent contains low"
+  - "canonical context available"
+do_not_use_when:
+  - "request requires prohibited autonomous external mutation"
+  - "policy profile missing"
+collision_strategy: "prefer higher confidence then lexicographic skill name"

@@ -1,0 +1,15 @@
+workflow_id: seo_intelligence_example
+skill: seo-intelligence
+input_bundle:
+  entity_schema: canonical_entity_v1
+  event_schema: canonical_event_v1
+steps:
+  - load_context
+  - evaluate_policy_gates
+  - generate_recommendation
+  - emit_canonical_output
+output_bundle:
+  entities: []
+  events:
+    - type: seo.intelligence.completed
+      approval_required: true
