@@ -9,7 +9,7 @@
     "event_type",
     "timestamp",
     "actor",
-    "source_system",
+    "source",
     "confidence",
     "lineage",
     "policy_context",
@@ -44,9 +44,6 @@
         }
       },
       "additionalProperties": false
-    },
-    "source_system": {
-      "type": "string"
     },
     "confidence": {
       "type": "number",
@@ -109,6 +106,9 @@
     "payload": {
       "type": "object",
       "additionalProperties": true
+    },
+    "source": {
+      "type": "string"
     }
   }
 }

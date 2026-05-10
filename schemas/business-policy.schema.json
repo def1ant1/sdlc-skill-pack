@@ -28,11 +28,15 @@
       "enum": [
         "draft",
         "active",
-        "retired"
+        "deprecated"
       ]
     },
     "scope": {
       "type": "object",
+      "required": [
+        "entities",
+        "events"
+      ],
       "properties": {
         "entities": {
           "type": "array",
@@ -47,20 +51,18 @@
           }
         }
       },
-      "required": [
-        "entities",
-        "events"
-      ],
       "additionalProperties": false
     },
     "rules": {
       "type": "array",
+      "minItems": 1,
       "items": {
         "type": "object",
         "required": [
           "rule_id",
           "condition",
-          "action"
+          "action",
+          "severity"
         ],
         "properties": {
           "rule_id": {
@@ -73,9 +75,9 @@
             "type": "string",
             "enum": [
               "allow",
+              "emit_violation",
               "block",
-              "require_approval",
-              "emit_violation"
+              "require_approval"
             ]
           },
           "severity": {
@@ -94,13 +96,14 @@
     "enforcement": {
       "type": "object",
       "required": [
-        "mode"
+        "mode",
+        "owner"
       ],
       "properties": {
         "mode": {
           "type": "string",
           "enum": [
-            "advisory",
+            "monitor",
             "enforced"
           ]
         },

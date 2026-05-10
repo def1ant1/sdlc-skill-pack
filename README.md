@@ -476,3 +476,11 @@ Full reference: `docs/onboarding/DEPLOYMENT.md`
 - `python scripts/generate_skill_inventory.py --root .`
 
 Contract specification reference: `references/skill-contract-v9.md`.
+
+
+## Business Governance Additions (2026-05-10)
+
+- Canonical entity schemas: `schemas/entities/` (including `account`, `customer`, `lead`, through `decision`).
+- Canonical business event schemas: `schemas/events/` for `invoice.created`, `workflow.completed`, `business_policy.violation`, and approval flow events.
+- Business policy standard: `schemas/business-policy.schema.json` + `references/business-policy-standard.md`.
+- Approval and audit coverage: `core/business-approval-gateway/approval-decision.model.json`, `core/business-audit-ledger/`, `skills/evidence-pack-generation/`, `skills/audit-trail-analysis/`.
