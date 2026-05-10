@@ -1,0 +1,1506 @@
+[
+  {
+    "category": "core",
+    "id": "agent-identity",
+    "name": "agent-identity",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "agent-kernel",
+    "name": "agent-kernel",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "alignment-engine",
+    "name": "alignment-engine",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "api-gateway",
+    "name": "api-gateway",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "audit-trail",
+    "name": "audit-trail",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "autonomous-os",
+    "name": "autonomous-os",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "benchmark-factory",
+    "name": "benchmark-factory",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "billing-runtime",
+    "name": "billing-runtime",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "business-orchestration",
+    "name": "business-orchestration",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "cluster-management",
+    "name": "cluster-management",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "cognitive-runtime",
+    "name": "cognitive-runtime",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "compliance-runtime",
+    "name": "compliance-runtime",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "connector-hub",
+    "name": "connector-hub",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "data-fabric",
+    "name": "data-fabric",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "developer-portal",
+    "name": "developer-portal",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "distributed-agent-runtime",
+    "name": "distributed-agent-runtime",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "economic-coordination",
+    "name": "economic-coordination",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "enterprise-integration-hub",
+    "name": "enterprise-integration-hub",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "enterprise-search",
+    "name": "enterprise-search",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "event-bus",
+    "name": "event-bus",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "evolution-engine",
+    "name": "evolution-engine",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "explainability",
+    "name": "explainability",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "federated-runtime",
+    "name": "federated-runtime",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "governance",
+    "name": "governance",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "gtm-orchestration",
+    "name": "gtm-orchestration",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "hitl-dashboard",
+    "name": "hitl-dashboard",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "inference-engine-fleet",
+    "name": "inference-engine-fleet",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "knowledge-graph",
+    "name": "knowledge-graph",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "kv-cache-management",
+    "name": "kv-cache-management",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "local-runtime",
+    "name": "local-runtime",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "local-security",
+    "name": "local-security",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "lora-lifecycle",
+    "name": "lora-lifecycle",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "master-data-management",
+    "name": "master-data-management",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "mcp-integrations",
+    "name": "mcp-integrations",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "meeting-intelligence",
+    "name": "meeting-intelligence",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "memory-token-management",
+    "name": "sdlc-memory-token-management",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "model-evaluation",
+    "name": "model-evaluation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "model-lifecycle",
+    "name": "model-lifecycle",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "model-routing",
+    "name": "model-routing",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "multi-agent",
+    "name": "multi-agent",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "multimodal-runtime",
+    "name": "multimodal-runtime",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "notification-orchestration",
+    "name": "notification-orchestration",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "observability-platform",
+    "name": "observability-platform",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "operator-console",
+    "name": "operator-console",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "orchestration",
+    "name": "sdlc-orchestration",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "persistent-agent-runtime",
+    "name": "persistent-agent-runtime",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "policy-engine",
+    "name": "policy-engine",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "predictive-reasoning",
+    "name": "predictive-reasoning",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "privacy-runtime",
+    "name": "privacy-runtime",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "ray-runtime",
+    "name": "ray-runtime",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "reinforcement-optimizer",
+    "name": "reinforcement-optimizer",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "research-runtime",
+    "name": "research-runtime",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "retrieval-engine",
+    "name": "retrieval-engine",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "runtime-economics",
+    "name": "runtime-economics",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "sandbox-execution",
+    "name": "sandbox-execution",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "sdk-runtime",
+    "name": "sdk-runtime",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "semantic-layer",
+    "name": "semantic-layer",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "simulation-engine",
+    "name": "simulation-engine",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "skill-gap-engine",
+    "name": "skill-gap-engine",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "strategic-planning",
+    "name": "strategic-planning",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "synthetic-data",
+    "name": "synthetic-data",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "telemetry",
+    "name": "telemetry",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "temporal-integration",
+    "name": "temporal-integration",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "tenant-management",
+    "name": "tenant-management",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "workflow-engine",
+    "name": "workflow-engine",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "workflow-runtime",
+    "name": "workflow-runtime",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "world-model",
+    "name": "world-model",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "core",
+    "id": "zero-trust-runtime",
+    "name": "zero-trust-runtime",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "accounting-automation",
+    "name": "accounting-automation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "adversarial-evaluation",
+    "name": "adversarial-evaluation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "ai-engineering",
+    "name": "ai-engineering",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "ai-search-optimization",
+    "name": "ai-search-optimization",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "alignment-testing",
+    "name": "alignment-testing",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "analytics-intelligence",
+    "name": "analytics-intelligence",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "audio-video-processing",
+    "name": "audio-video-processing",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "backend-engineering",
+    "name": "backend-engineering",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "belief-state-management",
+    "name": "belief-state-management",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "benchmark-generation",
+    "name": "benchmark-generation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "budget-planning",
+    "name": "budget-planning",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "business-continuity-planning",
+    "name": "business-continuity-planning",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "business-simulation",
+    "name": "business-simulation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "cache-placement-optimization",
+    "name": "cache-placement-optimization",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "capacity-balancing",
+    "name": "capacity-balancing",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "causal-analysis",
+    "name": "causal-analysis",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "causal-tracing",
+    "name": "causal-tracing",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "checkpoint-management",
+    "name": "checkpoint-management",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "cloud-deployment",
+    "name": "cloud-deployment",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "code-review",
+    "name": "code-review",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "communication-analytics",
+    "name": "communication-analytics",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "compliance-automation",
+    "name": "compliance-automation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "compliance-governance",
+    "name": "compliance-governance",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "compliance-posture-reporting",
+    "name": "compliance-posture-reporting",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "constraint-reasoning",
+    "name": "constraint-reasoning",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "content-marketing",
+    "name": "content-marketing",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "continuous-control-monitoring",
+    "name": "continuous-control-monitoring",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "crm-integration",
+    "name": "crm-integration",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "customer-success",
+    "name": "customer-success",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "data-contract-management",
+    "name": "data-contract-management",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "data-redaction",
+    "name": "data-redaction",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "dataset-curation",
+    "name": "dataset-curation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "deception-detection",
+    "name": "deception-detection",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "decision-intelligence",
+    "name": "decision-intelligence",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "developer-experience",
+    "name": "developer-experience",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "devsecops",
+    "name": "devsecops",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "disaster-recovery-automation",
+    "name": "disaster-recovery-automation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "discovery-synthesis",
+    "name": "discovery-synthesis",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "distributed-training-orchestration",
+    "name": "distributed-training-orchestration",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "document-intelligence",
+    "name": "document-intelligence",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "edge-runtime-management",
+    "name": "edge-runtime-management",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "erp-integration",
+    "name": "erp-integration",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "evaluation-dataset-curation",
+    "name": "evaluation-dataset-curation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "execution-explanation",
+    "name": "execution-explanation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "executive-reporting",
+    "name": "executive-reporting",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "forecasting",
+    "name": "forecasting",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "frontend-engineering",
+    "name": "frontend-engineering",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "goal-decomposition",
+    "name": "goal-decomposition",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "gpu-cluster-optimization",
+    "name": "gpu-cluster-optimization",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "harm-classification",
+    "name": "harm-classification",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "hierarchical-planning",
+    "name": "hierarchical-planning",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "hypothesis-generation",
+    "name": "hypothesis-generation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "inbox-automation",
+    "name": "inbox-automation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "incident-simulation",
+    "name": "incident-simulation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "inference-batching-optimization",
+    "name": "inference-batching-optimization",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "inference-engine-benchmarking",
+    "name": "inference-engine-benchmarking",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "inference-engine-deployment",
+    "name": "inference-engine-deployment",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "initiative-prioritization",
+    "name": "initiative-prioritization",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "institutional-knowledge-query",
+    "name": "institutional-knowledge-query",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "iot-data-ingestion",
+    "name": "iot-data-ingestion",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "itsm-integration",
+    "name": "itsm-integration",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "lateral-movement-detection",
+    "name": "lateral-movement-detection",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "launch-planning",
+    "name": "launch-planning",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "legal-hold-management",
+    "name": "legal-hold-management",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "legal-ops",
+    "name": "legal-ops",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "lessons-learned-extraction",
+    "name": "lessons-learned-extraction",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "lineage-analysis",
+    "name": "lineage-analysis",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "literature-review",
+    "name": "literature-review",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "long-horizon-planning",
+    "name": "long-horizon-planning",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "lora-management",
+    "name": "lora-management",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "marketplace-publishing",
+    "name": "marketplace-publishing",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "memory-compression",
+    "name": "memory-compression",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "meta-reasoning",
+    "name": "meta-reasoning",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "model-benchmarking",
+    "name": "model-benchmarking",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "model-distillation",
+    "name": "model-distillation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "model-placement-optimization",
+    "name": "model-placement-optimization",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "model-selection-optimization",
+    "name": "model-selection-optimization",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "network-topology-analysis",
+    "name": "network-topology-analysis",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "observability",
+    "name": "observability",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "paid-acquisition",
+    "name": "paid-acquisition",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "patent-analysis",
+    "name": "patent-analysis",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "pii-detection",
+    "name": "pii-detection",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "policy-justification",
+    "name": "policy-justification",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "policy-simulation",
+    "name": "policy-simulation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "portfolio-optimization",
+    "name": "portfolio-optimization",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "product-analytics",
+    "name": "product-analytics",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "program-governance",
+    "name": "program-governance",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "prompt-optimization",
+    "name": "prompt-optimization",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "qa-automation",
+    "name": "qa-automation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "quantization-optimization",
+    "name": "quantization-optimization",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "ray-serve-management",
+    "name": "ray-serve-management",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "reasoning-depth-estimation",
+    "name": "reasoning-depth-estimation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "reasoning-visualization",
+    "name": "reasoning-visualization",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "release-management",
+    "name": "release-management",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "repo-intelligence",
+    "name": "repo-intelligence",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "requirements-engineering",
+    "name": "requirements-engineering",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "research-analysis",
+    "name": "research-analysis",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "residency-analysis",
+    "name": "residency-analysis",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "revenue-operations",
+    "name": "revenue-operations",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "revenue-optimization",
+    "name": "revenue-optimization",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "runtime-recovery",
+    "name": "runtime-recovery",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "runtime-simulation",
+    "name": "runtime-simulation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "scenario-generation",
+    "name": "scenario-generation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "schema-evolution",
+    "name": "schema-evolution",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "sdk-authoring",
+    "name": "sdk-authoring",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "security-war-gaming",
+    "name": "security-war-gaming",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "self-reflection",
+    "name": "self-reflection",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "seo-engineering",
+    "name": "seo-engineering",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "sre-incident-response",
+    "name": "sre-incident-response",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "state-restoration",
+    "name": "state-restoration",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "synthetic-dataset-generation",
+    "name": "synthetic-dataset-generation",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "system-architecture",
+    "name": "system-architecture",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "temporal-memory-replay",
+    "name": "temporal-memory-replay",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "uncertainty-aware-routing",
+    "name": "uncertainty-aware-routing",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "vendor-procurement",
+    "name": "vendor-procurement",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "visual-analytics",
+    "name": "visual-analytics",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "workflow-ab-testing",
+    "name": "workflow-ab-testing",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "workflow-replay",
+    "name": "workflow-replay",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "workforce-management",
+    "name": "workforce-management",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  },
+  {
+    "category": "skills",
+    "id": "zero-trust-policy-authoring",
+    "name": "zero-trust-policy-authoring",
+    "version": null,
+    "owner": null,
+    "maturity": null
+  }
+]

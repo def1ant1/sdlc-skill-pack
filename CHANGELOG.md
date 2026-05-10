@@ -1,3 +1,11 @@
+
+## 2026-05-10
+
+- Added backlog truth tooling: `scripts/extract_backlog_paths.py`, `scripts/validate_backlog_truth.py`, and `scripts/generate_repo_truth_report.py`.
+- Added V9 skill contract assets: `schemas/skill-manifest-v9.schema.json`, `scripts/validate_skill_contracts.py`, and `scripts/migrate_frontmatter_to_manifest.py`.
+- Added inventory generation: `scripts/generate_skill_inventory.py` with generated reports in `reports/`.
+- Added tests for backlog truth, contract validation, and inventory determinism under `tests/scripts/`.
+
 # Changelog
 
 All notable changes to the Apotheon AI Company OS are documented here.

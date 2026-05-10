@@ -188,6 +188,8 @@ fallbacks:
 - Every `core/*`, `skills/*`, and `agents/*` directory containing `SKILL.md` has a valid V9 manifest or equivalent frontmatter.
 - `python scripts/validate_skill_contracts.py` passes.
 - Missing optional fields receive explicit `null` or empty-list values, not implicit absence.
+- ✅ Implemented: backlog truth extraction/validation/reporting scripts and tests.
+- ✅ Implemented: V9 schema, migration, inventory generation, and reports.
 
 ---
 
