@@ -1,3 +1,7 @@
+---
+last_updated: 2026-05-10
+---
+
 ## [8.0.4] — 2026-05-10 — Canonical Business Governance Models
 
 - Added canonical entity and business event schema coverage, including `lead` entity and required governance envelope fields across event contracts.
@@ -9,6 +13,8 @@
 
 
 ## [8.0.3] — 2026-05-10 — Backlog Truth + Skill Contract V9 Tooling
+
+- Includes backlog completion for Phase 93 and Phase 94.
 
 - Implemented backlog reference extraction/validation/reporting scripts with phase-aware parsing and ignore-list support.
 - Implemented skill contract enforcement and bulk frontmatter migration tooling aligned to the V9 manifest schema.

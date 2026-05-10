@@ -1,3 +1,7 @@
+---
+last_updated: 2026-05-10
+---
+
 # Apotheon SDLC Roadmap
 
 ## Phase 0: Foundation and Repo Architecture
