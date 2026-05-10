@@ -68,6 +68,7 @@ jobs:
           python scripts/detect_skill_overlap.py
           python scripts/validate_skill_evals.py
           python scripts/validate_telemetry_events.py
+          python scripts/check_work_tasks_snapshot_freshness.py
 
       - name: Enforce documentation governance
         run: |
