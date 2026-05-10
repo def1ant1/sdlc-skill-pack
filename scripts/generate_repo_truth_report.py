@@ -11,6 +11,8 @@ from pathlib import Path
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", type=Path, default=Path.cwd())
+    parser.add_argument("--json-out", type=Path, default=Path("reports/repo_truth_report.json"))
+    parser.add_argument("--md-out", type=Path, default=Path("reports/repo_truth_report.md"))
     args = parser.parse_args()
     root = args.root
 
@@ -36,11 +38,12 @@ def main() -> int:
         "missing": missing,
     }
 
-    reports_dir = root / "reports"
-    reports_dir.mkdir(exist_ok=True)
-    (reports_dir / "repo_truth_report.json").write_text(
-        json.dumps(report, indent=2) + "\n", encoding="utf-8"
-    )
+    json_path = root / args.json_out
+    md_path = root / args.md_out
+    json_path.parent.mkdir(parents=True, exist_ok=True)
+    md_path.parent.mkdir(parents=True, exist_ok=True)
+
+    json_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
 
     md = [
         "# Repo Truth Report",
@@ -55,8 +58,8 @@ def main() -> int:
         md.extend(["## Missing Paths", ""])
         md.extend([f"- {item}" for item in missing])
 
-    (reports_dir / "repo_truth_report.md").write_text("\n".join(md) + "\n", encoding="utf-8")
-    print("Generated reports/repo_truth_report.md and reports/repo_truth_report.json")
+    md_path.write_text("\n".join(md) + "\n", encoding="utf-8")
+    print(f"Generated {md_path} and {json_path}")
     return 0
 
 
