@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apotheon.ai/schemas/hitl-gate.schema.json",
+  "title": "HITL Gate Policy Metadata",
+  "description": "Schema for human-in-the-loop gate metadata embedded in skill frontmatter.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "risk_tier",
+    "approval_trigger",
+    "approver_role",
+    "action_scope"
+  ],
+  "properties": {
+    "risk_tier": {
+      "type": "string",
+      "description": "Policy risk tier for this gate.",
+      "enum": ["L0", "L1", "L2", "L3", "critical"]
+    },
+    "approval_trigger": {
+      "type": "string",
+      "minLength": 3,
+      "description": "Concrete condition that requires escalation to a human approver."
+    },
+    "approver_role": {
+      "type": "string",
+      "minLength": 2,
+      "description": "Role accountable for reviewing and approving the gated action.",
+      "examples": ["security-reviewer", "legal-counsel", "finance-controller"]
+    },
+    "action_scope": {
+      "type": "string",
+      "minLength": 3,
+      "description": "Surface area of actions controlled by this gate (for example deployment, external data mutation, customer communications)."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Optional policy notes for auditors.",
+      "maxLength": 2000
+    }
+  }
+}
