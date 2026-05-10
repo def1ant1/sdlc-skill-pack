@@ -22,7 +22,7 @@ services:
     environment:
       QDRANT__LOG_LEVEL: INFO
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:6333/readyz"]
+      test: ["CMD-SHELL", "wget -qO- http://localhost:6333/readyz || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -41,12 +41,17 @@ services:
       - "7234:7234"   # HTTP (membership)
       - "7235:7235"   # inter-node
     environment:
-      - DB=sqlite
+      - DB=postgres12
+      - DB_PORT=5432
+      - POSTGRES_USER=apotheon
+      - POSTGRES_PWD=apotheon
+      - POSTGRES_SEEDS=postgres
       - TEMPORAL_ADDRESS=temporal:7233
       - TEMPORAL_BROADCAST_ADDRESS=127.0.0.1
-      - DYNAMIC_CONFIG_FILE_PATH=config/dynamicconfig/development-sql.yaml
-    volumes:
-      - temporal_data:/etc/temporal/config/sqlite
+      - BIND_ON_IP=0.0.0.0
+    depends_on:
+      postgres:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "tctl", "--address", "temporal:7233", "cluster", "health"]
       interval: 15s
@@ -175,8 +180,6 @@ services:
 
 volumes:
   qdrant_data:
-    driver: local
-  temporal_data:
     driver: local
   ollama_data:
     driver: local
