@@ -27,14 +27,32 @@
     "format": "canonical-entity-event-bundle",
     "schema_refs": [
       "core/canonical-entity-model/README.md",
-      "core/business-event-model/README.md"
+      "core/business-event-model/README.md",
+      "schemas/entities/product.schema.json",
+      "schemas/entities/vendor.schema.json",
+      "schemas/entities/decision.schema.json",
+      "schemas/entities/workflow.schema.json",
+      "schemas/entities/task.schema.json",
+      "schemas/events/approval_requested.schema.json",
+      "schemas/events/approval_decided.schema.json",
+      "schemas/events/workflow_completed.schema.json",
+      "schemas/events/business_policy_violation.schema.json"
     ]
   },
   "output_contract": {
     "format": "canonical-entity-event-bundle",
     "schema_refs": [
       "core/canonical-entity-model/README.md",
-      "core/business-event-model/README.md"
+      "core/business-event-model/README.md",
+      "schemas/entities/product.schema.json",
+      "schemas/entities/vendor.schema.json",
+      "schemas/entities/decision.schema.json",
+      "schemas/entities/workflow.schema.json",
+      "schemas/entities/task.schema.json",
+      "schemas/events/approval_requested.schema.json",
+      "schemas/events/approval_decided.schema.json",
+      "schemas/events/workflow_completed.schema.json",
+      "schemas/events/business_policy_violation.schema.json"
     ],
     "approval_gate": "required-for-high-risk-actions"
   },
@@ -81,7 +99,16 @@
   ],
   "data_contracts": [
     "core/canonical-entity-model/README.md",
-    "core/business-event-model/README.md"
+    "core/business-event-model/README.md",
+    "schemas/entities/product.schema.json",
+    "schemas/entities/vendor.schema.json",
+    "schemas/entities/decision.schema.json",
+    "schemas/entities/workflow.schema.json",
+    "schemas/entities/task.schema.json",
+    "schemas/events/approval_requested.schema.json",
+    "schemas/events/approval_decided.schema.json",
+    "schemas/events/workflow_completed.schema.json",
+    "schemas/events/business_policy_violation.schema.json"
   ],
   "failure_modes": [
     "missing_required_context",
@@ -93,5 +120,30 @@
     "emit_safe_summary",
     "request_human_approval",
     "defer_with_retry_ticket"
-  ]
+  ],
+  "approval_controls": {
+    "required_for_outbound_customer_communication": true,
+    "required_for_external_mutations": true,
+    "mutation_examples": [
+      "create",
+      "update",
+      "delete",
+      "send"
+    ]
+  },
+  "canonical_schema_refs": {
+    "entities": [
+      "schemas/entities/product.schema.json",
+      "schemas/entities/vendor.schema.json",
+      "schemas/entities/decision.schema.json",
+      "schemas/entities/workflow.schema.json",
+      "schemas/entities/task.schema.json"
+    ],
+    "events": [
+      "schemas/events/approval_requested.schema.json",
+      "schemas/events/approval_decided.schema.json",
+      "schemas/events/workflow_completed.schema.json",
+      "schemas/events/business_policy_violation.schema.json"
+    ]
+  }
 }
