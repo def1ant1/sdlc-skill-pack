@@ -1134,3 +1134,13 @@ V9 is complete when:
 - Evaluation, telemetry, and runtime economics standards are enforced.
 - Skill inventory can drive routing without loading the full repository.
 - Codex can use this backlog as a deterministic implementation plan.
+
+### Phase 96 — Progressive Disclosure + Routing/Cache Hardening (2026-05-10)
+
+- ✅ Added `references/progressive-disclosure-standard.md` and `schemas/context-loading.schema.json`.
+- ✅ Added `scripts/check_context_budget.py` to enforce L1/L2/L3 and default-level conformance.
+- ✅ Added dependency graph generation via `scripts/generate_dependency_graph.py` with outputs in `reports/`.
+- ✅ Added routing overlap analysis via `scripts/detect_skill_overlap.py` and `reports/routing_collision_report.md`.
+- ✅ Added scaffolds: `core/skill-router/`, `skills/routing-collision-analysis/`, `core/semantic-cache/`, `skills/context-reuse-optimization/`.
+- ✅ Added `references/semantic-cache-policy.md` with safe/unsafe classes, invalidation, TTL, and lineage constraints.
+- ✅ Normalized `use_when` and `do_not_use_when` manifest fields across core/skills SKILL frontmatter; added telemetry contract hooks for token savings and cache-hit rates.

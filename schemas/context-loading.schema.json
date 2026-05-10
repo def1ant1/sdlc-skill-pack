@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Context Loading Contract",
+  "type": "object",
+  "required": [
+    "default_level",
+    "levels"
+  ],
+  "properties": {
+    "default_level": {
+      "type": "string",
+      "enum": [
+        "L1",
+        "L2",
+        "L3"
+      ]
+    },
+    "levels": {
+      "type": "object",
+      "required": [
+        "L1",
+        "L2",
+        "L3"
+      ],
+      "properties": {
+        "L1": {
+          "type": "object",
+          "required": [
+            "max_tokens"
+          ],
+          "properties": {
+            "max_tokens": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "L2": {
+          "type": "object",
+          "required": [
+            "max_tokens"
+          ],
+          "properties": {
+            "max_tokens": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "L3": {
+          "type": "object",
+          "required": [
+            "max_tokens"
+          ],
+          "properties": {
+            "max_tokens": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "estimated_tokens": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "additionalProperties": true
+}

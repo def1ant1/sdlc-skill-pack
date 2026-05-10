@@ -12,6 +12,18 @@ All notable changes to the Apotheon AI Company OS are documented here.
 
 ---
 
+
+## [8.0.1] — 2026-05-10 — Routing, Context Budget, and Semantic Cache Foundations
+
+- Added progressive disclosure policy and schema: `references/progressive-disclosure-standard.md`, `schemas/context-loading.schema.json`.
+- Added `scripts/check_context_budget.py` for L1/L2/L3 and default-level budget conformance validation.
+- Added dependency graph generator: `scripts/generate_dependency_graph.py` producing JSON, Mermaid, and orchestration map reports.
+- Added routing overlap detector: `scripts/detect_skill_overlap.py` producing `reports/routing_collision_report.md`.
+- Added new scaffolds: `core/skill-router`, `skills/routing-collision-analysis`, `core/semantic-cache`, `skills/context-reuse-optimization`.
+- Added semantic cache policy covering safe/unsafe classes, invalidation triggers, TTL, lineage, and telemetry contract points.
+- Normalized skill manifest frontmatter with deterministic routing fields (`use_when`, `do_not_use_when`) and telemetry hooks for estimated token savings + cache-hit rates.
+
+
 ## [8.0.0] — 2026-05-07 — Sovereign Autonomous Enterprise Intelligence OS (V8)
 
 Implements phases 75–92 of the V8 gap analysis backlog: Enterprise OS Platform, Compute &
