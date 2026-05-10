@@ -1,0 +1,89 @@
+{
+  "name": "marketplace-certification",
+  "type": "skill",
+  "domain": "governance",
+  "subdomain": "marketplace-release",
+  "version": "9.0.0",
+  "owner": "Apotheon",
+  "maturity": "beta",
+  "dependencies": [
+    "core/policy-engine",
+    "core/business-approval-gateway",
+    "core/telemetry"
+  ],
+  "activation_triggers": [
+    "skill_release_candidate",
+    "marketplace_certification_request"
+  ],
+  "required_context": [
+    "skill_manifest",
+    "eval_report",
+    "security_report",
+    "routing_collision_report"
+  ],
+  "optional_context": [
+    "historical_certification_results",
+    "runtime_incident_report"
+  ],
+  "input_contract": {
+    "format": "certification-request-bundle",
+    "schema_refs": [
+      "schemas/skill-manifest-v9.schema.json"
+    ]
+  },
+  "output_contract": {
+    "format": "certification-decision-bundle",
+    "approval_gate": "required-before-production-mutation"
+  },
+  "memory_policy": {
+    "retention": "artifact",
+    "pii": "none-expected"
+  },
+  "token_budget": {
+    "max_input_tokens": 12000,
+    "max_output_tokens": 2000,
+    "reserve_reasoning_tokens": 1000
+  },
+  "context_loading": {
+    "strategy": "progressive-disclosure",
+    "order": ["required_context", "optional_context"],
+    "max_chunks": 20
+  },
+  "governance_level": "L2",
+  "human_approval_required": true,
+  "execution_mode": "semi-autonomous",
+  "latency_target": "p95<=10s",
+  "cost_target": "<$0.05/run",
+  "determinism_level": "high",
+  "telemetry_events": [
+    "certification_started",
+    "certification_prerequisite_checked",
+    "certification_decision_recorded",
+    "production_mutation_approved"
+  ],
+  "eval_metrics": [
+    "manifest_schema_compliance_rate",
+    "prerequisite_pass_rate",
+    "governance_gate_enforcement_rate"
+  ],
+  "security_classification": "internal-confidential",
+  "integration_targets": [
+    "policy-engine",
+    "approval-gateway",
+    "audit-trail"
+  ],
+  "data_contracts": [
+    "schemas/skill-manifest-v9.schema.json"
+  ],
+  "failure_modes": [
+    "manifest_invalid",
+    "eval_failed",
+    "routing_collisions_unresolved",
+    "approval_missing"
+  ],
+  "fallbacks": [
+    "reject_with_reasons",
+    "request_human_approval",
+    "defer_certification"
+  ]
+}
