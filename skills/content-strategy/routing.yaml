@@ -1,0 +1,9 @@
+trigger_id: content_strategy_trigger
+skill: content-strategy
+use_when:
+  - "intent contains content"
+  - "canonical context available"
+do_not_use_when:
+  - "request requires prohibited autonomous external mutation"
+  - "policy profile missing"
+collision_strategy: "prefer higher confidence then lexicographic skill name"

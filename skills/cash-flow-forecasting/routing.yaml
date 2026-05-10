@@ -1,0 +1,9 @@
+trigger_id: cash_flow_forecasting_trigger
+skill: cash-flow-forecasting
+use_when:
+  - "intent contains cash"
+  - "canonical context available"
+do_not_use_when:
+  - "request requires prohibited autonomous external mutation"
+  - "policy profile missing"
+collision_strategy: "prefer higher confidence then lexicographic skill name"

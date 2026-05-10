@@ -1,0 +1,9 @@
+trigger_id: reconciliation_automation_trigger
+skill: reconciliation-automation
+use_when:
+  - "intent contains reconciliation"
+  - "canonical context available"
+do_not_use_when:
+  - "request requires prohibited autonomous external mutation"
+  - "policy profile missing"
+collision_strategy: "prefer higher confidence then lexicographic skill name"

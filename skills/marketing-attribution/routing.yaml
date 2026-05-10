@@ -1,0 +1,9 @@
+trigger_id: marketing_attribution_trigger
+skill: marketing-attribution
+use_when:
+  - "intent contains marketing"
+  - "canonical context available"
+do_not_use_when:
+  - "request requires prohibited autonomous external mutation"
+  - "policy profile missing"
+collision_strategy: "prefer higher confidence then lexicographic skill name"
