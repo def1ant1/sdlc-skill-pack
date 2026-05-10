@@ -4,6 +4,11 @@
     "repo_truth": "reports/repo_truth_report.json",
     "pytest_collect": "/root/.pyenv/versions/3.12.13/bin/python -m pytest --collect-only -q"
   },
+  "traceability": {
+    "commit_sha": "8f5d1d079a1114123bb53dd06f2cc3f29ccd13b3",
+    "generated_at_utc": "2026-05-10T16:35:03-04:00",
+    "generator": "scripts/generate_release_reports.py"
+  },
   "totals": {
     "skills_total": 284,
     "core_total": 70,
@@ -12,5 +17,10 @@
     "skills_with_hitl_markers": 0,
     "business_skill_total": 31,
     "tests_collected": 0
+  },
+  "_traceability": {
+    "commit_sha": "8f5d1d079a1114123bb53dd06f2cc3f29ccd13b3",
+    "generated_at_utc": "2026-05-10T16:35:03-04:00",
+    "generator": "scripts/generate_release_reports.py"
   }
 }

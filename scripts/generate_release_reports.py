@@ -5,6 +5,7 @@ import json
 import subprocess
 import sys
 from collections import Counter
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path.cwd()
@@ -25,6 +26,23 @@ def _run(cmd: list[str], allow_failure: bool = False) -> None:
         raise SystemExit(result.returncode)
 
 
+def _git_output(*args: str) -> str:
+    proc = subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True)
+    if proc.returncode != 0:
+        raise RuntimeError(f"git {' '.join(args)} failed: {proc.stderr.strip()}")
+    return proc.stdout.strip()
+
+
+def _build_traceability_metadata() -> dict[str, str]:
+    commit_sha = _git_output("rev-parse", "HEAD")
+    commit_ts = _git_output("show", "-s", "--format=%cI", "HEAD")
+    return {
+        "commit_sha": commit_sha,
+        "generated_at_utc": commit_ts,
+        "generator": "scripts/generate_release_reports.py",
+    }
+
+
 def _skill_rows() -> list[dict]:
     return json.loads((REPORTS / "skill_inventory.json").read_text(encoding="utf-8"))
 
@@ -35,7 +53,6 @@ def _pytest_collect() -> dict:
     collected = 0
     for line in (proc.stdout + "\n" + proc.stderr).splitlines():
         if " test" in line and "collected" in line:
-            # Example: "190 tests collected"
             token = line.strip().split()[0]
             if token.isdigit():
                 collected = int(token)
@@ -54,13 +71,39 @@ def _write(path: Path, content: str) -> None:
     path.write_text(content, encoding="utf-8")
 
 
-def generate_derived_reports() -> None:
+def _attach_metadata_to_report(path: Path, metadata: dict[str, str]) -> None:
+    if path.suffix == ".json":
+        data = json.loads(path.read_text(encoding="utf-8"))
+        if isinstance(data, dict):
+            data["_traceability"] = metadata
+            path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+        return
+
+    if path.suffix in {".md", ".mmd", ".csv", ".txt"}:
+        trace = (
+            "<!-- traceability: "
+            f"commit_sha={metadata['commit_sha']} "
+            f"generated_at_utc={metadata['generated_at_utc']} "
+            f"generator={metadata['generator']}"
+            " -->"
+        )
+        lines = path.read_text(encoding="utf-8").splitlines()
+        lines = [line for line in lines if not line.startswith("<!-- traceability:")]
+        path.write_text("\n".join([trace, *lines]).rstrip() + "\n", encoding="utf-8")
+
+
+def _stamp_all_reports(metadata: dict[str, str]) -> None:
+    for report in sorted(REPORTS.glob("*")):
+        if report.is_file():
+            _attach_metadata_to_report(report, metadata)
+
+
+def generate_derived_reports(metadata: dict[str, str]) -> None:
     rows = _skill_rows()
     counts = Counter(r["category"] for r in rows)
     total = len(rows)
     with_hitl = sum(1 for r in rows if (r.get("hitl_gates") or 0) > 0)
 
-    # Business coverage heuristic from filesystem categories.
     business_ids = sorted(
         r["id"] for r in rows if r["category"] == "skills" and any(x in r["id"] for x in ["finance", "hr", "sales", "marketing", "procurement", "inventory", "forecast", "customer", "vendor", "invoice", "accounting", "revenue", "pricing", "budget"])
     )
@@ -73,6 +116,7 @@ def generate_derived_reports() -> None:
             "repo_truth": "reports/repo_truth_report.json",
             "pytest_collect": test_info["command"],
         },
+        "traceability": metadata,
         "totals": {
             "skills_total": total,
             "core_total": counts.get("core", 0),
@@ -92,6 +136,9 @@ def generate_derived_reports() -> None:
             "",
             "All numeric claims here are generated from repository state and test collection output.",
             "",
+            f"- Commit SHA: **{metadata['commit_sha']}**",
+            f"- Generated at (UTC): **{metadata['generated_at_utc']}**",
+            "",
             f"- Total skills indexed: **{total}**",
             f"- Core skills: **{counts.get('core', 0)}**",
             f"- Domain skills: **{counts.get('skills', 0)}**",
@@ -108,6 +155,9 @@ def generate_derived_reports() -> None:
         "\n".join([
             "# HITL Coverage Report",
             "",
+            f"- Commit SHA: **{metadata['commit_sha']}**",
+            f"- Generated at (UTC): **{metadata['generated_at_utc']}**",
+            "",
             f"- Skills with HITL markers: **{with_hitl}**",
             f"- Total indexed skills: **{total}**",
             f"- Coverage ratio: **{(with_hitl / total * 100) if total else 0:.2f}%**",
@@ -120,6 +170,9 @@ def generate_derived_reports() -> None:
         REPORTS / "test_summary.md",
         "\n".join([
             "# Test Summary",
+            "",
+            f"- Commit SHA: **{metadata['commit_sha']}**",
+            f"- Generated at (UTC): **{metadata['generated_at_utc']}**",
             "",
             f"- Command: `{test_info['command']}`",
             f"- Return code: **{test_info['returncode']}**",
@@ -142,6 +195,9 @@ def generate_derived_reports() -> None:
         "\n".join([
             "# Business Skill Coverage",
             "",
+            f"- Commit SHA: **{metadata['commit_sha']}**",
+            f"- Generated at (UTC): **{metadata['generated_at_utc']}**",
+            "",
             f"- Business-oriented skills detected: **{len(business_ids)}**",
             "",
             "## Detected skill IDs",
@@ -155,5 +211,10 @@ def generate_derived_reports() -> None:
 if __name__ == "__main__":
     for idx, command in enumerate(COMMANDS):
         _run(command, allow_failure=(idx == 0))
-    generate_derived_reports()
-    print("Generated release readiness, HITL, test, and business coverage reports")
+
+    metadata = _build_traceability_metadata()
+    generate_derived_reports(metadata)
+    _stamp_all_reports(metadata)
+
+    generated_at = datetime.now(timezone.utc).isoformat()
+    print(f"Generated all release reports at {generated_at} for {metadata['commit_sha']}")

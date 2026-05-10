@@ -2,31 +2,87 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Runtime Economics Dashboard",
   "type": "object",
-  "required": ["generated_at", "attribution"],
+  "required": [
+    "generated_at",
+    "attribution"
+  ],
   "properties": {
-    "generated_at": {"type": "string", "format": "date-time"},
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
     "attribution": {
       "type": "object",
-      "required": ["skill", "workflow", "agent", "tenant", "domain"],
+      "required": [
+        "skill",
+        "workflow",
+        "agent",
+        "tenant",
+        "domain"
+      ],
       "properties": {
-        "skill": {"type": "array", "items": {"$ref": "#/$defs/entry"}},
-        "workflow": {"type": "array", "items": {"$ref": "#/$defs/entry"}},
-        "agent": {"type": "array", "items": {"$ref": "#/$defs/entry"}},
-        "tenant": {"type": "array", "items": {"$ref": "#/$defs/entry"}},
-        "domain": {"type": "array", "items": {"$ref": "#/$defs/entry"}}
+        "skill": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/entry"
+          }
+        },
+        "workflow": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/entry"
+          }
+        },
+        "agent": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/entry"
+          }
+        },
+        "tenant": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/entry"
+          }
+        },
+        "domain": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/entry"
+          }
+        }
       }
     }
   },
   "$defs": {
     "entry": {
       "type": "object",
-      "required": ["id", "cost_usd", "value_usd", "value_to_cost_ratio"],
+      "required": [
+        "id",
+        "cost_usd",
+        "value_usd",
+        "value_to_cost_ratio"
+      ],
       "properties": {
-        "id": {"type": "string"},
-        "cost_usd": {"type": "number", "minimum": 0},
-        "value_usd": {"type": "number"},
-        "value_to_cost_ratio": {"type": "number"}
+        "id": {
+          "type": "string"
+        },
+        "cost_usd": {
+          "type": "number",
+          "minimum": 0
+        },
+        "value_usd": {
+          "type": "number"
+        },
+        "value_to_cost_ratio": {
+          "type": "number"
+        }
       }
     }
+  },
+  "_traceability": {
+    "commit_sha": "8f5d1d079a1114123bb53dd06f2cc3f29ccd13b3",
+    "generated_at_utc": "2026-05-10T16:35:03-04:00",
+    "generator": "scripts/generate_release_reports.py"
   }
 }
