@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: ["main", "develop"]
   release:
-    types: [published]
+    types: [published, prereleased]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -58,6 +58,17 @@ jobs:
       - name: Run tests
         run: pytest --tb=short -q
 
+      - name: Run V9 contract/eval/telemetry/context checks
+        run: |
+          python scripts/validate_backlog_truth.py
+          python scripts/validate_skill_contracts.py
+          python scripts/check_context_budget.py
+          python scripts/generate_skill_inventory.py
+          python scripts/generate_dependency_graph.py
+          python scripts/detect_skill_overlap.py
+          python scripts/validate_skill_evals.py
+          python scripts/validate_telemetry_events.py
+
       - name: Validate release readiness (P0/P1 gates)
         run: python scripts/run_premerge_checks.py
 
@@ -71,7 +82,7 @@ jobs:
           path: reports/
 
   release-reports:
-    name: Release reports
+    name: Release/RC reports
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -94,10 +105,10 @@ jobs:
       - name: Generate release reports
         run: python scripts/generate_release_reports.py
 
-      - name: Upload release reports
+      - name: Upload release candidate reports
         uses: actions/upload-artifact@v4
         with:
-          name: release-reports-${{ github.event.release.tag_name }}
+          name: release-candidate-reports-${{ github.event.release.tag_name }}
           path: |
             reports/repo_truth_report.*
             reports/skill_inventory.*
