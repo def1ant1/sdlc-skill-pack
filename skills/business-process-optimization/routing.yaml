@@ -1,0 +1,9 @@
+trigger_id: business_process_optimization_trigger
+skill: business-process-optimization
+use_when:
+  - "intent mentions business or phase-116"
+  - "canonical context and policy profile available"
+do_not_use_when:
+  - "request asks for final autonomous determination"
+  - "human reviewer unavailable for required gate"
+collision_strategy: "prefer higher confidence then lexicographic skill name"

@@ -1,0 +1,9 @@
+trigger_id: vendor_obligation_tracking_trigger
+skill: vendor-obligation-tracking
+use_when:
+  - "intent mentions vendor or phase-114"
+  - "canonical context and policy profile available"
+do_not_use_when:
+  - "request asks for final autonomous determination"
+  - "human reviewer unavailable for required gate"
+collision_strategy: "prefer higher confidence then lexicographic skill name"

@@ -1,0 +1,9 @@
+trigger_id: legal_intake_triage_support_trigger
+skill: legal-intake-triage-support
+use_when:
+  - "intent mentions legal or phase-115"
+  - "canonical context and policy profile available"
+do_not_use_when:
+  - "request asks for final autonomous determination"
+  - "human reviewer unavailable for required gate"
+collision_strategy: "prefer higher confidence then lexicographic skill name"
