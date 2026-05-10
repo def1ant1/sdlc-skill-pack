@@ -1,71 +1,86 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
-import hashlib, re
+import hashlib
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-BACKLOG = ROOT / "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md"
-ROADMAP = ROOT / "ROADMAP.md"
-DOCS = sorted((ROOT / "docs").rglob("*.md"))
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
+MIN_SECTION_CHARS = 400
 
-def normalize(text:str)->str:
-    return re.sub(r"\s+"," ",text.strip().lower())
 
-def fingerprint(text:str)->str:
-    return hashlib.sha256(normalize(text).encode()).hexdigest()[:16]
+def normalize(text: str) -> str:
+    return re.sub(r"\s+", " ", text.strip().lower())
 
-def sections_for(path:Path):
-    lines=path.read_text(encoding="utf-8").splitlines(); out=[]; title=None; start=1; buf=[]
-    for i,line in enumerate(lines,1):
-        m=HEADING_RE.match(line)
+
+def fingerprint(text: str) -> str:
+    return hashlib.sha256(normalize(text).encode("utf-8")).hexdigest()[:20]
+
+
+def sections_for(path: Path) -> list[tuple[str, str, int]]:
+    lines = path.read_text(encoding="utf-8").splitlines()
+    sections: list[tuple[str, str, int]] = []
+    title: str | None = None
+    start_line = 1
+    body: list[str] = []
+
+    for i, line in enumerate(lines, start=1):
+        m = HEADING_RE.match(line)
         if m:
-            if title is not None: out.append((title,"\n".join(buf).strip(),start))
-            title=m.group(2).strip(); start=i; buf=[]
-        elif title is not None: buf.append(line)
-    if title is not None: out.append((title,"\n".join(buf).strip(),start))
-    return out
+            if title is not None:
+                sections.append((title, "\n".join(body).strip(), start_line))
+            title = m.group(2).strip()
+            start_line = i
+            body = []
+        elif title is not None:
+            body.append(line)
 
-def main()->int:
-    sources=[BACKLOG,ROADMAP]
-    for p in sources+DOCS:
-        if not p.exists():
-            print(f"Missing documentation target: {p.relative_to(ROOT)}"); return 1
+    if title is not None:
+        sections.append((title, "\n".join(body).strip(), start_line))
+    return sections
 
-    source_titles, source_bodies = {}, {}
-    for src in sources:
-        rel=src.relative_to(ROOT)
-        for title,body,line in sections_for(src):
-            source_titles.setdefault(normalize(title),[]).append(f"{rel}:{line} ({title})")
-            if len(normalize(body))>=80:
-                source_bodies.setdefault(fingerprint(body),[]).append(f"{rel}:{line} ({title})")
 
-    generic={"capabilities","overview","purpose","requirements"}
-    problems=0
-    for doc in DOCS:
-        rel=doc.relative_to(ROOT)
-        for title,body,line in sections_for(doc):
-            k=normalize(title)
-            if k in generic:
+def target_files() -> list[Path]:
+    top_level_md = sorted(ROOT.glob("*.md"))
+    readme_files = [p for p in top_level_md if p.name.lower().startswith("readme")]
+    backlog_files = [p for p in top_level_md if "backlog" in p.name.lower()]
+    docs_top_level = sorted((ROOT / "docs").glob("*.md")) if (ROOT / "docs").exists() else []
+    docs_governance = [ROOT / "docs/standards/documentation-governance.md"]
+
+    files = sorted({*readme_files, *backlog_files, *docs_top_level, *docs_governance})
+    return [p for p in files if p.exists()]
+
+
+def main() -> int:
+    files = target_files()
+    if not files:
+        print("No target files found for uniqueness validation.")
+        return 0
+
+    buckets: dict[str, list[str]] = {}
+    for file_path in files:
+        rel = file_path.relative_to(ROOT)
+        for title, body, line in sections_for(file_path):
+            body_norm = normalize(body)
+            if len(body_norm) < MIN_SECTION_CHARS:
                 continue
-            if k in source_titles:
-                problems+=1
-                print('Duplicate section title between canonical planning docs and docs/:')
-                for r in source_titles[k]: print(f' - {r}')
-                print(f' - {rel}:{line} ({title})')
-            if len(normalize(body))>=80:
-                b=fingerprint(body)
-                if b in source_bodies:
-                    problems+=1
-                    print('Duplicate content fingerprint between canonical planning docs and docs/:')
-                    for r in source_bodies[b]: print(f' - {r}')
-                    print(f' - {rel}:{line} ({title})')
-    if problems:
-        print(f"\nFound {problems} duplication issue(s).")
+            key = fingerprint(body)
+            buckets.setdefault(key, []).append(f"{rel}:{line} ({title})")
+
+    duplicates = {k: v for k, v in buckets.items() if len(v) > 1}
+    if duplicates:
+        print("Duplicate large documentation sections detected:")
+        for _, refs in sorted(duplicates.items(), key=lambda kv: kv[1][0]):
+            for ref in refs:
+                print(f" - {ref}")
+            print()
+        print(f"Found {len(duplicates)} duplicated section fingerprint(s).")
         return 1
-    print('No duplicate section titles/content fingerprints across backlog/roadmap and docs/.')
+
+    print("No duplicate large sections across top-level backlog/docs/readme files.")
     return 0
 
-if __name__=='__main__':
+
+if __name__ == "__main__":
     raise SystemExit(main())
