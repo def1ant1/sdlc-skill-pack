@@ -69,6 +69,12 @@ jobs:
           python scripts/validate_skill_evals.py
           python scripts/validate_telemetry_events.py
 
+      - name: Enforce documentation governance
+        run: |
+          python scripts/docs/validate_doc_uniqueness.py
+          python scripts/docs/check_backlog_changelog_sync.py
+          python scripts/docs/enforce_doc_freshness.py
+
       - name: Validate release readiness (P0/P1 gates)
         run: python scripts/run_premerge_checks.py
 

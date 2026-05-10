@@ -1,3 +1,7 @@
+---
+last_updated: 2026-05-10
+---
+
 # APOTHEON AI COMPANY OS — V9 ENTERPRISE SKILL OS BACKLOG
 
 **Version:** 9.0.0  

@@ -5,6 +5,9 @@ import subprocess
 import sys
 
 COMMANDS = [
+    ["python", "scripts/docs/validate_doc_uniqueness.py"],
+    ["python", "scripts/docs/check_backlog_changelog_sync.py"],
+    ["python", "scripts/docs/enforce_doc_freshness.py"],
     ["python", "scripts/validate_backlog_truth.py"],
     ["python", "scripts/validate_skill_contracts.py"],
     ["python", "scripts/check_context_budget.py"],
