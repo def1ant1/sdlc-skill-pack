@@ -16,6 +16,7 @@ COMMANDS = [
     ["python", "scripts/detect_skill_overlap.py"],
     ["python", "scripts/validate_skill_evals.py"],
     ["python", "scripts/validate_telemetry_events.py"],
+    ["python", "scripts/validate_hitl_coverage.py"],
 ]
 
 
