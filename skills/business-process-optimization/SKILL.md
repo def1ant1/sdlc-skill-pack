@@ -1,12 +1,17 @@
 ---
 name: business-process-optimization
-description: Recommend KPI-linked process improvements with mandatory review markers for high-impact changes.
+description: Recommend KPI-linked process improvements with mandatory review markers
+  for high-impact changes.
 metadata:
-  version: "9.0.0"
+  version: 9.0.0
   category: sdlc
   owner: Apotheon
   maturity: beta
   manifest: manifest.v9.json
+use_when:
+- Request clearly matches this skill's domain capabilities.
+do_not_use_when:
+- Request is outside this skill's domain or lacks required context.
 ---
 
 # Business Process Optimization

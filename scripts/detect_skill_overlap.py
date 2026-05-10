@@ -1,52 +1,110 @@
 #!/usr/bin/env python3
 from __future__ import annotations
+
 from pathlib import Path
-import re
+from collections import defaultdict
+import itertools
+import yaml
 
-ROOT=Path('.')
-OUT=ROOT/'reports/routing_collision_report.md'
+ROOT = Path('.')
+OUT = ROOT / 'reports' / 'routing_collision_report.md'
 
-def parse_fm(p:Path):
-    t=p.read_text(encoding='utf-8')
-    if not t.startswith('---'): return {}
-    import yaml
-    return yaml.safe_load(t.split('---',2)[1]) or {}
 
-skills=[]
-for p in list((ROOT/'core').glob('*/SKILL.md'))+list((ROOT/'skills').glob('*/SKILL.md')):
-    fm=parse_fm(p)
-    skills.append({"name":fm.get('name',p.parent.name),"path":str(p.parent),"use_when":fm.get('use_when',[]),"domain":(fm.get('metadata') or {}).get('category','unknown'),"deps":(fm.get('metadata') or {}).get('dependencies',[])})
+def parse_frontmatter(path: Path) -> dict:
+    text = path.read_text(encoding='utf-8')
+    if not text.startswith('---'):
+        return {}
+    return yaml.safe_load(text.split('---', 2)[1]) or {}
 
-collisions=[]
-for i,a in enumerate(skills):
-    ta={x.strip().lower() for x in a['use_when'] if isinstance(x,str)}
-    for b in skills[i+1:]:
-        tb={x.strip().lower() for x in b['use_when'] if isinstance(x,str)}
-        inter=ta & tb
-        if inter:
-            collisions.append((a['name'],b['name'],sorted(inter)[:2]))
+
+manifests = sorted((ROOT / 'core').glob('*/SKILL.md')) + sorted((ROOT / 'skills').glob('*/SKILL.md'))
+skills = []
+for manifest in manifests:
+    fm = parse_frontmatter(manifest)
+    skills.append(
+        {
+            'name': fm.get('name', manifest.parent.name),
+            'path': str(manifest.parent),
+            'use_when': [x.strip().lower() for x in (fm.get('use_when') or []) if isinstance(x, str)],
+            'do_not_use_when': [x.strip().lower() for x in (fm.get('do_not_use_when') or []) if isinstance(x, str)],
+            'domain': (fm.get('metadata') or {}).get('category', 'unknown'),
+            'deps': (fm.get('metadata') or {}).get('dependencies', []),
+        }
+    )
+
+collisions = []
+for a, b in itertools.combinations(skills, 2):
+    overlap = sorted(set(a['use_when']) & set(b['use_when']))
+    if overlap:
+        collisions.append((a['name'], b['name'], overlap[:3]))
 
 # cycle detection
-adj={s['name']:s['deps'] for s in skills}
-seen=set(); stack=set(); cycles=[]
+adj = {s['name']: [d for d in (s['deps'] or []) if isinstance(d, str)] for s in skills}
+visited, active = set(), set()
+cycles = []
 
-def dfs(n,path):
-    if n in stack:
-        i=path.index(n); cycles.append(path[i:]+[n]); return
-    if n in seen: return
-    seen.add(n); stack.add(n)
-    for m in adj.get(n,[]) or []: dfs(m,path+[m])
-    stack.remove(n)
-for n in adj: dfs(n,[n])
 
-OUT.write_text('# Routing Collision Report\n\n'
-+f'- Skills scanned: {len(skills)}\n'
-+f'- Trigger collisions: {len(collisions)}\n'
-+f'- Dependency cycles: {len(cycles)}\n\n'
-+'## Trigger Collisions\n'
-+('\n'.join([f"- `{a}` vs `{b}` overlap on {k}" for a,b,k in collisions[:100]]) or '- None detected\n')
-+'\n## Duplicate Capabilities\n- Heuristic: trigger collisions approximate duplicate capabilities.\n'
-+'\n## Dependency Cycles\n'
-+('\n'.join([f"- {' -> '.join(c)}" for c in cycles[:20]]) or '- None detected\n')
-+'\n## Ambiguous Domain Ownership\n- Skills with `metadata.category: unknown` require explicit ownership review.\n')
-print('wrote',OUT)
+def dfs(node: str, trail: list[str]) -> None:
+    if node in active:
+        if node in trail:
+            i = trail.index(node)
+            cycles.append(trail[i:] + [node])
+        return
+    if node in visited:
+        return
+    visited.add(node)
+    active.add(node)
+    for nxt in adj.get(node, []):
+        if nxt in adj:
+            dfs(nxt, trail + [nxt])
+    active.remove(node)
+
+
+for node in adj:
+    dfs(node, [node])
+
+unknown_domains = [s for s in skills if s['domain'] == 'unknown']
+ambiguous_rules = [s for s in skills if not s['do_not_use_when']]
+
+lines = [
+    '# Routing Collision Report',
+    '',
+    '## Summary',
+    f"- Skills scanned: {len(skills)}",
+    f"- Trigger overlaps: {len(collisions)}",
+    f"- Dependency cycles: {len(cycles)}",
+    f"- Unknown domain ownership: {len(unknown_domains)}",
+    f"- Missing exclusion rules: {len(ambiguous_rules)}",
+    '',
+    '## Trigger Overlap',
+]
+if collisions:
+    lines.extend([f"- `{a}` vs `{b}` overlap on: {', '.join(keys)}" for a, b, keys in collisions[:150]])
+else:
+    lines.append('- None detected.')
+
+lines.extend(['', '## Dependency Cycles'])
+if cycles:
+    lines.extend([f"- {' -> '.join(c)}" for c in cycles[:50]])
+else:
+    lines.append('- None detected.')
+
+lines.extend(['', '## Ambiguity Signals'])
+if unknown_domains:
+    lines.extend([f"- `{s['name']}` has `metadata.category: unknown`." for s in unknown_domains[:100]])
+if ambiguous_rules:
+    lines.extend([f"- `{s['name']}` missing `do_not_use_when` guidance." for s in ambiguous_rules[:100]])
+if not unknown_domains and not ambiguous_rules:
+    lines.append('- None detected.')
+
+lines.extend([
+    '',
+    '## Remediation Recommendations',
+    '1. Strengthen `use_when` with unique trigger language per domain.',
+    '2. Add negative routing constraints in `do_not_use_when` for neighboring skills.',
+    '3. Resolve dependency cycles by introducing orchestrator nodes or splitting responsibilities.',
+    '4. Assign explicit `metadata.category` ownership for all unknown domains.',
+])
+
+OUT.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+print(f'wrote {OUT}')

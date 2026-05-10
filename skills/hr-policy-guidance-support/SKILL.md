@@ -1,12 +1,17 @@
 ---
 name: hr-policy-guidance-support
-description: Support-only HR policy guidance drafts with bias and human-sensitivity guardrails and mandatory HR review.
+description: Support-only HR policy guidance drafts with bias and human-sensitivity
+  guardrails and mandatory HR review.
 metadata:
-  version: "9.0.0"
+  version: 9.0.0
   category: sdlc
   owner: Apotheon
   maturity: beta
   manifest: manifest.v9.json
+use_when:
+- Request clearly matches this skill's domain capabilities.
+do_not_use_when:
+- Request is outside this skill's domain or lacks required context.
 ---
 
 # Hr Policy Guidance Support

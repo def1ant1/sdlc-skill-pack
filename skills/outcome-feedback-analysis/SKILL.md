@@ -6,6 +6,10 @@ metadata:
   category: operations
   owner: Apotheon.ai
   maturity: beta
+use_when:
+- Request clearly matches this skill's domain capabilities.
+do_not_use_when:
+- Request is outside this skill's domain or lacks required context.
 ---
 
 # Outcome Feedback Analysis

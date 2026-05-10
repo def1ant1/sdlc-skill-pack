@@ -1,3442 +1,5586 @@
 {
   "nodes": [
     {
-      "name": "cluster-management",
-      "path": "core/cluster-management",
-      "type": "core"
-    },
-    {
-      "name": "tenant-management",
-      "path": "core/tenant-management",
-      "type": "core"
-    },
-    {
-      "name": "autonomous-os",
-      "path": "core/autonomous-os",
-      "type": "core"
-    },
-    {
-      "name": "multi-agent",
-      "path": "core/multi-agent",
-      "type": "core"
-    },
-    {
-      "name": "sdlc-skill-router",
-      "path": "core/skill-router",
-      "type": "core"
-    },
-    {
-      "name": "api-gateway",
-      "path": "core/api-gateway",
-      "type": "core"
-    },
-    {
-      "name": "cognitive-runtime",
-      "path": "core/cognitive-runtime",
-      "type": "core"
-    },
-    {
-      "name": "runtime-economics",
-      "path": "core/runtime-economics",
-      "type": "core"
-    },
-    {
-      "name": "research-runtime",
-      "path": "core/research-runtime",
-      "type": "core"
-    },
-    {
-      "name": "notification-orchestration",
-      "path": "core/notification-orchestration",
-      "type": "core"
-    },
-    {
-      "name": "enterprise-integration-hub",
-      "path": "core/enterprise-integration-hub",
-      "type": "core"
-    },
-    {
-      "name": "multimodal-runtime",
-      "path": "core/multimodal-runtime",
-      "type": "core"
-    },
-    {
-      "name": "inference-engine-fleet",
-      "path": "core/inference-engine-fleet",
-      "type": "core"
-    },
-    {
-      "name": "meeting-intelligence",
-      "path": "core/meeting-intelligence",
-      "type": "core"
-    },
-    {
-      "name": "enterprise-search",
-      "path": "core/enterprise-search",
-      "type": "core"
-    },
-    {
-      "name": "synthetic-data",
-      "path": "core/synthetic-data",
-      "type": "core"
-    },
-    {
-      "name": "zero-trust-runtime",
-      "path": "core/zero-trust-runtime",
-      "type": "core"
-    },
-    {
-      "name": "model-evaluation",
-      "path": "core/model-evaluation",
-      "type": "core"
-    },
-    {
-      "name": "knowledge-graph",
-      "path": "core/knowledge-graph",
-      "type": "core"
-    },
-    {
-      "name": "connector-hub",
-      "path": "core/connector-hub",
-      "type": "core"
-    },
-    {
-      "name": "local-security",
-      "path": "core/local-security",
-      "type": "core"
+      "name": "agent-identity",
+      "path": "core/agent-identity",
+      "type": "core",
+      "dependencies": [
+        "knowledge-graph",
+        "telemetry",
+        "agent-kernel"
+      ]
     },
     {
       "name": "agent-kernel",
       "path": "core/agent-kernel",
-      "type": "core"
-    },
-    {
-      "name": "lora-lifecycle",
-      "path": "core/lora-lifecycle",
-      "type": "core"
-    },
-    {
-      "name": "event-bus",
-      "path": "core/event-bus",
-      "type": "core"
-    },
-    {
-      "name": "workflow-engine",
-      "path": "core/workflow-engine",
-      "type": "core"
-    },
-    {
-      "name": "retrieval-engine",
-      "path": "core/retrieval-engine",
-      "type": "core"
-    },
-    {
-      "name": "observability-platform",
-      "path": "core/observability-platform",
-      "type": "core"
-    },
-    {
-      "name": "kv-cache-management",
-      "path": "core/kv-cache-management",
-      "type": "core"
-    },
-    {
-      "name": "local-runtime",
-      "path": "core/local-runtime",
-      "type": "core"
-    },
-    {
-      "name": "operator-console",
-      "path": "core/operator-console",
-      "type": "core"
-    },
-    {
-      "name": "benchmark-factory",
-      "path": "core/benchmark-factory",
-      "type": "core"
-    },
-    {
-      "name": "sdlc-orchestration",
-      "path": "core/orchestration",
-      "type": "core"
-    },
-    {
-      "name": "policy-engine",
-      "path": "core/policy-engine",
-      "type": "core"
-    },
-    {
-      "name": "predictive-reasoning",
-      "path": "core/predictive-reasoning",
-      "type": "core"
-    },
-    {
-      "name": "federated-runtime",
-      "path": "core/federated-runtime",
-      "type": "core"
-    },
-    {
-      "name": "distributed-agent-runtime",
-      "path": "core/distributed-agent-runtime",
-      "type": "core"
-    },
-    {
-      "name": "gtm-orchestration",
-      "path": "core/gtm-orchestration",
-      "type": "core"
-    },
-    {
-      "name": "sdlc-memory-token-management",
-      "path": "core/memory-token-management",
-      "type": "core"
-    },
-    {
-      "name": "privacy-runtime",
-      "path": "core/privacy-runtime",
-      "type": "core"
-    },
-    {
-      "name": "telemetry",
-      "path": "core/telemetry",
-      "type": "core"
-    },
-    {
-      "name": "economic-coordination",
-      "path": "core/economic-coordination",
-      "type": "core"
-    },
-    {
-      "name": "skill-gap-engine",
-      "path": "core/skill-gap-engine",
-      "type": "core"
-    },
-    {
-      "name": "agent-identity",
-      "path": "core/agent-identity",
-      "type": "core"
-    },
-    {
-      "name": "model-lifecycle",
-      "path": "core/model-lifecycle",
-      "type": "core"
-    },
-    {
-      "name": "compliance-runtime",
-      "path": "core/compliance-runtime",
-      "type": "core"
-    },
-    {
-      "name": "sdlc-semantic-cache",
-      "path": "core/semantic-cache",
-      "type": "core"
-    },
-    {
-      "name": "reinforcement-optimizer",
-      "path": "core/reinforcement-optimizer",
-      "type": "core"
-    },
-    {
-      "name": "governance",
-      "path": "core/governance",
-      "type": "core"
-    },
-    {
-      "name": "sdk-runtime",
-      "path": "core/sdk-runtime",
-      "type": "core"
-    },
-    {
-      "name": "developer-portal",
-      "path": "core/developer-portal",
-      "type": "core"
-    },
-    {
-      "name": "semantic-layer",
-      "path": "core/semantic-layer",
-      "type": "core"
-    },
-    {
-      "name": "billing-runtime",
-      "path": "core/billing-runtime",
-      "type": "core"
-    },
-    {
-      "name": "audit-trail",
-      "path": "core/audit-trail",
-      "type": "core"
-    },
-    {
-      "name": "workflow-runtime",
-      "path": "core/workflow-runtime",
-      "type": "core"
-    },
-    {
-      "name": "hitl-dashboard",
-      "path": "core/hitl-dashboard",
-      "type": "core"
-    },
-    {
-      "name": "data-fabric",
-      "path": "core/data-fabric",
-      "type": "core"
-    },
-    {
-      "name": "persistent-agent-runtime",
-      "path": "core/persistent-agent-runtime",
-      "type": "core"
-    },
-    {
-      "name": "evolution-engine",
-      "path": "core/evolution-engine",
-      "type": "core"
-    },
-    {
-      "name": "temporal-integration",
-      "path": "core/temporal-integration",
-      "type": "core"
-    },
-    {
-      "name": "strategic-planning",
-      "path": "core/strategic-planning",
-      "type": "core"
-    },
-    {
-      "name": "business-orchestration",
-      "path": "core/business-orchestration",
-      "type": "core"
-    },
-    {
-      "name": "world-model",
-      "path": "core/world-model",
-      "type": "core"
-    },
-    {
-      "name": "master-data-management",
-      "path": "core/master-data-management",
-      "type": "core"
-    },
-    {
-      "name": "explainability",
-      "path": "core/explainability",
-      "type": "core"
+      "type": "core",
+      "dependencies": [
+        "economic-coordination",
+        "event-bus",
+        "telemetry"
+      ]
     },
     {
       "name": "alignment-engine",
       "path": "core/alignment-engine",
-      "type": "core"
+      "type": "core",
+      "dependencies": [
+        "governance",
+        "telemetry",
+        "hitl-dashboard"
+      ]
+    },
+    {
+      "name": "api-gateway",
+      "path": "core/api-gateway",
+      "type": "core",
+      "dependencies": [
+        "sdlc-orchestration",
+        "sdlc-memory-token-management"
+      ]
+    },
+    {
+      "name": "audit-trail",
+      "path": "core/audit-trail",
+      "type": "core",
+      "dependencies": []
+    },
+    {
+      "name": "autonomous-os",
+      "path": "core/autonomous-os",
+      "type": "core",
+      "dependencies": [
+        "sdlc-orchestration",
+        "gtm-orchestration",
+        "sdlc-memory-token-management",
+        "knowledge-graph",
+        "retrieval-engine",
+        "kv-cache-management",
+        "multi-agent",
+        "local-runtime",
+        "local-security",
+        "telemetry",
+        "connector-hub",
+        "mcp-integrations",
+        "tenant-management",
+        "hitl-dashboard",
+        "strategic-planning",
+        "runtime-economics",
+        "model-evaluation",
+        "lora-lifecycle",
+        "synthetic-data",
+        "sandbox-execution",
+        "repo-intelligence",
+        "cloud-deployment",
+        "compliance-automation",
+        "customer-success",
+        "product-analytics",
+        "revenue-operations",
+        "content-marketing",
+        "ai-search-optimization",
+        "lora-lifecycle"
+      ]
+    },
+    {
+      "name": "benchmark-factory",
+      "path": "core/benchmark-factory",
+      "type": "core",
+      "dependencies": [
+        "synthetic-data",
+        "model-evaluation",
+        "data-fabric",
+        "knowledge-graph"
+      ]
+    },
+    {
+      "name": "billing-runtime",
+      "path": "core/billing-runtime",
+      "type": "core",
+      "dependencies": [
+        "sdlc-orchestration",
+        "audit-trail"
+      ]
+    },
+    {
+      "name": "business-orchestration",
+      "path": "core/business-orchestration",
+      "type": "core",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "workflow-engine",
+        "hitl-dashboard",
+        "governance",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "cluster-management",
+      "path": "core/cluster-management",
+      "type": "core",
+      "dependencies": [
+        "local-runtime",
+        "runtime-economics",
+        "telemetry",
+        "lora-lifecycle"
+      ]
+    },
+    {
+      "name": "cognitive-runtime",
+      "path": "core/cognitive-runtime",
+      "type": "core",
+      "dependencies": [
+        "workflow-runtime",
+        "agent-kernel",
+        "telemetry",
+        "hitl-dashboard"
+      ]
+    },
+    {
+      "name": "compliance-runtime",
+      "path": "core/compliance-runtime",
+      "type": "core",
+      "dependencies": [
+        "governance",
+        "telemetry",
+        "data-fabric",
+        "audit-trail"
+      ]
+    },
+    {
+      "name": "connector-hub",
+      "path": "core/connector-hub",
+      "type": "core",
+      "dependencies": [
+        "sdlc-orchestration"
+      ]
+    },
+    {
+      "name": "data-fabric",
+      "path": "core/data-fabric",
+      "type": "core",
+      "dependencies": [
+        "knowledge-graph",
+        "semantic-layer",
+        "master-data-management",
+        "enterprise-search"
+      ]
+    },
+    {
+      "name": "developer-portal",
+      "path": "core/developer-portal",
+      "type": "core",
+      "dependencies": [
+        "sdk-runtime",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "distributed-agent-runtime",
+      "path": "core/distributed-agent-runtime",
+      "type": "core",
+      "dependencies": [
+        "multi-agent",
+        "agent-kernel",
+        "event-bus",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "economic-coordination",
+      "path": "core/economic-coordination",
+      "type": "core",
+      "dependencies": [
+        "runtime-economics",
+        "agent-kernel",
+        "cluster-management",
+        "governance"
+      ]
+    },
+    {
+      "name": "enterprise-integration-hub",
+      "path": "core/enterprise-integration-hub",
+      "type": "core",
+      "dependencies": [
+        "connector-hub",
+        "event-bus",
+        "governance"
+      ]
+    },
+    {
+      "name": "enterprise-search",
+      "path": "core/enterprise-search",
+      "type": "core",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "retrieval-engine",
+        "knowledge-graph",
+        "local-security",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "event-bus",
+      "path": "core/event-bus",
+      "type": "core",
+      "dependencies": [
+        "telemetry",
+        "workflow-runtime",
+        "distributed-agent-runtime"
+      ]
+    },
+    {
+      "name": "evolution-engine",
+      "path": "core/evolution-engine",
+      "type": "core",
+      "dependencies": [
+        "skill-gap-engine",
+        "cognitive-runtime",
+        "workflow-engine",
+        "governance",
+        "hitl-dashboard"
+      ]
+    },
+    {
+      "name": "explainability",
+      "path": "core/explainability",
+      "type": "core",
+      "dependencies": [
+        "knowledge-graph",
+        "cognitive-runtime",
+        "governance",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "federated-runtime",
+      "path": "core/federated-runtime",
+      "type": "core",
+      "dependencies": [
+        "local-runtime",
+        "distributed-agent-runtime",
+        "cluster-management",
+        "governance"
+      ]
+    },
+    {
+      "name": "governance",
+      "path": "core/governance",
+      "type": "core",
+      "dependencies": [
+        "local-security",
+        "compliance-automation",
+        "telemetry",
+        "hitl-dashboard",
+        "sdlc-memory-token-management"
+      ]
+    },
+    {
+      "name": "gtm-orchestration",
+      "path": "core/gtm-orchestration",
+      "type": "core",
+      "dependencies": [
+        "sdlc-orchestration",
+        "sdlc-memory-token-management"
+      ]
+    },
+    {
+      "name": "hitl-dashboard",
+      "path": "core/hitl-dashboard",
+      "type": "core",
+      "dependencies": [
+        "local-security",
+        "telemetry",
+        "sdlc-memory-token-management",
+        "multi-agent"
+      ]
+    },
+    {
+      "name": "inference-engine-fleet",
+      "path": "core/inference-engine-fleet",
+      "type": "core",
+      "dependencies": [
+        "cluster-management",
+        "telemetry",
+        "event-bus"
+      ]
+    },
+    {
+      "name": "knowledge-graph",
+      "path": "core/knowledge-graph",
+      "type": "core",
+      "dependencies": [
+        "sdlc-orchestration",
+        "connector-hub",
+        "sdlc-memory-token-management"
+      ]
+    },
+    {
+      "name": "kv-cache-management",
+      "path": "core/kv-cache-management",
+      "type": "core",
+      "dependencies": [
+        "local-runtime",
+        "connector-hub"
+      ]
+    },
+    {
+      "name": "local-runtime",
+      "path": "core/local-runtime",
+      "type": "core",
+      "dependencies": [
+        "sdlc-orchestration",
+        "connector-hub"
+      ]
+    },
+    {
+      "name": "local-security",
+      "path": "core/local-security",
+      "type": "core",
+      "dependencies": [
+        "sdlc-orchestration"
+      ]
+    },
+    {
+      "name": "lora-lifecycle",
+      "path": "core/lora-lifecycle",
+      "type": "core",
+      "dependencies": [
+        "local-runtime",
+        "model-evaluation",
+        "synthetic-data",
+        "telemetry",
+        "local-security"
+      ]
+    },
+    {
+      "name": "master-data-management",
+      "path": "core/master-data-management",
+      "type": "core",
+      "dependencies": [
+        "data-fabric",
+        "knowledge-graph",
+        "semantic-layer",
+        "enterprise-search"
+      ]
     },
     {
       "name": "mcp-integrations",
       "path": "core/mcp-integrations",
-      "type": "core"
+      "type": "core",
+      "dependencies": [
+        "connector-hub",
+        "local-security"
+      ]
     },
     {
-      "name": "simulation-engine",
-      "path": "core/simulation-engine",
-      "type": "core"
+      "name": "meeting-intelligence",
+      "path": "core/meeting-intelligence",
+      "type": "core",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "knowledge-graph",
+        "telemetry",
+        "hitl-dashboard"
+      ]
     },
     {
-      "name": "ray-runtime",
-      "path": "core/ray-runtime",
-      "type": "core"
+      "name": "sdlc-memory-token-management",
+      "path": "core/memory-token-management",
+      "type": "core",
+      "dependencies": []
     },
     {
-      "name": "sandbox-execution",
-      "path": "core/sandbox-execution",
-      "type": "core"
+      "name": "model-evaluation",
+      "path": "core/model-evaluation",
+      "type": "core",
+      "dependencies": [
+        "local-runtime",
+        "telemetry",
+        "connector-hub"
+      ]
+    },
+    {
+      "name": "model-lifecycle",
+      "path": "core/model-lifecycle",
+      "type": "core",
+      "dependencies": [
+        "lora-lifecycle",
+        "model-evaluation",
+        "benchmark-factory",
+        "governance",
+        "telemetry"
+      ]
     },
     {
       "name": "model-routing",
       "path": "core/model-routing",
-      "type": "core"
+      "type": "core",
+      "dependencies": [
+        "cluster-management",
+        "economic-coordination",
+        "telemetry"
+      ]
     },
     {
-      "name": "code-review",
-      "path": "skills/code-review",
-      "type": "skill"
+      "name": "multi-agent",
+      "path": "core/multi-agent",
+      "type": "core",
+      "dependencies": [
+        "sdlc-orchestration",
+        "sdlc-memory-token-management",
+        "knowledge-graph"
+      ]
     },
     {
-      "name": "execution-explanation",
-      "path": "skills/execution-explanation",
-      "type": "skill"
+      "name": "multimodal-runtime",
+      "path": "core/multimodal-runtime",
+      "type": "core",
+      "dependencies": [
+        "cognitive-runtime",
+        "data-fabric",
+        "agent-kernel"
+      ]
     },
     {
-      "name": "document-intelligence",
-      "path": "skills/document-intelligence",
-      "type": "skill"
+      "name": "notification-orchestration",
+      "path": "core/notification-orchestration",
+      "type": "core",
+      "dependencies": [
+        "event-bus",
+        "connector-hub",
+        "hitl-dashboard"
+      ]
     },
     {
-      "name": "gpu-cluster-optimization",
-      "path": "skills/gpu-cluster-optimization",
-      "type": "skill"
+      "name": "observability-platform",
+      "path": "core/observability-platform",
+      "type": "core",
+      "dependencies": [
+        "sdlc-orchestration",
+        "audit-trail"
+      ]
     },
     {
-      "name": "hierarchical-planning",
-      "path": "skills/hierarchical-planning",
-      "type": "skill"
+      "name": "operator-console",
+      "path": "core/operator-console",
+      "type": "core",
+      "dependencies": [
+        "telemetry",
+        "hitl-dashboard",
+        "cognitive-runtime",
+        "persistent-agent-runtime"
+      ]
     },
     {
-      "name": "paid-acquisition",
-      "path": "skills/paid-acquisition",
-      "type": "skill"
+      "name": "sdlc-orchestration",
+      "path": "core/orchestration",
+      "type": "core",
+      "dependencies": [
+        "sdlc-memory-token-management"
+      ]
     },
     {
-      "name": "lora-management",
-      "path": "skills/lora-management",
-      "type": "skill"
+      "name": "persistent-agent-runtime",
+      "path": "core/persistent-agent-runtime",
+      "type": "core",
+      "dependencies": [
+        "agent-kernel",
+        "cognitive-runtime",
+        "workflow-runtime",
+        "event-bus"
+      ]
     },
     {
-      "name": "causal-tracing",
-      "path": "skills/causal-tracing",
-      "type": "skill"
+      "name": "policy-engine",
+      "path": "core/policy-engine",
+      "type": "core",
+      "dependencies": [
+        "audit-trail",
+        "sdlc-orchestration"
+      ]
     },
     {
-      "name": "program-governance",
-      "path": "skills/program-governance",
-      "type": "skill"
+      "name": "predictive-reasoning",
+      "path": "core/predictive-reasoning",
+      "type": "core",
+      "dependencies": [
+        "forecasting",
+        "knowledge-graph",
+        "simulation-engine",
+        "telemetry",
+        "data-fabric"
+      ]
     },
     {
-      "name": "ai-engineering",
-      "path": "skills/ai-engineering",
-      "type": "skill"
+      "name": "privacy-runtime",
+      "path": "core/privacy-runtime",
+      "type": "core",
+      "dependencies": [
+        "governance",
+        "data-fabric",
+        "alignment-engine",
+        "telemetry"
+      ]
     },
     {
-      "name": "policy-simulation",
-      "path": "skills/policy-simulation",
-      "type": "skill"
+      "name": "ray-runtime",
+      "path": "core/ray-runtime",
+      "type": "core",
+      "dependencies": [
+        "cluster-management",
+        "distributed-agent-runtime",
+        "event-bus"
+      ]
     },
     {
-      "name": "security-war-gaming",
-      "path": "skills/security-war-gaming",
-      "type": "skill"
+      "name": "reinforcement-optimizer",
+      "path": "core/reinforcement-optimizer",
+      "type": "core",
+      "dependencies": [
+        "cognitive-runtime",
+        "evolution-engine",
+        "telemetry"
+      ]
     },
     {
-      "name": "frontend-engineering",
-      "path": "skills/frontend-engineering",
-      "type": "skill"
+      "name": "research-runtime",
+      "path": "core/research-runtime",
+      "type": "core",
+      "dependencies": [
+        "enterprise-search",
+        "knowledge-graph",
+        "retrieval-engine",
+        "synthetic-data"
+      ]
     },
     {
-      "name": "quantization-optimization",
-      "path": "skills/quantization-optimization",
-      "type": "skill"
+      "name": "retrieval-engine",
+      "path": "core/retrieval-engine",
+      "type": "core",
+      "dependencies": [
+        "knowledge-graph",
+        "connector-hub",
+        "sdlc-memory-token-management"
+      ]
     },
     {
-      "name": "routing-collision-analysis",
-      "path": "skills/routing-collision-analysis",
-      "type": "skill"
+      "name": "runtime-economics",
+      "path": "core/runtime-economics",
+      "type": "core",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "local-runtime",
+        "telemetry",
+        "connector-hub",
+        "token-cost-analysis",
+        "roi-estimation"
+      ]
     },
     {
-      "name": "system-architecture",
-      "path": "skills/system-architecture",
-      "type": "skill"
+      "name": "sandbox-execution",
+      "path": "core/sandbox-execution",
+      "type": "core",
+      "dependencies": [
+        "local-security",
+        "local-runtime",
+        "telemetry",
+        "sdlc-memory-token-management"
+      ]
     },
     {
-      "name": "release-management",
-      "path": "skills/release-management",
-      "type": "skill"
+      "name": "sdk-runtime",
+      "path": "core/sdk-runtime",
+      "type": "core",
+      "dependencies": [
+        "agent-kernel",
+        "governance",
+        "local-security"
+      ]
     },
     {
-      "name": "inference-batching-optimization",
-      "path": "skills/inference-batching-optimization",
-      "type": "skill"
+      "name": "sdlc-semantic-cache",
+      "path": "core/semantic-cache",
+      "type": "core",
+      "dependencies": []
     },
     {
-      "name": "discovery-synthesis",
-      "path": "skills/discovery-synthesis",
-      "type": "skill"
+      "name": "semantic-layer",
+      "path": "core/semantic-layer",
+      "type": "core",
+      "dependencies": [
+        "data-fabric",
+        "knowledge-graph",
+        "telemetry"
+      ]
     },
     {
-      "name": "revenue-operations",
-      "path": "skills/revenue-operations",
-      "type": "skill"
+      "name": "simulation-engine",
+      "path": "core/simulation-engine",
+      "type": "core",
+      "dependencies": [
+        "cognitive-runtime",
+        "knowledge-graph",
+        "forecasting",
+        "synthetic-data"
+      ]
     },
     {
-      "name": "business-continuity-planning",
-      "path": "skills/business-continuity-planning",
-      "type": "skill"
+      "name": "skill-gap-engine",
+      "path": "core/skill-gap-engine",
+      "type": "core",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "governance",
+        "workflow-engine",
+        "hitl-dashboard"
+      ]
     },
     {
-      "name": "capacity-balancing",
-      "path": "skills/capacity-balancing",
-      "type": "skill"
+      "name": "sdlc-skill-router",
+      "path": "core/skill-router",
+      "type": "core",
+      "dependencies": []
     },
     {
-      "name": "devsecops",
-      "path": "skills/devsecops",
-      "type": "skill"
+      "name": "strategic-planning",
+      "path": "core/strategic-planning",
+      "type": "core",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "knowledge-graph",
+        "product-analytics",
+        "runtime-economics"
+      ]
     },
     {
-      "name": "evaluation-dataset-curation",
-      "path": "skills/evaluation-dataset-curation",
-      "type": "skill"
+      "name": "synthetic-data",
+      "path": "core/synthetic-data",
+      "type": "core",
+      "dependencies": [
+        "local-runtime",
+        "lora-lifecycle",
+        "model-evaluation",
+        "sandbox-execution",
+        "telemetry"
+      ]
     },
     {
-      "name": "launch-planning",
-      "path": "skills/launch-planning",
-      "type": "skill"
+      "name": "telemetry",
+      "path": "core/telemetry",
+      "type": "core",
+      "dependencies": [
+        "sdlc-orchestration",
+        "sdlc-memory-token-management"
+      ]
     },
     {
-      "name": "constraint-reasoning",
-      "path": "skills/constraint-reasoning",
-      "type": "skill"
+      "name": "temporal-integration",
+      "path": "core/temporal-integration",
+      "type": "core",
+      "dependencies": [
+        "workflow-runtime",
+        "event-bus",
+        "telemetry"
+      ]
     },
     {
-      "name": "schema-evolution",
-      "path": "skills/schema-evolution",
-      "type": "skill"
+      "name": "tenant-management",
+      "path": "core/tenant-management",
+      "type": "core",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "local-security",
+        "connector-hub",
+        "telemetry"
+      ]
     },
     {
-      "name": "product-analytics",
-      "path": "skills/product-analytics",
-      "type": "skill"
+      "name": "workflow-engine",
+      "path": "core/workflow-engine",
+      "type": "core",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "hitl-dashboard",
+        "telemetry",
+        "local-security"
+      ]
     },
     {
-      "name": "pii-detection",
-      "path": "skills/pii-detection",
-      "type": "skill"
+      "name": "workflow-runtime",
+      "path": "core/workflow-runtime",
+      "type": "core",
+      "dependencies": [
+        "checkpoint-management",
+        "event-bus",
+        "telemetry",
+        "hitl-dashboard"
+      ]
     },
     {
-      "name": "goal-decomposition",
-      "path": "skills/goal-decomposition",
-      "type": "skill"
+      "name": "world-model",
+      "path": "core/world-model",
+      "type": "core",
+      "dependencies": [
+        "cognitive-runtime",
+        "data-fabric",
+        "telemetry"
+      ]
     },
     {
-      "name": "network-topology-analysis",
-      "path": "skills/network-topology-analysis",
-      "type": "skill"
+      "name": "zero-trust-runtime",
+      "path": "core/zero-trust-runtime",
+      "type": "core",
+      "dependencies": [
+        "governance",
+        "local-security",
+        "agent-kernel"
+      ]
     },
     {
-      "name": "cloud-deployment",
-      "path": "skills/cloud-deployment",
-      "type": "skill"
-    },
-    {
-      "name": "model-selection-optimization",
-      "path": "skills/model-selection-optimization",
-      "type": "skill"
-    },
-    {
-      "name": "marketplace-publishing",
-      "path": "skills/marketplace-publishing",
-      "type": "skill"
-    },
-    {
-      "name": "research-analysis",
-      "path": "skills/research-analysis",
-      "type": "skill"
-    },
-    {
-      "name": "crm-integration",
-      "path": "skills/crm-integration",
-      "type": "skill"
-    },
-    {
-      "name": "adversarial-evaluation",
-      "path": "skills/adversarial-evaluation",
-      "type": "skill"
-    },
-    {
-      "name": "zero-trust-policy-authoring",
-      "path": "skills/zero-trust-policy-authoring",
-      "type": "skill"
-    },
-    {
-      "name": "erp-integration",
-      "path": "skills/erp-integration",
-      "type": "skill"
-    },
-    {
-      "name": "sdk-authoring",
-      "path": "skills/sdk-authoring",
-      "type": "skill"
-    },
-    {
-      "name": "institutional-knowledge-query",
-      "path": "skills/institutional-knowledge-query",
-      "type": "skill"
-    },
-    {
-      "name": "memory-compression",
-      "path": "skills/memory-compression",
-      "type": "skill"
-    },
-    {
-      "name": "inference-engine-deployment",
-      "path": "skills/inference-engine-deployment",
-      "type": "skill"
-    },
-    {
-      "name": "compliance-automation",
-      "path": "skills/compliance-automation",
-      "type": "skill"
-    },
-    {
-      "name": "inference-engine-benchmarking",
-      "path": "skills/inference-engine-benchmarking",
-      "type": "skill"
-    },
-    {
-      "name": "benchmark-generation",
-      "path": "skills/benchmark-generation",
-      "type": "skill"
-    },
-    {
-      "name": "alignment-testing",
-      "path": "skills/alignment-testing",
-      "type": "skill"
-    },
-    {
-      "name": "compliance-posture-reporting",
-      "path": "skills/compliance-posture-reporting",
-      "type": "skill"
-    },
-    {
-      "name": "reasoning-visualization",
-      "path": "skills/reasoning-visualization",
-      "type": "skill"
-    },
-    {
-      "name": "qa-automation",
-      "path": "skills/qa-automation",
-      "type": "skill"
-    },
-    {
-      "name": "data-contract-management",
-      "path": "skills/data-contract-management",
-      "type": "skill"
-    },
-    {
-      "name": "initiative-prioritization",
-      "path": "skills/initiative-prioritization",
-      "type": "skill"
+      "name": "account-expansion-intelligence",
+      "path": "skills/account-expansion-intelligence",
+      "type": "skill",
+      "dependencies": []
     },
     {
       "name": "accounting-automation",
       "path": "skills/accounting-automation",
-      "type": "skill"
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "business-orchestration",
+        "hitl-dashboard",
+        "telemetry"
+      ]
     },
     {
-      "name": "workforce-management",
-      "path": "skills/workforce-management",
-      "type": "skill"
+      "name": "accounting-operations",
+      "path": "skills/accounting-operations",
+      "type": "skill",
+      "dependencies": []
     },
     {
-      "name": "incident-simulation",
-      "path": "skills/incident-simulation",
-      "type": "skill"
+      "name": "accounts-payable-automation",
+      "path": "skills/accounts-payable-automation",
+      "type": "skill",
+      "dependencies": []
     },
     {
-      "name": "self-reflection",
-      "path": "skills/self-reflection",
-      "type": "skill"
+      "name": "accounts-receivable-automation",
+      "path": "skills/accounts-receivable-automation",
+      "type": "skill",
+      "dependencies": []
     },
     {
-      "name": "deception-detection",
-      "path": "skills/deception-detection",
-      "type": "skill"
+      "name": "adversarial-evaluation",
+      "path": "skills/adversarial-evaluation",
+      "type": "skill",
+      "dependencies": [
+        "alignment-engine",
+        "alignment-testing",
+        "telemetry"
+      ]
     },
     {
-      "name": "hypothesis-generation",
-      "path": "skills/hypothesis-generation",
-      "type": "skill"
-    },
-    {
-      "name": "lessons-learned-extraction",
-      "path": "skills/lessons-learned-extraction",
-      "type": "skill"
-    },
-    {
-      "name": "state-restoration",
-      "path": "skills/state-restoration",
-      "type": "skill"
-    },
-    {
-      "name": "literature-review",
-      "path": "skills/literature-review",
-      "type": "skill"
-    },
-    {
-      "name": "context-reuse-optimization",
-      "path": "skills/context-reuse-optimization",
-      "type": "skill"
-    },
-    {
-      "name": "residency-analysis",
-      "path": "skills/residency-analysis",
-      "type": "skill"
-    },
-    {
-      "name": "long-horizon-planning",
-      "path": "skills/long-horizon-planning",
-      "type": "skill"
-    },
-    {
-      "name": "lineage-analysis",
-      "path": "skills/lineage-analysis",
-      "type": "skill"
-    },
-    {
-      "name": "observability",
-      "path": "skills/observability",
-      "type": "skill"
-    },
-    {
-      "name": "ray-serve-management",
-      "path": "skills/ray-serve-management",
-      "type": "skill"
-    },
-    {
-      "name": "budget-planning",
-      "path": "skills/budget-planning",
-      "type": "skill"
-    },
-    {
-      "name": "forecasting",
-      "path": "skills/forecasting",
-      "type": "skill"
-    },
-    {
-      "name": "visual-analytics",
-      "path": "skills/visual-analytics",
-      "type": "skill"
-    },
-    {
-      "name": "uncertainty-aware-routing",
-      "path": "skills/uncertainty-aware-routing",
-      "type": "skill"
-    },
-    {
-      "name": "seo-engineering",
-      "path": "skills/seo-engineering",
-      "type": "skill"
-    },
-    {
-      "name": "iot-data-ingestion",
-      "path": "skills/iot-data-ingestion",
-      "type": "skill"
-    },
-    {
-      "name": "belief-state-management",
-      "path": "skills/belief-state-management",
-      "type": "skill"
-    },
-    {
-      "name": "model-placement-optimization",
-      "path": "skills/model-placement-optimization",
-      "type": "skill"
-    },
-    {
-      "name": "vendor-procurement",
-      "path": "skills/vendor-procurement",
-      "type": "skill"
-    },
-    {
-      "name": "repo-intelligence",
-      "path": "skills/repo-intelligence",
-      "type": "skill"
-    },
-    {
-      "name": "meta-reasoning",
-      "path": "skills/meta-reasoning",
-      "type": "skill"
-    },
-    {
-      "name": "cache-placement-optimization",
-      "path": "skills/cache-placement-optimization",
-      "type": "skill"
-    },
-    {
-      "name": "model-benchmarking",
-      "path": "skills/model-benchmarking",
-      "type": "skill"
-    },
-    {
-      "name": "temporal-memory-replay",
-      "path": "skills/temporal-memory-replay",
-      "type": "skill"
-    },
-    {
-      "name": "lateral-movement-detection",
-      "path": "skills/lateral-movement-detection",
-      "type": "skill"
-    },
-    {
-      "name": "analytics-intelligence",
-      "path": "skills/analytics-intelligence",
-      "type": "skill"
-    },
-    {
-      "name": "synthetic-dataset-generation",
-      "path": "skills/synthetic-dataset-generation",
-      "type": "skill"
-    },
-    {
-      "name": "causal-analysis",
-      "path": "skills/causal-analysis",
-      "type": "skill"
-    },
-    {
-      "name": "reasoning-depth-estimation",
-      "path": "skills/reasoning-depth-estimation",
-      "type": "skill"
-    },
-    {
-      "name": "edge-runtime-management",
-      "path": "skills/edge-runtime-management",
-      "type": "skill"
-    },
-    {
-      "name": "policy-justification",
-      "path": "skills/policy-justification",
-      "type": "skill"
-    },
-    {
-      "name": "customer-success",
-      "path": "skills/customer-success",
-      "type": "skill"
-    },
-    {
-      "name": "revenue-optimization",
-      "path": "skills/revenue-optimization",
-      "type": "skill"
-    },
-    {
-      "name": "harm-classification",
-      "path": "skills/harm-classification",
-      "type": "skill"
-    },
-    {
-      "name": "developer-experience",
-      "path": "skills/developer-experience",
-      "type": "skill"
-    },
-    {
-      "name": "backend-engineering",
-      "path": "skills/backend-engineering",
-      "type": "skill"
-    },
-    {
-      "name": "content-marketing",
-      "path": "skills/content-marketing",
-      "type": "skill"
-    },
-    {
-      "name": "itsm-integration",
-      "path": "skills/itsm-integration",
-      "type": "skill"
-    },
-    {
-      "name": "executive-reporting",
-      "path": "skills/executive-reporting",
-      "type": "skill"
-    },
-    {
-      "name": "model-distillation",
-      "path": "skills/model-distillation",
-      "type": "skill"
-    },
-    {
-      "name": "legal-ops",
-      "path": "skills/legal-ops",
-      "type": "skill"
-    },
-    {
-      "name": "audio-video-processing",
-      "path": "skills/audio-video-processing",
-      "type": "skill"
-    },
-    {
-      "name": "dataset-curation",
-      "path": "skills/dataset-curation",
-      "type": "skill"
-    },
-    {
-      "name": "checkpoint-management",
-      "path": "skills/checkpoint-management",
-      "type": "skill"
-    },
-    {
-      "name": "continuous-control-monitoring",
-      "path": "skills/continuous-control-monitoring",
-      "type": "skill"
-    },
-    {
-      "name": "inbox-automation",
-      "path": "skills/inbox-automation",
-      "type": "skill"
-    },
-    {
-      "name": "decision-intelligence",
-      "path": "skills/decision-intelligence",
-      "type": "skill"
-    },
-    {
-      "name": "prompt-optimization",
-      "path": "skills/prompt-optimization",
-      "type": "skill"
-    },
-    {
-      "name": "patent-analysis",
-      "path": "skills/patent-analysis",
-      "type": "skill"
-    },
-    {
-      "name": "portfolio-optimization",
-      "path": "skills/portfolio-optimization",
-      "type": "skill"
-    },
-    {
-      "name": "runtime-recovery",
-      "path": "skills/runtime-recovery",
-      "type": "skill"
-    },
-    {
-      "name": "data-redaction",
-      "path": "skills/data-redaction",
-      "type": "skill"
-    },
-    {
-      "name": "communication-analytics",
-      "path": "skills/communication-analytics",
-      "type": "skill"
-    },
-    {
-      "name": "workflow-replay",
-      "path": "skills/workflow-replay",
-      "type": "skill"
-    },
-    {
-      "name": "legal-hold-management",
-      "path": "skills/legal-hold-management",
-      "type": "skill"
-    },
-    {
-      "name": "compliance-governance",
-      "path": "skills/compliance-governance",
-      "type": "skill"
-    },
-    {
-      "name": "workflow-ab-testing",
-      "path": "skills/workflow-ab-testing",
-      "type": "skill"
+      "name": "ai-engineering",
+      "path": "skills/ai-engineering",
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "local-runtime",
+        "model-evaluation",
+        "retrieval-engine"
+      ]
     },
     {
       "name": "ai-search-optimization",
       "path": "skills/ai-search-optimization",
-      "type": "skill"
+      "type": "skill",
+      "dependencies": []
     },
     {
-      "name": "runtime-simulation",
-      "path": "skills/runtime-simulation",
-      "type": "skill"
+      "name": "alignment-testing",
+      "path": "skills/alignment-testing",
+      "type": "skill",
+      "dependencies": [
+        "alignment-engine",
+        "benchmark-factory",
+        "telemetry"
+      ]
     },
     {
-      "name": "scenario-generation",
-      "path": "skills/scenario-generation",
-      "type": "skill"
+      "name": "analytics-intelligence",
+      "path": "skills/analytics-intelligence",
+      "type": "skill",
+      "dependencies": [
+        "launch-planning",
+        "sdlc-memory-token-management",
+        "connector-hub"
+      ]
     },
     {
-      "name": "distributed-training-orchestration",
-      "path": "skills/distributed-training-orchestration",
-      "type": "skill"
+      "name": "arbitrage-opportunity-detection",
+      "path": "skills/arbitrage-opportunity-detection",
+      "type": "skill",
+      "dependencies": []
     },
     {
-      "name": "disaster-recovery-automation",
-      "path": "skills/disaster-recovery-automation",
-      "type": "skill"
+      "name": "audio-video-processing",
+      "path": "skills/audio-video-processing",
+      "type": "skill",
+      "dependencies": [
+        "multimodal-runtime"
+      ]
     },
     {
-      "name": "sre-incident-response",
-      "path": "skills/sre-incident-response",
-      "type": "skill"
+      "name": "audit-trail-analysis",
+      "path": "skills/audit-trail-analysis",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "backend-engineering",
+      "path": "skills/backend-engineering",
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "sdlc-orchestration",
+        "devsecops",
+        "observability"
+      ]
+    },
+    {
+      "name": "belief-state-management",
+      "path": "skills/belief-state-management",
+      "type": "skill",
+      "dependencies": [
+        "world-model"
+      ]
+    },
+    {
+      "name": "benchmark-generation",
+      "path": "skills/benchmark-generation",
+      "type": "skill",
+      "dependencies": [
+        "benchmark-factory",
+        "synthetic-dataset-generation",
+        "dataset-curation",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "bookkeeping-automation",
+      "path": "skills/bookkeeping-automation",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "brand-sentiment-analysis",
+      "path": "skills/brand-sentiment-analysis",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "budget-planning",
+      "path": "skills/budget-planning",
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "accounting-automation",
+        "revenue-operations",
+        "strategic-planning",
+        "hitl-dashboard"
+      ]
+    },
+    {
+      "name": "budget-variance-analysis",
+      "path": "skills/budget-variance-analysis",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "business-continuity-planning",
+      "path": "skills/business-continuity-planning",
+      "type": "skill",
+      "dependencies": [
+        "disaster-recovery-automation",
+        "governance"
+      ]
+    },
+    {
+      "name": "business-process-optimization",
+      "path": "skills/business-process-optimization",
+      "type": "skill",
+      "dependencies": []
     },
     {
       "name": "business-simulation",
       "path": "skills/business-simulation",
-      "type": "skill"
+      "type": "skill",
+      "dependencies": [
+        "simulation-engine",
+        "predictive-reasoning",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "cache-placement-optimization",
+      "path": "skills/cache-placement-optimization",
+      "type": "skill",
+      "dependencies": [
+        "cluster-management",
+        "kv-cache-management",
+        "local-runtime",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "campaign-optimization",
+      "path": "skills/campaign-optimization",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "capacity-balancing",
+      "path": "skills/capacity-balancing",
+      "type": "skill",
+      "dependencies": [
+        "portfolio-optimization",
+        "workforce-management",
+        "forecasting",
+        "strategic-planning"
+      ]
+    },
+    {
+      "name": "cash-flow-forecasting",
+      "path": "skills/cash-flow-forecasting",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "causal-analysis",
+      "path": "skills/causal-analysis",
+      "type": "skill",
+      "dependencies": [
+        "data-fabric",
+        "semantic-layer",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "causal-tracing",
+      "path": "skills/causal-tracing",
+      "type": "skill",
+      "dependencies": [
+        "explainability",
+        "event-bus",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "chart-of-accounts-management",
+      "path": "skills/chart-of-accounts-management",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "checkpoint-management",
+      "path": "skills/checkpoint-management",
+      "type": "skill",
+      "dependencies": [
+        "workflow-runtime",
+        "event-bus",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "churn-risk-detection",
+      "path": "skills/churn-risk-detection",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "cloud-deployment",
+      "path": "skills/cloud-deployment",
+      "type": "skill",
+      "dependencies": [
+        "devsecops",
+        "release-management",
+        "connector-hub",
+        "local-security"
+      ]
+    },
+    {
+      "name": "code-review",
+      "path": "skills/code-review",
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "devsecops",
+        "qa-automation"
+      ]
+    },
+    {
+      "name": "collections-prioritization",
+      "path": "skills/collections-prioritization",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "communication-analytics",
+      "path": "skills/communication-analytics",
+      "type": "skill",
+      "dependencies": [
+        "inbox-automation",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "competitor-price-scraping",
+      "path": "skills/competitor-price-scraping",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "compliance-automation",
+      "path": "skills/compliance-automation",
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "local-security",
+        "connector-hub",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "compliance-governance",
+      "path": "skills/compliance-governance",
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "compliance-automation",
+        "local-security",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "compliance-posture-reporting",
+      "path": "skills/compliance-posture-reporting",
+      "type": "skill",
+      "dependencies": [
+        "compliance-runtime",
+        "continuous-control-monitoring"
+      ]
+    },
+    {
+      "name": "constraint-reasoning",
+      "path": "skills/constraint-reasoning",
+      "type": "skill",
+      "dependencies": [
+        "cognitive-runtime",
+        "hierarchical-planning",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "content-marketing",
+      "path": "skills/content-marketing",
+      "type": "skill",
+      "dependencies": [
+        "gtm-orchestration",
+        "ai-search-optimization"
+      ]
+    },
+    {
+      "name": "content-strategy",
+      "path": "skills/content-strategy",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "context-reuse-optimization",
+      "path": "skills/context-reuse-optimization",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "continuous-control-monitoring",
+      "path": "skills/continuous-control-monitoring",
+      "type": "skill",
+      "dependencies": [
+        "compliance-runtime",
+        "governance"
+      ]
+    },
+    {
+      "name": "conversion-funnel-analysis",
+      "path": "skills/conversion-funnel-analysis",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "crm-integration",
+      "path": "skills/crm-integration",
+      "type": "skill",
+      "dependencies": [
+        "enterprise-integration-hub"
+      ]
+    },
+    {
+      "name": "customer-health-scoring",
+      "path": "skills/customer-health-scoring",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "customer-journey-mapping",
+      "path": "skills/customer-journey-mapping",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "customer-success",
+      "path": "skills/customer-success",
+      "type": "skill",
+      "dependencies": [
+        "gtm-orchestration",
+        "sdlc-memory-token-management",
+        "connector-hub",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "data-contract-management",
+      "path": "skills/data-contract-management",
+      "type": "skill",
+      "dependencies": [
+        "data-fabric",
+        "schema-evolution",
+        "event-bus",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "data-quality-scoring",
+      "path": "skills/data-quality-scoring",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "data-redaction",
+      "path": "skills/data-redaction",
+      "type": "skill",
+      "dependencies": [
+        "privacy-runtime",
+        "pii-detection",
+        "data-fabric",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "dataset-curation",
+      "path": "skills/dataset-curation",
+      "type": "skill",
+      "dependencies": [
+        "data-fabric",
+        "benchmark-factory",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "deception-detection",
+      "path": "skills/deception-detection",
+      "type": "skill",
+      "dependencies": [
+        "alignment-engine",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "decision-intelligence",
+      "path": "skills/decision-intelligence",
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "knowledge-graph",
+        "forecasting",
+        "hitl-dashboard"
+      ]
+    },
+    {
+      "name": "demand-planning",
+      "path": "skills/demand-planning",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "developer-experience",
+      "path": "skills/developer-experience",
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "observability",
+        "qa-automation",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "devsecops",
+      "path": "skills/devsecops",
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "local-security",
+        "compliance-automation"
+      ]
+    },
+    {
+      "name": "disaster-recovery-automation",
+      "path": "skills/disaster-recovery-automation",
+      "type": "skill",
+      "dependencies": [
+        "runtime-recovery",
+        "cluster-management"
+      ]
+    },
+    {
+      "name": "discovery-synthesis",
+      "path": "skills/discovery-synthesis",
+      "type": "skill",
+      "dependencies": [
+        "research-runtime",
+        "literature-review",
+        "research-analysis",
+        "knowledge-graph"
+      ]
+    },
+    {
+      "name": "distributed-training-orchestration",
+      "path": "skills/distributed-training-orchestration",
+      "type": "skill",
+      "dependencies": [
+        "ray-runtime",
+        "model-distillation"
+      ]
+    },
+    {
+      "name": "document-intelligence",
+      "path": "skills/document-intelligence",
+      "type": "skill",
+      "dependencies": [
+        "multimodal-runtime"
+      ]
+    },
+    {
+      "name": "edge-runtime-management",
+      "path": "skills/edge-runtime-management",
+      "type": "skill",
+      "dependencies": [
+        "inference-engine-fleet",
+        "cluster-management"
+      ]
+    },
+    {
+      "name": "entity-resolution",
+      "path": "skills/entity-resolution",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "erp-integration",
+      "path": "skills/erp-integration",
+      "type": "skill",
+      "dependencies": [
+        "enterprise-integration-hub"
+      ]
+    },
+    {
+      "name": "escalation-prediction",
+      "path": "skills/escalation-prediction",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "evaluation-dataset-curation",
+      "path": "skills/evaluation-dataset-curation",
+      "type": "skill",
+      "dependencies": [
+        "benchmark-factory",
+        "dataset-curation",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "evidence-pack-generation",
+      "path": "skills/evidence-pack-generation",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "execution-explanation",
+      "path": "skills/execution-explanation",
+      "type": "skill",
+      "dependencies": [
+        "explainability",
+        "causal-tracing",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "executive-reporting",
+      "path": "skills/executive-reporting",
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "product-analytics",
+        "revenue-operations",
+        "customer-success",
+        "strategic-planning"
+      ]
+    },
+    {
+      "name": "feature-prioritization",
+      "path": "skills/feature-prioritization",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "financial-scenario-modeling",
+      "path": "skills/financial-scenario-modeling",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "forecasting",
+      "path": "skills/forecasting",
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "revenue-operations",
+        "product-analytics",
+        "budget-planning",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "fpa-analysis",
+      "path": "skills/fpa-analysis",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "frontend-engineering",
+      "path": "skills/frontend-engineering",
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "sdlc-orchestration",
+        "devsecops",
+        "observability"
+      ]
+    },
+    {
+      "name": "goal-decomposition",
+      "path": "skills/goal-decomposition",
+      "type": "skill",
+      "dependencies": [
+        "cognitive-runtime",
+        "hierarchical-planning",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "golden-record-management",
+      "path": "skills/golden-record-management",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "gpu-cluster-optimization",
+      "path": "skills/gpu-cluster-optimization",
+      "type": "skill",
+      "dependencies": [
+        "cluster-management",
+        "network-topology-analysis",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "harm-classification",
+      "path": "skills/harm-classification",
+      "type": "skill",
+      "dependencies": [
+        "alignment-engine",
+        "governance",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "hierarchical-planning",
+      "path": "skills/hierarchical-planning",
+      "type": "skill",
+      "dependencies": [
+        "cognitive-runtime",
+        "workflow-runtime",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "hr-policy-guidance-support",
+      "path": "skills/hr-policy-guidance-support",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "hypothesis-generation",
+      "path": "skills/hypothesis-generation",
+      "type": "skill",
+      "dependencies": [
+        "research-runtime",
+        "literature-review",
+        "semantic-layer",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "inbox-automation",
+      "path": "skills/inbox-automation",
+      "type": "skill",
+      "dependencies": [
+        "enterprise-integration-hub",
+        "connector-hub"
+      ]
+    },
+    {
+      "name": "incident-simulation",
+      "path": "skills/incident-simulation",
+      "type": "skill",
+      "dependencies": [
+        "simulation-engine",
+        "sre-incident-response",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "inference-batching-optimization",
+      "path": "skills/inference-batching-optimization",
+      "type": "skill",
+      "dependencies": [
+        "cluster-management",
+        "model-routing",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "inference-engine-benchmarking",
+      "path": "skills/inference-engine-benchmarking",
+      "type": "skill",
+      "dependencies": [
+        "inference-engine-fleet",
+        "model-benchmarking"
+      ]
+    },
+    {
+      "name": "inference-engine-deployment",
+      "path": "skills/inference-engine-deployment",
+      "type": "skill",
+      "dependencies": [
+        "inference-engine-fleet",
+        "cluster-management"
+      ]
+    },
+    {
+      "name": "initiative-prioritization",
+      "path": "skills/initiative-prioritization",
+      "type": "skill",
+      "dependencies": [
+        "portfolio-optimization",
+        "capacity-balancing",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "institutional-knowledge-query",
+      "path": "skills/institutional-knowledge-query",
+      "type": "skill",
+      "dependencies": [
+        "world-model",
+        "enterprise-search"
+      ]
+    },
+    {
+      "name": "inventory-forecasting",
+      "path": "skills/inventory-forecasting",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "invoice-processing",
+      "path": "skills/invoice-processing",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "iot-data-ingestion",
+      "path": "skills/iot-data-ingestion",
+      "type": "skill",
+      "dependencies": [
+        "data-fabric",
+        "event-bus"
+      ]
+    },
+    {
+      "name": "itsm-integration",
+      "path": "skills/itsm-integration",
+      "type": "skill",
+      "dependencies": [
+        "enterprise-integration-hub"
+      ]
+    },
+    {
+      "name": "journal-entry-review",
+      "path": "skills/journal-entry-review",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "lateral-movement-detection",
+      "path": "skills/lateral-movement-detection",
+      "type": "skill",
+      "dependencies": [
+        "zero-trust-runtime",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "launch-planning",
+      "path": "skills/launch-planning",
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "gtm-orchestration",
+        "executive-reporting"
+      ]
+    },
+    {
+      "name": "lead-scoring",
+      "path": "skills/lead-scoring",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "legal-hold-management",
+      "path": "skills/legal-hold-management",
+      "type": "skill",
+      "dependencies": [
+        "privacy-runtime",
+        "data-fabric",
+        "governance",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "legal-intake-triage-support",
+      "path": "skills/legal-intake-triage-support",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "legal-ops",
+      "path": "skills/legal-ops",
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "business-orchestration",
+        "compliance-automation",
+        "hitl-dashboard"
+      ]
+    },
+    {
+      "name": "lessons-learned-extraction",
+      "path": "skills/lessons-learned-extraction",
+      "type": "skill",
+      "dependencies": [
+        "world-model",
+        "sdlc-memory-token-management"
+      ]
+    },
+    {
+      "name": "lineage-analysis",
+      "path": "skills/lineage-analysis",
+      "type": "skill",
+      "dependencies": [
+        "data-fabric",
+        "semantic-layer",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "literature-review",
+      "path": "skills/literature-review",
+      "type": "skill",
+      "dependencies": [
+        "research-runtime",
+        "enterprise-search",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "local-market-data-collection",
+      "path": "skills/local-market-data-collection",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "long-horizon-planning",
+      "path": "skills/long-horizon-planning",
+      "type": "skill",
+      "dependencies": [
+        "cognitive-runtime",
+        "hierarchical-planning",
+        "forecasting",
+        "decision-intelligence"
+      ]
+    },
+    {
+      "name": "lora-management",
+      "path": "skills/lora-management",
+      "type": "skill",
+      "dependencies": [
+        "model-lifecycle",
+        "lora-lifecycle",
+        "local-runtime",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "low-stock-detection",
+      "path": "skills/low-stock-detection",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "market-data-quality-scoring",
+      "path": "skills/market-data-quality-scoring",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "market-pricing-intelligence",
+      "path": "skills/market-pricing-intelligence",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "marketing-attribution",
+      "path": "skills/marketing-attribution",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "marketplace-certification",
+      "path": "skills/marketplace-certification",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "marketplace-publishing",
+      "path": "skills/marketplace-publishing",
+      "type": "skill",
+      "dependencies": [
+        "developer-portal",
+        "sdk-runtime",
+        "governance"
+      ]
+    },
+    {
+      "name": "memory-compression",
+      "path": "skills/memory-compression",
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management"
+      ]
+    },
+    {
+      "name": "meta-reasoning",
+      "path": "skills/meta-reasoning",
+      "type": "skill",
+      "dependencies": [
+        "cognitive-runtime",
+        "alignment-engine",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "model-benchmarking",
+      "path": "skills/model-benchmarking",
+      "type": "skill",
+      "dependencies": [
+        "benchmark-factory",
+        "model-lifecycle",
+        "synthetic-data",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "model-distillation",
+      "path": "skills/model-distillation",
+      "type": "skill",
+      "dependencies": [
+        "model-lifecycle",
+        "benchmark-factory",
+        "dataset-curation",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "model-placement-optimization",
+      "path": "skills/model-placement-optimization",
+      "type": "skill",
+      "dependencies": [
+        "cluster-management",
+        "network-topology-analysis",
+        "local-runtime",
+        "runtime-economics"
+      ]
+    },
+    {
+      "name": "model-selection-optimization",
+      "path": "skills/model-selection-optimization",
+      "type": "skill",
+      "dependencies": [
+        "model-routing",
+        "model-lifecycle",
+        "benchmark-factory",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "month-end-close-support",
+      "path": "skills/month-end-close-support",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "network-topology-analysis",
+      "path": "skills/network-topology-analysis",
+      "type": "skill",
+      "dependencies": [
+        "cluster-management",
+        "local-runtime",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "observability",
+      "path": "skills/observability",
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "telemetry",
+        "sre-incident-response"
+      ]
+    },
+    {
+      "name": "opportunity-risk-analysis",
+      "path": "skills/opportunity-risk-analysis",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "outcome-feedback-analysis",
+      "path": "skills/outcome-feedback-analysis",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "paid-acquisition",
+      "path": "skills/paid-acquisition",
+      "type": "skill",
+      "dependencies": [
+        "launch-planning",
+        "content-marketing",
+        "analytics-intelligence",
+        "sdlc-memory-token-management"
+      ]
+    },
+    {
+      "name": "patent-analysis",
+      "path": "skills/patent-analysis",
+      "type": "skill",
+      "dependencies": [
+        "research-runtime",
+        "legal-ops",
+        "knowledge-graph",
+        "enterprise-search"
+      ]
+    },
+    {
+      "name": "payment-matching",
+      "path": "skills/payment-matching",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "payroll-audit",
+      "path": "skills/payroll-audit",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "persona-modeling",
+      "path": "skills/persona-modeling",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "pii-detection",
+      "path": "skills/pii-detection",
+      "type": "skill",
+      "dependencies": [
+        "privacy-runtime",
+        "data-fabric",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "policy-justification",
+      "path": "skills/policy-justification",
+      "type": "skill",
+      "dependencies": [
+        "explainability",
+        "governance",
+        "alignment-engine",
+        "knowledge-graph"
+      ]
+    },
+    {
+      "name": "policy-simulation",
+      "path": "skills/policy-simulation",
+      "type": "skill",
+      "dependencies": [
+        "simulation-engine",
+        "governance",
+        "business-simulation",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "portfolio-optimization",
+      "path": "skills/portfolio-optimization",
+      "type": "skill",
+      "dependencies": [
+        "initiative-prioritization",
+        "capacity-balancing",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "pricing-optimization",
+      "path": "skills/pricing-optimization",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "procurement-kpi-optimization-support",
+      "path": "skills/procurement-kpi-optimization-support",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "product-analytics",
+      "path": "skills/product-analytics",
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "telemetry",
+        "connector-hub",
+        "customer-success"
+      ]
+    },
+    {
+      "name": "product-feedback-analysis",
+      "path": "skills/product-feedback-analysis",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "product-lifecycle-intelligence",
+      "path": "skills/product-lifecycle-intelligence",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "product-market-fit-analysis",
+      "path": "skills/product-market-fit-analysis",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "program-governance",
+      "path": "skills/program-governance",
+      "type": "skill",
+      "dependencies": [
+        "portfolio-optimization",
+        "initiative-prioritization",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "prompt-optimization",
+      "path": "skills/prompt-optimization",
+      "type": "skill",
+      "dependencies": [
+        "reinforcement-optimizer",
+        "benchmark-factory"
+      ]
+    },
+    {
+      "name": "prompt-variant-testing",
+      "path": "skills/prompt-variant-testing",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "proposal-automation",
+      "path": "skills/proposal-automation",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "purchase-order-optimization",
+      "path": "skills/purchase-order-optimization",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "qa-automation",
+      "path": "skills/qa-automation",
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "sdlc-orchestration",
+        "sandbox-execution"
+      ]
+    },
+    {
+      "name": "quantization-optimization",
+      "path": "skills/quantization-optimization",
+      "type": "skill",
+      "dependencies": [
+        "model-lifecycle",
+        "benchmark-factory",
+        "cluster-management",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "ray-serve-management",
+      "path": "skills/ray-serve-management",
+      "type": "skill",
+      "dependencies": [
+        "ray-runtime",
+        "inference-engine-fleet"
+      ]
+    },
+    {
+      "name": "reasoning-depth-estimation",
+      "path": "skills/reasoning-depth-estimation",
+      "type": "skill",
+      "dependencies": [
+        "model-routing",
+        "model-selection-optimization",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "reasoning-visualization",
+      "path": "skills/reasoning-visualization",
+      "type": "skill",
+      "dependencies": [
+        "explainability",
+        "cognitive-runtime",
+        "causal-tracing",
+        "knowledge-graph"
+      ]
+    },
+    {
+      "name": "reconciliation-automation",
+      "path": "skills/reconciliation-automation",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "release-management",
+      "path": "skills/release-management",
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "cloud-deployment",
+        "devsecops",
+        "observability"
+      ]
+    },
+    {
+      "name": "reorder-point-optimization",
+      "path": "skills/reorder-point-optimization",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "repo-intelligence",
+      "path": "skills/repo-intelligence",
+      "type": "skill",
+      "dependencies": [
+        "knowledge-graph",
+        "retrieval-engine"
+      ]
     },
     {
       "name": "requirements-engineering",
       "path": "skills/requirements-engineering",
-      "type": "skill"
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "sdlc-orchestration",
+        "knowledge-graph"
+      ]
+    },
+    {
+      "name": "research-analysis",
+      "path": "skills/research-analysis",
+      "type": "skill",
+      "dependencies": [
+        "research-runtime",
+        "data-fabric",
+        "causal-analysis",
+        "knowledge-graph"
+      ]
+    },
+    {
+      "name": "residency-analysis",
+      "path": "skills/residency-analysis",
+      "type": "skill",
+      "dependencies": [
+        "privacy-runtime",
+        "pii-detection",
+        "data-fabric",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "revenue-leakage-detection",
+      "path": "skills/revenue-leakage-detection",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "revenue-operations",
+      "path": "skills/revenue-operations",
+      "type": "skill",
+      "dependencies": [
+        "product-analytics",
+        "customer-success",
+        "gtm-orchestration",
+        "sdlc-memory-token-management"
+      ]
+    },
+    {
+      "name": "revenue-optimization",
+      "path": "skills/revenue-optimization",
+      "type": "skill",
+      "dependencies": [
+        "analytics-intelligence",
+        "customer-success",
+        "sdlc-memory-token-management"
+      ]
+    },
+    {
+      "name": "roadmap-impact-analysis",
+      "path": "skills/roadmap-impact-analysis",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "roi-estimation",
+      "path": "skills/roi-estimation",
+      "type": "skill",
+      "dependencies": [
+        "runtime-economics",
+        "telemetry",
+        "token-cost-analysis"
+      ]
+    },
+    {
+      "name": "routing-collision-analysis",
+      "path": "skills/routing-collision-analysis",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "routing-policy-optimization",
+      "path": "skills/routing-policy-optimization",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "runtime-recovery",
+      "path": "skills/runtime-recovery",
+      "type": "skill",
+      "dependencies": [
+        "checkpoint-management",
+        "workflow-runtime",
+        "telemetry",
+        "hitl-dashboard"
+      ]
+    },
+    {
+      "name": "runtime-simulation",
+      "path": "skills/runtime-simulation",
+      "type": "skill",
+      "dependencies": [
+        "simulation-engine",
+        "cluster-management",
+        "local-runtime",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "runway-analysis",
+      "path": "skills/runway-analysis",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "sales-pipeline-forecasting",
+      "path": "skills/sales-pipeline-forecasting",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "scarcity-analysis",
+      "path": "skills/scarcity-analysis",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "scenario-generation",
+      "path": "skills/scenario-generation",
+      "type": "skill",
+      "dependencies": [
+        "simulation-engine",
+        "benchmark-factory",
+        "synthetic-data",
+        "adversarial-evaluation"
+      ]
+    },
+    {
+      "name": "schema-evolution",
+      "path": "skills/schema-evolution",
+      "type": "skill",
+      "dependencies": [
+        "data-fabric",
+        "data-contract-management",
+        "event-bus",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "sdk-authoring",
+      "path": "skills/sdk-authoring",
+      "type": "skill",
+      "dependencies": [
+        "sdk-runtime",
+        "developer-portal"
+      ]
+    },
+    {
+      "name": "security-war-gaming",
+      "path": "skills/security-war-gaming",
+      "type": "skill",
+      "dependencies": [
+        "simulation-engine",
+        "devsecops",
+        "alignment-engine",
+        "local-security"
+      ]
+    },
+    {
+      "name": "self-reflection",
+      "path": "skills/self-reflection",
+      "type": "skill",
+      "dependencies": [
+        "cognitive-runtime",
+        "meta-reasoning",
+        "alignment-engine",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "seo-engineering",
+      "path": "skills/seo-engineering",
+      "type": "skill",
+      "dependencies": [
+        "launch-planning",
+        "sdlc-memory-token-management",
+        "analytics-intelligence"
+      ]
+    },
+    {
+      "name": "seo-intelligence",
+      "path": "skills/seo-intelligence",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "skill-composition",
+      "path": "skills/skill-composition",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "skill-factory-v9",
+      "path": "skills/skill-factory-v9",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "skill-gap-detection",
+      "path": "skills/skill-gap-detection",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "skill-refactoring",
+      "path": "skills/skill-refactoring",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "sku-margin-analysis",
+      "path": "skills/sku-margin-analysis",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "sla-risk-detection",
+      "path": "skills/sla-risk-detection",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "sre-incident-response",
+      "path": "skills/sre-incident-response",
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "observability",
+        "telemetry",
+        "hitl-dashboard"
+      ]
+    },
+    {
+      "name": "state-restoration",
+      "path": "skills/state-restoration",
+      "type": "skill",
+      "dependencies": [
+        "checkpoint-management",
+        "workflow-runtime",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "supplier-risk-intelligence",
+      "path": "skills/supplier-risk-intelligence",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "support-ticket-intelligence",
+      "path": "skills/support-ticket-intelligence",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "synthetic-dataset-generation",
+      "path": "skills/synthetic-dataset-generation",
+      "type": "skill",
+      "dependencies": [
+        "benchmark-factory",
+        "synthetic-data",
+        "model-lifecycle",
+        "data-fabric"
+      ]
+    },
+    {
+      "name": "system-architecture",
+      "path": "skills/system-architecture",
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management"
+      ]
+    },
+    {
+      "name": "talent-risk-screening-support",
+      "path": "skills/talent-risk-screening-support",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "tax-planning-support",
+      "path": "skills/tax-planning-support",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "temporal-memory-replay",
+      "path": "skills/temporal-memory-replay",
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "memory-compression"
+      ]
+    },
+    {
+      "name": "token-cost-analysis",
+      "path": "skills/token-cost-analysis",
+      "type": "skill",
+      "dependencies": [
+        "runtime-economics",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "uncertainty-aware-routing",
+      "path": "skills/uncertainty-aware-routing",
+      "type": "skill",
+      "dependencies": [
+        "model-routing",
+        "reasoning-depth-estimation",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "vendor-obligation-tracking",
+      "path": "skills/vendor-obligation-tracking",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "vendor-procurement",
+      "path": "skills/vendor-procurement",
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "business-orchestration",
+        "budget-planning",
+        "legal-ops",
+        "hitl-dashboard"
+      ]
+    },
+    {
+      "name": "visual-analytics",
+      "path": "skills/visual-analytics",
+      "type": "skill",
+      "dependencies": [
+        "multimodal-runtime"
+      ]
+    },
+    {
+      "name": "voice-of-customer-analysis",
+      "path": "skills/voice-of-customer-analysis",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "warehouse-optimization",
+      "path": "skills/warehouse-optimization",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "win-loss-analysis",
+      "path": "skills/win-loss-analysis",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "workflow-ab-testing",
+      "path": "skills/workflow-ab-testing",
+      "type": "skill",
+      "dependencies": [
+        "reinforcement-optimizer",
+        "workflow-runtime"
+      ]
+    },
+    {
+      "name": "workflow-optimization-loop",
+      "path": "skills/workflow-optimization-loop",
+      "type": "skill",
+      "dependencies": []
+    },
+    {
+      "name": "workflow-replay",
+      "path": "skills/workflow-replay",
+      "type": "skill",
+      "dependencies": [
+        "workflow-runtime",
+        "checkpoint-management",
+        "event-bus",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "workforce-management",
+      "path": "skills/workforce-management",
+      "type": "skill",
+      "dependencies": [
+        "sdlc-memory-token-management",
+        "business-orchestration",
+        "budget-planning",
+        "hitl-dashboard"
+      ]
+    },
+    {
+      "name": "zero-trust-policy-authoring",
+      "path": "skills/zero-trust-policy-authoring",
+      "type": "skill",
+      "dependencies": [
+        "zero-trust-runtime",
+        "governance"
+      ]
     }
   ],
   "edges": [
     {
-      "from": "cluster-management",
-      "to": "local-runtime"
+      "from": "agent-identity",
+      "to": "knowledge-graph",
+      "resolved": true
     },
     {
-      "from": "cluster-management",
-      "to": "runtime-economics"
+      "from": "agent-identity",
+      "to": "telemetry",
+      "resolved": true
     },
     {
-      "from": "cluster-management",
-      "to": "telemetry"
+      "from": "agent-identity",
+      "to": "agent-kernel",
+      "resolved": true
     },
     {
-      "from": "cluster-management",
-      "to": "lora-lifecycle"
+      "from": "agent-kernel",
+      "to": "economic-coordination",
+      "resolved": true
     },
     {
-      "from": "tenant-management",
-      "to": "sdlc-memory-token-management"
+      "from": "agent-kernel",
+      "to": "event-bus",
+      "resolved": true
     },
     {
-      "from": "tenant-management",
-      "to": "local-security"
+      "from": "agent-kernel",
+      "to": "telemetry",
+      "resolved": true
     },
     {
-      "from": "tenant-management",
-      "to": "connector-hub"
+      "from": "alignment-engine",
+      "to": "governance",
+      "resolved": true
     },
     {
-      "from": "tenant-management",
-      "to": "telemetry"
+      "from": "alignment-engine",
+      "to": "telemetry",
+      "resolved": true
     },
     {
-      "from": "autonomous-os",
-      "to": "sdlc-orchestration"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "gtm-orchestration"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "knowledge-graph"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "retrieval-engine"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "kv-cache-management"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "multi-agent"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "local-runtime"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "local-security"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "telemetry"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "connector-hub"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "mcp-integrations"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "tenant-management"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "hitl-dashboard"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "strategic-planning"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "runtime-economics"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "model-evaluation"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "lora-lifecycle"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "synthetic-data"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "sandbox-execution"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "repo-intelligence"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "cloud-deployment"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "compliance-automation"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "customer-success"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "product-analytics"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "revenue-operations"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "content-marketing"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "ai-search-optimization"
-    },
-    {
-      "from": "autonomous-os",
-      "to": "lora-lifecycle"
-    },
-    {
-      "from": "multi-agent",
-      "to": "sdlc-orchestration"
-    },
-    {
-      "from": "multi-agent",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "multi-agent",
-      "to": "knowledge-graph"
+      "from": "alignment-engine",
+      "to": "hitl-dashboard",
+      "resolved": true
     },
     {
       "from": "api-gateway",
-      "to": "sdlc-orchestration"
+      "to": "sdlc-orchestration",
+      "resolved": true
     },
     {
       "from": "api-gateway",
-      "to": "sdlc-memory-token-management"
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "sdlc-orchestration",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "gtm-orchestration",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "knowledge-graph",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "retrieval-engine",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "kv-cache-management",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "multi-agent",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "local-runtime",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "local-security",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "connector-hub",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "mcp-integrations",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "tenant-management",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "hitl-dashboard",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "strategic-planning",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "runtime-economics",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "model-evaluation",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "lora-lifecycle",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "synthetic-data",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "sandbox-execution",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "repo-intelligence",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "cloud-deployment",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "compliance-automation",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "customer-success",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "product-analytics",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "revenue-operations",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "content-marketing",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "ai-search-optimization",
+      "resolved": true
+    },
+    {
+      "from": "autonomous-os",
+      "to": "lora-lifecycle",
+      "resolved": true
+    },
+    {
+      "from": "benchmark-factory",
+      "to": "synthetic-data",
+      "resolved": true
+    },
+    {
+      "from": "benchmark-factory",
+      "to": "model-evaluation",
+      "resolved": true
+    },
+    {
+      "from": "benchmark-factory",
+      "to": "data-fabric",
+      "resolved": true
+    },
+    {
+      "from": "benchmark-factory",
+      "to": "knowledge-graph",
+      "resolved": true
+    },
+    {
+      "from": "billing-runtime",
+      "to": "sdlc-orchestration",
+      "resolved": true
+    },
+    {
+      "from": "billing-runtime",
+      "to": "audit-trail",
+      "resolved": true
+    },
+    {
+      "from": "business-orchestration",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "business-orchestration",
+      "to": "workflow-engine",
+      "resolved": true
+    },
+    {
+      "from": "business-orchestration",
+      "to": "hitl-dashboard",
+      "resolved": true
+    },
+    {
+      "from": "business-orchestration",
+      "to": "governance",
+      "resolved": true
+    },
+    {
+      "from": "business-orchestration",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "cluster-management",
+      "to": "local-runtime",
+      "resolved": true
+    },
+    {
+      "from": "cluster-management",
+      "to": "runtime-economics",
+      "resolved": true
+    },
+    {
+      "from": "cluster-management",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "cluster-management",
+      "to": "lora-lifecycle",
+      "resolved": true
     },
     {
       "from": "cognitive-runtime",
-      "to": "workflow-runtime"
+      "to": "workflow-runtime",
+      "resolved": true
     },
     {
       "from": "cognitive-runtime",
-      "to": "agent-kernel"
+      "to": "agent-kernel",
+      "resolved": true
     },
     {
       "from": "cognitive-runtime",
-      "to": "telemetry"
+      "to": "telemetry",
+      "resolved": true
     },
     {
       "from": "cognitive-runtime",
-      "to": "hitl-dashboard"
+      "to": "hitl-dashboard",
+      "resolved": true
     },
     {
-      "from": "runtime-economics",
-      "to": "sdlc-memory-token-management"
+      "from": "compliance-runtime",
+      "to": "governance",
+      "resolved": true
     },
     {
-      "from": "runtime-economics",
-      "to": "local-runtime"
+      "from": "compliance-runtime",
+      "to": "telemetry",
+      "resolved": true
     },
     {
-      "from": "runtime-economics",
-      "to": "telemetry"
+      "from": "compliance-runtime",
+      "to": "data-fabric",
+      "resolved": true
     },
     {
-      "from": "runtime-economics",
-      "to": "connector-hub"
-    },
-    {
-      "from": "research-runtime",
-      "to": "enterprise-search"
-    },
-    {
-      "from": "research-runtime",
-      "to": "knowledge-graph"
-    },
-    {
-      "from": "research-runtime",
-      "to": "retrieval-engine"
-    },
-    {
-      "from": "research-runtime",
-      "to": "synthetic-data"
-    },
-    {
-      "from": "notification-orchestration",
-      "to": "event-bus"
-    },
-    {
-      "from": "notification-orchestration",
-      "to": "connector-hub"
-    },
-    {
-      "from": "notification-orchestration",
-      "to": "hitl-dashboard"
-    },
-    {
-      "from": "enterprise-integration-hub",
-      "to": "connector-hub"
-    },
-    {
-      "from": "enterprise-integration-hub",
-      "to": "event-bus"
-    },
-    {
-      "from": "enterprise-integration-hub",
-      "to": "governance"
-    },
-    {
-      "from": "multimodal-runtime",
-      "to": "cognitive-runtime"
-    },
-    {
-      "from": "multimodal-runtime",
-      "to": "data-fabric"
-    },
-    {
-      "from": "multimodal-runtime",
-      "to": "agent-kernel"
-    },
-    {
-      "from": "inference-engine-fleet",
-      "to": "cluster-management"
-    },
-    {
-      "from": "inference-engine-fleet",
-      "to": "telemetry"
-    },
-    {
-      "from": "inference-engine-fleet",
-      "to": "event-bus"
-    },
-    {
-      "from": "meeting-intelligence",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "meeting-intelligence",
-      "to": "knowledge-graph"
-    },
-    {
-      "from": "meeting-intelligence",
-      "to": "telemetry"
-    },
-    {
-      "from": "meeting-intelligence",
-      "to": "hitl-dashboard"
-    },
-    {
-      "from": "enterprise-search",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "enterprise-search",
-      "to": "retrieval-engine"
-    },
-    {
-      "from": "enterprise-search",
-      "to": "knowledge-graph"
-    },
-    {
-      "from": "enterprise-search",
-      "to": "local-security"
-    },
-    {
-      "from": "enterprise-search",
-      "to": "telemetry"
-    },
-    {
-      "from": "synthetic-data",
-      "to": "local-runtime"
-    },
-    {
-      "from": "synthetic-data",
-      "to": "lora-lifecycle"
-    },
-    {
-      "from": "synthetic-data",
-      "to": "model-evaluation"
-    },
-    {
-      "from": "synthetic-data",
-      "to": "sandbox-execution"
-    },
-    {
-      "from": "synthetic-data",
-      "to": "telemetry"
-    },
-    {
-      "from": "zero-trust-runtime",
-      "to": "governance"
-    },
-    {
-      "from": "zero-trust-runtime",
-      "to": "local-security"
-    },
-    {
-      "from": "zero-trust-runtime",
-      "to": "agent-kernel"
-    },
-    {
-      "from": "model-evaluation",
-      "to": "local-runtime"
-    },
-    {
-      "from": "model-evaluation",
-      "to": "telemetry"
-    },
-    {
-      "from": "model-evaluation",
-      "to": "connector-hub"
-    },
-    {
-      "from": "knowledge-graph",
-      "to": "sdlc-orchestration"
-    },
-    {
-      "from": "knowledge-graph",
-      "to": "connector-hub"
-    },
-    {
-      "from": "knowledge-graph",
-      "to": "sdlc-memory-token-management"
+      "from": "compliance-runtime",
+      "to": "audit-trail",
+      "resolved": true
     },
     {
       "from": "connector-hub",
-      "to": "sdlc-orchestration"
+      "to": "sdlc-orchestration",
+      "resolved": true
+    },
+    {
+      "from": "data-fabric",
+      "to": "knowledge-graph",
+      "resolved": true
+    },
+    {
+      "from": "data-fabric",
+      "to": "semantic-layer",
+      "resolved": true
+    },
+    {
+      "from": "data-fabric",
+      "to": "master-data-management",
+      "resolved": true
+    },
+    {
+      "from": "data-fabric",
+      "to": "enterprise-search",
+      "resolved": true
+    },
+    {
+      "from": "developer-portal",
+      "to": "sdk-runtime",
+      "resolved": true
+    },
+    {
+      "from": "developer-portal",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "distributed-agent-runtime",
+      "to": "multi-agent",
+      "resolved": true
+    },
+    {
+      "from": "distributed-agent-runtime",
+      "to": "agent-kernel",
+      "resolved": true
+    },
+    {
+      "from": "distributed-agent-runtime",
+      "to": "event-bus",
+      "resolved": true
+    },
+    {
+      "from": "distributed-agent-runtime",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "economic-coordination",
+      "to": "runtime-economics",
+      "resolved": true
+    },
+    {
+      "from": "economic-coordination",
+      "to": "agent-kernel",
+      "resolved": true
+    },
+    {
+      "from": "economic-coordination",
+      "to": "cluster-management",
+      "resolved": true
+    },
+    {
+      "from": "economic-coordination",
+      "to": "governance",
+      "resolved": true
+    },
+    {
+      "from": "enterprise-integration-hub",
+      "to": "connector-hub",
+      "resolved": true
+    },
+    {
+      "from": "enterprise-integration-hub",
+      "to": "event-bus",
+      "resolved": true
+    },
+    {
+      "from": "enterprise-integration-hub",
+      "to": "governance",
+      "resolved": true
+    },
+    {
+      "from": "enterprise-search",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "enterprise-search",
+      "to": "retrieval-engine",
+      "resolved": true
+    },
+    {
+      "from": "enterprise-search",
+      "to": "knowledge-graph",
+      "resolved": true
+    },
+    {
+      "from": "enterprise-search",
+      "to": "local-security",
+      "resolved": true
+    },
+    {
+      "from": "enterprise-search",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "event-bus",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "event-bus",
+      "to": "workflow-runtime",
+      "resolved": true
+    },
+    {
+      "from": "event-bus",
+      "to": "distributed-agent-runtime",
+      "resolved": true
+    },
+    {
+      "from": "evolution-engine",
+      "to": "skill-gap-engine",
+      "resolved": true
+    },
+    {
+      "from": "evolution-engine",
+      "to": "cognitive-runtime",
+      "resolved": true
+    },
+    {
+      "from": "evolution-engine",
+      "to": "workflow-engine",
+      "resolved": true
+    },
+    {
+      "from": "evolution-engine",
+      "to": "governance",
+      "resolved": true
+    },
+    {
+      "from": "evolution-engine",
+      "to": "hitl-dashboard",
+      "resolved": true
+    },
+    {
+      "from": "explainability",
+      "to": "knowledge-graph",
+      "resolved": true
+    },
+    {
+      "from": "explainability",
+      "to": "cognitive-runtime",
+      "resolved": true
+    },
+    {
+      "from": "explainability",
+      "to": "governance",
+      "resolved": true
+    },
+    {
+      "from": "explainability",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "federated-runtime",
+      "to": "local-runtime",
+      "resolved": true
+    },
+    {
+      "from": "federated-runtime",
+      "to": "distributed-agent-runtime",
+      "resolved": true
+    },
+    {
+      "from": "federated-runtime",
+      "to": "cluster-management",
+      "resolved": true
+    },
+    {
+      "from": "federated-runtime",
+      "to": "governance",
+      "resolved": true
+    },
+    {
+      "from": "governance",
+      "to": "local-security",
+      "resolved": true
+    },
+    {
+      "from": "governance",
+      "to": "compliance-automation",
+      "resolved": true
+    },
+    {
+      "from": "governance",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "governance",
+      "to": "hitl-dashboard",
+      "resolved": true
+    },
+    {
+      "from": "governance",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "gtm-orchestration",
+      "to": "sdlc-orchestration",
+      "resolved": true
+    },
+    {
+      "from": "gtm-orchestration",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "hitl-dashboard",
+      "to": "local-security",
+      "resolved": true
+    },
+    {
+      "from": "hitl-dashboard",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "hitl-dashboard",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "hitl-dashboard",
+      "to": "multi-agent",
+      "resolved": true
+    },
+    {
+      "from": "inference-engine-fleet",
+      "to": "cluster-management",
+      "resolved": true
+    },
+    {
+      "from": "inference-engine-fleet",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "inference-engine-fleet",
+      "to": "event-bus",
+      "resolved": true
+    },
+    {
+      "from": "knowledge-graph",
+      "to": "sdlc-orchestration",
+      "resolved": true
+    },
+    {
+      "from": "knowledge-graph",
+      "to": "connector-hub",
+      "resolved": true
+    },
+    {
+      "from": "knowledge-graph",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "kv-cache-management",
+      "to": "local-runtime",
+      "resolved": true
+    },
+    {
+      "from": "kv-cache-management",
+      "to": "connector-hub",
+      "resolved": true
+    },
+    {
+      "from": "local-runtime",
+      "to": "sdlc-orchestration",
+      "resolved": true
+    },
+    {
+      "from": "local-runtime",
+      "to": "connector-hub",
+      "resolved": true
     },
     {
       "from": "local-security",
-      "to": "sdlc-orchestration"
-    },
-    {
-      "from": "agent-kernel",
-      "to": "economic-coordination"
-    },
-    {
-      "from": "agent-kernel",
-      "to": "event-bus"
-    },
-    {
-      "from": "agent-kernel",
-      "to": "telemetry"
+      "to": "sdlc-orchestration",
+      "resolved": true
     },
     {
       "from": "lora-lifecycle",
-      "to": "local-runtime"
+      "to": "local-runtime",
+      "resolved": true
     },
     {
       "from": "lora-lifecycle",
-      "to": "model-evaluation"
+      "to": "model-evaluation",
+      "resolved": true
     },
     {
       "from": "lora-lifecycle",
-      "to": "synthetic-data"
+      "to": "synthetic-data",
+      "resolved": true
     },
     {
       "from": "lora-lifecycle",
-      "to": "telemetry"
+      "to": "telemetry",
+      "resolved": true
     },
     {
       "from": "lora-lifecycle",
-      "to": "local-security"
+      "to": "local-security",
+      "resolved": true
     },
     {
-      "from": "event-bus",
-      "to": "telemetry"
+      "from": "master-data-management",
+      "to": "data-fabric",
+      "resolved": true
     },
     {
-      "from": "event-bus",
-      "to": "workflow-runtime"
+      "from": "master-data-management",
+      "to": "knowledge-graph",
+      "resolved": true
     },
     {
-      "from": "event-bus",
-      "to": "distributed-agent-runtime"
+      "from": "master-data-management",
+      "to": "semantic-layer",
+      "resolved": true
     },
     {
-      "from": "workflow-engine",
-      "to": "sdlc-memory-token-management"
+      "from": "master-data-management",
+      "to": "enterprise-search",
+      "resolved": true
     },
     {
-      "from": "workflow-engine",
-      "to": "hitl-dashboard"
+      "from": "mcp-integrations",
+      "to": "connector-hub",
+      "resolved": true
     },
     {
-      "from": "workflow-engine",
-      "to": "telemetry"
+      "from": "mcp-integrations",
+      "to": "local-security",
+      "resolved": true
     },
     {
-      "from": "workflow-engine",
-      "to": "local-security"
+      "from": "meeting-intelligence",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
     },
     {
-      "from": "retrieval-engine",
-      "to": "knowledge-graph"
+      "from": "meeting-intelligence",
+      "to": "knowledge-graph",
+      "resolved": true
     },
     {
-      "from": "retrieval-engine",
-      "to": "connector-hub"
+      "from": "meeting-intelligence",
+      "to": "telemetry",
+      "resolved": true
     },
     {
-      "from": "retrieval-engine",
-      "to": "sdlc-memory-token-management"
+      "from": "meeting-intelligence",
+      "to": "hitl-dashboard",
+      "resolved": true
+    },
+    {
+      "from": "model-evaluation",
+      "to": "local-runtime",
+      "resolved": true
+    },
+    {
+      "from": "model-evaluation",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "model-evaluation",
+      "to": "connector-hub",
+      "resolved": true
+    },
+    {
+      "from": "model-lifecycle",
+      "to": "lora-lifecycle",
+      "resolved": true
+    },
+    {
+      "from": "model-lifecycle",
+      "to": "model-evaluation",
+      "resolved": true
+    },
+    {
+      "from": "model-lifecycle",
+      "to": "benchmark-factory",
+      "resolved": true
+    },
+    {
+      "from": "model-lifecycle",
+      "to": "governance",
+      "resolved": true
+    },
+    {
+      "from": "model-lifecycle",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "model-routing",
+      "to": "cluster-management",
+      "resolved": true
+    },
+    {
+      "from": "model-routing",
+      "to": "economic-coordination",
+      "resolved": true
+    },
+    {
+      "from": "model-routing",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "multi-agent",
+      "to": "sdlc-orchestration",
+      "resolved": true
+    },
+    {
+      "from": "multi-agent",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "multi-agent",
+      "to": "knowledge-graph",
+      "resolved": true
+    },
+    {
+      "from": "multimodal-runtime",
+      "to": "cognitive-runtime",
+      "resolved": true
+    },
+    {
+      "from": "multimodal-runtime",
+      "to": "data-fabric",
+      "resolved": true
+    },
+    {
+      "from": "multimodal-runtime",
+      "to": "agent-kernel",
+      "resolved": true
+    },
+    {
+      "from": "notification-orchestration",
+      "to": "event-bus",
+      "resolved": true
+    },
+    {
+      "from": "notification-orchestration",
+      "to": "connector-hub",
+      "resolved": true
+    },
+    {
+      "from": "notification-orchestration",
+      "to": "hitl-dashboard",
+      "resolved": true
     },
     {
       "from": "observability-platform",
-      "to": "sdlc-orchestration"
+      "to": "sdlc-orchestration",
+      "resolved": true
     },
     {
       "from": "observability-platform",
-      "to": "audit-trail"
-    },
-    {
-      "from": "kv-cache-management",
-      "to": "local-runtime"
-    },
-    {
-      "from": "kv-cache-management",
-      "to": "connector-hub"
-    },
-    {
-      "from": "local-runtime",
-      "to": "sdlc-orchestration"
-    },
-    {
-      "from": "local-runtime",
-      "to": "connector-hub"
+      "to": "audit-trail",
+      "resolved": true
     },
     {
       "from": "operator-console",
-      "to": "telemetry"
+      "to": "telemetry",
+      "resolved": true
     },
     {
       "from": "operator-console",
-      "to": "hitl-dashboard"
+      "to": "hitl-dashboard",
+      "resolved": true
     },
     {
       "from": "operator-console",
-      "to": "cognitive-runtime"
+      "to": "cognitive-runtime",
+      "resolved": true
     },
     {
       "from": "operator-console",
-      "to": "persistent-agent-runtime"
-    },
-    {
-      "from": "benchmark-factory",
-      "to": "synthetic-data"
-    },
-    {
-      "from": "benchmark-factory",
-      "to": "model-evaluation"
-    },
-    {
-      "from": "benchmark-factory",
-      "to": "data-fabric"
-    },
-    {
-      "from": "benchmark-factory",
-      "to": "knowledge-graph"
+      "to": "persistent-agent-runtime",
+      "resolved": true
     },
     {
       "from": "sdlc-orchestration",
-      "to": "sdlc-memory-token-management"
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "persistent-agent-runtime",
+      "to": "agent-kernel",
+      "resolved": true
+    },
+    {
+      "from": "persistent-agent-runtime",
+      "to": "cognitive-runtime",
+      "resolved": true
+    },
+    {
+      "from": "persistent-agent-runtime",
+      "to": "workflow-runtime",
+      "resolved": true
+    },
+    {
+      "from": "persistent-agent-runtime",
+      "to": "event-bus",
+      "resolved": true
     },
     {
       "from": "policy-engine",
-      "to": "audit-trail"
+      "to": "audit-trail",
+      "resolved": true
     },
     {
       "from": "policy-engine",
-      "to": "sdlc-orchestration"
+      "to": "sdlc-orchestration",
+      "resolved": true
     },
     {
       "from": "predictive-reasoning",
-      "to": "forecasting"
+      "to": "forecasting",
+      "resolved": true
     },
     {
       "from": "predictive-reasoning",
-      "to": "knowledge-graph"
+      "to": "knowledge-graph",
+      "resolved": true
     },
     {
       "from": "predictive-reasoning",
-      "to": "simulation-engine"
+      "to": "simulation-engine",
+      "resolved": true
     },
     {
       "from": "predictive-reasoning",
-      "to": "telemetry"
+      "to": "telemetry",
+      "resolved": true
     },
     {
       "from": "predictive-reasoning",
-      "to": "data-fabric"
-    },
-    {
-      "from": "federated-runtime",
-      "to": "local-runtime"
-    },
-    {
-      "from": "federated-runtime",
-      "to": "distributed-agent-runtime"
-    },
-    {
-      "from": "federated-runtime",
-      "to": "cluster-management"
-    },
-    {
-      "from": "federated-runtime",
-      "to": "governance"
-    },
-    {
-      "from": "distributed-agent-runtime",
-      "to": "multi-agent"
-    },
-    {
-      "from": "distributed-agent-runtime",
-      "to": "agent-kernel"
-    },
-    {
-      "from": "distributed-agent-runtime",
-      "to": "event-bus"
-    },
-    {
-      "from": "distributed-agent-runtime",
-      "to": "telemetry"
-    },
-    {
-      "from": "gtm-orchestration",
-      "to": "sdlc-orchestration"
-    },
-    {
-      "from": "gtm-orchestration",
-      "to": "sdlc-memory-token-management"
+      "to": "data-fabric",
+      "resolved": true
     },
     {
       "from": "privacy-runtime",
-      "to": "governance"
+      "to": "governance",
+      "resolved": true
     },
     {
       "from": "privacy-runtime",
-      "to": "data-fabric"
+      "to": "data-fabric",
+      "resolved": true
     },
     {
       "from": "privacy-runtime",
-      "to": "alignment-engine"
+      "to": "alignment-engine",
+      "resolved": true
     },
     {
       "from": "privacy-runtime",
-      "to": "telemetry"
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "ray-runtime",
+      "to": "cluster-management",
+      "resolved": true
+    },
+    {
+      "from": "ray-runtime",
+      "to": "distributed-agent-runtime",
+      "resolved": true
+    },
+    {
+      "from": "ray-runtime",
+      "to": "event-bus",
+      "resolved": true
+    },
+    {
+      "from": "reinforcement-optimizer",
+      "to": "cognitive-runtime",
+      "resolved": true
+    },
+    {
+      "from": "reinforcement-optimizer",
+      "to": "evolution-engine",
+      "resolved": true
+    },
+    {
+      "from": "reinforcement-optimizer",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "research-runtime",
+      "to": "enterprise-search",
+      "resolved": true
+    },
+    {
+      "from": "research-runtime",
+      "to": "knowledge-graph",
+      "resolved": true
+    },
+    {
+      "from": "research-runtime",
+      "to": "retrieval-engine",
+      "resolved": true
+    },
+    {
+      "from": "research-runtime",
+      "to": "synthetic-data",
+      "resolved": true
+    },
+    {
+      "from": "retrieval-engine",
+      "to": "knowledge-graph",
+      "resolved": true
+    },
+    {
+      "from": "retrieval-engine",
+      "to": "connector-hub",
+      "resolved": true
+    },
+    {
+      "from": "retrieval-engine",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "runtime-economics",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "runtime-economics",
+      "to": "local-runtime",
+      "resolved": true
+    },
+    {
+      "from": "runtime-economics",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "runtime-economics",
+      "to": "connector-hub",
+      "resolved": true
+    },
+    {
+      "from": "runtime-economics",
+      "to": "token-cost-analysis",
+      "resolved": true
+    },
+    {
+      "from": "runtime-economics",
+      "to": "roi-estimation",
+      "resolved": true
+    },
+    {
+      "from": "sandbox-execution",
+      "to": "local-security",
+      "resolved": true
+    },
+    {
+      "from": "sandbox-execution",
+      "to": "local-runtime",
+      "resolved": true
+    },
+    {
+      "from": "sandbox-execution",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "sandbox-execution",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "sdk-runtime",
+      "to": "agent-kernel",
+      "resolved": true
+    },
+    {
+      "from": "sdk-runtime",
+      "to": "governance",
+      "resolved": true
+    },
+    {
+      "from": "sdk-runtime",
+      "to": "local-security",
+      "resolved": true
+    },
+    {
+      "from": "semantic-layer",
+      "to": "data-fabric",
+      "resolved": true
+    },
+    {
+      "from": "semantic-layer",
+      "to": "knowledge-graph",
+      "resolved": true
+    },
+    {
+      "from": "semantic-layer",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "simulation-engine",
+      "to": "cognitive-runtime",
+      "resolved": true
+    },
+    {
+      "from": "simulation-engine",
+      "to": "knowledge-graph",
+      "resolved": true
+    },
+    {
+      "from": "simulation-engine",
+      "to": "forecasting",
+      "resolved": true
+    },
+    {
+      "from": "simulation-engine",
+      "to": "synthetic-data",
+      "resolved": true
+    },
+    {
+      "from": "skill-gap-engine",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "skill-gap-engine",
+      "to": "governance",
+      "resolved": true
+    },
+    {
+      "from": "skill-gap-engine",
+      "to": "workflow-engine",
+      "resolved": true
+    },
+    {
+      "from": "skill-gap-engine",
+      "to": "hitl-dashboard",
+      "resolved": true
+    },
+    {
+      "from": "strategic-planning",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "strategic-planning",
+      "to": "knowledge-graph",
+      "resolved": true
+    },
+    {
+      "from": "strategic-planning",
+      "to": "product-analytics",
+      "resolved": true
+    },
+    {
+      "from": "strategic-planning",
+      "to": "runtime-economics",
+      "resolved": true
+    },
+    {
+      "from": "synthetic-data",
+      "to": "local-runtime",
+      "resolved": true
+    },
+    {
+      "from": "synthetic-data",
+      "to": "lora-lifecycle",
+      "resolved": true
+    },
+    {
+      "from": "synthetic-data",
+      "to": "model-evaluation",
+      "resolved": true
+    },
+    {
+      "from": "synthetic-data",
+      "to": "sandbox-execution",
+      "resolved": true
+    },
+    {
+      "from": "synthetic-data",
+      "to": "telemetry",
+      "resolved": true
     },
     {
       "from": "telemetry",
-      "to": "sdlc-orchestration"
+      "to": "sdlc-orchestration",
+      "resolved": true
     },
     {
       "from": "telemetry",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "economic-coordination",
-      "to": "runtime-economics"
-    },
-    {
-      "from": "economic-coordination",
-      "to": "agent-kernel"
-    },
-    {
-      "from": "economic-coordination",
-      "to": "cluster-management"
-    },
-    {
-      "from": "economic-coordination",
-      "to": "governance"
-    },
-    {
-      "from": "skill-gap-engine",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "skill-gap-engine",
-      "to": "governance"
-    },
-    {
-      "from": "skill-gap-engine",
-      "to": "workflow-engine"
-    },
-    {
-      "from": "skill-gap-engine",
-      "to": "hitl-dashboard"
-    },
-    {
-      "from": "agent-identity",
-      "to": "knowledge-graph"
-    },
-    {
-      "from": "agent-identity",
-      "to": "telemetry"
-    },
-    {
-      "from": "agent-identity",
-      "to": "agent-kernel"
-    },
-    {
-      "from": "model-lifecycle",
-      "to": "lora-lifecycle"
-    },
-    {
-      "from": "model-lifecycle",
-      "to": "model-evaluation"
-    },
-    {
-      "from": "model-lifecycle",
-      "to": "benchmark-factory"
-    },
-    {
-      "from": "model-lifecycle",
-      "to": "governance"
-    },
-    {
-      "from": "model-lifecycle",
-      "to": "telemetry"
-    },
-    {
-      "from": "compliance-runtime",
-      "to": "governance"
-    },
-    {
-      "from": "compliance-runtime",
-      "to": "telemetry"
-    },
-    {
-      "from": "compliance-runtime",
-      "to": "data-fabric"
-    },
-    {
-      "from": "compliance-runtime",
-      "to": "audit-trail"
-    },
-    {
-      "from": "reinforcement-optimizer",
-      "to": "cognitive-runtime"
-    },
-    {
-      "from": "reinforcement-optimizer",
-      "to": "evolution-engine"
-    },
-    {
-      "from": "reinforcement-optimizer",
-      "to": "telemetry"
-    },
-    {
-      "from": "governance",
-      "to": "local-security"
-    },
-    {
-      "from": "governance",
-      "to": "compliance-automation"
-    },
-    {
-      "from": "governance",
-      "to": "telemetry"
-    },
-    {
-      "from": "governance",
-      "to": "hitl-dashboard"
-    },
-    {
-      "from": "governance",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "sdk-runtime",
-      "to": "agent-kernel"
-    },
-    {
-      "from": "sdk-runtime",
-      "to": "governance"
-    },
-    {
-      "from": "sdk-runtime",
-      "to": "local-security"
-    },
-    {
-      "from": "developer-portal",
-      "to": "sdk-runtime"
-    },
-    {
-      "from": "developer-portal",
-      "to": "telemetry"
-    },
-    {
-      "from": "semantic-layer",
-      "to": "data-fabric"
-    },
-    {
-      "from": "semantic-layer",
-      "to": "knowledge-graph"
-    },
-    {
-      "from": "semantic-layer",
-      "to": "telemetry"
-    },
-    {
-      "from": "billing-runtime",
-      "to": "sdlc-orchestration"
-    },
-    {
-      "from": "billing-runtime",
-      "to": "audit-trail"
-    },
-    {
-      "from": "workflow-runtime",
-      "to": "checkpoint-management"
-    },
-    {
-      "from": "workflow-runtime",
-      "to": "event-bus"
-    },
-    {
-      "from": "workflow-runtime",
-      "to": "telemetry"
-    },
-    {
-      "from": "workflow-runtime",
-      "to": "hitl-dashboard"
-    },
-    {
-      "from": "hitl-dashboard",
-      "to": "local-security"
-    },
-    {
-      "from": "hitl-dashboard",
-      "to": "telemetry"
-    },
-    {
-      "from": "hitl-dashboard",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "hitl-dashboard",
-      "to": "multi-agent"
-    },
-    {
-      "from": "data-fabric",
-      "to": "knowledge-graph"
-    },
-    {
-      "from": "data-fabric",
-      "to": "semantic-layer"
-    },
-    {
-      "from": "data-fabric",
-      "to": "master-data-management"
-    },
-    {
-      "from": "data-fabric",
-      "to": "enterprise-search"
-    },
-    {
-      "from": "persistent-agent-runtime",
-      "to": "agent-kernel"
-    },
-    {
-      "from": "persistent-agent-runtime",
-      "to": "cognitive-runtime"
-    },
-    {
-      "from": "persistent-agent-runtime",
-      "to": "workflow-runtime"
-    },
-    {
-      "from": "persistent-agent-runtime",
-      "to": "event-bus"
-    },
-    {
-      "from": "evolution-engine",
-      "to": "skill-gap-engine"
-    },
-    {
-      "from": "evolution-engine",
-      "to": "cognitive-runtime"
-    },
-    {
-      "from": "evolution-engine",
-      "to": "workflow-engine"
-    },
-    {
-      "from": "evolution-engine",
-      "to": "governance"
-    },
-    {
-      "from": "evolution-engine",
-      "to": "hitl-dashboard"
+      "to": "sdlc-memory-token-management",
+      "resolved": true
     },
     {
       "from": "temporal-integration",
-      "to": "workflow-runtime"
+      "to": "workflow-runtime",
+      "resolved": true
     },
     {
       "from": "temporal-integration",
-      "to": "event-bus"
+      "to": "event-bus",
+      "resolved": true
     },
     {
       "from": "temporal-integration",
-      "to": "telemetry"
+      "to": "telemetry",
+      "resolved": true
     },
     {
-      "from": "strategic-planning",
-      "to": "sdlc-memory-token-management"
+      "from": "tenant-management",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
     },
     {
-      "from": "strategic-planning",
-      "to": "knowledge-graph"
+      "from": "tenant-management",
+      "to": "local-security",
+      "resolved": true
     },
     {
-      "from": "strategic-planning",
-      "to": "product-analytics"
+      "from": "tenant-management",
+      "to": "connector-hub",
+      "resolved": true
     },
     {
-      "from": "strategic-planning",
-      "to": "runtime-economics"
+      "from": "tenant-management",
+      "to": "telemetry",
+      "resolved": true
     },
     {
-      "from": "business-orchestration",
-      "to": "sdlc-memory-token-management"
+      "from": "workflow-engine",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
     },
     {
-      "from": "business-orchestration",
-      "to": "workflow-engine"
+      "from": "workflow-engine",
+      "to": "hitl-dashboard",
+      "resolved": true
     },
     {
-      "from": "business-orchestration",
-      "to": "hitl-dashboard"
+      "from": "workflow-engine",
+      "to": "telemetry",
+      "resolved": true
     },
     {
-      "from": "business-orchestration",
-      "to": "governance"
+      "from": "workflow-engine",
+      "to": "local-security",
+      "resolved": true
     },
     {
-      "from": "business-orchestration",
-      "to": "telemetry"
+      "from": "workflow-runtime",
+      "to": "checkpoint-management",
+      "resolved": true
+    },
+    {
+      "from": "workflow-runtime",
+      "to": "event-bus",
+      "resolved": true
+    },
+    {
+      "from": "workflow-runtime",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "workflow-runtime",
+      "to": "hitl-dashboard",
+      "resolved": true
     },
     {
       "from": "world-model",
-      "to": "cognitive-runtime"
+      "to": "cognitive-runtime",
+      "resolved": true
     },
     {
       "from": "world-model",
-      "to": "data-fabric"
+      "to": "data-fabric",
+      "resolved": true
     },
     {
       "from": "world-model",
-      "to": "telemetry"
+      "to": "telemetry",
+      "resolved": true
     },
     {
-      "from": "master-data-management",
-      "to": "data-fabric"
+      "from": "zero-trust-runtime",
+      "to": "governance",
+      "resolved": true
     },
     {
-      "from": "master-data-management",
-      "to": "knowledge-graph"
+      "from": "zero-trust-runtime",
+      "to": "local-security",
+      "resolved": true
     },
     {
-      "from": "master-data-management",
-      "to": "semantic-layer"
+      "from": "zero-trust-runtime",
+      "to": "agent-kernel",
+      "resolved": true
     },
     {
-      "from": "master-data-management",
-      "to": "enterprise-search"
+      "from": "accounting-automation",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
     },
     {
-      "from": "explainability",
-      "to": "knowledge-graph"
+      "from": "accounting-automation",
+      "to": "business-orchestration",
+      "resolved": true
     },
     {
-      "from": "explainability",
-      "to": "cognitive-runtime"
+      "from": "accounting-automation",
+      "to": "hitl-dashboard",
+      "resolved": true
     },
     {
-      "from": "explainability",
-      "to": "governance"
-    },
-    {
-      "from": "explainability",
-      "to": "telemetry"
-    },
-    {
-      "from": "alignment-engine",
-      "to": "governance"
-    },
-    {
-      "from": "alignment-engine",
-      "to": "telemetry"
-    },
-    {
-      "from": "alignment-engine",
-      "to": "hitl-dashboard"
-    },
-    {
-      "from": "mcp-integrations",
-      "to": "connector-hub"
-    },
-    {
-      "from": "mcp-integrations",
-      "to": "local-security"
-    },
-    {
-      "from": "simulation-engine",
-      "to": "cognitive-runtime"
-    },
-    {
-      "from": "simulation-engine",
-      "to": "knowledge-graph"
-    },
-    {
-      "from": "simulation-engine",
-      "to": "forecasting"
-    },
-    {
-      "from": "simulation-engine",
-      "to": "synthetic-data"
-    },
-    {
-      "from": "ray-runtime",
-      "to": "cluster-management"
-    },
-    {
-      "from": "ray-runtime",
-      "to": "distributed-agent-runtime"
-    },
-    {
-      "from": "ray-runtime",
-      "to": "event-bus"
-    },
-    {
-      "from": "sandbox-execution",
-      "to": "local-security"
-    },
-    {
-      "from": "sandbox-execution",
-      "to": "local-runtime"
-    },
-    {
-      "from": "sandbox-execution",
-      "to": "telemetry"
-    },
-    {
-      "from": "sandbox-execution",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "model-routing",
-      "to": "cluster-management"
-    },
-    {
-      "from": "model-routing",
-      "to": "economic-coordination"
-    },
-    {
-      "from": "model-routing",
-      "to": "telemetry"
-    },
-    {
-      "from": "code-review",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "code-review",
-      "to": "devsecops"
-    },
-    {
-      "from": "code-review",
-      "to": "qa-automation"
-    },
-    {
-      "from": "execution-explanation",
-      "to": "explainability"
-    },
-    {
-      "from": "execution-explanation",
-      "to": "causal-tracing"
-    },
-    {
-      "from": "execution-explanation",
-      "to": "telemetry"
-    },
-    {
-      "from": "document-intelligence",
-      "to": "multimodal-runtime"
-    },
-    {
-      "from": "gpu-cluster-optimization",
-      "to": "cluster-management"
-    },
-    {
-      "from": "gpu-cluster-optimization",
-      "to": "network-topology-analysis"
-    },
-    {
-      "from": "gpu-cluster-optimization",
-      "to": "telemetry"
-    },
-    {
-      "from": "hierarchical-planning",
-      "to": "cognitive-runtime"
-    },
-    {
-      "from": "hierarchical-planning",
-      "to": "workflow-runtime"
-    },
-    {
-      "from": "hierarchical-planning",
-      "to": "telemetry"
-    },
-    {
-      "from": "paid-acquisition",
-      "to": "launch-planning"
-    },
-    {
-      "from": "paid-acquisition",
-      "to": "content-marketing"
-    },
-    {
-      "from": "paid-acquisition",
-      "to": "analytics-intelligence"
-    },
-    {
-      "from": "paid-acquisition",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "lora-management",
-      "to": "model-lifecycle"
-    },
-    {
-      "from": "lora-management",
-      "to": "lora-lifecycle"
-    },
-    {
-      "from": "lora-management",
-      "to": "local-runtime"
-    },
-    {
-      "from": "lora-management",
-      "to": "telemetry"
-    },
-    {
-      "from": "causal-tracing",
-      "to": "explainability"
-    },
-    {
-      "from": "causal-tracing",
-      "to": "event-bus"
-    },
-    {
-      "from": "causal-tracing",
-      "to": "telemetry"
-    },
-    {
-      "from": "program-governance",
-      "to": "portfolio-optimization"
-    },
-    {
-      "from": "program-governance",
-      "to": "initiative-prioritization"
-    },
-    {
-      "from": "program-governance",
-      "to": "telemetry"
-    },
-    {
-      "from": "ai-engineering",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "ai-engineering",
-      "to": "local-runtime"
-    },
-    {
-      "from": "ai-engineering",
-      "to": "model-evaluation"
-    },
-    {
-      "from": "ai-engineering",
-      "to": "retrieval-engine"
-    },
-    {
-      "from": "policy-simulation",
-      "to": "simulation-engine"
-    },
-    {
-      "from": "policy-simulation",
-      "to": "governance"
-    },
-    {
-      "from": "policy-simulation",
-      "to": "business-simulation"
-    },
-    {
-      "from": "policy-simulation",
-      "to": "telemetry"
-    },
-    {
-      "from": "security-war-gaming",
-      "to": "simulation-engine"
-    },
-    {
-      "from": "security-war-gaming",
-      "to": "devsecops"
-    },
-    {
-      "from": "security-war-gaming",
-      "to": "alignment-engine"
-    },
-    {
-      "from": "security-war-gaming",
-      "to": "local-security"
-    },
-    {
-      "from": "frontend-engineering",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "frontend-engineering",
-      "to": "sdlc-orchestration"
-    },
-    {
-      "from": "frontend-engineering",
-      "to": "devsecops"
-    },
-    {
-      "from": "frontend-engineering",
-      "to": "observability"
-    },
-    {
-      "from": "quantization-optimization",
-      "to": "model-lifecycle"
-    },
-    {
-      "from": "quantization-optimization",
-      "to": "benchmark-factory"
-    },
-    {
-      "from": "quantization-optimization",
-      "to": "cluster-management"
-    },
-    {
-      "from": "quantization-optimization",
-      "to": "telemetry"
-    },
-    {
-      "from": "system-architecture",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "release-management",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "release-management",
-      "to": "cloud-deployment"
-    },
-    {
-      "from": "release-management",
-      "to": "devsecops"
-    },
-    {
-      "from": "release-management",
-      "to": "observability"
-    },
-    {
-      "from": "inference-batching-optimization",
-      "to": "cluster-management"
-    },
-    {
-      "from": "inference-batching-optimization",
-      "to": "model-routing"
-    },
-    {
-      "from": "inference-batching-optimization",
-      "to": "telemetry"
-    },
-    {
-      "from": "discovery-synthesis",
-      "to": "research-runtime"
-    },
-    {
-      "from": "discovery-synthesis",
-      "to": "literature-review"
-    },
-    {
-      "from": "discovery-synthesis",
-      "to": "research-analysis"
-    },
-    {
-      "from": "discovery-synthesis",
-      "to": "knowledge-graph"
-    },
-    {
-      "from": "revenue-operations",
-      "to": "product-analytics"
-    },
-    {
-      "from": "revenue-operations",
-      "to": "customer-success"
-    },
-    {
-      "from": "revenue-operations",
-      "to": "gtm-orchestration"
-    },
-    {
-      "from": "revenue-operations",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "business-continuity-planning",
-      "to": "disaster-recovery-automation"
-    },
-    {
-      "from": "business-continuity-planning",
-      "to": "governance"
-    },
-    {
-      "from": "capacity-balancing",
-      "to": "portfolio-optimization"
-    },
-    {
-      "from": "capacity-balancing",
-      "to": "workforce-management"
-    },
-    {
-      "from": "capacity-balancing",
-      "to": "forecasting"
-    },
-    {
-      "from": "capacity-balancing",
-      "to": "strategic-planning"
-    },
-    {
-      "from": "devsecops",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "devsecops",
-      "to": "local-security"
-    },
-    {
-      "from": "devsecops",
-      "to": "compliance-automation"
-    },
-    {
-      "from": "evaluation-dataset-curation",
-      "to": "benchmark-factory"
-    },
-    {
-      "from": "evaluation-dataset-curation",
-      "to": "dataset-curation"
-    },
-    {
-      "from": "evaluation-dataset-curation",
-      "to": "telemetry"
-    },
-    {
-      "from": "launch-planning",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "launch-planning",
-      "to": "gtm-orchestration"
-    },
-    {
-      "from": "launch-planning",
-      "to": "executive-reporting"
-    },
-    {
-      "from": "constraint-reasoning",
-      "to": "cognitive-runtime"
-    },
-    {
-      "from": "constraint-reasoning",
-      "to": "hierarchical-planning"
-    },
-    {
-      "from": "constraint-reasoning",
-      "to": "telemetry"
-    },
-    {
-      "from": "schema-evolution",
-      "to": "data-fabric"
-    },
-    {
-      "from": "schema-evolution",
-      "to": "data-contract-management"
-    },
-    {
-      "from": "schema-evolution",
-      "to": "event-bus"
-    },
-    {
-      "from": "schema-evolution",
-      "to": "telemetry"
-    },
-    {
-      "from": "product-analytics",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "product-analytics",
-      "to": "telemetry"
-    },
-    {
-      "from": "product-analytics",
-      "to": "connector-hub"
-    },
-    {
-      "from": "product-analytics",
-      "to": "customer-success"
-    },
-    {
-      "from": "pii-detection",
-      "to": "privacy-runtime"
-    },
-    {
-      "from": "pii-detection",
-      "to": "data-fabric"
-    },
-    {
-      "from": "pii-detection",
-      "to": "telemetry"
-    },
-    {
-      "from": "goal-decomposition",
-      "to": "cognitive-runtime"
-    },
-    {
-      "from": "goal-decomposition",
-      "to": "hierarchical-planning"
-    },
-    {
-      "from": "goal-decomposition",
-      "to": "telemetry"
-    },
-    {
-      "from": "network-topology-analysis",
-      "to": "cluster-management"
-    },
-    {
-      "from": "network-topology-analysis",
-      "to": "local-runtime"
-    },
-    {
-      "from": "network-topology-analysis",
-      "to": "telemetry"
-    },
-    {
-      "from": "cloud-deployment",
-      "to": "devsecops"
-    },
-    {
-      "from": "cloud-deployment",
-      "to": "release-management"
-    },
-    {
-      "from": "cloud-deployment",
-      "to": "connector-hub"
-    },
-    {
-      "from": "cloud-deployment",
-      "to": "local-security"
-    },
-    {
-      "from": "model-selection-optimization",
-      "to": "model-routing"
-    },
-    {
-      "from": "model-selection-optimization",
-      "to": "model-lifecycle"
-    },
-    {
-      "from": "model-selection-optimization",
-      "to": "benchmark-factory"
-    },
-    {
-      "from": "model-selection-optimization",
-      "to": "telemetry"
-    },
-    {
-      "from": "marketplace-publishing",
-      "to": "developer-portal"
-    },
-    {
-      "from": "marketplace-publishing",
-      "to": "sdk-runtime"
-    },
-    {
-      "from": "marketplace-publishing",
-      "to": "governance"
-    },
-    {
-      "from": "research-analysis",
-      "to": "research-runtime"
-    },
-    {
-      "from": "research-analysis",
-      "to": "data-fabric"
-    },
-    {
-      "from": "research-analysis",
-      "to": "causal-analysis"
-    },
-    {
-      "from": "research-analysis",
-      "to": "knowledge-graph"
-    },
-    {
-      "from": "crm-integration",
-      "to": "enterprise-integration-hub"
+      "from": "accounting-automation",
+      "to": "telemetry",
+      "resolved": true
     },
     {
       "from": "adversarial-evaluation",
-      "to": "alignment-engine"
+      "to": "alignment-engine",
+      "resolved": true
     },
     {
       "from": "adversarial-evaluation",
-      "to": "alignment-testing"
+      "to": "alignment-testing",
+      "resolved": true
     },
     {
       "from": "adversarial-evaluation",
-      "to": "telemetry"
+      "to": "telemetry",
+      "resolved": true
     },
     {
-      "from": "zero-trust-policy-authoring",
-      "to": "zero-trust-runtime"
+      "from": "ai-engineering",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
     },
     {
-      "from": "zero-trust-policy-authoring",
-      "to": "governance"
+      "from": "ai-engineering",
+      "to": "local-runtime",
+      "resolved": true
     },
     {
-      "from": "erp-integration",
-      "to": "enterprise-integration-hub"
+      "from": "ai-engineering",
+      "to": "model-evaluation",
+      "resolved": true
     },
     {
-      "from": "sdk-authoring",
-      "to": "sdk-runtime"
-    },
-    {
-      "from": "sdk-authoring",
-      "to": "developer-portal"
-    },
-    {
-      "from": "institutional-knowledge-query",
-      "to": "world-model"
-    },
-    {
-      "from": "institutional-knowledge-query",
-      "to": "enterprise-search"
-    },
-    {
-      "from": "memory-compression",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "inference-engine-deployment",
-      "to": "inference-engine-fleet"
-    },
-    {
-      "from": "inference-engine-deployment",
-      "to": "cluster-management"
-    },
-    {
-      "from": "compliance-automation",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "compliance-automation",
-      "to": "local-security"
-    },
-    {
-      "from": "compliance-automation",
-      "to": "connector-hub"
-    },
-    {
-      "from": "compliance-automation",
-      "to": "telemetry"
-    },
-    {
-      "from": "inference-engine-benchmarking",
-      "to": "inference-engine-fleet"
-    },
-    {
-      "from": "inference-engine-benchmarking",
-      "to": "model-benchmarking"
-    },
-    {
-      "from": "benchmark-generation",
-      "to": "benchmark-factory"
-    },
-    {
-      "from": "benchmark-generation",
-      "to": "synthetic-dataset-generation"
-    },
-    {
-      "from": "benchmark-generation",
-      "to": "dataset-curation"
-    },
-    {
-      "from": "benchmark-generation",
-      "to": "telemetry"
+      "from": "ai-engineering",
+      "to": "retrieval-engine",
+      "resolved": true
     },
     {
       "from": "alignment-testing",
-      "to": "alignment-engine"
+      "to": "alignment-engine",
+      "resolved": true
     },
     {
       "from": "alignment-testing",
-      "to": "benchmark-factory"
+      "to": "benchmark-factory",
+      "resolved": true
     },
     {
       "from": "alignment-testing",
-      "to": "telemetry"
-    },
-    {
-      "from": "compliance-posture-reporting",
-      "to": "compliance-runtime"
-    },
-    {
-      "from": "compliance-posture-reporting",
-      "to": "continuous-control-monitoring"
-    },
-    {
-      "from": "reasoning-visualization",
-      "to": "explainability"
-    },
-    {
-      "from": "reasoning-visualization",
-      "to": "cognitive-runtime"
-    },
-    {
-      "from": "reasoning-visualization",
-      "to": "causal-tracing"
-    },
-    {
-      "from": "reasoning-visualization",
-      "to": "knowledge-graph"
-    },
-    {
-      "from": "qa-automation",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "qa-automation",
-      "to": "sdlc-orchestration"
-    },
-    {
-      "from": "qa-automation",
-      "to": "sandbox-execution"
-    },
-    {
-      "from": "data-contract-management",
-      "to": "data-fabric"
-    },
-    {
-      "from": "data-contract-management",
-      "to": "schema-evolution"
-    },
-    {
-      "from": "data-contract-management",
-      "to": "event-bus"
-    },
-    {
-      "from": "data-contract-management",
-      "to": "telemetry"
-    },
-    {
-      "from": "initiative-prioritization",
-      "to": "portfolio-optimization"
-    },
-    {
-      "from": "initiative-prioritization",
-      "to": "capacity-balancing"
-    },
-    {
-      "from": "initiative-prioritization",
-      "to": "telemetry"
-    },
-    {
-      "from": "accounting-automation",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "accounting-automation",
-      "to": "business-orchestration"
-    },
-    {
-      "from": "accounting-automation",
-      "to": "hitl-dashboard"
-    },
-    {
-      "from": "accounting-automation",
-      "to": "telemetry"
-    },
-    {
-      "from": "workforce-management",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "workforce-management",
-      "to": "business-orchestration"
-    },
-    {
-      "from": "workforce-management",
-      "to": "budget-planning"
-    },
-    {
-      "from": "workforce-management",
-      "to": "hitl-dashboard"
-    },
-    {
-      "from": "incident-simulation",
-      "to": "simulation-engine"
-    },
-    {
-      "from": "incident-simulation",
-      "to": "sre-incident-response"
-    },
-    {
-      "from": "incident-simulation",
-      "to": "telemetry"
-    },
-    {
-      "from": "self-reflection",
-      "to": "cognitive-runtime"
-    },
-    {
-      "from": "self-reflection",
-      "to": "meta-reasoning"
-    },
-    {
-      "from": "self-reflection",
-      "to": "alignment-engine"
-    },
-    {
-      "from": "self-reflection",
-      "to": "telemetry"
-    },
-    {
-      "from": "deception-detection",
-      "to": "alignment-engine"
-    },
-    {
-      "from": "deception-detection",
-      "to": "telemetry"
-    },
-    {
-      "from": "hypothesis-generation",
-      "to": "research-runtime"
-    },
-    {
-      "from": "hypothesis-generation",
-      "to": "literature-review"
-    },
-    {
-      "from": "hypothesis-generation",
-      "to": "semantic-layer"
-    },
-    {
-      "from": "hypothesis-generation",
-      "to": "telemetry"
-    },
-    {
-      "from": "lessons-learned-extraction",
-      "to": "world-model"
-    },
-    {
-      "from": "lessons-learned-extraction",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "state-restoration",
-      "to": "checkpoint-management"
-    },
-    {
-      "from": "state-restoration",
-      "to": "workflow-runtime"
-    },
-    {
-      "from": "state-restoration",
-      "to": "telemetry"
-    },
-    {
-      "from": "literature-review",
-      "to": "research-runtime"
-    },
-    {
-      "from": "literature-review",
-      "to": "enterprise-search"
-    },
-    {
-      "from": "literature-review",
-      "to": "telemetry"
-    },
-    {
-      "from": "residency-analysis",
-      "to": "privacy-runtime"
-    },
-    {
-      "from": "residency-analysis",
-      "to": "pii-detection"
-    },
-    {
-      "from": "residency-analysis",
-      "to": "data-fabric"
-    },
-    {
-      "from": "residency-analysis",
-      "to": "telemetry"
-    },
-    {
-      "from": "long-horizon-planning",
-      "to": "cognitive-runtime"
-    },
-    {
-      "from": "long-horizon-planning",
-      "to": "hierarchical-planning"
-    },
-    {
-      "from": "long-horizon-planning",
-      "to": "forecasting"
-    },
-    {
-      "from": "long-horizon-planning",
-      "to": "decision-intelligence"
-    },
-    {
-      "from": "lineage-analysis",
-      "to": "data-fabric"
-    },
-    {
-      "from": "lineage-analysis",
-      "to": "semantic-layer"
-    },
-    {
-      "from": "lineage-analysis",
-      "to": "telemetry"
-    },
-    {
-      "from": "observability",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "observability",
-      "to": "telemetry"
-    },
-    {
-      "from": "observability",
-      "to": "sre-incident-response"
-    },
-    {
-      "from": "ray-serve-management",
-      "to": "ray-runtime"
-    },
-    {
-      "from": "ray-serve-management",
-      "to": "inference-engine-fleet"
-    },
-    {
-      "from": "budget-planning",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "budget-planning",
-      "to": "accounting-automation"
-    },
-    {
-      "from": "budget-planning",
-      "to": "revenue-operations"
-    },
-    {
-      "from": "budget-planning",
-      "to": "strategic-planning"
-    },
-    {
-      "from": "budget-planning",
-      "to": "hitl-dashboard"
-    },
-    {
-      "from": "forecasting",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "forecasting",
-      "to": "revenue-operations"
-    },
-    {
-      "from": "forecasting",
-      "to": "product-analytics"
-    },
-    {
-      "from": "forecasting",
-      "to": "budget-planning"
-    },
-    {
-      "from": "forecasting",
-      "to": "telemetry"
-    },
-    {
-      "from": "visual-analytics",
-      "to": "multimodal-runtime"
-    },
-    {
-      "from": "uncertainty-aware-routing",
-      "to": "model-routing"
-    },
-    {
-      "from": "uncertainty-aware-routing",
-      "to": "reasoning-depth-estimation"
-    },
-    {
-      "from": "uncertainty-aware-routing",
-      "to": "telemetry"
-    },
-    {
-      "from": "seo-engineering",
-      "to": "launch-planning"
-    },
-    {
-      "from": "seo-engineering",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "seo-engineering",
-      "to": "analytics-intelligence"
-    },
-    {
-      "from": "iot-data-ingestion",
-      "to": "data-fabric"
-    },
-    {
-      "from": "iot-data-ingestion",
-      "to": "event-bus"
-    },
-    {
-      "from": "belief-state-management",
-      "to": "world-model"
-    },
-    {
-      "from": "model-placement-optimization",
-      "to": "cluster-management"
-    },
-    {
-      "from": "model-placement-optimization",
-      "to": "network-topology-analysis"
-    },
-    {
-      "from": "model-placement-optimization",
-      "to": "local-runtime"
-    },
-    {
-      "from": "model-placement-optimization",
-      "to": "runtime-economics"
-    },
-    {
-      "from": "vendor-procurement",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "vendor-procurement",
-      "to": "business-orchestration"
-    },
-    {
-      "from": "vendor-procurement",
-      "to": "budget-planning"
-    },
-    {
-      "from": "vendor-procurement",
-      "to": "legal-ops"
-    },
-    {
-      "from": "vendor-procurement",
-      "to": "hitl-dashboard"
-    },
-    {
-      "from": "repo-intelligence",
-      "to": "knowledge-graph"
-    },
-    {
-      "from": "repo-intelligence",
-      "to": "retrieval-engine"
-    },
-    {
-      "from": "meta-reasoning",
-      "to": "cognitive-runtime"
-    },
-    {
-      "from": "meta-reasoning",
-      "to": "alignment-engine"
-    },
-    {
-      "from": "meta-reasoning",
-      "to": "telemetry"
-    },
-    {
-      "from": "cache-placement-optimization",
-      "to": "cluster-management"
-    },
-    {
-      "from": "cache-placement-optimization",
-      "to": "kv-cache-management"
-    },
-    {
-      "from": "cache-placement-optimization",
-      "to": "local-runtime"
-    },
-    {
-      "from": "cache-placement-optimization",
-      "to": "telemetry"
-    },
-    {
-      "from": "model-benchmarking",
-      "to": "benchmark-factory"
-    },
-    {
-      "from": "model-benchmarking",
-      "to": "model-lifecycle"
-    },
-    {
-      "from": "model-benchmarking",
-      "to": "synthetic-data"
-    },
-    {
-      "from": "model-benchmarking",
-      "to": "telemetry"
-    },
-    {
-      "from": "temporal-memory-replay",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "temporal-memory-replay",
-      "to": "memory-compression"
-    },
-    {
-      "from": "lateral-movement-detection",
-      "to": "zero-trust-runtime"
-    },
-    {
-      "from": "lateral-movement-detection",
-      "to": "telemetry"
+      "to": "telemetry",
+      "resolved": true
     },
     {
       "from": "analytics-intelligence",
-      "to": "launch-planning"
+      "to": "launch-planning",
+      "resolved": true
     },
     {
       "from": "analytics-intelligence",
-      "to": "sdlc-memory-token-management"
+      "to": "sdlc-memory-token-management",
+      "resolved": true
     },
     {
       "from": "analytics-intelligence",
-      "to": "connector-hub"
-    },
-    {
-      "from": "synthetic-dataset-generation",
-      "to": "benchmark-factory"
-    },
-    {
-      "from": "synthetic-dataset-generation",
-      "to": "synthetic-data"
-    },
-    {
-      "from": "synthetic-dataset-generation",
-      "to": "model-lifecycle"
-    },
-    {
-      "from": "synthetic-dataset-generation",
-      "to": "data-fabric"
-    },
-    {
-      "from": "causal-analysis",
-      "to": "data-fabric"
-    },
-    {
-      "from": "causal-analysis",
-      "to": "semantic-layer"
-    },
-    {
-      "from": "causal-analysis",
-      "to": "telemetry"
-    },
-    {
-      "from": "reasoning-depth-estimation",
-      "to": "model-routing"
-    },
-    {
-      "from": "reasoning-depth-estimation",
-      "to": "model-selection-optimization"
-    },
-    {
-      "from": "reasoning-depth-estimation",
-      "to": "telemetry"
-    },
-    {
-      "from": "edge-runtime-management",
-      "to": "inference-engine-fleet"
-    },
-    {
-      "from": "edge-runtime-management",
-      "to": "cluster-management"
-    },
-    {
-      "from": "policy-justification",
-      "to": "explainability"
-    },
-    {
-      "from": "policy-justification",
-      "to": "governance"
-    },
-    {
-      "from": "policy-justification",
-      "to": "alignment-engine"
-    },
-    {
-      "from": "policy-justification",
-      "to": "knowledge-graph"
-    },
-    {
-      "from": "customer-success",
-      "to": "gtm-orchestration"
-    },
-    {
-      "from": "customer-success",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "customer-success",
-      "to": "connector-hub"
-    },
-    {
-      "from": "customer-success",
-      "to": "telemetry"
-    },
-    {
-      "from": "revenue-optimization",
-      "to": "analytics-intelligence"
-    },
-    {
-      "from": "revenue-optimization",
-      "to": "customer-success"
-    },
-    {
-      "from": "revenue-optimization",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "harm-classification",
-      "to": "alignment-engine"
-    },
-    {
-      "from": "harm-classification",
-      "to": "governance"
-    },
-    {
-      "from": "harm-classification",
-      "to": "telemetry"
-    },
-    {
-      "from": "developer-experience",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "developer-experience",
-      "to": "observability"
-    },
-    {
-      "from": "developer-experience",
-      "to": "qa-automation"
-    },
-    {
-      "from": "developer-experience",
-      "to": "telemetry"
-    },
-    {
-      "from": "backend-engineering",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "backend-engineering",
-      "to": "sdlc-orchestration"
-    },
-    {
-      "from": "backend-engineering",
-      "to": "devsecops"
-    },
-    {
-      "from": "backend-engineering",
-      "to": "observability"
-    },
-    {
-      "from": "content-marketing",
-      "to": "gtm-orchestration"
-    },
-    {
-      "from": "content-marketing",
-      "to": "ai-search-optimization"
-    },
-    {
-      "from": "itsm-integration",
-      "to": "enterprise-integration-hub"
-    },
-    {
-      "from": "executive-reporting",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "executive-reporting",
-      "to": "product-analytics"
-    },
-    {
-      "from": "executive-reporting",
-      "to": "revenue-operations"
-    },
-    {
-      "from": "executive-reporting",
-      "to": "customer-success"
-    },
-    {
-      "from": "executive-reporting",
-      "to": "strategic-planning"
-    },
-    {
-      "from": "model-distillation",
-      "to": "model-lifecycle"
-    },
-    {
-      "from": "model-distillation",
-      "to": "benchmark-factory"
-    },
-    {
-      "from": "model-distillation",
-      "to": "dataset-curation"
-    },
-    {
-      "from": "model-distillation",
-      "to": "telemetry"
-    },
-    {
-      "from": "legal-ops",
-      "to": "sdlc-memory-token-management"
-    },
-    {
-      "from": "legal-ops",
-      "to": "business-orchestration"
-    },
-    {
-      "from": "legal-ops",
-      "to": "compliance-automation"
-    },
-    {
-      "from": "legal-ops",
-      "to": "hitl-dashboard"
+      "to": "connector-hub",
+      "resolved": true
     },
     {
       "from": "audio-video-processing",
-      "to": "multimodal-runtime"
+      "to": "multimodal-runtime",
+      "resolved": true
     },
     {
-      "from": "dataset-curation",
-      "to": "data-fabric"
+      "from": "backend-engineering",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
     },
     {
-      "from": "dataset-curation",
-      "to": "benchmark-factory"
+      "from": "backend-engineering",
+      "to": "sdlc-orchestration",
+      "resolved": true
     },
     {
-      "from": "dataset-curation",
-      "to": "telemetry"
+      "from": "backend-engineering",
+      "to": "devsecops",
+      "resolved": true
+    },
+    {
+      "from": "backend-engineering",
+      "to": "observability",
+      "resolved": true
+    },
+    {
+      "from": "belief-state-management",
+      "to": "world-model",
+      "resolved": true
+    },
+    {
+      "from": "benchmark-generation",
+      "to": "benchmark-factory",
+      "resolved": true
+    },
+    {
+      "from": "benchmark-generation",
+      "to": "synthetic-dataset-generation",
+      "resolved": true
+    },
+    {
+      "from": "benchmark-generation",
+      "to": "dataset-curation",
+      "resolved": true
+    },
+    {
+      "from": "benchmark-generation",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "budget-planning",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "budget-planning",
+      "to": "accounting-automation",
+      "resolved": true
+    },
+    {
+      "from": "budget-planning",
+      "to": "revenue-operations",
+      "resolved": true
+    },
+    {
+      "from": "budget-planning",
+      "to": "strategic-planning",
+      "resolved": true
+    },
+    {
+      "from": "budget-planning",
+      "to": "hitl-dashboard",
+      "resolved": true
+    },
+    {
+      "from": "business-continuity-planning",
+      "to": "disaster-recovery-automation",
+      "resolved": true
+    },
+    {
+      "from": "business-continuity-planning",
+      "to": "governance",
+      "resolved": true
+    },
+    {
+      "from": "business-simulation",
+      "to": "simulation-engine",
+      "resolved": true
+    },
+    {
+      "from": "business-simulation",
+      "to": "predictive-reasoning",
+      "resolved": true
+    },
+    {
+      "from": "business-simulation",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "cache-placement-optimization",
+      "to": "cluster-management",
+      "resolved": true
+    },
+    {
+      "from": "cache-placement-optimization",
+      "to": "kv-cache-management",
+      "resolved": true
+    },
+    {
+      "from": "cache-placement-optimization",
+      "to": "local-runtime",
+      "resolved": true
+    },
+    {
+      "from": "cache-placement-optimization",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "capacity-balancing",
+      "to": "portfolio-optimization",
+      "resolved": true
+    },
+    {
+      "from": "capacity-balancing",
+      "to": "workforce-management",
+      "resolved": true
+    },
+    {
+      "from": "capacity-balancing",
+      "to": "forecasting",
+      "resolved": true
+    },
+    {
+      "from": "capacity-balancing",
+      "to": "strategic-planning",
+      "resolved": true
+    },
+    {
+      "from": "causal-analysis",
+      "to": "data-fabric",
+      "resolved": true
+    },
+    {
+      "from": "causal-analysis",
+      "to": "semantic-layer",
+      "resolved": true
+    },
+    {
+      "from": "causal-analysis",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "causal-tracing",
+      "to": "explainability",
+      "resolved": true
+    },
+    {
+      "from": "causal-tracing",
+      "to": "event-bus",
+      "resolved": true
+    },
+    {
+      "from": "causal-tracing",
+      "to": "telemetry",
+      "resolved": true
     },
     {
       "from": "checkpoint-management",
-      "to": "workflow-runtime"
+      "to": "workflow-runtime",
+      "resolved": true
     },
     {
       "from": "checkpoint-management",
-      "to": "event-bus"
+      "to": "event-bus",
+      "resolved": true
     },
     {
       "from": "checkpoint-management",
-      "to": "telemetry"
+      "to": "telemetry",
+      "resolved": true
     },
     {
-      "from": "continuous-control-monitoring",
-      "to": "compliance-runtime"
+      "from": "cloud-deployment",
+      "to": "devsecops",
+      "resolved": true
     },
     {
-      "from": "continuous-control-monitoring",
-      "to": "governance"
+      "from": "cloud-deployment",
+      "to": "release-management",
+      "resolved": true
     },
     {
-      "from": "inbox-automation",
-      "to": "enterprise-integration-hub"
+      "from": "cloud-deployment",
+      "to": "connector-hub",
+      "resolved": true
     },
     {
-      "from": "inbox-automation",
-      "to": "connector-hub"
+      "from": "cloud-deployment",
+      "to": "local-security",
+      "resolved": true
     },
     {
-      "from": "decision-intelligence",
-      "to": "sdlc-memory-token-management"
+      "from": "code-review",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
     },
     {
-      "from": "decision-intelligence",
-      "to": "knowledge-graph"
+      "from": "code-review",
+      "to": "devsecops",
+      "resolved": true
     },
     {
-      "from": "decision-intelligence",
-      "to": "forecasting"
-    },
-    {
-      "from": "decision-intelligence",
-      "to": "hitl-dashboard"
-    },
-    {
-      "from": "prompt-optimization",
-      "to": "reinforcement-optimizer"
-    },
-    {
-      "from": "prompt-optimization",
-      "to": "benchmark-factory"
-    },
-    {
-      "from": "patent-analysis",
-      "to": "research-runtime"
-    },
-    {
-      "from": "patent-analysis",
-      "to": "legal-ops"
-    },
-    {
-      "from": "patent-analysis",
-      "to": "knowledge-graph"
-    },
-    {
-      "from": "patent-analysis",
-      "to": "enterprise-search"
-    },
-    {
-      "from": "portfolio-optimization",
-      "to": "initiative-prioritization"
-    },
-    {
-      "from": "portfolio-optimization",
-      "to": "capacity-balancing"
-    },
-    {
-      "from": "portfolio-optimization",
-      "to": "telemetry"
-    },
-    {
-      "from": "runtime-recovery",
-      "to": "checkpoint-management"
-    },
-    {
-      "from": "runtime-recovery",
-      "to": "workflow-runtime"
-    },
-    {
-      "from": "runtime-recovery",
-      "to": "telemetry"
-    },
-    {
-      "from": "runtime-recovery",
-      "to": "hitl-dashboard"
-    },
-    {
-      "from": "data-redaction",
-      "to": "privacy-runtime"
-    },
-    {
-      "from": "data-redaction",
-      "to": "pii-detection"
-    },
-    {
-      "from": "data-redaction",
-      "to": "data-fabric"
-    },
-    {
-      "from": "data-redaction",
-      "to": "telemetry"
+      "from": "code-review",
+      "to": "qa-automation",
+      "resolved": true
     },
     {
       "from": "communication-analytics",
-      "to": "inbox-automation"
+      "to": "inbox-automation",
+      "resolved": true
     },
     {
       "from": "communication-analytics",
-      "to": "telemetry"
+      "to": "telemetry",
+      "resolved": true
     },
     {
-      "from": "workflow-replay",
-      "to": "workflow-runtime"
+      "from": "compliance-automation",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
     },
     {
-      "from": "workflow-replay",
-      "to": "checkpoint-management"
+      "from": "compliance-automation",
+      "to": "local-security",
+      "resolved": true
     },
     {
-      "from": "workflow-replay",
-      "to": "event-bus"
+      "from": "compliance-automation",
+      "to": "connector-hub",
+      "resolved": true
     },
     {
-      "from": "workflow-replay",
-      "to": "telemetry"
-    },
-    {
-      "from": "legal-hold-management",
-      "to": "privacy-runtime"
-    },
-    {
-      "from": "legal-hold-management",
-      "to": "data-fabric"
-    },
-    {
-      "from": "legal-hold-management",
-      "to": "governance"
-    },
-    {
-      "from": "legal-hold-management",
-      "to": "telemetry"
+      "from": "compliance-automation",
+      "to": "telemetry",
+      "resolved": true
     },
     {
       "from": "compliance-governance",
-      "to": "sdlc-memory-token-management"
+      "to": "sdlc-memory-token-management",
+      "resolved": true
     },
     {
       "from": "compliance-governance",
-      "to": "compliance-automation"
+      "to": "compliance-automation",
+      "resolved": true
     },
     {
       "from": "compliance-governance",
-      "to": "local-security"
+      "to": "local-security",
+      "resolved": true
     },
     {
       "from": "compliance-governance",
-      "to": "telemetry"
+      "to": "telemetry",
+      "resolved": true
     },
     {
-      "from": "workflow-ab-testing",
-      "to": "reinforcement-optimizer"
+      "from": "compliance-posture-reporting",
+      "to": "compliance-runtime",
+      "resolved": true
     },
     {
-      "from": "workflow-ab-testing",
-      "to": "workflow-runtime"
+      "from": "compliance-posture-reporting",
+      "to": "continuous-control-monitoring",
+      "resolved": true
     },
     {
-      "from": "runtime-simulation",
-      "to": "simulation-engine"
+      "from": "constraint-reasoning",
+      "to": "cognitive-runtime",
+      "resolved": true
     },
     {
-      "from": "runtime-simulation",
-      "to": "cluster-management"
+      "from": "constraint-reasoning",
+      "to": "hierarchical-planning",
+      "resolved": true
     },
     {
-      "from": "runtime-simulation",
-      "to": "local-runtime"
+      "from": "constraint-reasoning",
+      "to": "telemetry",
+      "resolved": true
     },
     {
-      "from": "runtime-simulation",
-      "to": "telemetry"
+      "from": "content-marketing",
+      "to": "gtm-orchestration",
+      "resolved": true
     },
     {
-      "from": "scenario-generation",
-      "to": "simulation-engine"
+      "from": "content-marketing",
+      "to": "ai-search-optimization",
+      "resolved": true
     },
     {
-      "from": "scenario-generation",
-      "to": "benchmark-factory"
+      "from": "continuous-control-monitoring",
+      "to": "compliance-runtime",
+      "resolved": true
     },
     {
-      "from": "scenario-generation",
-      "to": "synthetic-data"
+      "from": "continuous-control-monitoring",
+      "to": "governance",
+      "resolved": true
     },
     {
-      "from": "scenario-generation",
-      "to": "adversarial-evaluation"
+      "from": "crm-integration",
+      "to": "enterprise-integration-hub",
+      "resolved": true
     },
     {
-      "from": "distributed-training-orchestration",
-      "to": "ray-runtime"
+      "from": "customer-success",
+      "to": "gtm-orchestration",
+      "resolved": true
     },
     {
-      "from": "distributed-training-orchestration",
-      "to": "model-distillation"
+      "from": "customer-success",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "customer-success",
+      "to": "connector-hub",
+      "resolved": true
+    },
+    {
+      "from": "customer-success",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "data-contract-management",
+      "to": "data-fabric",
+      "resolved": true
+    },
+    {
+      "from": "data-contract-management",
+      "to": "schema-evolution",
+      "resolved": true
+    },
+    {
+      "from": "data-contract-management",
+      "to": "event-bus",
+      "resolved": true
+    },
+    {
+      "from": "data-contract-management",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "data-redaction",
+      "to": "privacy-runtime",
+      "resolved": true
+    },
+    {
+      "from": "data-redaction",
+      "to": "pii-detection",
+      "resolved": true
+    },
+    {
+      "from": "data-redaction",
+      "to": "data-fabric",
+      "resolved": true
+    },
+    {
+      "from": "data-redaction",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "dataset-curation",
+      "to": "data-fabric",
+      "resolved": true
+    },
+    {
+      "from": "dataset-curation",
+      "to": "benchmark-factory",
+      "resolved": true
+    },
+    {
+      "from": "dataset-curation",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "deception-detection",
+      "to": "alignment-engine",
+      "resolved": true
+    },
+    {
+      "from": "deception-detection",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "decision-intelligence",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "decision-intelligence",
+      "to": "knowledge-graph",
+      "resolved": true
+    },
+    {
+      "from": "decision-intelligence",
+      "to": "forecasting",
+      "resolved": true
+    },
+    {
+      "from": "decision-intelligence",
+      "to": "hitl-dashboard",
+      "resolved": true
+    },
+    {
+      "from": "developer-experience",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "developer-experience",
+      "to": "observability",
+      "resolved": true
+    },
+    {
+      "from": "developer-experience",
+      "to": "qa-automation",
+      "resolved": true
+    },
+    {
+      "from": "developer-experience",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "devsecops",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "devsecops",
+      "to": "local-security",
+      "resolved": true
+    },
+    {
+      "from": "devsecops",
+      "to": "compliance-automation",
+      "resolved": true
     },
     {
       "from": "disaster-recovery-automation",
-      "to": "runtime-recovery"
+      "to": "runtime-recovery",
+      "resolved": true
     },
     {
       "from": "disaster-recovery-automation",
-      "to": "cluster-management"
+      "to": "cluster-management",
+      "resolved": true
     },
     {
-      "from": "sre-incident-response",
-      "to": "sdlc-memory-token-management"
+      "from": "discovery-synthesis",
+      "to": "research-runtime",
+      "resolved": true
     },
     {
-      "from": "sre-incident-response",
-      "to": "observability"
+      "from": "discovery-synthesis",
+      "to": "literature-review",
+      "resolved": true
     },
     {
-      "from": "sre-incident-response",
-      "to": "telemetry"
+      "from": "discovery-synthesis",
+      "to": "research-analysis",
+      "resolved": true
     },
     {
-      "from": "sre-incident-response",
-      "to": "hitl-dashboard"
+      "from": "discovery-synthesis",
+      "to": "knowledge-graph",
+      "resolved": true
     },
     {
-      "from": "business-simulation",
-      "to": "simulation-engine"
+      "from": "distributed-training-orchestration",
+      "to": "ray-runtime",
+      "resolved": true
     },
     {
-      "from": "business-simulation",
-      "to": "predictive-reasoning"
+      "from": "distributed-training-orchestration",
+      "to": "model-distillation",
+      "resolved": true
     },
     {
-      "from": "business-simulation",
-      "to": "telemetry"
+      "from": "document-intelligence",
+      "to": "multimodal-runtime",
+      "resolved": true
+    },
+    {
+      "from": "edge-runtime-management",
+      "to": "inference-engine-fleet",
+      "resolved": true
+    },
+    {
+      "from": "edge-runtime-management",
+      "to": "cluster-management",
+      "resolved": true
+    },
+    {
+      "from": "erp-integration",
+      "to": "enterprise-integration-hub",
+      "resolved": true
+    },
+    {
+      "from": "evaluation-dataset-curation",
+      "to": "benchmark-factory",
+      "resolved": true
+    },
+    {
+      "from": "evaluation-dataset-curation",
+      "to": "dataset-curation",
+      "resolved": true
+    },
+    {
+      "from": "evaluation-dataset-curation",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "execution-explanation",
+      "to": "explainability",
+      "resolved": true
+    },
+    {
+      "from": "execution-explanation",
+      "to": "causal-tracing",
+      "resolved": true
+    },
+    {
+      "from": "execution-explanation",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "executive-reporting",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "executive-reporting",
+      "to": "product-analytics",
+      "resolved": true
+    },
+    {
+      "from": "executive-reporting",
+      "to": "revenue-operations",
+      "resolved": true
+    },
+    {
+      "from": "executive-reporting",
+      "to": "customer-success",
+      "resolved": true
+    },
+    {
+      "from": "executive-reporting",
+      "to": "strategic-planning",
+      "resolved": true
+    },
+    {
+      "from": "forecasting",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "forecasting",
+      "to": "revenue-operations",
+      "resolved": true
+    },
+    {
+      "from": "forecasting",
+      "to": "product-analytics",
+      "resolved": true
+    },
+    {
+      "from": "forecasting",
+      "to": "budget-planning",
+      "resolved": true
+    },
+    {
+      "from": "forecasting",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "frontend-engineering",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "frontend-engineering",
+      "to": "sdlc-orchestration",
+      "resolved": true
+    },
+    {
+      "from": "frontend-engineering",
+      "to": "devsecops",
+      "resolved": true
+    },
+    {
+      "from": "frontend-engineering",
+      "to": "observability",
+      "resolved": true
+    },
+    {
+      "from": "goal-decomposition",
+      "to": "cognitive-runtime",
+      "resolved": true
+    },
+    {
+      "from": "goal-decomposition",
+      "to": "hierarchical-planning",
+      "resolved": true
+    },
+    {
+      "from": "goal-decomposition",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "gpu-cluster-optimization",
+      "to": "cluster-management",
+      "resolved": true
+    },
+    {
+      "from": "gpu-cluster-optimization",
+      "to": "network-topology-analysis",
+      "resolved": true
+    },
+    {
+      "from": "gpu-cluster-optimization",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "harm-classification",
+      "to": "alignment-engine",
+      "resolved": true
+    },
+    {
+      "from": "harm-classification",
+      "to": "governance",
+      "resolved": true
+    },
+    {
+      "from": "harm-classification",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "hierarchical-planning",
+      "to": "cognitive-runtime",
+      "resolved": true
+    },
+    {
+      "from": "hierarchical-planning",
+      "to": "workflow-runtime",
+      "resolved": true
+    },
+    {
+      "from": "hierarchical-planning",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "hypothesis-generation",
+      "to": "research-runtime",
+      "resolved": true
+    },
+    {
+      "from": "hypothesis-generation",
+      "to": "literature-review",
+      "resolved": true
+    },
+    {
+      "from": "hypothesis-generation",
+      "to": "semantic-layer",
+      "resolved": true
+    },
+    {
+      "from": "hypothesis-generation",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "inbox-automation",
+      "to": "enterprise-integration-hub",
+      "resolved": true
+    },
+    {
+      "from": "inbox-automation",
+      "to": "connector-hub",
+      "resolved": true
+    },
+    {
+      "from": "incident-simulation",
+      "to": "simulation-engine",
+      "resolved": true
+    },
+    {
+      "from": "incident-simulation",
+      "to": "sre-incident-response",
+      "resolved": true
+    },
+    {
+      "from": "incident-simulation",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "inference-batching-optimization",
+      "to": "cluster-management",
+      "resolved": true
+    },
+    {
+      "from": "inference-batching-optimization",
+      "to": "model-routing",
+      "resolved": true
+    },
+    {
+      "from": "inference-batching-optimization",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "inference-engine-benchmarking",
+      "to": "inference-engine-fleet",
+      "resolved": true
+    },
+    {
+      "from": "inference-engine-benchmarking",
+      "to": "model-benchmarking",
+      "resolved": true
+    },
+    {
+      "from": "inference-engine-deployment",
+      "to": "inference-engine-fleet",
+      "resolved": true
+    },
+    {
+      "from": "inference-engine-deployment",
+      "to": "cluster-management",
+      "resolved": true
+    },
+    {
+      "from": "initiative-prioritization",
+      "to": "portfolio-optimization",
+      "resolved": true
+    },
+    {
+      "from": "initiative-prioritization",
+      "to": "capacity-balancing",
+      "resolved": true
+    },
+    {
+      "from": "initiative-prioritization",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "institutional-knowledge-query",
+      "to": "world-model",
+      "resolved": true
+    },
+    {
+      "from": "institutional-knowledge-query",
+      "to": "enterprise-search",
+      "resolved": true
+    },
+    {
+      "from": "iot-data-ingestion",
+      "to": "data-fabric",
+      "resolved": true
+    },
+    {
+      "from": "iot-data-ingestion",
+      "to": "event-bus",
+      "resolved": true
+    },
+    {
+      "from": "itsm-integration",
+      "to": "enterprise-integration-hub",
+      "resolved": true
+    },
+    {
+      "from": "lateral-movement-detection",
+      "to": "zero-trust-runtime",
+      "resolved": true
+    },
+    {
+      "from": "lateral-movement-detection",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "launch-planning",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "launch-planning",
+      "to": "gtm-orchestration",
+      "resolved": true
+    },
+    {
+      "from": "launch-planning",
+      "to": "executive-reporting",
+      "resolved": true
+    },
+    {
+      "from": "legal-hold-management",
+      "to": "privacy-runtime",
+      "resolved": true
+    },
+    {
+      "from": "legal-hold-management",
+      "to": "data-fabric",
+      "resolved": true
+    },
+    {
+      "from": "legal-hold-management",
+      "to": "governance",
+      "resolved": true
+    },
+    {
+      "from": "legal-hold-management",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "legal-ops",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "legal-ops",
+      "to": "business-orchestration",
+      "resolved": true
+    },
+    {
+      "from": "legal-ops",
+      "to": "compliance-automation",
+      "resolved": true
+    },
+    {
+      "from": "legal-ops",
+      "to": "hitl-dashboard",
+      "resolved": true
+    },
+    {
+      "from": "lessons-learned-extraction",
+      "to": "world-model",
+      "resolved": true
+    },
+    {
+      "from": "lessons-learned-extraction",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "lineage-analysis",
+      "to": "data-fabric",
+      "resolved": true
+    },
+    {
+      "from": "lineage-analysis",
+      "to": "semantic-layer",
+      "resolved": true
+    },
+    {
+      "from": "lineage-analysis",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "literature-review",
+      "to": "research-runtime",
+      "resolved": true
+    },
+    {
+      "from": "literature-review",
+      "to": "enterprise-search",
+      "resolved": true
+    },
+    {
+      "from": "literature-review",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "long-horizon-planning",
+      "to": "cognitive-runtime",
+      "resolved": true
+    },
+    {
+      "from": "long-horizon-planning",
+      "to": "hierarchical-planning",
+      "resolved": true
+    },
+    {
+      "from": "long-horizon-planning",
+      "to": "forecasting",
+      "resolved": true
+    },
+    {
+      "from": "long-horizon-planning",
+      "to": "decision-intelligence",
+      "resolved": true
+    },
+    {
+      "from": "lora-management",
+      "to": "model-lifecycle",
+      "resolved": true
+    },
+    {
+      "from": "lora-management",
+      "to": "lora-lifecycle",
+      "resolved": true
+    },
+    {
+      "from": "lora-management",
+      "to": "local-runtime",
+      "resolved": true
+    },
+    {
+      "from": "lora-management",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "marketplace-publishing",
+      "to": "developer-portal",
+      "resolved": true
+    },
+    {
+      "from": "marketplace-publishing",
+      "to": "sdk-runtime",
+      "resolved": true
+    },
+    {
+      "from": "marketplace-publishing",
+      "to": "governance",
+      "resolved": true
+    },
+    {
+      "from": "memory-compression",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "meta-reasoning",
+      "to": "cognitive-runtime",
+      "resolved": true
+    },
+    {
+      "from": "meta-reasoning",
+      "to": "alignment-engine",
+      "resolved": true
+    },
+    {
+      "from": "meta-reasoning",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "model-benchmarking",
+      "to": "benchmark-factory",
+      "resolved": true
+    },
+    {
+      "from": "model-benchmarking",
+      "to": "model-lifecycle",
+      "resolved": true
+    },
+    {
+      "from": "model-benchmarking",
+      "to": "synthetic-data",
+      "resolved": true
+    },
+    {
+      "from": "model-benchmarking",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "model-distillation",
+      "to": "model-lifecycle",
+      "resolved": true
+    },
+    {
+      "from": "model-distillation",
+      "to": "benchmark-factory",
+      "resolved": true
+    },
+    {
+      "from": "model-distillation",
+      "to": "dataset-curation",
+      "resolved": true
+    },
+    {
+      "from": "model-distillation",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "model-placement-optimization",
+      "to": "cluster-management",
+      "resolved": true
+    },
+    {
+      "from": "model-placement-optimization",
+      "to": "network-topology-analysis",
+      "resolved": true
+    },
+    {
+      "from": "model-placement-optimization",
+      "to": "local-runtime",
+      "resolved": true
+    },
+    {
+      "from": "model-placement-optimization",
+      "to": "runtime-economics",
+      "resolved": true
+    },
+    {
+      "from": "model-selection-optimization",
+      "to": "model-routing",
+      "resolved": true
+    },
+    {
+      "from": "model-selection-optimization",
+      "to": "model-lifecycle",
+      "resolved": true
+    },
+    {
+      "from": "model-selection-optimization",
+      "to": "benchmark-factory",
+      "resolved": true
+    },
+    {
+      "from": "model-selection-optimization",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "network-topology-analysis",
+      "to": "cluster-management",
+      "resolved": true
+    },
+    {
+      "from": "network-topology-analysis",
+      "to": "local-runtime",
+      "resolved": true
+    },
+    {
+      "from": "network-topology-analysis",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "observability",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "observability",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "observability",
+      "to": "sre-incident-response",
+      "resolved": true
+    },
+    {
+      "from": "paid-acquisition",
+      "to": "launch-planning",
+      "resolved": true
+    },
+    {
+      "from": "paid-acquisition",
+      "to": "content-marketing",
+      "resolved": true
+    },
+    {
+      "from": "paid-acquisition",
+      "to": "analytics-intelligence",
+      "resolved": true
+    },
+    {
+      "from": "paid-acquisition",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "patent-analysis",
+      "to": "research-runtime",
+      "resolved": true
+    },
+    {
+      "from": "patent-analysis",
+      "to": "legal-ops",
+      "resolved": true
+    },
+    {
+      "from": "patent-analysis",
+      "to": "knowledge-graph",
+      "resolved": true
+    },
+    {
+      "from": "patent-analysis",
+      "to": "enterprise-search",
+      "resolved": true
+    },
+    {
+      "from": "pii-detection",
+      "to": "privacy-runtime",
+      "resolved": true
+    },
+    {
+      "from": "pii-detection",
+      "to": "data-fabric",
+      "resolved": true
+    },
+    {
+      "from": "pii-detection",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "policy-justification",
+      "to": "explainability",
+      "resolved": true
+    },
+    {
+      "from": "policy-justification",
+      "to": "governance",
+      "resolved": true
+    },
+    {
+      "from": "policy-justification",
+      "to": "alignment-engine",
+      "resolved": true
+    },
+    {
+      "from": "policy-justification",
+      "to": "knowledge-graph",
+      "resolved": true
+    },
+    {
+      "from": "policy-simulation",
+      "to": "simulation-engine",
+      "resolved": true
+    },
+    {
+      "from": "policy-simulation",
+      "to": "governance",
+      "resolved": true
+    },
+    {
+      "from": "policy-simulation",
+      "to": "business-simulation",
+      "resolved": true
+    },
+    {
+      "from": "policy-simulation",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "portfolio-optimization",
+      "to": "initiative-prioritization",
+      "resolved": true
+    },
+    {
+      "from": "portfolio-optimization",
+      "to": "capacity-balancing",
+      "resolved": true
+    },
+    {
+      "from": "portfolio-optimization",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "product-analytics",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "product-analytics",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "product-analytics",
+      "to": "connector-hub",
+      "resolved": true
+    },
+    {
+      "from": "product-analytics",
+      "to": "customer-success",
+      "resolved": true
+    },
+    {
+      "from": "program-governance",
+      "to": "portfolio-optimization",
+      "resolved": true
+    },
+    {
+      "from": "program-governance",
+      "to": "initiative-prioritization",
+      "resolved": true
+    },
+    {
+      "from": "program-governance",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "prompt-optimization",
+      "to": "reinforcement-optimizer",
+      "resolved": true
+    },
+    {
+      "from": "prompt-optimization",
+      "to": "benchmark-factory",
+      "resolved": true
+    },
+    {
+      "from": "qa-automation",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "qa-automation",
+      "to": "sdlc-orchestration",
+      "resolved": true
+    },
+    {
+      "from": "qa-automation",
+      "to": "sandbox-execution",
+      "resolved": true
+    },
+    {
+      "from": "quantization-optimization",
+      "to": "model-lifecycle",
+      "resolved": true
+    },
+    {
+      "from": "quantization-optimization",
+      "to": "benchmark-factory",
+      "resolved": true
+    },
+    {
+      "from": "quantization-optimization",
+      "to": "cluster-management",
+      "resolved": true
+    },
+    {
+      "from": "quantization-optimization",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "ray-serve-management",
+      "to": "ray-runtime",
+      "resolved": true
+    },
+    {
+      "from": "ray-serve-management",
+      "to": "inference-engine-fleet",
+      "resolved": true
+    },
+    {
+      "from": "reasoning-depth-estimation",
+      "to": "model-routing",
+      "resolved": true
+    },
+    {
+      "from": "reasoning-depth-estimation",
+      "to": "model-selection-optimization",
+      "resolved": true
+    },
+    {
+      "from": "reasoning-depth-estimation",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "reasoning-visualization",
+      "to": "explainability",
+      "resolved": true
+    },
+    {
+      "from": "reasoning-visualization",
+      "to": "cognitive-runtime",
+      "resolved": true
+    },
+    {
+      "from": "reasoning-visualization",
+      "to": "causal-tracing",
+      "resolved": true
+    },
+    {
+      "from": "reasoning-visualization",
+      "to": "knowledge-graph",
+      "resolved": true
+    },
+    {
+      "from": "release-management",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "release-management",
+      "to": "cloud-deployment",
+      "resolved": true
+    },
+    {
+      "from": "release-management",
+      "to": "devsecops",
+      "resolved": true
+    },
+    {
+      "from": "release-management",
+      "to": "observability",
+      "resolved": true
+    },
+    {
+      "from": "repo-intelligence",
+      "to": "knowledge-graph",
+      "resolved": true
+    },
+    {
+      "from": "repo-intelligence",
+      "to": "retrieval-engine",
+      "resolved": true
     },
     {
       "from": "requirements-engineering",
-      "to": "sdlc-memory-token-management"
+      "to": "sdlc-memory-token-management",
+      "resolved": true
     },
     {
       "from": "requirements-engineering",
-      "to": "sdlc-orchestration"
+      "to": "sdlc-orchestration",
+      "resolved": true
     },
     {
       "from": "requirements-engineering",
-      "to": "knowledge-graph"
+      "to": "knowledge-graph",
+      "resolved": true
+    },
+    {
+      "from": "research-analysis",
+      "to": "research-runtime",
+      "resolved": true
+    },
+    {
+      "from": "research-analysis",
+      "to": "data-fabric",
+      "resolved": true
+    },
+    {
+      "from": "research-analysis",
+      "to": "causal-analysis",
+      "resolved": true
+    },
+    {
+      "from": "research-analysis",
+      "to": "knowledge-graph",
+      "resolved": true
+    },
+    {
+      "from": "residency-analysis",
+      "to": "privacy-runtime",
+      "resolved": true
+    },
+    {
+      "from": "residency-analysis",
+      "to": "pii-detection",
+      "resolved": true
+    },
+    {
+      "from": "residency-analysis",
+      "to": "data-fabric",
+      "resolved": true
+    },
+    {
+      "from": "residency-analysis",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "revenue-operations",
+      "to": "product-analytics",
+      "resolved": true
+    },
+    {
+      "from": "revenue-operations",
+      "to": "customer-success",
+      "resolved": true
+    },
+    {
+      "from": "revenue-operations",
+      "to": "gtm-orchestration",
+      "resolved": true
+    },
+    {
+      "from": "revenue-operations",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "revenue-optimization",
+      "to": "analytics-intelligence",
+      "resolved": true
+    },
+    {
+      "from": "revenue-optimization",
+      "to": "customer-success",
+      "resolved": true
+    },
+    {
+      "from": "revenue-optimization",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "roi-estimation",
+      "to": "runtime-economics",
+      "resolved": true
+    },
+    {
+      "from": "roi-estimation",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "roi-estimation",
+      "to": "token-cost-analysis",
+      "resolved": true
+    },
+    {
+      "from": "runtime-recovery",
+      "to": "checkpoint-management",
+      "resolved": true
+    },
+    {
+      "from": "runtime-recovery",
+      "to": "workflow-runtime",
+      "resolved": true
+    },
+    {
+      "from": "runtime-recovery",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "runtime-recovery",
+      "to": "hitl-dashboard",
+      "resolved": true
+    },
+    {
+      "from": "runtime-simulation",
+      "to": "simulation-engine",
+      "resolved": true
+    },
+    {
+      "from": "runtime-simulation",
+      "to": "cluster-management",
+      "resolved": true
+    },
+    {
+      "from": "runtime-simulation",
+      "to": "local-runtime",
+      "resolved": true
+    },
+    {
+      "from": "runtime-simulation",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "scenario-generation",
+      "to": "simulation-engine",
+      "resolved": true
+    },
+    {
+      "from": "scenario-generation",
+      "to": "benchmark-factory",
+      "resolved": true
+    },
+    {
+      "from": "scenario-generation",
+      "to": "synthetic-data",
+      "resolved": true
+    },
+    {
+      "from": "scenario-generation",
+      "to": "adversarial-evaluation",
+      "resolved": true
+    },
+    {
+      "from": "schema-evolution",
+      "to": "data-fabric",
+      "resolved": true
+    },
+    {
+      "from": "schema-evolution",
+      "to": "data-contract-management",
+      "resolved": true
+    },
+    {
+      "from": "schema-evolution",
+      "to": "event-bus",
+      "resolved": true
+    },
+    {
+      "from": "schema-evolution",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "sdk-authoring",
+      "to": "sdk-runtime",
+      "resolved": true
+    },
+    {
+      "from": "sdk-authoring",
+      "to": "developer-portal",
+      "resolved": true
+    },
+    {
+      "from": "security-war-gaming",
+      "to": "simulation-engine",
+      "resolved": true
+    },
+    {
+      "from": "security-war-gaming",
+      "to": "devsecops",
+      "resolved": true
+    },
+    {
+      "from": "security-war-gaming",
+      "to": "alignment-engine",
+      "resolved": true
+    },
+    {
+      "from": "security-war-gaming",
+      "to": "local-security",
+      "resolved": true
+    },
+    {
+      "from": "self-reflection",
+      "to": "cognitive-runtime",
+      "resolved": true
+    },
+    {
+      "from": "self-reflection",
+      "to": "meta-reasoning",
+      "resolved": true
+    },
+    {
+      "from": "self-reflection",
+      "to": "alignment-engine",
+      "resolved": true
+    },
+    {
+      "from": "self-reflection",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "seo-engineering",
+      "to": "launch-planning",
+      "resolved": true
+    },
+    {
+      "from": "seo-engineering",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "seo-engineering",
+      "to": "analytics-intelligence",
+      "resolved": true
+    },
+    {
+      "from": "sre-incident-response",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "sre-incident-response",
+      "to": "observability",
+      "resolved": true
+    },
+    {
+      "from": "sre-incident-response",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "sre-incident-response",
+      "to": "hitl-dashboard",
+      "resolved": true
+    },
+    {
+      "from": "state-restoration",
+      "to": "checkpoint-management",
+      "resolved": true
+    },
+    {
+      "from": "state-restoration",
+      "to": "workflow-runtime",
+      "resolved": true
+    },
+    {
+      "from": "state-restoration",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "synthetic-dataset-generation",
+      "to": "benchmark-factory",
+      "resolved": true
+    },
+    {
+      "from": "synthetic-dataset-generation",
+      "to": "synthetic-data",
+      "resolved": true
+    },
+    {
+      "from": "synthetic-dataset-generation",
+      "to": "model-lifecycle",
+      "resolved": true
+    },
+    {
+      "from": "synthetic-dataset-generation",
+      "to": "data-fabric",
+      "resolved": true
+    },
+    {
+      "from": "system-architecture",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "temporal-memory-replay",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "temporal-memory-replay",
+      "to": "memory-compression",
+      "resolved": true
+    },
+    {
+      "from": "token-cost-analysis",
+      "to": "runtime-economics",
+      "resolved": true
+    },
+    {
+      "from": "token-cost-analysis",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "uncertainty-aware-routing",
+      "to": "model-routing",
+      "resolved": true
+    },
+    {
+      "from": "uncertainty-aware-routing",
+      "to": "reasoning-depth-estimation",
+      "resolved": true
+    },
+    {
+      "from": "uncertainty-aware-routing",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "vendor-procurement",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "vendor-procurement",
+      "to": "business-orchestration",
+      "resolved": true
+    },
+    {
+      "from": "vendor-procurement",
+      "to": "budget-planning",
+      "resolved": true
+    },
+    {
+      "from": "vendor-procurement",
+      "to": "legal-ops",
+      "resolved": true
+    },
+    {
+      "from": "vendor-procurement",
+      "to": "hitl-dashboard",
+      "resolved": true
+    },
+    {
+      "from": "visual-analytics",
+      "to": "multimodal-runtime",
+      "resolved": true
+    },
+    {
+      "from": "workflow-ab-testing",
+      "to": "reinforcement-optimizer",
+      "resolved": true
+    },
+    {
+      "from": "workflow-ab-testing",
+      "to": "workflow-runtime",
+      "resolved": true
+    },
+    {
+      "from": "workflow-replay",
+      "to": "workflow-runtime",
+      "resolved": true
+    },
+    {
+      "from": "workflow-replay",
+      "to": "checkpoint-management",
+      "resolved": true
+    },
+    {
+      "from": "workflow-replay",
+      "to": "event-bus",
+      "resolved": true
+    },
+    {
+      "from": "workflow-replay",
+      "to": "telemetry",
+      "resolved": true
+    },
+    {
+      "from": "workforce-management",
+      "to": "sdlc-memory-token-management",
+      "resolved": true
+    },
+    {
+      "from": "workforce-management",
+      "to": "business-orchestration",
+      "resolved": true
+    },
+    {
+      "from": "workforce-management",
+      "to": "budget-planning",
+      "resolved": true
+    },
+    {
+      "from": "workforce-management",
+      "to": "hitl-dashboard",
+      "resolved": true
+    },
+    {
+      "from": "zero-trust-policy-authoring",
+      "to": "zero-trust-runtime",
+      "resolved": true
+    },
+    {
+      "from": "zero-trust-policy-authoring",
+      "to": "governance",
+      "resolved": true
     }
   ],
   "stats": {
-    "node_count": 192,
-    "edge_count": 618
+    "node_count": 273,
+    "edge_count": 625,
+    "unresolved_dependencies": 0
   }
 }
