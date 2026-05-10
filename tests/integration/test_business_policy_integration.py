@@ -74,7 +74,7 @@ def _trigger_external_side_effect(amount: int, blocked: bool, approval_decision:
 
 def test_policy_violation_event_and_side_effect_blocked_pending_approval():
     policy_schema = _load(REPO_ROOT / "schemas" / "business-policy.schema.json")
-    event_schema = _load(REPO_ROOT / "schemas" / "events" / "business_policy_violation.schema.json")
+    event_schema = _load(REPO_ROOT / "schemas" / "events" / "business_policy.violation.schema.json")
 
     policy_instance = {
         "policy_id": "pol-001",
@@ -112,3 +112,39 @@ def test_approved_flow_allows_external_side_effect_after_policy_gate():
 
     assert blocked is True
     assert _trigger_external_side_effect(amount=12500, blocked=blocked, approval_decision="approve") is True
+
+
+def test_rejected_flow_blocks_external_side_effect():
+    blocked, _ = evaluate_policy(
+        {
+            "policy_id": "pol-003",
+            "name": "High value transfer check",
+            "version": "1.0.0",
+            "status": "active",
+            "scope": {"entities": ["payment"], "events": ["invoice.created"]},
+            "rules": [{"rule_id": "r1", "condition": "amount_gt_10000", "action": "require_approval", "severity": "high"}],
+            "enforcement": {"mode": "enforced", "owner": "finance"},
+        },
+        {"amount": 13000},
+    )
+
+    assert blocked is True
+    assert _trigger_external_side_effect(amount=13000, blocked=blocked, approval_decision="reject") is False
+
+
+def test_request_more_info_flow_blocks_external_side_effect():
+    blocked, _ = evaluate_policy(
+        {
+            "policy_id": "pol-004",
+            "name": "High value transfer check",
+            "version": "1.0.0",
+            "status": "active",
+            "scope": {"entities": ["payment"], "events": ["invoice.created"]},
+            "rules": [{"rule_id": "r1", "condition": "amount_gt_10000", "action": "require_approval", "severity": "high"}],
+            "enforcement": {"mode": "enforced", "owner": "finance"},
+        },
+        {"amount": 13100},
+    )
+
+    assert blocked is True
+    assert _trigger_external_side_effect(amount=13100, blocked=blocked, approval_decision="request_more_info") is False

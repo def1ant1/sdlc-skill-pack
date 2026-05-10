@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apotheon.dev/schemas/entities/lineage.schema.json",
+  "title": "Lineage",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["correlation_id", "causation_id"],
+  "properties": {
+    "correlation_id": {"type": "string"},
+    "causation_id": {"type": "string"},
+    "parent_event_ids": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  }
+}

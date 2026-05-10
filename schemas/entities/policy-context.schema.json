@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apotheon.dev/schemas/entities/policy-context.schema.json",
+  "title": "Policy Context",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["policy_id", "policy_version", "evaluation_result"],
+  "properties": {
+    "policy_id": {"type": "string"},
+    "policy_version": {"type": "string"},
+    "evaluation_result": {"type": "string", "enum": ["pass", "warn", "fail"]},
+    "violations": {"type": "array", "items": {"type": "string"}}
+  }
+}
