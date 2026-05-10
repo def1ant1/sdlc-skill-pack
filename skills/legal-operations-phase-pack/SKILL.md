@@ -14,3 +14,7 @@ Provides orchestrated support workflows for legal operations with KPI-linked rec
 ## Integration
 - Canonical entities from `core/master-data-management`.
 - Policy, approvals, and audit lineage through core governance runtime.
+
+
+## Governance References
+- `docs/governance/professional-advice-boundaries.md`

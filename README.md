@@ -48,6 +48,17 @@ PLAN --> BUILD --> SHIP --> GROW
 
 ---
 
+
+## Governance Boundary Policies
+
+The following governance boundary policies define hard limits for high-risk domains:
+
+- `docs/governance/professional-advice-boundaries.md`
+- `docs/governance/data-scraping-policy.md`
+- `docs/governance/external-action-policy.md`
+- `docs/governance/financial-controls.md`
+- `docs/governance/hr-high-impact-decision-policy.md`
+
 ## Quick Start
 
 ### Validate the skill pack
