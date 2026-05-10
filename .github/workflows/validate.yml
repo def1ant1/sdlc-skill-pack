@@ -5,6 +5,8 @@ on:
     branches: ["**"]
   pull_request:
     branches: ["main", "develop"]
+  release:
+    types: [published]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -55,6 +57,53 @@ jobs:
 
       - name: Run tests
         run: pytest --tb=short -q
+
+      - name: Validate release readiness (P0/P1 gates)
+        run: python scripts/run_premerge_checks.py
+
+      - name: Generate reports
+        run: python scripts/generate_release_reports.py
+
+      - name: Upload reports artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-reports
+          path: reports/
+
+  release-reports:
+    name: Release reports
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Generate release reports
+        run: python scripts/generate_release_reports.py
+
+      - name: Upload release reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-reports-${{ github.event.release.tag_name }}
+          path: |
+            reports/repo_truth_report.*
+            reports/skill_inventory.*
+            reports/skill_dependency_graph.*
+            reports/orchestration_map.md
+            reports/routing_collision_report.md
 
   security-scan:
     name: Secret scan
