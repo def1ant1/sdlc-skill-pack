@@ -29,3 +29,7 @@ Execute local market data collection workflows while producing only canonical en
 
 ## Workflow Artifact
 See `examples/workflow.yaml`.
+
+
+## Governance References
+- `docs/governance/data-scraping-policy.md`

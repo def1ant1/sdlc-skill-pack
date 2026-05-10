@@ -29,3 +29,7 @@ Execute competitor price scraping workflows while producing only canonical entit
 
 ## Workflow Artifact
 See `examples/workflow.yaml`.
+
+
+## Governance References
+- `docs/governance/data-scraping-policy.md`

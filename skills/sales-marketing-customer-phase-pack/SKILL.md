@@ -35,3 +35,7 @@ Orchestrate phase 107-109 workflows while outputting only canonical entities/eve
 
 ## Example workflow
 See `examples/workflow.yaml`.
+
+
+## Governance References
+- `docs/governance/external-action-policy.md`

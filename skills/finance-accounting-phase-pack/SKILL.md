@@ -35,3 +35,8 @@ Coordinate finance/accounting workflows across phase 103-105 capabilities using 
 
 ## Example workflow
 See `examples/workflow.yaml`.
+
+
+## Governance References
+- `docs/governance/professional-advice-boundaries.md`
+- `docs/governance/financial-controls.md`

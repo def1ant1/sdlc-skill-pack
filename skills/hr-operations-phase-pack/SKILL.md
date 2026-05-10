@@ -14,3 +14,8 @@ Provides orchestrated support workflows for hr operations with KPI-linked recomm
 ## Integration
 - Canonical entities from `core/master-data-management`.
 - Policy, approvals, and audit lineage through core governance runtime.
+
+
+## Governance References
+- `docs/governance/professional-advice-boundaries.md`
+- `docs/governance/hr-high-impact-decision-policy.md`

@@ -14,3 +14,7 @@ Provides orchestrated support workflows for vendor procurement with KPI-linked r
 ## Integration
 - Canonical entities from `core/master-data-management`.
 - Policy, approvals, and audit lineage through core governance runtime.
+
+
+## Governance References
+- `docs/governance/external-action-policy.md`
