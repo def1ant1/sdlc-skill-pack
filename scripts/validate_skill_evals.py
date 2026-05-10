@@ -7,6 +7,8 @@ from pathlib import Path
 
 import yaml
 
+REQUIRED_TOP_LEVEL_FIELDS = ("datasets", "metrics", "acceptance_gates")
+
 
 def load_frontmatter(path: Path) -> dict:
     text = path.read_text(encoding="utf-8")
@@ -16,6 +18,10 @@ def load_frontmatter(path: Path) -> dict:
     if end == -1:
         return {}
     return yaml.safe_load(text[3 : end + 1]) or {}
+
+
+def _is_non_empty_list(value: object) -> bool:
+    return isinstance(value, list) and len(value) > 0
 
 
 def main() -> int:
@@ -54,11 +60,17 @@ def main() -> int:
                 f"{spec_path}: priority mismatch skill={priority} eval={spec_priority or 'MISSING'}"
             )
 
+        for field in REQUIRED_TOP_LEVEL_FIELDS:
+            if not _is_non_empty_list(spec.get(field)):
+                errors.append(
+                    f"{spec_path}: {field} must be a non-empty list for {priority} skill eval completeness"
+                )
+
     if errors:
         print("\n".join(errors))
         return 1
 
-    print("All required P0/P1 skill eval specs are present.")
+    print("All required P0/P1 skill eval specs are present and complete.")
     return 0
 
 
