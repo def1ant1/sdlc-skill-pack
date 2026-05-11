@@ -1,148 +1,158 @@
 {
   "name": "fpa-analysis",
   "type": "skill",
-  "domain": "business-operations",
-  "subdomain": "phase-105",
+  "domain": "finance",
+  "subdomain": "office-of-cfo",
   "version": "9.0.0",
   "owner": "Apotheon",
   "maturity": "beta",
   "dependencies": [
     "core/policy-engine",
-    "core/business-approval-gateway"
+    "core/canonical-entity-model",
+    "core/business-event-model"
   ],
   "activation_triggers": [
-    "phase_105",
-    "fpa_analysis"
+    "fpa_analysis",
+    "finance_ops"
   ],
   "required_context": [
     "tenant_profile",
     "canonical_entities",
-    "policy_profile"
+    "policy_profile",
+    "source_lineage_registry"
   ],
   "optional_context": [
     "historical_events",
-    "benchmark_data"
+    "benchmark_data",
+    "prior_reports"
   ],
   "input_contract": {
     "format": "canonical-entity-event-bundle",
+    "required_inputs": [
+      "reporting_period",
+      "currency",
+      "source_snapshots_with_timestamps",
+      "lineage_entries_by_metric"
+    ],
     "schema_refs": [
       "core/canonical-entity-model/README.md",
       "core/business-event-model/README.md",
-      "schemas/entities/invoice.schema.json",
-      "schemas/entities/payment.schema.json",
       "schemas/entities/account.schema.json",
-      "schemas/entities/decision.schema.json",
-      "schemas/entities/workflow.schema.json",
-      "schemas/events/approval_requested.schema.json",
-      "schemas/events/approval_decided.schema.json",
-      "schemas/events/workflow_completed.schema.json",
+      "schemas/entities/actuals.schema.json",
+      "schemas/entities/forecast.schema.json",
+      "schemas/entities/scenario.schema.json",
+      "schemas/entities/kpi_snapshot.schema.json",
       "schemas/events/business_policy_violation.schema.json"
     ]
   },
   "output_contract": {
-    "format": "canonical-entity-event-bundle",
+    "format": "finance-report-bundle",
+    "required_sections": [
+      "executive_summary",
+      "kpi_reporting",
+      "calculations",
+      "anomalies",
+      "data_freshness",
+      "source_lineage",
+      "governance_assertions"
+    ],
+    "required_outputs": [
+      "runway_months",
+      "cash_forecast_13_week",
+      "ar_aging",
+      "ap_aging",
+      "gross_margin_pct",
+      "contribution_margin_pct",
+      "anomaly_flags"
+    ],
     "schema_refs": [
       "core/canonical-entity-model/README.md",
       "core/business-event-model/README.md",
-      "schemas/entities/invoice.schema.json",
-      "schemas/entities/payment.schema.json",
       "schemas/entities/account.schema.json",
-      "schemas/entities/decision.schema.json",
-      "schemas/entities/workflow.schema.json",
-      "schemas/events/approval_requested.schema.json",
-      "schemas/events/approval_decided.schema.json",
-      "schemas/events/workflow_completed.schema.json",
+      "schemas/entities/actuals.schema.json",
+      "schemas/entities/forecast.schema.json",
+      "schemas/entities/scenario.schema.json",
+      "schemas/entities/kpi_snapshot.schema.json",
       "schemas/events/business_policy_violation.schema.json"
     ],
-    "approval_gate": "required-for-high-risk-actions"
+    "approval_gate": "required-for-external-actions"
   },
-  "memory_policy": {
-    "retention": "session+artifact",
-    "pii": "minimize-and-redact"
+  "calculation_contract": {
+    "runway_months": "cash_on_hand / max(monthly_net_burn, 1)",
+    "cash_forecast_13_week": "rolling_13_week(starting_cash + inflows - outflows)",
+    "ar_aging": "bucket_open_ar_by_days([0-30,31-60,61-90,90+])",
+    "ap_aging": "bucket_open_ap_by_days([0-30,31-60,61-90,90+])",
+    "gross_margin_pct": "(revenue - cogs) / revenue",
+    "contribution_margin_pct": "(revenue - variable_costs) / revenue",
+    "anomaly_detection": "flag_zscore_gt_3_and_policy_violations"
   },
-  "token_budget": {
-    "max_input_tokens": 12000,
-    "max_output_tokens": 2500,
-    "reserve_reasoning_tokens": 1500
+  "data_quality_controls": {
+    "stale_data_detection": {
+      "enabled": true,
+      "max_source_age_hours": 72,
+      "on_breach": "emit_blocking_warning"
+    },
+    "missing_data_detection": {
+      "enabled": true,
+      "required_fields": [
+        "source_system",
+        "extracted_at",
+        "effective_date",
+        "record_id"
+      ],
+      "on_breach": "emit_blocking_warning"
+    },
+    "lineage_enforcement": {
+      "enabled": true,
+      "require_lineage_per_metric": true,
+      "lineage_fields": [
+        "metric",
+        "source_system",
+        "entity_id",
+        "extracted_at",
+        "transformation_id"
+      ]
+    }
   },
-  "context_loading": {
-    "strategy": "progressive-disclosure",
-    "order": [
-      "required_context",
-      "optional_context"
-    ],
-    "max_chunks": 24
-  },
-  "governance_level": "L1",
+  "governance_level": "L2",
   "human_approval_required": false,
   "execution_mode": "semi-autonomous",
-  "latency_target": "p95<=8s",
-  "cost_target": "<$0.08/run",
-  "determinism_level": "medium",
+  "determinism_level": "high",
   "telemetry_events": [
     "skill_invoked",
-    "policy_gate_checked",
-    "risk_scored",
+    "data_freshness_checked",
+    "lineage_attached",
+    "calculation_executed",
+    "governance_checked",
     "output_emitted"
   ],
   "eval_metrics": [
-    "schema_compliance_rate",
-    "policy_gate_invocation_rate",
-    "groundedness_score",
-    "fallback_recovery_rate"
-  ],
-  "security_classification": "internal-confidential",
-  "integration_targets": [
-    "crm",
-    "erp",
-    "data-warehouse"
-  ],
-  "data_contracts": [
-    "core/canonical-entity-model/README.md",
-    "core/business-event-model/README.md",
-    "schemas/entities/invoice.schema.json",
-    "schemas/entities/payment.schema.json",
-    "schemas/entities/account.schema.json",
-    "schemas/entities/decision.schema.json",
-    "schemas/entities/workflow.schema.json",
-    "schemas/events/approval_requested.schema.json",
-    "schemas/events/approval_decided.schema.json",
-    "schemas/events/workflow_completed.schema.json",
-    "schemas/events/business_policy_violation.schema.json"
+    "calculation_accuracy",
+    "source_completeness",
+    "governance_compliance",
+    "schema_compliance_rate"
   ],
   "failure_modes": [
     "missing_required_context",
-    "schema_validation_failure",
-    "policy_gate_denied",
-    "upstream_connector_timeout"
+    "stale_source_data",
+    "missing_lineage",
+    "calculation_input_gap",
+    "policy_gate_denied"
   ],
   "fallbacks": [
-    "emit_safe_summary",
-    "request_human_approval",
-    "defer_with_retry_ticket"
+    "emit_safe_summary_with_gaps",
+    "request_missing_sources",
+    "defer_with_review_ticket"
   ],
-  "approval_controls": {
-    "required_for_outbound_customer_communication": true,
-    "required_for_external_mutations": true,
-    "mutation_examples": [
-      "create",
-      "update",
-      "delete",
-      "send"
-    ]
-  },
   "canonical_schema_refs": {
     "entities": [
-      "schemas/entities/invoice.schema.json",
-      "schemas/entities/payment.schema.json",
       "schemas/entities/account.schema.json",
-      "schemas/entities/decision.schema.json",
-      "schemas/entities/workflow.schema.json"
+      "schemas/entities/actuals.schema.json",
+      "schemas/entities/forecast.schema.json",
+      "schemas/entities/scenario.schema.json",
+      "schemas/entities/kpi_snapshot.schema.json"
     ],
     "events": [
-      "schemas/events/approval_requested.schema.json",
-      "schemas/events/approval_decided.schema.json",
-      "schemas/events/workflow_completed.schema.json",
       "schemas/events/business_policy_violation.schema.json"
     ]
   }

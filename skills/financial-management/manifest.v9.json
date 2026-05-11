@@ -1,5 +1,5 @@
 {
-  "name": "budget-variance-analysis",
+  "name": "financial-management",
   "type": "skill",
   "domain": "finance",
   "subdomain": "office-of-cfo",
@@ -12,7 +12,7 @@
     "core/business-event-model"
   ],
   "activation_triggers": [
-    "budget_variance_analysis",
+    "financial_management",
     "finance_ops"
   ],
   "required_context": [
@@ -37,11 +37,11 @@
     "schema_refs": [
       "core/canonical-entity-model/README.md",
       "core/business-event-model/README.md",
-      "schemas/entities/budget.schema.json",
-      "schemas/entities/actuals.schema.json",
-      "schemas/entities/variance.schema.json",
-      "schemas/entities/department.schema.json",
       "schemas/entities/account.schema.json",
+      "schemas/entities/transaction.schema.json",
+      "schemas/entities/ledger_entry.schema.json",
+      "schemas/entities/department.schema.json",
+      "schemas/entities/business_unit.schema.json",
       "schemas/events/business_policy_violation.schema.json"
     ]
   },
@@ -68,11 +68,11 @@
     "schema_refs": [
       "core/canonical-entity-model/README.md",
       "core/business-event-model/README.md",
-      "schemas/entities/budget.schema.json",
-      "schemas/entities/actuals.schema.json",
-      "schemas/entities/variance.schema.json",
-      "schemas/entities/department.schema.json",
       "schemas/entities/account.schema.json",
+      "schemas/entities/transaction.schema.json",
+      "schemas/entities/ledger_entry.schema.json",
+      "schemas/entities/department.schema.json",
+      "schemas/entities/business_unit.schema.json",
       "schemas/events/business_policy_violation.schema.json"
     ],
     "approval_gate": "required-for-external-actions"
@@ -146,11 +146,11 @@
   ],
   "canonical_schema_refs": {
     "entities": [
-      "schemas/entities/budget.schema.json",
-      "schemas/entities/actuals.schema.json",
-      "schemas/entities/variance.schema.json",
+      "schemas/entities/account.schema.json",
+      "schemas/entities/transaction.schema.json",
+      "schemas/entities/ledger_entry.schema.json",
       "schemas/entities/department.schema.json",
-      "schemas/entities/account.schema.json"
+      "schemas/entities/business_unit.schema.json"
     ],
     "events": [
       "schemas/events/business_policy_violation.schema.json"

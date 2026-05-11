@@ -1,9 +1,17 @@
-trigger_id: cash_flow_forecasting_trigger
+version: 1
 skill: cash-flow-forecasting
-use_when:
-  - "intent contains cash"
-  - "canonical context available"
-do_not_use_when:
-  - "request requires prohibited autonomous external mutation"
-  - "policy profile missing"
-collision_strategy: "prefer higher confidence then lexicographic skill name"
+routes:
+  - when_intent_in:
+      - finance
+      - fp&a
+      - treasury
+    then: cash-flow-forecasting
+  - when_contains_any:
+      - runway
+      - 13-week cash forecast
+      - ar aging
+      - ap aging
+      - margin
+      - anomaly
+      - lineage
+    then: cash-flow-forecasting

@@ -1,4 +1,4 @@
-# budget-planning
+# unit-economics-analysis
 
 Provides finance analytics with required KPI calculations and governance checks.
 

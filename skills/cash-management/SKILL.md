@@ -1,4 +1,4 @@
-# budget-planning
+# cash-management
 
 Provides finance analytics with required KPI calculations and governance checks.
 
