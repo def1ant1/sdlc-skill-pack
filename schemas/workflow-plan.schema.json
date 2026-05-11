@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apotheon.dev/schemas/workflow-plan.schema.json",
+  "title": "Workflow Plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "objectives",
+    "steps",
+    "governance_gates",
+    "dry_run_safety",
+    "deterministic_artifacts",
+    "planner_metadata"
+  ],
+  "properties": {
+    "id": {"type": "string", "minLength": 3},
+    "description": {"type": "string"},
+    "objectives": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "skill", "depends_on"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "title": {"type": "string", "minLength": 1},
+          "skill": {"type": "string", "minLength": 1},
+          "depends_on": {"type": "array", "items": {"type": "string"}},
+          "governance_policy_refs": {"type": "array", "items": {"type": "string"}},
+          "outputs": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "governance_gates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "policy_ref", "enforcement"],
+        "properties": {
+          "id": {"type": "string"},
+          "policy_ref": {"type": "string"},
+          "enforcement": {"type": "string", "enum": ["advisory", "blocking"]}
+        }
+      }
+    },
+    "dry_run_safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enabled", "no_external_writes", "require_human_approval_for_mutations"],
+      "properties": {
+        "enabled": {"type": "boolean"},
+        "no_external_writes": {"type": "boolean"},
+        "require_human_approval_for_mutations": {"type": "boolean"}
+      }
+    },
+    "deterministic_artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "path", "format"],
+        "properties": {
+          "name": {"type": "string"},
+          "path": {"type": "string"},
+          "format": {"type": "string", "enum": ["json", "yaml", "md", "txt"]}
+        }
+      }
+    },
+    "planner_metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["planner", "version", "created_at"],
+      "properties": {
+        "planner": {"type": "string"},
+        "version": {"type": "string"},
+        "created_at": {"type": "string"}
+      }
+    }
+  }
+}

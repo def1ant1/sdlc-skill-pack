@@ -26,6 +26,7 @@ GATES: tuple[Gate, ...] = (
     Gate("Skill overlap", "contracts", ["python", "scripts/detect_skill_overlap.py"]),
     Gate("Skill evals", "contracts", ["python", "scripts/validate_skill_evals.py"]),
     Gate("Telemetry events", "contracts", ["python", "scripts/validate_telemetry_events.py"]),
+    Gate("Workflow plans", "contracts", ["python", "scripts/validation/validate_workflow_plan.py", "tests/fixtures/workflow-plans/valid-plan.yaml"]),
     Gate(
         "Work task snapshot freshness",
         "contracts",

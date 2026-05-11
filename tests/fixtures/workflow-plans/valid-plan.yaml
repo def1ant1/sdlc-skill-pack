@@ -1,0 +1,29 @@
+id: sample-sdlc-plan
+description: Sample plan for validator tests.
+objectives:
+  - Validate workflow plan governance and dependency checks.
+steps:
+  - id: analyze
+    title: Analyze requirements
+    skill: workflow-engine
+    depends_on: []
+  - id: govern
+    title: Governance review
+    skill: compliance-runtime
+    depends_on: [analyze]
+governance_gates:
+  - id: policy-check
+    policy_ref: references/business-policy-standard.md
+    enforcement: blocking
+dry_run_safety:
+  enabled: true
+  no_external_writes: true
+  require_human_approval_for_mutations: true
+deterministic_artifacts:
+  - name: plan-report
+    path: artifacts/plan-report.json
+    format: json
+planner_metadata:
+  planner: test-planner
+  version: 1.0.0
+  created_at: '2026-05-11T00:00:00Z'

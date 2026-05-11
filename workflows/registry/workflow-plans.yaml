@@ -1,0 +1,8 @@
+workflow_plans:
+  - id: sample-sdlc-plan
+    file: tests/fixtures/workflow-plans/valid-plan.yaml
+
+known_governance_policies:
+  - references/business-policy-standard.md
+  - references/semantic-cache-policy.md
+  - docs/standards/documentation-governance.md
