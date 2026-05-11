@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "entity_type",
+    "version",
+    "status",
+    "created_at",
+    "updated_at",
+    "source_system",
+    "tenant_id",
+    "canonical_keys",
+    "links"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Canonical entity identifier (e.g., mkp_..., lst_..., inv_...)."
+    },
+    "entity_type": {
+      "const": "marketplace_listing"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "status": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_system": {
+      "type": "string"
+    },
+    "tenant_id": {
+      "type": "string"
+    },
+    "canonical_keys": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "global_id",
+        "channel_id",
+        "external_ids"
+      ],
+      "properties": {
+        "global_id": {
+          "type": "string"
+        },
+        "channel_id": {
+          "type": "string"
+        },
+        "sku": {
+          "type": "string"
+        },
+        "asin": {
+          "type": "string"
+        },
+        "upc": {
+          "type": "string"
+        },
+        "ean": {
+          "type": "string"
+        },
+        "isbn": {
+          "type": "string"
+        },
+        "mpn": {
+          "type": "string"
+        },
+        "external_ids": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "system",
+              "id"
+            ],
+            "properties": {
+              "system": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "attributes": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "marketplace_id": {
+      "type": "string"
+    },
+    "catalog_item_id": {
+      "type": "string"
+    },
+    "seller_account_id": {
+      "type": "string"
+    },
+    "listing_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "asking_price": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "listing_state": {
+      "type": "string"
+    },
+    "condition_report_id": {
+      "type": "string"
+    }
+  },
+  "$id": "https://apotheon.dev/schemas/entities/marketplace-listing.schema.json",
+  "title": "Marketplace Listing Entity"
+}

@@ -1,4 +1,11 @@
 
+## 2026-05-11 — MB-ECOM-P0-001 canonical ecommerce ontology + entities
+
+- Added 11 canonical ecommerce entity schemas under `schemas/entities/` for marketplace, listing, supplier, catalog, inventory, fulfillment, shipment tracking, pricing snapshots, fee profiles, condition reports, and acquisition opportunities.
+- Added normalized key/linkage model (`canonical_keys`, `links`) across all ecommerce entities to support cross-marketplace joins and reconciliation.
+- Added condition grading + refurbishment fields and acquisition confidence/risk modeling fields for used/refurbished/collector workflows.
+- Added `references/ecommerce-ontology.md` with canonical definitions, relationship diagram, and sample payloads.
+
 ## 2026-05-11 — MB-P3-005 documentation completion refresh
 
 - Updated top-level docs and onboarding runbooks to align with current CLI/runtime paths.
