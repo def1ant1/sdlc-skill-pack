@@ -19,8 +19,42 @@ Key critique incorporated:
 - Provide a single-user chat/dashboard experience.
 - Add rate limits, budget tracking, connector limits, and API/database quotas.
 - Add deployable Docker profiles for local solo, team, and enterprise use.
+- Close competitor gaps against Paperclip-style control planes, OpenClaw-style skill ecosystems, OpenCognit-style execution hierarchies, and Greentic-style governance/determinism. fileciteturn50file0
 
-Source planning input: user-provided critique and execution recommendations. fileciteturn46file0
+Source planning inputs: user-provided implementation critique and competitor comparison feedback. fileciteturn46file0 fileciteturn50file0
+
+---
+
+## 0.1 Competitor-Informed Gap Response
+
+The attached competitor analysis identifies the largest market gaps as execution depth, UI/control plane, skill compiler maturity, out-of-the-box deployment, reference company templates, observability, community, deterministic governance, connectors, self-improvement loops, modular packaging, onboarding, hardware accessibility, and commercial clarity. fileciteturn50file0
+
+### Strategic response
+
+Apotheon should position itself as:
+
+```text
+deep enterprise skill OS
++ governed execution runtime
++ skill-to-code compiler
++ local-first Docker deployment
++ company templates
++ deterministic control plane
+```
+
+rather than competing only as a generic chat assistant or personal productivity agent.
+
+### Required differentiators
+
+```text
+1. Executable enterprise workflows, not only SKILL.md specs.
+2. Skill compiler that converts SKILL.md contracts into runnable activities, schemas, tests, policies, and docs.
+3. Company templates that can be imported and run.
+4. Stronger governance/determinism than UI-first competitors.
+5. Broader business-domain skill coverage than personal-agent ecosystems.
+6. Docker-first local solo deployment that works on consumer hardware.
+7. Public skill contribution and registry workflow.
+```
 
 ---
 
@@ -75,6 +109,8 @@ observability/reporting
 Docker deployment
 chat UI MVP
 dashboard MVP
+skill pipeline compiler MVP
+company template MVP
 ```
 
 ### Non-MVP handling
@@ -95,6 +131,7 @@ Acceptance criteria:
 - MVP profile can run on a normal laptop.
 - MVP profile has executable reference workflows.
 - Non-MVP skills are clearly labeled and excluded from default scheduler execution.
+- Users can run at least one company template end-to-end in dry-run mode.
 
 ---
 
@@ -115,6 +152,8 @@ host machine
     ├── apotheon-api
     ├── apotheon-chat-ui
     ├── apotheon-dashboard
+    ├── apotheon-control-plane
+    ├── skill-registry-api optional
     ├── qdrant
     ├── temporal
     ├── temporal-ui
@@ -218,14 +257,20 @@ Later implementation:
 FastAPI + React + persistent job queue
 ```
 
-### apotheon-dashboard
+### apotheon-dashboard / control plane
 
-Purpose: browser dashboards for workflows, schedules, approvals, budget/cost, connectors, local apps, knowledge, and runtime health.
+Purpose: browser control plane for workflows, schedules, approvals, budgets, agents, company goals, connector health, local apps, knowledge, and runtime status.
 
 MVP implementation:
 
 ```text
 Streamlit dashboard + generated dashboard_state.json
+```
+
+Post-MVP implementation:
+
+```text
+React/Vue control plane backed by FastAPI
 ```
 
 ---
@@ -264,6 +309,7 @@ Define profiles:
 local-solo
 team
 enterprise
+mvp
 core
 runtime
 scheduler
@@ -271,6 +317,7 @@ reports
 api
 ui
 dashboard
+control-plane
 observability
 local-apps
 security
@@ -325,6 +372,8 @@ APOTHEON_MVP_PROFILE=local-solo
 APOTHEON_MAX_WORKFLOW_COST_USD=2.00
 APOTHEON_MAX_DAILY_COST_USD=10.00
 APOTHEON_CONNECTOR_READ_ONLY_DEFAULT=true
+APOTHEON_SKILL_REGISTRY_MODE=local
+APOTHEON_ENABLE_PUBLIC_REGISTRY=false
 ```
 
 Rules:
@@ -334,6 +383,7 @@ Rules:
 - Write actions are disabled by default.
 - Scheduler defaults to dry-run.
 - Connectors default to read-only.
+- Public registry features are disabled by default.
 
 ---
 
@@ -373,7 +423,60 @@ Acceptance criteria:
 
 ---
 
-## 10. Reference Workflow Implementations
+## 10. Skill Pipeline Compiler
+
+Highest-leverage productization feature.
+
+Create:
+
+```text
+scripts/skill_pipeline.py
+core/skill-compiler/
+schemas/compiled-skill.schema.json
+references/skill-pipeline-standard.md
+reports/skill_pipeline_report.md
+reports/skill_pipeline_report.json
+```
+
+Inputs:
+
+```text
+SKILL.md
+manifest.yaml
+contracts/*.yaml
+workflows/*.yaml
+templates/*.md
+references/*.md
+evals/*.yaml
+```
+
+Generated outputs:
+
+```text
+compiled skill descriptor
+Temporal activity stub
+Python activity scaffold
+JSON schema bindings
+pytest test scaffold
+eval scaffold
+governance wrapper
+telemetry event definitions
+rate-limit policy stub
+cost policy stub
+documentation page
+```
+
+Acceptance criteria:
+
+- `python scripts/skill_pipeline.py compile skills/example-skill` generates runnable scaffolds.
+- Generated scaffolds pass lint/tests.
+- Compiler fails clearly on missing contracts.
+- Compiler can batch compile MVP skills.
+- Skill compiler output is deterministic.
+
+---
+
+## 11. Reference Workflow Implementations
 
 Create executable demos under:
 
@@ -381,6 +484,7 @@ Create executable demos under:
 workflows/examples/
 reports/reference_workflows/
 tests/reference_workflows/
+company_templates/
 ```
 
 Required reference workflows:
@@ -418,7 +522,47 @@ Acceptance criteria:
 
 ---
 
-## 11. Skill Maturity and Certification
+## 12. Company Templates
+
+Create importable company templates similar to competitor company-template/control-plane strengths. fileciteturn50file0
+
+Create:
+
+```text
+company_templates/oldfarmtrucks/
+company_templates/sdlc-agency/
+company_templates/solo-consultant/
+company_templates/local-service-business/
+company_templates/ecommerce-operator/
+scripts/company_templates/import_template.py
+schemas/company-template.schema.json
+```
+
+Each template includes:
+
+```text
+business profile
+roles/agent map
+goals/OKRs
+budgets
+enabled skills
+workflows
+schedules
+connectors
+approval policies
+dashboards
+sample data
+```
+
+Acceptance criteria:
+
+- User can import OldFarmTrucks template locally.
+- Imported template creates workflows, schedules, dashboards, and sample fixtures.
+- Template import runs in dry-run mode by default.
+
+---
+
+## 13. Skill Maturity and Certification
 
 Create or extend:
 
@@ -451,7 +595,7 @@ critical/high-risk MVP skills at level 5
 
 ---
 
-## 12. Hybrid Skill Execution
+## 14. Hybrid Skill Execution
 
 Migrate core skills to hybrid mode:
 
@@ -483,7 +627,7 @@ Acceptance criteria:
 
 ---
 
-## 13. Chat UI Backlog
+## 15. Chat UI Backlog
 
 A single user needs a lightweight browser interface.
 
@@ -511,6 +655,7 @@ show schedule list
 show local app health
 show estimated cost before execution
 show rate-limit warnings
+import company template
 ```
 
 Acceptance criteria:
@@ -521,17 +666,23 @@ Acceptance criteria:
 - UI shows generated reports and run status.
 - UI blocks live writes by default.
 - UI displays approval requirements before execution.
+- UI can import the OldFarmTrucks company template.
 
 ---
 
-## 14. Dashboard Backlog
+## 16. Dashboard / Control Plane Backlog
 
-Single-user business operation needs dashboards for:
+Single-user business operation needs a visible control plane, not only CLI output.
+
+Dashboards:
 
 ```text
 workflow runs
 scheduled tasks
 approvals
+goals/OKRs
+budgets
+agent/team roles
 expenses and budget
 runtime costs
 connector status
@@ -568,9 +719,24 @@ schemas/dashboard-state.schema.json
 reports/dashboard_state.json
 ```
 
+Post-MVP:
+
+```text
+apps/control-plane-api/
+apps/control-plane-ui/
+```
+
+Acceptance criteria:
+
+- User can see workflow progress.
+- User can see scheduled work.
+- User can approve/reject HITL items.
+- User can see budgets and rate limits.
+- User can see company template goals and status.
+
 ---
 
-## 15. Reliability, Error Handling, and Observability
+## 17. Reliability, Error Handling, and Observability
 
 Implement or integrate the hardening backlog:
 
@@ -591,6 +757,8 @@ OpenTelemetry traces
 Prometheus metrics
 runtime diagnostics
 failure injection tests
+workflow history visualization
+anomaly detection hooks
 ```
 
 Acceptance criteria:
@@ -599,10 +767,11 @@ Acceptance criteria:
 - Errors are structured and actionable.
 - Circuit breakers prevent repeated failing connector calls.
 - Temporal workflows support replay/checkpointing for macro-cycle orchestrations.
+- UI/control plane surfaces workflow history and failures.
 
 ---
 
-## 16. Token, Context, Cache, and Retrieval Optimization
+## 18. Token, Context, Cache, and Retrieval Optimization
 
 Create or harden:
 
@@ -632,7 +801,7 @@ Acceptance criteria:
 
 ---
 
-## 17. Governance Enforcement
+## 19. Governance Enforcement and Determinism
 
 Implement enforceable runtime guards, not just docs.
 
@@ -644,6 +813,7 @@ core/business-approval-gateway/
 scripts/governance/validate_policy_links.py
 scripts/governance/validate_hitl_for_actions.py
 scripts/governance/enforce_runtime_policy.py
+scripts/governance/generate_evidence_pack.py
 ```
 
 Required:
@@ -654,16 +824,19 @@ Required:
 - Trading/tax/legal boundaries.
 - Security mutation boundaries.
 - Customer communication approvals.
+- Deterministic fallbacks for high-risk paths.
+- Compliance evidence packs.
 
 Acceptance criteria:
 
 - High-risk actions fail closed without approval.
 - Policy decisions are logged.
 - Approval queue appears in UI/dashboard.
+- Evidence packs can be generated for regulated workflows.
 
 ---
 
-## 18. Rate Limit and Quota Management
+## 20. Rate Limit and Quota Management
 
 Create:
 
@@ -727,7 +900,7 @@ Acceptance criteria:
 
 ---
 
-## 19. Budget and Cost Tracking
+## 21. Budget and Cost Tracking
 
 Create:
 
@@ -767,7 +940,7 @@ Acceptance criteria:
 
 ---
 
-## 20. Modular Packaging Profiles
+## 22. Modular Packaging Profiles and Feature Flags
 
 Create profiles:
 
@@ -777,6 +950,14 @@ profiles/team.yaml
 profiles/enterprise.yaml
 profiles/mvp.yaml
 profiles/full-domain-lab.yaml
+```
+
+Create feature flags:
+
+```text
+core/feature-flags/
+schemas/feature-flag.schema.json
+scripts/validation/validate_feature_flags.py
 ```
 
 Profiles control:
@@ -791,6 +972,7 @@ resource limits
 default model routing
 write-action policy
 budget limits
+UI modules
 ```
 
 Acceptance criteria:
@@ -799,10 +981,11 @@ Acceptance criteria:
 - `mvp` includes only release-critical skills.
 - `enterprise` enables advanced governance/connectors.
 - Docker Compose profiles align with product profiles.
+- Experimental skills can be hidden behind feature flags.
 
 ---
 
-## 21. Accessibility and Consumer Hardware Support
+## 23. Accessibility and Consumer Hardware Support
 
 Requirements:
 
@@ -831,7 +1014,7 @@ Acceptance criteria:
 
 ---
 
-## 22. VS Code / Developer Experience
+## 24. VS Code / Developer Experience
 
 Create or improve:
 
@@ -848,11 +1031,13 @@ dry-run workflow launch
 skill maturity panel
 workflow/dashboard link
 error diagnostics
+skill compiler command
+company template import command
 ```
 
 ---
 
-## 23. Local Open-Source App Profiles
+## 25. Local Open-Source App Profiles
 
 Add local Docker-deployable business app profiles:
 
@@ -882,7 +1067,134 @@ reports/local_app_health_report.md
 
 ---
 
-## 24. Backup and Restore for Docker Deployment
+## 26. Connector Ecosystem Hardening
+
+Prioritize robust production-grade connectors with health checks, auth, retry, rate limits, and schema mapping.
+
+Priority connectors:
+
+```text
+GitHub
+Google Workspace/Gmail/Calendar
+Slack/Teams
+CRM local connector
+PostHog/CDP connector
+ERPNext/Odoo connector
+Metabase connector
+Chatwoot/Zammad connector
+BookStack/Wiki.js connector
+Stripe/payment connector, read-only first
+Salesforce/HubSpot, optional
+```
+
+Acceptance criteria:
+
+- Each connector has health check.
+- Each connector declares rate limits.
+- Each connector supports dry-run.
+- Write actions require approval.
+- Connector failures are surfaced in dashboard.
+
+---
+
+## 27. Self-Improvement and Evolution Loop
+
+Create or harden:
+
+```text
+core/evolution-engine/
+core/skill-gap-engine/
+scripts/evolution/propose_skill_changes.py
+scripts/evolution/generate_skill_pr.py
+scripts/evolution/review_skill_change.py
+```
+
+Rules:
+
+- Self-improvement proposes changes only.
+- Human review required before applying changes.
+- Proposed changes must include tests/evals.
+- CI must pass before merge.
+
+Acceptance criteria:
+
+- System can identify skill gaps from failed workflows.
+- System can generate a PR-ready patch.
+- System cannot auto-merge or auto-apply high-risk changes.
+
+---
+
+## 28. Community and Skill Registry
+
+Create:
+
+```text
+skill_registry/
+skill_registry/README.md
+skills/CONTRIBUTING.md
+CONTRIBUTING.md
+CODE_OF_CONDUCT.md
+.github/ISSUE_TEMPLATE/
+.github/PULL_REQUEST_TEMPLATE.md
+scripts/registry/validate_registry_entry.py
+scripts/registry/package_skill.py
+scripts/registry/publish_skill.py
+```
+
+Skill registry features:
+
+```text
+local registry first
+public registry optional
+skill metadata
+certification badge
+maturity level
+governance level
+dependencies
+examples
+tests/evals
+```
+
+Acceptance criteria:
+
+- Contributors can add a skill with one documented workflow.
+- Registry validation runs in CI.
+- Public publishing is optional and disabled by default.
+
+---
+
+## 29. Commercial and Open-Source Boundary
+
+Create:
+
+```text
+COMMERCIAL.md
+LICENSE_REVIEW.md
+docs/commercial/open-core-boundary.md
+```
+
+Clarify:
+
+```text
+open-source core
+open skill format
+local solo usage
+hosted/cloud tier
+enterprise governance features
+multi-tenancy
+billing/usage analytics
+commercial support
+CLA policy if needed
+```
+
+Acceptance criteria:
+
+- Users understand what is open vs paid.
+- Hosted/enterprise ambitions do not confuse local OSS usage.
+
+---
+
+## 30. Backup and Restore for Docker Deployment
 
 Create:
 
@@ -913,7 +1225,7 @@ Acceptance criteria:
 
 ---
 
-## 25. Security Hardening for Docker Deployment
+## 31. Security Hardening for Docker Deployment
 
 Create:
 
@@ -940,7 +1252,7 @@ image vulnerability scanning
 
 ---
 
-## 26. Documentation, API Docs, and Demo Assets
+## 32. Documentation, API Docs, and Demo Assets
 
 Create or improve:
 
@@ -967,11 +1279,13 @@ video demo script
 API docs for FastAPI if implemented
 issue templates
 contribution workflow
+success stories/case studies
+competitor-positioning page for maintainers
 ```
 
 ---
 
-## 27. Container Smoke Tests
+## 33. Container Smoke Tests
 
 Create:
 
@@ -995,7 +1309,7 @@ docker compose run --rm apotheon-cli pytest --tb=short -q
 
 ---
 
-## 28. Phase 1 MVP Execution Plan
+## 34. Phase 1 MVP Execution Plan
 
 Target timeline:
 
@@ -1016,15 +1330,19 @@ Phase 1 tasks:
 [ ] .env.example
 [ ] skill activity runtime hardening
 [ ] execute_workflow live/dry-run reliability
+[ ] skill_pipeline.py compiler MVP
+[ ] OldFarmTrucks company template
 [ ] 5 executable reference workflows
 [ ] chat UI MVP
-[ ] dashboard MVP
+[ ] dashboard/control-plane MVP
 [ ] rate-limit policy skeleton
 [ ] budget/cost report skeleton
 [ ] governance runtime enforcement for writes
+[ ] connector health check MVP
 [ ] container smoke tests
 [ ] local-solo profile
 [ ] docs quickstart
+[ ] contribution/registry skeleton
 ```
 
 Success metrics:
@@ -1032,6 +1350,8 @@ Success metrics:
 ```text
 runnable demos
 >50% MVP skills executable
+5 reference workflows dry-run end-to-end
+1 company template importable
 passing end-to-end tests
 user feedback from beta testers
 reduced manual intervention in workflow loops
@@ -1040,30 +1360,34 @@ no dry-run side effects
 
 ---
 
-## 29. Recommended Implementation Order
+## 35. Recommended Implementation Order
 
 1. Dockerfile and `.dockerignore`.
 2. `.env.example`.
 3. Core `docker-compose.yml` with Qdrant, Temporal, Postgres, Redis, apotheon-cli.
 4. Runtime execution hardening.
-5. Reference workflow fixtures.
-6. Container smoke tests.
-7. Worker and scheduler services.
-8. Docker deployment docs.
-9. Chat UI MVP.
-10. Dashboard MVP.
-11. Rate-limit manager.
-12. Budget/cost dashboard.
-13. Modular profiles.
-14. Local app compose profiles.
-15. Backup/restore scripts.
-16. Docker security baseline.
-17. Server deployment compose file.
-18. VS Code/devcontainer enhancements.
+5. `skill_pipeline.py` compiler MVP.
+6. OldFarmTrucks company template.
+7. Reference workflow fixtures.
+8. Container smoke tests.
+9. Worker and scheduler services.
+10. Docker deployment docs.
+11. Chat UI MVP.
+12. Dashboard/control-plane MVP.
+13. Rate-limit manager.
+14. Budget/cost dashboard.
+15. Modular profiles and feature flags.
+16. Connector health check MVP.
+17. Local app compose profiles.
+18. Registry/contribution skeleton.
+19. Backup/restore scripts.
+20. Docker security baseline.
+21. Server deployment compose file.
+22. VS Code/devcontainer enhancements.
 
 ---
 
-## 30. Release Acceptance Criteria
+## 36. Release Acceptance Criteria
 
 Docker/productization is complete when:
 
@@ -1073,8 +1397,10 @@ Docker/productization is complete when:
 [ ] Qdrant, Temporal, Postgres, and Redis are healthy
 [ ] Validation commands run inside container
 [ ] Workflow dry-run works inside container
+[ ] Skill pipeline compiler generates runnable scaffolds
 [ ] At least 5 reference workflows execute end-to-end in dry-run
 [ ] At least 3 reference workflows execute live in controlled mode
+[ ] OldFarmTrucks company template imports successfully
 [ ] Worker service starts
 [ ] Scheduler service starts in dry-run mode
 [ ] Health report is generated
@@ -1083,6 +1409,8 @@ Docker/productization is complete when:
 [ ] Rate-limit policies exist for connectors and APIs
 [ ] Budget/cost reports exist
 [ ] Governance runtime blocks high-risk writes by default
+[ ] Connector health checks exist for priority connectors
+[ ] Skill registry/contribution skeleton exists
 [ ] Backup/restore dry-run exists
 [ ] Docker security baseline passes
 [ ] Documentation includes laptop and server setup
