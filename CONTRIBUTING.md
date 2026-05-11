@@ -59,3 +59,14 @@ Every skill folder must:
 ## Skill maturity and certification
 - Run `python scripts/grade_skill_maturity.py` to generate `reports/skill_maturity_report.md` and enforce MVP/critical thresholds.
 - Run `python scripts/certify_skill.py <skill_dir> ...` with check flags to generate `reports/skill_certification_report.md` with repeatable criteria and evidence pointers.
+
+
+## Skill registry workflow
+
+Use the registry flow for repeatable skill versioning and CI checks:
+
+1. Add/update a skill in `skills/<skill-name>/`.
+2. Register or update the skill in `skill_registry/skills.index.json`.
+3. Validate registry entries: `python scripts/registry/validate_registry_entry.py --index skill_registry/skills.index.json`.
+4. Package and lock a version: `python scripts/registry/package_skill.py --skill-dir skills/<skill-name> --version <semver>`.
+5. Public publishing is optional and disabled by default. To opt in explicitly: `python scripts/registry/publish_skill.py --artifact <artifact> --enable-public-publish`.

@@ -706,7 +706,7 @@ Acceptance criteria:
 ## MB-P1-003 — Add graph-based workflow execution
 
 **Source:** Docker/Productization Backlog  
-**Status:** Completed (2026-05-11)
+**Status:** Completed (2026-05-11; registry implementation finalized with CI validation, lockfiles, and opt-in publishing)
 
 Create or harden:
 
@@ -1155,7 +1155,7 @@ Acceptance criteria:
 ## MB-P3-001 — Skill registry and marketplace skeleton
 
 **Source:** Docker/Productization Backlog  
-**Status:** Completed (2026-05-11)
+**Status:** Completed (2026-05-11; registry implementation finalized with CI validation, lockfiles, and opt-in publishing)
 
 Create:
 

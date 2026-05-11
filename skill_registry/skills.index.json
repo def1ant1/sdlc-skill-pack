@@ -1,0 +1,12 @@
+{
+  "schema_version": "1",
+  "skills": [
+    {
+      "skill": "roi-estimation",
+      "path": "skills/roi-estimation",
+      "version": "0.1.0",
+      "owner": "maintainers@sdlc-skill-pack.local",
+      "status": "active"
+    }
+  ]
+}

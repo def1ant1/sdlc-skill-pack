@@ -1,0 +1,8 @@
+{
+  "schema_version": "1",
+  "skill": "roi-estimation",
+  "version": "0.1.0",
+  "artifact": "dist/skills/roi-estimation-0.1.0.tar.gz",
+  "sha256": "0d18c8b2d371d6fe95a9260c44f742e9468d6f3303f060214a1263e3d0eba3c0",
+  "resolved_at": "2026-05-11T22:08:44.569780+00:00"
+}

@@ -43,6 +43,14 @@
 All notable changes to the Apotheon AI Company OS are documented here.
 
 
+## [8.0.30] — 2026-05-11 — Skill Registry Skeleton + Validation Flow (MB-P3-001)
+
+- Added registry scaffold in `skill_registry/` with README, starter index, and entry template for contributor onboarding.
+- Added registry tooling in `scripts/registry/` for CI validation, packaging, lockfile generation, and opt-in publishing (disabled by default).
+- Added package/lockfile schemas in `schemas/skill-package.schema.json` and `schemas/skill-lockfile.schema.json`.
+- Added contribution templates and governance docs (`skills/CONTRIBUTING.md`, issue templates, PR template, `CODE_OF_CONDUCT.md`) and wired registry validation into `.github/workflows/validate.yml`.
+
+
 ## [8.0.29] — 2026-05-11 — MVP Domain Cognition Modules + Skill Rubrics (MB-P1-007)
 
 - Added `docs/cognition/modules/mvp-domain-cognition-modules.md` with cognition content for sales, finance/accounting, legal/tax, security, HR, knowledge/research, GTM, SDLC, and operations, including principles, heuristics, frameworks, evaluators, anti-pattern detectors, examples, policy boundaries, and memory hooks.

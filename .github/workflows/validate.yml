@@ -42,6 +42,9 @@ jobs:
       - name: Validate frontmatter
         run: python scripts/validation/validate_frontmatter.py .
 
+      - name: Validate skill registry
+        run: python scripts/registry/validate_registry_entry.py --index skill_registry/skills.index.json
+
       - name: Validate workflow plans
         run: python scripts/validation/validate_workflow_plan.py tests/fixtures/workflow-plans/valid-plan.yaml
 
