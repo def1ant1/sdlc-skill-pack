@@ -48,3 +48,9 @@ Expected output: JSON response from API and Qdrant.
 - Qdrant: `:6333`
 - Temporal gRPC: `:7233`
 - Temporal UI: `:8080`
+
+
+## Related runbooks
+- `docs/onboarding/DOCKER_TROUBLESHOOTING.md`
+- `docs/onboarding/OPERATOR_RUNBOOK.md`
+- `docs/examples/RUNNABLE_CLI_EXAMPLES.md`

@@ -1344,3 +1344,10 @@ Completion rule:
 ```text
 Only mark complete when implementation exists, tests pass, reports regenerate cleanly, and dry-run/live boundaries are verified.
 ```
+
+
+## MB-P3-005 — Docs/demo/onboarding completion
+
+**Status:** Complete (2026-05-11)
+
+Completed documentation updates across top-level docs, onboarding runbooks, API/examples pages, required architecture/tutorial/demo assets, docs consistency pass, and docs index navigation updates.

@@ -1,3 +1,11 @@
+
+## 2026-05-11 — MB-P3-005 documentation completion refresh
+
+- Updated top-level docs and onboarding runbooks to align with current CLI/runtime paths.
+- Refreshed API/examples documentation with runnable commands for profiles, schedules, approvals/governance, and diagnostics.
+- Added required docs assets for architecture/tutorial/demo/navigation consistency.
+- Updated docs index/navigation and marked MB-P3-005 complete in `MASTER_BACKLOG.md`.
+
 ## 2026-05-11 — MB-P2-007 multi-domain pack completion
 
 - Completed MB-P2-007 by adding 28 domain skills across economics, logistics, materials, and data-security under `skills/` with standardized manifests/routing/evals.

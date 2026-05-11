@@ -409,3 +409,9 @@ Your laptop setup is complete when:
 
 ### Scheduling update (MB-P0-010)
 Scheduling tooling is implemented under `scripts/schedules/` with schema + runtime run recording in `runtime/schedule_runs/`. Use `python scripts/schedules/run_due_schedules.py --dry-run` for safe due-window checks.
+
+
+## Cross-links
+- Quickstart: `docs/onboarding/QUICKSTART.md`
+- Single-user tutorial: `docs/onboarding/SINGLE_USER_TUTORIAL.md`
+- Troubleshooting: `docs/onboarding/TROUBLESHOOTING.md`
