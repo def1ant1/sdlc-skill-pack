@@ -13,3 +13,9 @@ Define baseline controls for financial recommendations and money-moving workflow
 - Threshold matrix and approver policy.
 - Exception handling with mandatory rationale.
 - Periodic control testing and reconciliation.
+
+## Runtime cost governance
+
+- Scheduler must evaluate projected per-run estimated cost before execution.
+- Policy actions: `allow`, `warn`, `block` based on plan-tier budget thresholds.
+- Cost events SHOULD be emitted using `schemas/cost-event.schema.json` for auditability.

@@ -24,3 +24,7 @@ python scripts/reports/generate_ai_telemetry_report.py
 ```
 
 The report includes stage-level coverage and a stage-by-stage path summary suitable for debugging and postmortems.
+
+## Cost observability
+
+Replay streams can include cost-event records carrying `estimated_cost_usd`, `budget_policy_action`, and workflow metadata for daily/weekly/monthly rollups.

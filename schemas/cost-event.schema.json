@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apotheon.local/schemas/cost-event.schema.json",
+  "title": "CostEvent",
+  "type": "object",
+  "required": ["run_id", "timestamp", "workflow_id", "estimated_cost_usd", "budget_policy_action"],
+  "properties": {
+    "run_id": {"type": "string"},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "tenant_id": {"type": "string"},
+    "workflow_id": {"type": "string"},
+    "estimated_cost_usd": {"type": "number", "minimum": 0},
+    "actual_cost_usd": {"type": "number", "minimum": 0},
+    "budget_policy_action": {"type": "string", "enum": ["allow", "warn", "block"]},
+    "warning_threshold_pct": {"type": "number", "minimum": 0, "maximum": 1},
+    "block_threshold_pct": {"type": "number", "minimum": 0, "maximum": 1},
+    "model": {"type": "string"},
+    "skills": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}

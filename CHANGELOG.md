@@ -614,3 +614,10 @@ Added local-security, mcp-integrations, and initial CI pipeline.
 - Added acceptance tests for approval thresholds, obligation tracking, and KPI-linked recommendations: `tests/skills/test_phase106_116_policy_controls.py`.
 
 - Added Phase 108-116 skill expansion with MDM integrations, support-only disclaimers, HR/legal bias safeguards, and policy-control tests.
+
+## 2026-05-11 — Runtime economics cost observability
+
+- Added cost-event schema (`schemas/cost-event.schema.json`) for per-run estimated cost and policy outcomes.
+- Added cost dashboard reports (`reports/cost_dashboard.md`, `reports/cost_dashboard.json`) with daily/weekly/monthly aggregation placeholders.
+- Extended cost APIs for pre-execution estimates with budget warn/block policy output and summary rollups.
+- Added cost-related skill scaffolds (`skills/budget-monitoring`, `skills/api-cost-analysis`, `skills/llm-token-cost-tracking`, `skills/workflow-cost-attribution`).
