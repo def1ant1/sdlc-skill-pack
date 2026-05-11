@@ -495,6 +495,10 @@ Machine-verifiable gate checklist:
 
 ## 16. Recommended Implementation Order
 
+Implementation board and milestone tracking are published at:
+
+- `docs/roadmap/hardening-section16-milestones-board.md`
+
 1. Error envelope schema and standard.
 2. Runtime error handler, retry policy, circuit breaker, idempotency.
 3. Workflow checkpoint/failure/resume support.
