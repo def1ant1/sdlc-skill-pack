@@ -55,6 +55,12 @@
 
 # Changelog
 
+## 2026-05-11 — MB-ECOM-P0-003 pricing intelligence engine completion
+
+- Added `core/pricing-intelligence/` package with reusable normalization logic for marketplace price/fee/shipping/tax standardization and profitability calculations.
+- Added new marketplace skills: `marketplace-price-normalization`, `marketplace-fee-analysis`, `marketplace-profitability-analysis`, `dynamic-margin-analysis`, and `competitor-pricing-intelligence`.
+- Added `reports/marketplace_pricing_report.md` with channel-level and SKU-level sample analyses including net margin and confidence scoring outputs.
+
 ## 2026-05-11 — MB-P3-005 docs/demo/onboarding milestone
 
 - Published unified documentation navigation in `docs/index.md` and added quickstart/onboarding flow updates.

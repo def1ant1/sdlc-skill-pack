@@ -134,6 +134,8 @@ Acceptance criteria:
 
 ## MB-ECOM-P0-003 — Multi-marketplace pricing intelligence engine
 
+**Status:** Completed (2026-05-11)
+
 Create:
 
 ```text
@@ -457,3 +459,10 @@ Update (2026-05-11):
 - Added `schemas/marketplace-source.schema.json` for required legal, robots/TOS, throttling, network, and lineage metadata.
 - Added `references/marketplace-data-policy.md` and `scripts/marketplaces/validate_source_policy.py` for policy documentation and enforcement.
 - Marked MB-ECOM-P0-002 as Completed (2026-05-11).
+
+
+### 2026-05-11 Update — MB-ECOM-P0-003 completed
+
+- Added `core/pricing-intelligence/` with normalization and profitability modules for marketplace fee, shipping, and tax normalization.
+- Added five pricing-intelligence skills for normalization, fee analysis, profitability, dynamic margins, and competitor pricing intelligence.
+- Published `reports/marketplace_pricing_report.md` with channel-level and SKU-level examples including net margin and confidence scoring.

@@ -29,3 +29,9 @@ Execute market pricing intelligence workflows while producing only canonical ent
 
 ## Workflow Artifact
 See `examples/workflow.yaml`.
+
+
+## Pricing Intelligence Extension
+- Use `core/pricing-intelligence/normalization.py` for price, fee, shipping, and tax normalization by marketplace profile.
+- Use `core/pricing-intelligence/profitability.py` for net profit/net margin outputs and confidence scoring.
+- Reference `reports/marketplace_pricing_report.md` for expected channel-level and SKU-level report shape.
