@@ -1,3 +1,10 @@
+## 2026-05-11
+
+- Added local workflow registry scaffolding with `workflows/examples/`, `workflows/library/`, and `workflows/generated/.gitkeep`.
+- Added `scripts/workflows/register_workflow.py` and `scripts/workflows/list_workflows.py` for fixture registration and registry introspection.
+- Added five OldFarmTrucks reference workflow fixtures under `workflows/examples/` with expected artifacts and failure fixture contracts.
+- Documented fixture and registry conventions plus dry-run verification workflow guidance.
+
 ---
 last_updated: 2026-05-11
 ---

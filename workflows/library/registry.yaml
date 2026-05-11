@@ -1,0 +1,56 @@
+workflows:
+- id: oldfarmtrucks-launch-readiness
+  file: workflows/examples/oldfarmtrucks-launch-readiness.json
+  expected_artifacts:
+  - run_id
+  - status
+  - steps
+  failure_fixtures:
+  - name: missing-objective
+    reason: plan objective omitted
+  - name: empty-skill-chain
+    reason: workflow has no executable steps
+- id: oldfarmtrucks-weekly-operating-review
+  file: workflows/examples/oldfarmtrucks-weekly-operating-review.json
+  expected_artifacts:
+  - run_id
+  - status
+  - steps
+  failure_fixtures:
+  - name: missing-objective
+    reason: plan objective omitted
+  - name: empty-skill-chain
+    reason: workflow has no executable steps
+- id: oldfarmtrucks-market-scarcity-scan
+  file: workflows/examples/oldfarmtrucks-market-scarcity-scan.json
+  expected_artifacts:
+  - run_id
+  - status
+  - steps
+  failure_fixtures:
+  - name: missing-objective
+    reason: plan objective omitted
+  - name: empty-skill-chain
+    reason: workflow has no executable steps
+- id: oldfarmtrucks-customer-lifecycle
+  file: workflows/examples/oldfarmtrucks-customer-lifecycle.json
+  expected_artifacts:
+  - run_id
+  - status
+  - steps
+  failure_fixtures:
+  - name: missing-objective
+    reason: plan objective omitted
+  - name: empty-skill-chain
+    reason: workflow has no executable steps
+- id: oldfarmtrucks-customer-360
+  file: workflows/examples/oldfarmtrucks-customer-360.json
+  expected_artifacts:
+  - run_id
+  - status
+  - steps
+  failure_fixtures:
+  - name: missing-objective
+    reason: plan objective omitted
+  - name: empty-skill-chain
+    reason: workflow has no executable steps

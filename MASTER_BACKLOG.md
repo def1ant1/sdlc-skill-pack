@@ -233,7 +233,7 @@ Acceptance criteria:
 ## MB-P0-006 — Build local workflow registry and executable fixtures
 
 **Source:** Local Workflow Scheduling + Docker/Productization Backlogs  
-**Status:** Open
+**Status:** Completed (2026-05-11)
 
 Create:
 
