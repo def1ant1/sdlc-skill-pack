@@ -53,6 +53,13 @@
 - Added integration fixtures for forecasting, close, reconciliation, and controls in `tests/fixtures/finance-pack/`.
 - Added regression tests to assert documentation, eval, and fixture completeness for the MB-P2-001 finance pack.
 
+## 2026-05-11 — MB-ECOM-P0-004 sourcing and acquisition intelligence completion
+
+- Added 8 ecommerce sourcing skills under `skills/`: `product-sourcing-intelligence`, `supplier-discovery`, `local-liquidation-analysis`, `auction-opportunity-analysis`, `wholesale-price-comparison`, `product-condition-estimation`, `product-authenticity-risk-analysis`, and `acquisition-priority-scoring`.
+- Standardized supplier/opportunity scoring model requirements across these skills with margin, velocity, fraud/counterfeit risk, and confidence components plus weighted acquisition-priority scoring guidance.
+- Enforced recommendation contract requirements for explicit rationale, assumptions, and multi-factor risk profiles on acquisition recommendations.
+- Enforced mandatory HITL approval gates for all purchase action pathways (bids, deposits, POs, and payments).
+
 # Changelog
 
 ## 2026-05-11 — MB-ECOM-P0-003 pricing intelligence engine completion

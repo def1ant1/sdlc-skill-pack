@@ -172,6 +172,8 @@ Acceptance criteria:
 
 ## MB-ECOM-P0-004 — Product sourcing and acquisition intelligence
 
+**Status:** Completed (2026-05-11)
+
 Create:
 
 ```text
@@ -200,9 +202,10 @@ velocity scoring
 
 Acceptance criteria:
 
-- Outputs include acquisition rationale and risk profile.
-- Purchases require approval.
-- Fraud/counterfeit indicators surfaced prominently.
+- Outputs include explicit acquisition rationale, assumptions, and risk profile.
+- Purchases require approval gates on all purchase action pathways.
+- Fraud/counterfeit indicators surfaced prominently in scoring outputs.
+- Margin, velocity, fraud/counterfeit risk, and confidence scoring model included across sourcing recommendations.
 
 ---
 
