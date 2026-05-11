@@ -41,3 +41,8 @@ Core infrastructure is operational for local development and testing.
 - Autonomous OS bootstrap (zero-config onboarding)
 - World model integration
 - Reinforcement learning from operator feedback
+
+## Documentation maturity
+- Centralized docs index and onboarding navigation.
+- OldFarmTrucks demo quickstart + video script.
+- API/docs/examples coverage with automated docs integrity checks.

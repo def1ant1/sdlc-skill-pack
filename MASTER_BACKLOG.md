@@ -1255,7 +1255,7 @@ Capabilities:
 ## MB-P3-005 — Documentation, demo, and onboarding assets
 
 **Source:** Docker/Productization + Local Setup Backlogs  
-**Status:** Open / partially implemented
+**Status:** Completed — 2026-05-11 (docs/index navigation, onboarding quickstart/tutorials, API index, architecture diagrams, marketplace+memory guide, docs integrity checks)
 
 Create or improve:
 

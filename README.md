@@ -525,3 +525,10 @@ Contract specification reference: `references/skill-contract-v9.md`.
 - Approval and audit coverage: `core/business-approval-gateway/approval-decision.model.json`, `core/business-audit-ledger/`, `skills/evidence-pack-generation/`, `skills/audit-trail-analysis/`.
 
 - Phase 108-116 business operations packs now include MDM entity resolution, golden record management, data quality scoring, and support-only governance controls.
+
+
+## Documentation Navigation
+- Primary docs index: `docs/index.md`
+- Quickstart: `docs/onboarding/QUICKSTART.md`
+- OldFarmTrucks tutorial: `docs/examples/OLDFARMTRUCKS_DEMO_TUTORIAL.md`
+- API index: `docs/api/README.md`
