@@ -356,3 +356,13 @@ apotheon connector health
 | Embedding unavailable | Ollama not running | `docker compose up -d ollama` (or set `EMBEDDING_BACKEND=openai`) |
 | `temporalio not installed` | Missing dep | `pip install 'apotheon[temporal]'` |
 | Workflow stuck at HITL | Pending approval | `apotheon approve <run-id>` |
+
+## OldFarmTrucks template import demo
+
+Provision the OldFarmTrucks template in safe dry-run mode:
+
+```bash
+python scripts/company_templates/import_template.py --validate-workflows
+```
+
+This imports/provisions workflows, schedules, dashboards, connectors, approvals, budgets, and sample data into `reports/company_templates/oldfarmtrucks-import.json`, and validates one short-term plus one long-term workflow with runtime dry-runs.

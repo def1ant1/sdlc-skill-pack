@@ -1,5 +1,11 @@
 ## 2026-05-11
 
+## [8.0.21] — 2026-05-11 — OldFarmTrucks Company Template Import (MB-P0-019)
+
+- Added importable template payload at `company_templates/oldfarmtrucks/template.json` with workflows, schedules, dashboards, connectors, approvals, budgets, and sample data.
+- Added schema and importer command: `schemas/company-template.schema.json` and `scripts/company_templates/import_template.py` (defaults to dry-run and can validate short-term/long-term workflow dry-runs).
+- Generated template import report at `reports/company_templates/oldfarmtrucks-import.json` and updated tutorial/onboarding docs for demo flow.
+
 ## [8.0.20] — 2026-05-11 — Skill Pipeline Compiler MVP (MB-P0-018)
 
 - Added deterministic skill pipeline generator at `scripts/skill_pipeline.py` and generated reports `reports/skill_pipeline_report.md` + `reports/skill_pipeline_report.json`.

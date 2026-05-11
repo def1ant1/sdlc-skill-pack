@@ -1,0 +1,93 @@
+{
+  "template_id": "oldfarmtrucks",
+  "template_path": "company_templates/oldfarmtrucks/template.json",
+  "provisioned": {
+    "workflows": {
+      "short_term": [
+        {
+          "id": "oldfarmtrucks-market-scarcity-scan",
+          "plan_path": "workflows/examples/oldfarmtrucks-market-scarcity-scan.json"
+        }
+      ],
+      "long_term": [
+        {
+          "id": "oldfarmtrucks-customer-lifecycle",
+          "plan_path": "workflows/examples/oldfarmtrucks-customer-lifecycle.json"
+        }
+      ],
+      "catalog": [
+        "workflows/examples/oldfarmtrucks-launch-readiness.json",
+        "workflows/examples/oldfarmtrucks-weekly-operating-review.json",
+        "workflows/examples/oldfarmtrucks-customer-360.json"
+      ]
+    },
+    "schedules": [
+      {
+        "schedule_id": "oldfarmtrucks-weekly-operating-review",
+        "mode": "cron",
+        "cron": "0 14 * * 1",
+        "enabled": false,
+        "owner": "oldfarmtrucks-ops",
+        "planner_target": "scripts/orchestration/plan_business_workflow.py",
+        "risk_tier": "medium"
+      },
+      {
+        "schedule_id": "oldfarmtrucks-monthly-customer-lifecycle",
+        "mode": "cron",
+        "cron": "0 16 1 * *",
+        "enabled": false,
+        "owner": "oldfarmtrucks-growth",
+        "planner_target": "scripts/orchestration/plan_customer_workflow.py",
+        "risk_tier": "medium"
+      }
+    ],
+    "dashboards": [
+      "executive_kpis",
+      "pipeline_and_inventory",
+      "customer_lifecycle_health"
+    ],
+    "connectors": [
+      "salesforce",
+      "hubspot",
+      "ga4",
+      "jira",
+      "slack",
+      "stripe"
+    ],
+    "approvals": [
+      {
+        "policy_id": "oldfarmtrucks-high-risk-external",
+        "requires_hitl": true,
+        "risk_tier": "high"
+      }
+    ],
+    "budgets": [
+      {
+        "budget_id": "oldfarmtrucks-quarterly-ai-ops",
+        "currency": "USD",
+        "amount": 25000,
+        "period": "quarterly"
+      }
+    ],
+    "sample_data": [
+      "workflows/fixtures/oldfarmtrucks/customer-lifecycle.yaml",
+      "workflows/fixtures/oldfarmtrucks/launch-readiness.yaml",
+      "workflows/fixtures/oldfarmtrucks/weekly-ops-reviews.json",
+      "workflows/fixtures/oldfarmtrucks/customer-360.json",
+      "workflows/fixtures/oldfarmtrucks/market-scans.yaml"
+    ]
+  },
+  "mode": "dry-run",
+  "workflow_validation": {
+    "short_term": {
+      "command": "python scripts/runtime/execute_workflow.py --plan workflows/examples/oldfarmtrucks-market-scarcity-scan.json --dry-run",
+      "returncode": 1,
+      "stderr": "2026-05-11 20:22:13,203 ERROR execute_workflow \u2014 Workflow plan has no skill_chain \u2014 nothing to execute"
+    },
+    "long_term": {
+      "command": "python scripts/runtime/execute_workflow.py --plan workflows/examples/oldfarmtrucks-customer-lifecycle.json --dry-run",
+      "returncode": 1,
+      "stderr": "2026-05-11 20:22:13,369 ERROR execute_workflow \u2014 Workflow plan has no skill_chain \u2014 nothing to execute"
+    }
+  }
+}
