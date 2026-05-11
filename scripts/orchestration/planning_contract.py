@@ -21,6 +21,13 @@ DOMAIN_DEFAULTS: dict[str, list[str]] = {
     "business": ["finance-operations", "procurement-operations", "customer-operations", "inventory-operations", "hr-operations", "legal-operations", "executive-reporting"],
 }
 
+_APPROVAL_POLICIES: dict[str, dict] = {
+    "finance-operations": {"approver_role": "finance-controller", "policy_tags": ["budget-control", "spend-authorization"]},
+    "procurement-operations": {"approver_role": "procurement-manager", "policy_tags": ["vendor-governance", "third-party-risk"]},
+    "hr-operations": {"approver_role": "hr-business-partner", "policy_tags": ["workforce-policy", "separation-of-duties"]},
+    "legal-operations": {"approver_role": "legal-counsel", "policy_tags": ["regulatory-compliance", "contract-risk"]},
+}
+
 
 def route_objective(objective: str, domain: str) -> list[str]:
     lowered = objective.lower()
@@ -31,6 +38,23 @@ def route_objective(objective: str, domain: str) -> list[str]:
     return [s for s in ordered if s in selected] or ordered
 
 
+def _governance_annotation(skill: str) -> dict:
+    policy = _APPROVAL_POLICIES.get(skill)
+    if not policy:
+        return {
+            "approval_required": False,
+            "approver_role": None,
+            "policy_tags": [],
+            "reason": "No elevated governance policy mapped for this step.",
+        }
+    return {
+        "approval_required": True,
+        "approver_role": policy["approver_role"],
+        "policy_tags": policy["policy_tags"],
+        "reason": "Step impacts controlled business processes and requires explicit approval.",
+    }
+
+
 def build_domain_plan(objective: str, domain: str) -> dict:
     routed = route_objective(objective, domain)
     plan_id = f"{domain.upper()}-{datetime.date.today().strftime('%Y%m%d')}-{uuid.uuid4().hex[:8]}"
@@ -39,6 +63,7 @@ def build_domain_plan(objective: str, domain: str) -> dict:
         "skill": skill,
         "phase": SHARED_SKILLS[skill]["domain"],
         "depends_on": [routed[i - 2]] if i > 1 else [],
+        "governance": _governance_annotation(skill),
     } for i, skill in enumerate(routed, start=1)]
 
     return {
@@ -50,6 +75,7 @@ def build_domain_plan(objective: str, domain: str) -> dict:
             "version": "1.0",
             "routed_domains": sorted({SHARED_SKILLS[s]["domain"] for s in routed}),
             "shared_skill_registry": list(SHARED_SKILLS.keys()),
+            "schema": "workflow-plan@1.0",
         },
         "skill_chain": skill_chain,
         "governance_checks": [
