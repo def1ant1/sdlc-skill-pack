@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apotheon.ai/schemas/skill.yaml.schema.json",
+  "title": "Skill YAML Specification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "metadata", "runtime"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "metadata": {"$ref": "./skill-metadata.schema.json"},
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entrypoints"],
+      "properties": {
+        "entrypoints": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "minItems": 1
+        },
+        "references": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1}
+        },
+        "connectors": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}
