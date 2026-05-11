@@ -112,3 +112,10 @@ to memory packet.
 
 - `references/api-design-standards.md` — OpenAPI template, versioning rules, error schemas, authentication patterns
 - `references/service-patterns.md` — Data modeling patterns, service layer design, resilience patterns, caching strategy
+
+## Domain Cognition + Self-Check Integration
+- Apply the domain module for **SDLC** from `docs/cognition/modules/mvp-domain-cognition-modules.md` before finalizing recommendations.
+- Run the self-check rubric in `docs/cognition/references/self-check-rubric.md`.
+- If rubric score is below threshold or any blocking dimension is `0`, pause, state gaps, and request/trigger human review.
+- Persist memory hooks defined by the module in the output memory packet.
+

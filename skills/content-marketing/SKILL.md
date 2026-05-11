@@ -155,3 +155,10 @@ Unsubscribe: [required]
 - `references/channel-playbook.md` — Per-channel content formats, tone guides, and best practices
 - `references/editorial-calendar-template.md` — Calendar structure, status labels, and prioritization rules
 - `references/content-brief-template.md` — Brief format for briefing content production
+
+## Domain Cognition + Self-Check Integration
+- Apply the domain module for **GTM** from `docs/cognition/modules/mvp-domain-cognition-modules.md` before finalizing recommendations.
+- Run the self-check rubric in `docs/cognition/references/self-check-rubric.md`.
+- If rubric score is below threshold or any blocking dimension is `0`, pause, state gaps, and request/trigger human review.
+- Persist memory hooks defined by the module in the output memory packet.
+

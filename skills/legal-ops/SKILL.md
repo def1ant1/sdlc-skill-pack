@@ -121,3 +121,10 @@ For any inbound agreement, flag these deviations from standard positions:
 
 - `references/contract-templates.md` — All standard contract templates (NDA, MSA, DPA, offer letter)
 - `references/acceptable-positions.md` — Company negotiating positions by contract term, fallback positions, hard limits
+
+## Domain Cognition + Self-Check Integration
+- Apply the domain module for **legal/tax** from `docs/cognition/modules/mvp-domain-cognition-modules.md` before finalizing recommendations.
+- Run the self-check rubric in `docs/cognition/references/self-check-rubric.md`.
+- If rubric score is below threshold or any blocking dimension is `0`, pause, state gaps, and request/trigger human review.
+- Persist memory hooks defined by the module in the output memory packet.
+

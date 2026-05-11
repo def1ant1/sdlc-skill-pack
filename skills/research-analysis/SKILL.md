@@ -68,3 +68,10 @@ identified, evidence grade per finding, confidence intervals, and research impli
 ## References
 
 - `references/analysis-methods-guide.md` — statistical test selection, evidence grading criteria, uncertainty quantification methods
+
+## Domain Cognition + Self-Check Integration
+- Apply the domain module for **knowledge/research** from `docs/cognition/modules/mvp-domain-cognition-modules.md` before finalizing recommendations.
+- Run the self-check rubric in `docs/cognition/references/self-check-rubric.md`.
+- If rubric score is below threshold or any blocking dimension is `0`, pause, state gaps, and request/trigger human review.
+- Persist memory hooks defined by the module in the output memory packet.
+
