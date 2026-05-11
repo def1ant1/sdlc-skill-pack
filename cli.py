@@ -19,7 +19,14 @@ Usage:
     apotheon validate                      Run all validation checks
     apotheon bootstrap                     Full OS health check
     apotheon init                          First-time setup: DB, Qdrant, env check
-    apotheon doctor                        Diagnose environment health
+    apotheon doctor                        Diagnose environment health + fixes
+    apotheon diagnostics                   Generate runtime diagnostics artifacts
+    apotheon workflows resume <run_id>     Resume/recover a workflow from history
+    apotheon schedules repair              Repair schedule state + run due jobs
+    apotheon connectors check              Run connector readiness checks
+    apotheon local-apps check              Verify local compose app health
+    apotheon backup create                 Create local backup archive
+    apotheon backup restore --dry-run ...  Preview backup restore actions
 
 Install:
     pip install -e .                       Installs 'apotheon' into PATH
@@ -119,7 +126,7 @@ def _list_run_files(history_dir: Path) -> list[Path]:
 
 def cmd_workflows(args: list[str]) -> int:
     if not args:
-        return _err("usage: apotheon workflows <list|run>")
+        return _err("usage: apotheon workflows <list|run|resume>")
     subcommand = args[0]
     rest = args[1:]
     if subcommand == "run":
@@ -128,6 +135,10 @@ def cmd_workflows(args: list[str]) -> int:
         if dry_run:
             return cmd_dry_run(run_args)
         return cmd_run(run_args)
+    if subcommand == "resume":
+        if not rest:
+            return _err("usage: apotheon workflows resume <run_id>")
+        return _run([_python(), _script("scripts/runtime/recovery.py"), "--run-id", rest[0]])
     if subcommand == "list":
         try:
             mode, flags = _parse_output_mode(rest)
@@ -158,19 +169,58 @@ def cmd_workflows(args: list[str]) -> int:
             lines.append(f"{row['run_id']}  {row['status']}  {row['started_at']}  {row['objective']}")
         _print_mode({"runs": rows, "lines": lines}, mode)
         return 0
-    return _err("usage: apotheon workflows <list|run>")
+    return _err("usage: apotheon workflows <list|run|resume>")
 
 
 def cmd_schedules(args: list[str]) -> int:
     if not args:
-        return _err("usage: apotheon schedules <preview|run-due>")
+        return _err("usage: apotheon schedules <preview|run-due|repair>")
     subcommand = args[0]
     rest = args[1:]
     if subcommand == "preview":
         return _run([_python(), _script("scripts/scheduling/preview_schedule.py"), *rest])
     if subcommand == "run-due":
         return _run([_python(), _script("scripts/scheduling/run_due_schedules.py"), *rest])
-    return _err("usage: apotheon schedules <preview|run-due>")
+    if subcommand == "repair":
+        print("Repairing schedule state...")
+        locks_dir = Path("runtime/schedule_history/locks")
+        removed = 0
+        if locks_dir.exists():
+            for lock_file in locks_dir.glob("*.lock.json"):
+                lock_file.unlink(missing_ok=True)
+                removed += 1
+        print(f"Removed {removed} stale lock file(s).")
+        return _run([_python(), _script("scripts/scheduling/run_due_schedules.py"), "--dry-run"])
+    return _err("usage: apotheon schedules <preview|run-due|repair>")
+
+
+def cmd_connectors(args: list[str]) -> int:
+    if args and args[0] == "check":
+        return _run([_python(), _script("scripts/connectors/health_check.py"), *args[1:]])
+    return _err("usage: apotheon connectors check [--connector NAME|--json]")
+
+
+def cmd_local_apps(args: list[str]) -> int:
+    if not args or args[0] != "check":
+        return _err("usage: apotheon local-apps check [--compose-file docker-compose.yml]")
+    rest = args[1:]
+    if "--compose-file" not in rest:
+        rest = ["--compose-file", "docker-compose.yml", *rest]
+    return _run([_python(), _script("scripts/local_apps/check_app_health.py"), *rest])
+
+
+def cmd_backup(args: list[str]) -> int:
+    if not args:
+        return _err("usage: apotheon backup <create|restore>")
+    if args[0] == "create":
+        return _run([_python(), _script("scripts/backup/backup_local_state.py"), *args[1:]])
+    if args[0] == "restore":
+        return _run([_python(), _script("scripts/backup/restore_local_state.py"), *args[1:]])
+    return _err("usage: apotheon backup <create|restore>")
+
+
+def cmd_diagnostics(args: list[str]) -> int:
+    return _run([_python(), _script("scripts/reports/generate_runtime_diagnostics.py"), *args])
 
 
 def cmd_runs(args: list[str]) -> int:
@@ -547,6 +597,18 @@ def cmd_doctor(_args: list[str]) -> int:
         icon = "OK  " if ok else "WARN"
         print(f"  [{icon}] {name:<38} {detail}")
 
+    print("\nRecommended fixes:")
+    if not py_ok:
+        print("  - Install Python 3.11+ and recreate your virtual environment.")
+    if not api_key:
+        print("  - Set ANTHROPIC_API_KEY before live workflow execution.")
+    if not qdrant_ok:
+        print("  - Start Qdrant: docker compose up -d qdrant")
+    if not temporal_ok:
+        print("  - Start Temporal (optional): docker compose up -d temporal temporal-ui")
+    missing_pkgs = [name.split(': ')[1] for name, ok, _ in checks if name.startswith("Package: ") and not ok]
+    if missing_pkgs:
+        print("  - Install missing packages: pip install -e \".[dev]\"")
     print()
     failures = [n for n, ok, _ in checks if not ok]
     if not failures:
@@ -571,11 +633,15 @@ _COMMANDS: dict[str, tuple] = {
     "logs":          (cmd_logs,             "Show step outputs for a run"),
     "skill":         (cmd_skill,            "Skill registry: list | gaps"),
     "connector":     (cmd_connector_health, "Check connector health"),
+    "connectors":    (cmd_connectors,       "Connectors: check"),
+    "local-apps":    (cmd_local_apps,       "Local apps: check"),
     "memory":        (cmd_memory,           "Memory: search \"query\" | init"),
+    "backup":        (cmd_backup,           "Backup: create | restore"),
     "validate":      (cmd_validate,         "Run all validation checks"),
     "bootstrap":     (cmd_bootstrap,        "Full OS bootstrap health check"),
     "init":          (cmd_init,             "First-time setup: DB, Qdrant, env check"),
     "doctor":        (cmd_doctor,           "Diagnose environment health"),
+    "diagnostics":   (cmd_diagnostics,      "Generate runtime diagnostics report"),
     "workflows":     (cmd_workflows,        "Workflows: list | run [--execute]"),
     "schedules":     (cmd_schedules,        "Schedules: preview | run-due"),
     "runs":          (cmd_runs,             "Run history: list"),
@@ -594,6 +660,12 @@ def _print_help() -> None:
     print('  apotheon dry-run "Deploy to production"')
     print("  apotheon status")
     print("  apotheon connector health")
+    print("  apotheon connectors check --json")
+    print("  apotheon local-apps check --compose-file docker-compose.yml")
+    print("  apotheon workflows resume RUN-12345678-abcd1234")
+    print("  apotheon schedules repair")
+    print("  apotheon backup create --output dist")
+    print("  apotheon backup restore --dry-run dist/apotheon-backup.tar.gz")
     print("  apotheon skill gaps")
     print('  apotheon memory search "authentication"')
     print("  apotheon init")

@@ -321,6 +321,20 @@ Live execution should initially be limited to read-only operations.
 
 ## 14. Troubleshooting
 
+For structured remediation, see:
+
+- `docs/onboarding/TROUBLESHOOTING.md`
+- `docs/onboarding/OPERATOR_RUNBOOK.md`
+
+Recommended local recovery command bundle:
+
+```bash
+apotheon doctor
+apotheon diagnostics
+apotheon connectors check
+apotheon local-apps check --compose-file docker-compose.yml
+```
+
 ### Qdrant not reachable
 
 ```bash
