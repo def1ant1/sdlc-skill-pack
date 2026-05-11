@@ -914,7 +914,7 @@ Acceptance criteria:
 ## MB-P2-002 — CRM/CDP/marketing/customer lifecycle skill pack
 
 **Source:** V9 + Domain + Customer Lifecycle Docs  
-**Status:** Completed (2026-05-11)
+**Status:** Completed (2026-05-11, verified with evolution scripts + review gate updates)
 
 Implement/complete skills for:
 
@@ -1186,7 +1186,7 @@ Acceptance criteria:
 ## MB-P3-002 — Self-improvement/evolution engine
 
 **Source:** Docker/Productization Backlog  
-**Status:** Completed (2026-05-11)
+**Status:** Completed (2026-05-11, verified: scripts + review workflow)
 
 Create:
 
