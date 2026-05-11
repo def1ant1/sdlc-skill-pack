@@ -325,3 +325,46 @@ class TestDryRunGovernanceAndDeterminism:
         plan = _make_plan(skills=["devsecops"])
         log = execute_local(plan, dry_run=True)
         assert log["steps"][0]["side_effect_classification"] == "simulated-mutation"
+
+
+class TestDryRunSafetyAndDeterminism:
+    def test_dry_run_blocks_external_skill_execution(self):
+        plan = _make_plan(skills=["requirements-analysis", "backend-engineering"])
+        with mock.patch("execute_workflow.run_skill_activity") as mock_run, \
+             mock.patch("execute_workflow._make_context_manager") as mock_cm:
+            log = execute_local(plan, dry_run=True)
+        mock_run.assert_not_called()
+        mock_cm.assert_not_called()
+        assert log["status"] == "dry_run"
+
+    def test_dry_run_repeatability_equivalent_outputs(self):
+        plan = _make_plan(skills=["requirements-analysis", "backend-engineering", "qa"])
+        first = execute_local(plan, dry_run=True)
+        second = execute_local(plan, dry_run=True)
+
+        assert first["run_id"] == second["run_id"]
+        assert first["started_at"] == second["started_at"] == "1970-01-01T00:00:00Z"
+        assert first["completed_at"] == second["completed_at"] == "1970-01-01T00:00:00Z"
+        assert first["steps"] == second["steps"]
+
+
+class TestExecutionArtifactStructure:
+    def test_execution_artifact_contains_expected_structure(self, tmp_path):
+        plan = _make_plan(skills=["requirements-analysis"])
+        with mock.patch("execute_workflow.run_skill_activity", return_value=_mock_skill_result()), \
+             mock.patch("execute_workflow._make_context_manager", return_value=None):
+            log = execute_local(plan)
+
+        from execute_workflow import _persist_execution_artifact
+        _persist_execution_artifact(log, history_dir=tmp_path)
+        artifact = tmp_path / f"{log['run_id']}.json"
+        assert artifact.exists()
+        payload = json.loads(artifact.read_text())
+
+        assert {
+            "run_id", "mode", "objective", "plan_id", "total_steps",
+            "steps", "status", "started_at", "completed_at"
+        }.issubset(payload.keys())
+        assert isinstance(payload["steps"], list) and payload["steps"]
+        assert {"step", "skill", "status", "duration_ms", "side_effect_classification"}.issubset(payload["steps"][0].keys())
+

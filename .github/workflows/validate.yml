@@ -58,6 +58,10 @@ jobs:
           print(f'No dependency gaps found ({len(d[\"registered_skills\"])} skills registered)')
           "
 
+      - name: Run local orchestration regression gates
+        run: |
+          pytest --tb=short -q             tests/runtime/test_execute_workflow.py             tests/scheduling/test_scheduling.py
+
       - name: Run tests
         run: pytest --tb=short -q
 
