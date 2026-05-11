@@ -24,11 +24,11 @@ def validate_source(doc: dict, file: Path) -> list[str]:
     rpm = throttle.get("max_requests_per_minute", 0)
     burst = throttle.get("burst_limit", 0)
     cooldown = throttle.get("cooldown_seconds", -1)
-    if not isinstance(rpm, int) or rpm < 1:
+    if type(rpm) is not int or rpm < 1:
         errors.append("throttling.max_requests_per_minute must be an integer >= 1")
-    if not isinstance(burst, int) or burst < 1:
+    if type(burst) is not int or burst < 1:
         errors.append("throttling.burst_limit must be an integer >= 1")
-    if not isinstance(cooldown, int) or cooldown < 0:
+    if type(cooldown) is not int or cooldown < 0:
         errors.append("throttling.cooldown_seconds must be an integer >= 0")
 
     network = doc.get("network", {})
