@@ -405,3 +405,7 @@ Your laptop setup is complete when:
 [ ] Local ops report is generated
 [ ] No dry-run path calls external APIs
 ```
+
+
+### Scheduling update (MB-P0-010)
+Scheduling tooling is implemented under `scripts/schedules/` with schema + runtime run recording in `runtime/schedule_runs/`. Use `python scripts/schedules/run_due_schedules.py --dry-run` for safe due-window checks.

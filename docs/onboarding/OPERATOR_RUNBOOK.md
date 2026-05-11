@@ -60,3 +60,7 @@ apotheon backup restore --dry-run dist/<backup-archive>.tar.gz
   - `runtime/workflow_runs/<run_id>/run_record.json`
   - `runtime/artifacts/<run_id>.artifacts.json`
   - `runtime/reports/<run_id>.report.md`
+
+
+### Scheduling update (MB-P0-010)
+Scheduling tooling is implemented under `scripts/schedules/` with schema + runtime run recording in `runtime/schedule_runs/`. Use `python scripts/schedules/run_due_schedules.py --dry-run` for safe due-window checks.
