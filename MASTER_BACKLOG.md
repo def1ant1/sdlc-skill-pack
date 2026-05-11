@@ -666,7 +666,7 @@ Acceptance criteria:
 ## MB-P1-002 — Add event bus and trigger engine
 
 **Source:** Docker/Productization Backlog  
-**Status:** Open
+**Status:** Completed and finalized (2026-05-11)
 
 Create:
 

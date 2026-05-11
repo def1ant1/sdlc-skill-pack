@@ -2,6 +2,13 @@
 
 All notable changes to the Apotheon AI Company OS are documented here.
 
+
+## [8.0.24] — 2026-05-11 — Event Bus + Trigger Engine (MB-P1-002)
+
+- Added event bus and trigger-engine scaffolding in `core/event-bus/` and `core/trigger-engine/` for local event publishing, trigger registration, matching, and history persistence.
+- Added `schemas/automation-trigger.schema.json` and automation scripts `scripts/automation/register_trigger.py` + `scripts/automation/run_event_trigger.py` to support trigger registration, governance checks, and dry-run workflow launch execution.
+- Extended dashboard data generation in `scripts/reports/generate_dashboard_data.py` with `trigger_history` rollups derived from `runtime/automation/trigger_history.jsonl`.
+
 ## [8.0.23] — 2026-05-11 — Multi-layer Memory + Knowledge Graph (MB-P1-001)
 
 - Added multi-layer memory foundations in `core/memory-system/`, `core/organizational-memory/`, and `core/procedural-memory/` plus graph domain scaffolding in `core/knowledge-graph/`.

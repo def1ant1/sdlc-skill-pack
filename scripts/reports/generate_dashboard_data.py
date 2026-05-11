@@ -4,6 +4,27 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+
+def _trigger_summary(root: Path) -> dict:
+ history = root/"runtime"/"automation"/"trigger_history.jsonl"
+ if not history.exists():
+  return {"events_24h":0,"launches_24h":0,"blocked_by_governance_24h":0}
+ now = datetime.now(timezone.utc)
+ events=launches=blocked=0
+ for line in history.read_text(encoding="utf-8").splitlines():
+  if not line.strip():
+   continue
+  rec=json.loads(line)
+  ts=datetime.fromisoformat(rec.get("timestamp","1970-01-01T00:00:00+00:00").replace("Z","+00:00"))
+  if (now-ts).total_seconds()>86400:
+   continue
+  events += 1
+  if rec.get("execution_status")=="launched":
+   launches += 1
+  if rec.get("execution_status")=="blocked_by_governance":
+   blocked += 1
+ return {"events_24h":events,"launches_24h":launches,"blocked_by_governance_24h":blocked}
+
 def main()->int:
  root=Path(__file__).resolve().parents[2]
  data={
@@ -22,7 +43,8 @@ def main()->int:
   "memory":{"health":"ok","collection_coverage_pct":96,"stale_embeddings":12},
   "telemetry":{"events_24h":12432,"errors_24h":16,"p95_latency_ms":285},
   "skill_maturity":{"production_ready":44,"pilot":18,"experimental":9},
-  "template_status":{"name":"OldFarmTrucks","imported":True,"workflow_templates":5,"schedule_templates":3}
+  "template_status":{"name":"OldFarmTrucks","imported":True,"workflow_templates":5,"schedule_templates":3},
+  "trigger_history":_trigger_summary(root)
  }
  (root/"reports"/"dashboard_state.json").write_text(json.dumps(data,indent=2)+"\n",encoding="utf-8")
  return 0
