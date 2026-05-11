@@ -1,0 +1,33 @@
+schedules:
+  - schedule_id: daily-gtm-plan
+    mode: cron
+    cron: "0 9 * * 1-5"
+    enabled: true
+    owner: gtm-ops
+    planner_target: scripts/orchestration/plan_gtm_workflow.py
+    risk_tier: medium
+    metadata:
+      description: Weekday morning GTM planning run.
+
+  - schedule_id: runtime-health-check
+    mode: interval
+    interval_minutes: 30
+    enabled: true
+    owner: platform
+    planner_target: scripts/runtime/execute_workflow.py
+    risk_tier: low
+    metadata:
+      description: Frequent runtime health automation.
+
+  - schedule_id: backlog-refresh
+    mode: event
+    event:
+      name: backlog.updated
+      match:
+        source: github
+    enabled: false
+    owner: governance
+    planner_target: scripts/validate_backlog_truth.py
+    risk_tier: high
+    metadata:
+      description: Trigger when backlog updates are published.
