@@ -2,6 +2,13 @@
 
 All notable changes to the Apotheon AI Company OS are documented here.
 
+## [8.0.23] — 2026-05-11 — Multi-layer Memory + Knowledge Graph (MB-P1-001)
+
+- Added multi-layer memory foundations in `core/memory-system/`, `core/organizational-memory/`, and `core/procedural-memory/` plus graph domain scaffolding in `core/knowledge-graph/`.
+- Added `schemas/memory-event.schema.json` to standardize episodic/semantic/organizational/procedural memory events and graph entity references.
+- Added `scripts/memory/record_execution_memory.py` with episodic capture, stable fact promotion to semantic memory, procedural memory recording, and local graph updates.
+- Added `scripts/memory/detect_contradictions.py` and integrated contradiction blocking in `scripts/memory/retrieve_context.py` before retrieved context is eligible for downstream use.
+
 ## [8.0.22] — 2026-05-11 — Release Readiness Gate + Packaging Manifest (MB-P0-020)
 
 - Unified release gate in `scripts/validate_release_readiness.py` to aggregate release report generation, artifact consistency validation, Section 15 governance gates, and offline smoke tests.

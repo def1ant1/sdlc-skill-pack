@@ -41,6 +41,7 @@ COLLECTION = os.environ.get("QDRANT_COLLECTION", "apotheon-observations")
 _HERE = __file__
 sys.path.insert(0, str(__import__("pathlib").Path(_HERE).parent))
 from embed_observation import embed_text  # noqa: E402
+from detect_contradictions import detect  # noqa: E402
 
 
 def search_qdrant(
@@ -108,6 +109,21 @@ def retrieve(
             "observed_at": payload.get("observed_at", ""),
             "salience": payload.get("salience", 0.0),
         })
+
+    contradiction_report = detect([{
+        "event_id": r["obs_id"],
+        "content": r["content"],
+        "entity_refs": [{"entity_type": e.split(":", 1)[0], "entity_id": e.split(":", 1)[1]} for e in r.get("entities", []) if isinstance(e, str) and ":" in e],
+    } for r in results])
+
+    if contradiction_report.get("blocked"):
+        return {
+            "query": query,
+            "blocked": True,
+            "contradictions": contradiction_report.get("contradictions", []),
+            "result_count": 0,
+            "results": [],
+        }
 
     return {
         "query": query,
