@@ -27,6 +27,14 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
+
+class DryRunSideEffectBlocked(RuntimeError):
+    """Raised when connector outbound calls are blocked in dry-run mode."""
+
+
+def _dry_run_enabled() -> bool:
+    return os.environ.get("APOTHEON_DRY_RUN", "").strip().lower() in {"1", "true", "yes", "on"}
+
 # ---------------------------------------------------------------------------
 # Secret resolution
 # ---------------------------------------------------------------------------
@@ -160,6 +168,11 @@ class BaseConnector(ABC):
         Returns the parsed JSON response body.
         Raises RuntimeError on non-retryable errors.
         """
+        if _dry_run_enabled():
+            raise DryRunSideEffectBlocked(
+                f"Outbound connector call blocked during dry-run: {method} {url}"
+            )
+
         self._ensure_authenticated()
         self._rate_limiter.acquire()
 
