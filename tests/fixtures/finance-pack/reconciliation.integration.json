@@ -1,0 +1,10 @@
+{
+  "fixture_id": "finance-pack-reconciliation-integration",
+  "skills": ["reconciliation-automation", "payment-matching", "accounts-receivable-automation"],
+  "required_entities": ["invoice", "payment", "account", "lineage"],
+  "required_output_sections": ["observed_data", "calculations", "assumptions", "recommendations"],
+  "assertions": {
+    "calculation_correctness_rate": 0.995,
+    "approval_gate_enforcement_rate": 1.0
+  }
+}

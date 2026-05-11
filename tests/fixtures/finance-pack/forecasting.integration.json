@@ -1,0 +1,10 @@
+{
+  "fixture_id": "finance-pack-forecasting-integration",
+  "skills": ["cash-flow-forecasting", "budget-planning", "fpa-analysis"],
+  "required_output_sections": ["observed_data", "calculations", "assumptions", "recommendations"],
+  "approval_required_actions": ["payment.execute", "ledger.post", "tax.filing.submit"],
+  "assertions": {
+    "calculation_correctness_rate": 0.995,
+    "approval_gate_enforcement_rate": 1.0
+  }
+}

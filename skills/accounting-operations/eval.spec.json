@@ -1,15 +1,15 @@
 {
-  "skill_name": "expense-policy-compliance",
+  "skill_name": "accounting-operations",
   "priority": "P1",
   "owner": "Apotheon.ai",
   "last_updated": "2026-05-11",
   "datasets": [
     {
-      "id": "expense-policy-compliance-calc-golden",
+      "id": "accounting-operations-calc-golden",
       "description": "Golden finance scenarios with expected KPI and ledger math outputs"
     },
     {
-      "id": "expense-policy-compliance-governance-negative",
+      "id": "accounting-operations-governance-negative",
       "description": "Policy, stale-data, and approval-gate violation scenarios"
     }
   ],

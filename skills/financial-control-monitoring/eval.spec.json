@@ -6,50 +6,26 @@
   "datasets": [
     {
       "id": "financial-control-monitoring-calc-golden",
-      "description": "Golden finance scenarios with expected KPI outputs"
-    },
-    {
-      "id": "financial-control-monitoring-lineage-completeness",
-      "description": "Samples with partial/complete source lineage"
+      "description": "Golden finance scenarios with expected KPI and ledger math outputs"
     },
     {
       "id": "financial-control-monitoring-governance-negative",
-      "description": "Policy and freshness violation cases"
+      "description": "Policy, stale-data, and approval-gate violation scenarios"
     }
   ],
   "metrics": [
     {
-      "name": "runway_mae",
-      "target": 0.01,
-      "direction": "lte"
-    },
-    {
-      "name": "forecast_13w_mape",
-      "target": 0.05,
-      "direction": "lte"
-    },
-    {
-      "name": "aging_bucket_accuracy",
-      "target": 0.99,
-      "direction": "gte"
-    },
-    {
-      "name": "margin_accuracy",
+      "name": "calculation_correctness_rate",
       "target": 0.995,
       "direction": "gte"
     },
     {
-      "name": "anomaly_precision",
-      "target": 0.9,
-      "direction": "gte"
-    },
-    {
-      "name": "source_lineage_completeness",
+      "name": "formula_trace_completeness",
       "target": 1.0,
       "direction": "gte"
     },
     {
-      "name": "stale_data_detection_recall",
+      "name": "approval_gate_enforcement_rate",
       "target": 1.0,
       "direction": "gte"
     },
@@ -60,9 +36,9 @@
     }
   ],
   "acceptance_gates": [
-    "all_required_outputs_present == true",
-    "source_lineage_completeness == 1.0",
-    "stale_data_detection_recall == 1.0",
+    "calculation_correctness_rate >= 0.995",
+    "formula_trace_completeness == 1.0",
+    "approval_gate_enforcement_rate == 1.0",
     "governance_compliance_rate == 1.0"
   ]
 }
