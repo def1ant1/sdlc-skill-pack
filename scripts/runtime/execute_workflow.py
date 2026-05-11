@@ -96,6 +96,36 @@ TEMPORAL_TASK_QUEUE = os.environ.get("TEMPORAL_TASK_QUEUE", "apotheon-sdlc")
 TEMPORAL_TIMEOUT_HOURS = int(os.environ.get("TEMPORAL_TIMEOUT_HOURS", "4"))
 
 
+def _json_log_enabled() -> bool:
+    return os.environ.get("LOG_FORMAT", "").lower() == "json"
+
+
+def _log(level: str, message: str, **fields: object) -> None:
+    correlation_id = str(fields.get("correlation_id") or fields.get("run_id") or "unknown")
+    payload = {"level": level.upper(), "message": message, "correlation_id": correlation_id, **fields}
+    if _json_log_enabled():
+        print(json.dumps(payload, sort_keys=True))
+        return
+    logger.log(getattr(logging, level.upper(), logging.INFO), "%s | correlation_id=%s", message, correlation_id)
+
+
+def _emit_runtime_event(run_id: str, event_name: str, status: str, details: dict | None = None) -> None:
+    event = {
+        "event_category": "runtime",
+        "event_name": event_name,
+        "status": status,
+        "correlation_id": run_id,
+        "workflow_id": run_id,
+        "phase": event_name,
+        "gate_result": "PASS" if status in {"info", "ok"} else "FAIL",
+        "tokens_used": 0,
+        "duration_ms": 0,
+        "details": details or {},
+    }
+    _emit_telemetry(run_id, event_name, event["gate_result"], 0)
+    _log("info", f"runtime event: {event_name}", run_id=run_id, correlation_id=run_id, event=event)
+
+
 # ---------------------------------------------------------------------------
 
 WORKFLOW_HISTORY_DIR = Path(__file__).resolve().parents[2] / "runtime" / "workflow_history"
@@ -235,7 +265,7 @@ def execute_local(plan: dict, dry_run: bool = False, *, options: RuntimeOptions 
     objective = plan.get("objective", "")
     steps = plan.get("skill_chain", [])
 
-    logger.info("Starting local workflow execution: %s (%d steps)", run_id, len(steps))
+    _log("info", "Starting local workflow execution", run_id=run_id, correlation_id=run_id, total_steps=len(steps))
     execution_log = resume_run or {
         "run_id": run_id,
         "mode": "local",
@@ -269,6 +299,7 @@ def execute_local(plan: dict, dry_run: bool = False, *, options: RuntimeOptions 
             if dry_run:
                 step_record["status"] = "dry_run"
                 execution_log["steps"].append(step_record)
+                _emit_runtime_event(run_id, "workflow.lifecycle.dry_run_step", "info", {"step": step_num})
                 continue
 
             additional_context_parts: list[str] = []
@@ -284,6 +315,7 @@ def execute_local(plan: dict, dry_run: bool = False, *, options: RuntimeOptions 
             context_packet["phase"] = step.get("phase", skill_name)
             inp = SkillActivityInput(skill_name=skill_name, objective=objective, context_packet=context_packet, additional_context="\n\n---\n\n".join(additional_context_parts))
             t0 = time.perf_counter()
+            _emit_runtime_event(run_id, "workflow.lifecycle.step_started", "info", {"step": step_num, "skill": skill_name})
             try:
                 result = run_skill_activity(inp)
             except Exception as exc:
@@ -296,6 +328,8 @@ def execute_local(plan: dict, dry_run: bool = False, *, options: RuntimeOptions 
                     cm.finalize("failed")
                 if options.error_report:
                     options.error_report.write_text(json.dumps(envelope, indent=2), encoding="utf-8")
+                _emit_runtime_event(run_id, "workflow.schema.failure", "error", {"step": step_num, "skill": skill_name})
+                _emit_runtime_event(run_id, "workflow.policy.failure", "error", {"step": step_num})
                 if options.fail_fast:
                     break
                 continue
@@ -305,6 +339,7 @@ def execute_local(plan: dict, dry_run: bool = False, *, options: RuntimeOptions 
                 step_record.update({"status": "timeout", "error": f"step exceeded max runtime {options.max_step_runtime}s", "duration_ms": duration_ms})
                 execution_log.update({"status": "failed", "failed_at_step": step_num})
                 execution_log["steps"].append(step_record)
+                _emit_runtime_event(run_id, "workflow.retries.timeout", "error", {"step": step_num})
                 break
 
             step_record.update({"status": "completed" if result.success else "failed", "output": result.output[:500] if result.output else None, "error": result.error or None, "duration_ms": duration_ms, "hitl_required": result.requires_hitl})
@@ -312,6 +347,7 @@ def execute_local(plan: dict, dry_run: bool = False, *, options: RuntimeOptions 
                 step_record["status"] = "pending_hitl"
                 execution_log.update({"status": "paused_for_hitl", "paused_at_step": step_num})
                 execution_log["steps"].append(step_record)
+                _emit_runtime_event(run_id, "workflow.hitl.required", "info", {"step": step_num})
                 if cm:
                     cm.save_context(context_packet)
                 break
@@ -321,6 +357,7 @@ def execute_local(plan: dict, dry_run: bool = False, *, options: RuntimeOptions 
                 execution_log["steps"].append(step_record)
                 if cm:
                     cm.finalize("failed")
+                _emit_runtime_event(run_id, "workflow.policy.failure", "error", {"step": step_num})
                 if options.fail_fast:
                     break
                 continue
@@ -333,10 +370,12 @@ def execute_local(plan: dict, dry_run: bool = False, *, options: RuntimeOptions 
             if gate:
                 step_record["gate_reached"] = gate
             execution_log["steps"].append(step_record)
+            _emit_runtime_event(run_id, "workflow.lifecycle.step_completed", "ok", {"step": step_num, "skill": skill_name})
             _persist_execution_artifact(execution_log)
         else:
             if not dry_run:
                 execution_log["status"] = "completed"
+                _emit_runtime_event(run_id, "workflow.lifecycle.completed", "ok", {"steps": len(execution_log.get("steps", []))})
                 if cm:
                     cm.finalize("completed")
 

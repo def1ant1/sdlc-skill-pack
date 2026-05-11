@@ -1,0 +1,22 @@
+{
+  "events": [],
+  "failure_categories": {
+    "HITL": 0,
+    "circuit/open health": 0,
+    "misfires": 0,
+    "policy": 0,
+    "retries": 0,
+    "schema failures": 0,
+    "workflow lifecycle": 0
+  },
+  "remediation": {
+    "HITL": "No remediation required.",
+    "circuit/open health": "No remediation required.",
+    "misfires": "No remediation required.",
+    "policy": "No remediation required.",
+    "retries": "No remediation required.",
+    "schema failures": "No remediation required.",
+    "workflow lifecycle": "No remediation required."
+  },
+  "totals": {}
+}
