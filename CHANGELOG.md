@@ -43,6 +43,12 @@
 All notable changes to the Apotheon AI Company OS are documented here.
 
 
+## [8.0.31] — 2026-05-11 — Evolution Improvement Workflow + Review Gate (MB-P3-002)
+
+- Added evolution automation scripts in `scripts/evolution/` to generate PR-ready patch/test/eval proposals from failed workflow evidence and enforce no auto-apply/auto-merge defaults.
+- Added `.github/workflows/evolution-review.yml` requiring an explicit human-approval marker for evolution-related pull requests.
+- Added `docs/workflows/improvement-workflow.md` documenting the end-to-end evolution improvement path and approval gates.
+
 ## [8.0.30] — 2026-05-11 — Skill Registry Skeleton + Validation Flow (MB-P3-001)
 
 - Added registry scaffold in `skill_registry/` with README, starter index, and entry template for contributor onboarding.
