@@ -315,7 +315,7 @@ Acceptance criteria:
 ## MB-P0-009 — Add local workflow run history and artifact policy
 
 **Source:** Local Workflow Scheduling Backlog  
-**Status:** Open
+**Status:** Done (2026-05-11)
 
 Create:
 

@@ -129,6 +129,9 @@ def _emit_runtime_event(run_id: str, event_name: str, status: str, details: dict
 # ---------------------------------------------------------------------------
 
 WORKFLOW_HISTORY_DIR = Path(__file__).resolve().parents[2] / "runtime" / "workflow_history"
+WORKFLOW_RUNS_DIR = Path(__file__).resolve().parents[2] / "runtime" / "workflow_runs"
+WORKFLOW_ARTIFACTS_DIR = Path(__file__).resolve().parents[2] / "runtime" / "artifacts"
+WORKFLOW_REPORTS_DIR = Path(__file__).resolve().parents[2] / "runtime" / "reports"
 WORKFLOW_PLAN_SCHEMA = Path(__file__).resolve().parents[2] / "schemas" / "workflow-plan.schema.json"
 
 
@@ -173,6 +176,37 @@ def _persist_execution_artifact(execution_log: dict, history_dir: Path = WORKFLO
         raise ValueError("terminal execution artifact missing completed_at")
     out = history_dir / f"{run_id}.json"
     out.write_text(json.dumps(execution_log, indent=2, sort_keys=True)+"\n")
+
+
+def _persist_run_outputs(execution_log: dict) -> None:
+    run_id = execution_log["run_id"]
+    run_dir = WORKFLOW_RUNS_DIR / run_id
+    run_dir.mkdir(parents=True, exist_ok=True)
+    WORKFLOW_ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
+    WORKFLOW_REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+    artifacts = sorted(set(str(a) for a in execution_log.get("artifacts", [])))
+    storage = {
+        "run_dir": str(run_dir),
+        "record_file": str(run_dir / "run_record.json"),
+        "artifacts_file": str(WORKFLOW_ARTIFACTS_DIR / f"{run_id}.artifacts.json"),
+        "report_file": str(WORKFLOW_REPORTS_DIR / f"{run_id}.report.md"),
+    }
+    execution_log["storage"] = storage
+    (run_dir / "run_record.json").write_text(json.dumps(execution_log, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    (WORKFLOW_ARTIFACTS_DIR / f"{run_id}.artifacts.json").write_text(
+        json.dumps({"run_id": run_id, "artifacts": artifacts}, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    report_lines = [
+        f"# Workflow Run Report: {run_id}",
+        "",
+        f"- Status: {execution_log.get('status')}",
+        f"- Mode: {execution_log.get('mode')}",
+        f"- Objective: {execution_log.get('objective')}",
+        f"- Steps: {len(execution_log.get('steps', []))}",
+        f"- Cost estimate (USD): {execution_log.get('cost_estimate_usd', 0.0)}",
+    ]
+    (WORKFLOW_REPORTS_DIR / f"{run_id}.report.md").write_text("\n".join(report_lines) + "\n", encoding="utf-8")
 
 # Context manager (graceful — Qdrant may not be running)
 # ---------------------------------------------------------------------------
@@ -393,6 +427,7 @@ def execute_local(plan: dict, dry_run: bool = False, *, options: RuntimeOptions 
     execution_log["cost_estimate_usd"] = round(sum(float(s.get("estimated_cost_usd",0.0)) for s in execution_log["steps"]),6)
     _record_workflow(execution_log["status"], "local", sum(s.get("duration_ms", 0) for s in execution_log["steps"]) / 1000.0)
     _persist_execution_artifact(execution_log)
+    _persist_run_outputs(execution_log)
     return execution_log
 
 

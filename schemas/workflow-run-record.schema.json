@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apotheon.local/schemas/workflow-run-record.schema.json",
+  "title": "Workflow Run Record",
+  "type": "object",
+  "required": [
+    "run_id",
+    "mode",
+    "objective",
+    "status",
+    "started_at",
+    "steps",
+    "storage"
+  ],
+  "properties": {
+    "run_id": {"type": "string", "minLength": 1},
+    "mode": {"type": "string", "enum": ["local", "temporal"]},
+    "objective": {"type": "string"},
+    "plan_id": {"type": "string"},
+    "status": {"type": "string"},
+    "started_at": {"type": "string"},
+    "completed_at": {"type": ["string", "null"]},
+    "total_steps": {"type": "integer", "minimum": 0},
+    "steps": {"type": "array", "items": {"type": "object"}},
+    "cost_estimate_usd": {"type": "number", "minimum": 0},
+    "storage": {
+      "type": "object",
+      "required": ["run_dir", "record_file", "artifacts_file", "report_file"],
+      "properties": {
+        "run_dir": {"type": "string"},
+        "record_file": {"type": "string"},
+        "artifacts_file": {"type": "string"},
+        "report_file": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}
