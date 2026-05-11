@@ -796,7 +796,7 @@ Acceptance criteria:
 ## MB-P1-006 — Add backup/restore for local and Docker state
 
 **Source:** Hardening + Docker/Productization Backlogs  
-**Status:** Open
+**Status:** Completed — 2026-05-11
 
 Create:
 
