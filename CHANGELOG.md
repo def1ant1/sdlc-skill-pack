@@ -2,6 +2,13 @@
 last_updated: 2026-05-11
 ---
 
+
+## [8.0.10] — 2026-05-11 — Skill Graph Engine MVP
+
+- Added `core/skill-graph-engine/` with a planner-consumable skill graph engine that models skills, tools, policies, connectors, memory requirements, and dependency/routing diagnostics.
+- Added `scripts/skills/build_skill_graph.py` and `scripts/skills/resolve_skill_dependencies.py` for report generation and planner-facing candidate resolution.
+- Added graph reports: `reports/skill_graph.json`, `reports/skill_graph.md`, and `reports/skill_graph.mmd`.
+
 ## [8.0.9] — 2026-05-11 — Skill YAML Spec Hardening + MVP Migration Notes
 
 - Added hardened skill specification schemas: `schemas/skill.yaml.schema.json` and `schemas/skill-metadata.schema.json`.
