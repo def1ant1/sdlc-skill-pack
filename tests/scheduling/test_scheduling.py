@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import datetime as dt
 
+import pytest
+
 from scripts.scheduling.preview_schedule import compute_due_runs
 from scripts.scheduling.run_due_schedules import execute_due
 
@@ -72,3 +74,47 @@ schedules:
 
     assert {r["status"] for r in first["runs"]} == {"executed"}
     assert {r["status"] for r in second["runs"]} == {"skipped_existing"}
+
+
+def test_schedule_artifact_structure_and_required_fields(tmp_path):
+    registry = tmp_path / "registry.yaml"
+    registry.write_text(
+        """
+schedules:
+  - schedule_id: artifact-shape
+    mode: interval
+    interval_minutes: 60
+    enabled: true
+    owner: ops
+    planner_target: scripts/orchestration/plan_workflow.py
+    risk_tier: low
+""".strip()
+    )
+    history = tmp_path / "history"
+    as_of = _utc("2026-01-05T12:00:00Z")
+
+    report = execute_due(as_of, registry, history, lookback_minutes=60)
+    run = report["runs"][0]
+    artifact_path = history / "artifact-shape" / f"{run['run_id']}.json"
+
+    assert artifact_path.exists()
+    payload = __import__("json").loads(artifact_path.read_text())
+    assert set(("run_id", "schedule_id", "planner_target", "owner", "risk_tier", "run_at", "executed_at", "status")).issubset(payload.keys())
+
+
+def test_due_runs_are_deterministic_for_same_inputs():
+    as_of = _utc("2026-01-05T10:00:00Z")
+    schedule = {"schedule_id": "stable", "mode": "cron", "cron": "0 10 * * 1", "enabled": True}
+
+    first = compute_due_runs(schedule, as_of, lookback_minutes=60)
+    second = compute_due_runs(schedule, as_of, lookback_minutes=60)
+
+    assert [d.isoformat() for d in first] == [d.isoformat() for d in second]
+
+
+def test_invalid_schedule_mode_raises():
+    as_of = _utc("2026-01-05T10:00:00Z")
+    bad = {"schedule_id": "bad", "mode": "unknown", "enabled": True}
+
+    with pytest.raises(KeyError):
+        compute_due_runs(bad, as_of, lookback_minutes=60)
