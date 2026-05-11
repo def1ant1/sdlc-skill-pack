@@ -55,3 +55,7 @@ Every skill folder must:
 - avoid XML angle brackets in frontmatter
 - use `references/` for long material
 - include examples when workflow behavior is non-trivial
+
+## Skill maturity and certification
+- Run `python scripts/grade_skill_maturity.py` to generate `reports/skill_maturity_report.md` and enforce MVP/critical thresholds.
+- Run `python scripts/certify_skill.py <skill_dir> ...` with check flags to generate `reports/skill_certification_report.md` with repeatable criteria and evidence pointers.
