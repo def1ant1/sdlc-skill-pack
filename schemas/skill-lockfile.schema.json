@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Skill Lockfile",
+  "type": "object",
+  "required": ["schema_version", "skill", "version", "artifact", "sha256", "resolved_at"],
+  "properties": {
+    "schema_version": {"type": "string"},
+    "skill": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "version": {"type": "string"},
+    "artifact": {"type": "string"},
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "resolved_at": {"type": "string", "format": "date-time"}
+  },
+  "additionalProperties": false
+}
