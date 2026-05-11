@@ -123,19 +123,34 @@
     "required_for_outbound_customer_communication": true,
     "required_for_external_mutations": true,
     "mutation_examples": [
+      "contact_vendor",
       "create",
-      "update",
       "delete",
-      "send"
-    ]
+      "publish_listing",
+      "send",
+      "submit_purchase_request",
+      "update"
+    ],
+    "required_for_purchase_actions": true,
+    "required_for_listing_actions": true,
+    "required_for_vendor_outreach": true
   },
   "name": "inventory-product-market-phase-pack",
   "subdomain": "supply-intelligence",
   "activation_triggers": [
+    "arbitrage_analysis",
+    "demand_planning",
+    "inventory_product_market_phase_pack",
     "phase_110",
     "phase_111",
     "phase_112",
-    "inventory_product_market_phase_pack"
+    "procurement_automation",
+    "purchase_approval_routing",
+    "scarcity_analysis",
+    "sku_margin_analysis",
+    "stockout_risk_detection",
+    "supplier_risk_intelligence",
+    "vehicle_market_arbitrage"
   ],
   "canonical_schema_refs": {
     "entities": [
@@ -152,5 +167,11 @@
       "schemas/events/workflow_completed.schema.json",
       "schemas/events/business_policy_violation.schema.json"
     ]
+  },
+  "scraping_policy_controls": {
+    "require_robots_check": true,
+    "require_terms_of_use_check": true,
+    "require_rate_limit_enforcement": true,
+    "require_operator_approval_for_restricted_sources": true
   }
 }

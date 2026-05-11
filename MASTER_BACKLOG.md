@@ -952,7 +952,12 @@ Acceptance criteria:
 ## MB-P2-003 — Inventory, product, procurement, and market intelligence skill pack
 
 **Source:** V9 + Domain + OldFarmTrucks Docs  
-**Status:** Open
+**Status:** Completed (2026-05-11)
+
+Implementation notes:
+- Added demand/margin/stockout/vendor-risk/procurement-routing/scarcity/arbitrage coverage in phase-pack governance.
+- Enforced scraping policy controls (robots/terms/rate limits/operator approval) and explicit approval gates for purchase/listing/outreach actions.
+- Validated OldFarmTrucks acquisition/pricing paths with upgraded dry-run fixtures.
 
 Implement/complete skills for:
 
