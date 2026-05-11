@@ -1,0 +1,9 @@
+version: 1
+skill: logistics-management
+routes:
+  - when_intent_in:
+      - logistics
+    then: logistics-management
+  - when_contains_any:
+      - logistics management
+    then: logistics-management

@@ -1,0 +1,9 @@
+version: 1
+skill: privacy-impact-assessment
+routes:
+  - when_intent_in:
+      - security
+    then: privacy-impact-assessment
+  - when_contains_any:
+      - privacy impact assessment
+    then: privacy-impact-assessment

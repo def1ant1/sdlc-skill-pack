@@ -1,0 +1,9 @@
+version: 1
+skill: material-requirements-planning
+routes:
+  - when_intent_in:
+      - materials
+    then: material-requirements-planning
+  - when_contains_any:
+      - material requirements planning
+    then: material-requirements-planning

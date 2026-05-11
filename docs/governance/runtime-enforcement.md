@@ -33,3 +33,10 @@ Policy decisions include a `dashboard_event` envelope with decision status and v
 - Before dispatch, call `/v1/cost/estimate` and compute projected budget consumption.
 - If policy action is `block`, scheduler rejects execution and records a governance event.
 - If policy action is `warn`, scheduler proceeds with operator-visible warning.
+
+## MB-P2-007 domain enforcement addendum (2026-05-11)
+
+- **Economics:** reports must attach explicit `source_timestamps` and `scenario_ranges` (base/upside/downside) for all forecasts and impact estimates.
+- **Logistics:** booking, payment, and shipping document issuance actions must pause pending human approval.
+- **Security:** IAM/policy/secret/DLP mutations must require explicit approval and must preserve evidence artifacts (pre-state, post-state, actor, timestamp, audit-log references).
+- **Materials:** outputs that can affect safety, compliance, or structural integrity must be marked `safety_critical=true` and routed to professional review before operational use.

@@ -1,0 +1,9 @@
+version: 1
+skill: data-loss-prevention-analysis
+routes:
+  - when_intent_in:
+      - security
+    then: data-loss-prevention-analysis
+  - when_contains_any:
+      - data loss prevention analysis
+    then: data-loss-prevention-analysis

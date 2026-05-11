@@ -1,0 +1,9 @@
+version: 1
+skill: freight-cost-analysis
+routes:
+  - when_intent_in:
+      - logistics
+    then: freight-cost-analysis
+  - when_contains_any:
+      - freight cost analysis
+    then: freight-cost-analysis

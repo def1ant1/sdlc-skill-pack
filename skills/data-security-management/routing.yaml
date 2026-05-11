@@ -1,0 +1,9 @@
+version: 1
+skill: data-security-management
+routes:
+  - when_intent_in:
+      - security
+    then: data-security-management
+  - when_contains_any:
+      - data security management
+    then: data-security-management

@@ -1,0 +1,9 @@
+version: 1
+skill: security-incident-triage
+routes:
+  - when_intent_in:
+      - security
+    then: security-incident-triage
+  - when_contains_any:
+      - security incident triage
+    then: security-incident-triage

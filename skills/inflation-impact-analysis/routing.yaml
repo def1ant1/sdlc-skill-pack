@@ -1,0 +1,9 @@
+version: 1
+skill: inflation-impact-analysis
+routes:
+  - when_intent_in:
+      - economics
+    then: inflation-impact-analysis
+  - when_contains_any:
+      - inflation impact analysis
+    then: inflation-impact-analysis

@@ -1,0 +1,9 @@
+version: 1
+skill: material-quality-documentation
+routes:
+  - when_intent_in:
+      - materials
+    then: material-quality-documentation
+  - when_contains_any:
+      - material quality documentation
+    then: material-quality-documentation

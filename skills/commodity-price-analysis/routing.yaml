@@ -1,0 +1,9 @@
+version: 1
+skill: commodity-price-analysis
+routes:
+  - when_intent_in:
+      - economics
+    then: commodity-price-analysis
+  - when_contains_any:
+      - commodity price analysis
+    then: commodity-price-analysis

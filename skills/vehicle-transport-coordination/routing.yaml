@@ -1,0 +1,9 @@
+version: 1
+skill: vehicle-transport-coordination
+routes:
+  - when_intent_in:
+      - logistics
+    then: vehicle-transport-coordination
+  - when_contains_any:
+      - vehicle transport coordination
+    then: vehicle-transport-coordination

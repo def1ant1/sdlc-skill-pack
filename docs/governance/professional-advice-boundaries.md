@@ -13,3 +13,8 @@ Define boundaries for AI-generated support in regulated professional domains.
 - Human-in-the-loop approval for final determinations.
 - Audit trail including reviewer identity, decision timestamp, and rationale.
 - Escalation path to domain experts for ambiguous or high-risk scenarios.
+
+
+## Safety-critical materials review boundary
+- Materials-science and compatibility outputs are advisory only and must be reviewed by qualified engineering/safety professionals before procurement, substitution, or deployment.
+- Any recommendation involving hazardous, load-bearing, medical, food-contact, or regulated materials must include a visible safety-critical flag and required reviewer role(s).

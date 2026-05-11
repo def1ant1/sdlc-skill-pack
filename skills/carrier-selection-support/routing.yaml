@@ -1,0 +1,9 @@
+version: 1
+skill: carrier-selection-support
+routes:
+  - when_intent_in:
+      - logistics
+    then: carrier-selection-support
+  - when_contains_any:
+      - carrier selection support
+    then: carrier-selection-support

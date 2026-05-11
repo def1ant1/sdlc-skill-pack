@@ -1,0 +1,9 @@
+version: 1
+skill: material-compatibility-research
+routes:
+  - when_intent_in:
+      - materials
+    then: material-compatibility-research
+  - when_contains_any:
+      - material compatibility research
+    then: material-compatibility-research

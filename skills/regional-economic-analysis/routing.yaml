@@ -1,0 +1,9 @@
+version: 1
+skill: regional-economic-analysis
+routes:
+  - when_intent_in:
+      - economics
+    then: regional-economic-analysis
+  - when_contains_any:
+      - regional economic analysis
+    then: regional-economic-analysis
