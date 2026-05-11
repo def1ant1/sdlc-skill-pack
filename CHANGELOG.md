@@ -1,6 +1,15 @@
 ---
-last_updated: 2026-05-10
+last_updated: 2026-05-11
 ---
+
+
+## [8.0.6] — 2026-05-11 — Local Orchestration Documentation Consolidation
+
+- Declared `APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md` as the canonical local orchestration and scheduling plan and linked to it from README documentation index.
+- Added `reports/local_runtime_readiness.md` and `reports/local_runtime_readiness.json` from local validator/test/report outputs for operator readiness evidence.
+- Strengthened doc duplication checks to fail on repeated top-level status blocks across backlog/readme/docs files, reducing stale conflicting status narratives.
+- Archived superseded release-finalization planning document to `docs/archive/APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG_2026-05-11.md` and replaced top-level file with a pointer.
+
 
 ## [8.0.5] — 2026-05-10 — Release Artifact Validation and CI Consistency
 

@@ -1,0 +1,14 @@
+{
+  "consistency_checks": {
+    "errors": [],
+    "passed": true
+  },
+  "pending_governance_approvals": [],
+  "schedule_history": [],
+  "token_cost_estimates": {
+    "assumed_rate_usd_per_1k_tokens": 0.003,
+    "estimated_cost_usd": 0.0,
+    "total_tokens_estimated": 0
+  },
+  "workflow_run_history": []
+}

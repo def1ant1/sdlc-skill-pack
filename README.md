@@ -480,6 +480,8 @@ Full reference: `docs/onboarding/DEPLOYMENT.md`
 | Agent fleet | `docs/architecture/agent-fleet.md` |
 | HITL gate audit | `docs/governance/hitl-gate-audit.md` |
 | System overview | `docs/architecture/system-overview.md` |
+| Local orchestration canonical backlog | `APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md` |
+| Archived planning docs | `docs/archive/` |
 ## Generated Release Reports
 
 - Release readiness (canonical): `reports/release_readiness.md` and `reports/release_readiness.json`
