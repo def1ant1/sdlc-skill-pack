@@ -80,35 +80,3 @@ jobs:
             }
 
             core.info(`Found ${validApprovals.length} independent human approval(s).`);
-
-
-jobs:
-  review-gate:
-    name: Require human approval for evolution changes
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Fail when approval marker is missing
-        env:
-          PR_BODY: ${{ github.event.pull_request.body }}
-        run: |
-          python - <<'PY'
-          import os
-          import re
-          import sys
-
-          body = os.environ.get("PR_BODY") or ""
-          marker = re.search(r"Human approval:\s*(approved|yes)", body, re.IGNORECASE)
-          if not marker:
-              print("Missing explicit human approval marker in PR body: 'Human approval: approved'")
-              sys.exit(1)
-          print("Human approval marker found.")
-          PY
-

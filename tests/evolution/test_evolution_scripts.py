@@ -24,11 +24,7 @@ def test_propose_and_render_and_review(tmp_path: Path) -> None:
     failures_path = tmp_path / "failures.json"
     failures_path.write_text(json.dumps(failures), encoding="utf-8")
 
-
     proposal_path = tmp_path / "runtime" / "evolution" / "proposals.json"
-=======
-    proposal_path = tmp_path / "proposals.json"
-
     pr_path = tmp_path / "proposal.md"
 
     subprocess.run(
