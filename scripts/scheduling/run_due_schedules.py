@@ -9,6 +9,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+from scripts.runtime.error_envelope import build_error_envelope
+
 from scripts.scheduling.preview_schedule import REGISTRY_PATH, _parse_iso, compute_due_runs, load_registry
 
 HISTORY_DIR = Path(__file__).resolve().parents[2] / "runtime" / "schedule_history"
@@ -27,7 +29,8 @@ def _validate_schedule_artifact(payload: dict[str, Any]) -> None:
     required = ("run_id", "schedule_id", "run_at", "executed_at", "status")
     for field in required:
         if not payload.get(field):
-            raise ValueError(f"schedule artifact missing {field}")
+            envelope = build_error_envelope(correlation_id=payload.get("run_id", "corr-schedule"), workflow_run_id="n/a", schedule_run_id=payload.get("run_id", "n/a"), skill="scheduler", step="artifact_validation", category="schedule", retryable=False, user_action_required=True, message="Schedule artifact validation failed.", technical_detail=f"schedule artifact missing {field}", root_cause_hint="Internal scheduler payload bug", remediation="Regenerate schedule run artifact with all required fields.", source_exception="ValueError")
+            raise ValueError(json.dumps(envelope, sort_keys=True))
 
 
 

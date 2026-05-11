@@ -25,6 +25,8 @@ import urllib.request
 from abc import ABC, abstractmethod
 from typing import Any
 
+from scripts.runtime.error_envelope import build_error_envelope
+
 logger = logging.getLogger(__name__)
 
 
@@ -140,6 +142,9 @@ class BaseConnector(ABC):
         self._rate_limiter = RateLimiter(self.RATE_LIMIT_RPM)
         self._authenticated = False
         self.logger = logging.getLogger(f"connector.{self.__class__.__name__.lower()}")
+        self.correlation_id = os.environ.get("APOTHEON_CORRELATION_ID", "corr-connector")
+        self.workflow_run_id = os.environ.get("APOTHEON_WORKFLOW_RUN_ID", "n/a")
+        self.schedule_run_id = os.environ.get("APOTHEON_SCHEDULE_RUN_ID", "n/a")
 
     @abstractmethod
     def _authenticate(self) -> None:
@@ -195,9 +200,8 @@ class BaseConnector(ABC):
 
                 if status in self.NON_RETRYABLE_STATUS_CODES:
                     error_body = exc.read().decode(errors="replace")
-                    raise RuntimeError(
-                        f"HTTP {status} {method} {url}: {error_body}"
-                    ) from exc
+                    envelope = build_error_envelope(correlation_id=self.correlation_id, workflow_run_id=self.workflow_run_id, schedule_run_id=self.schedule_run_id, skill=f"connector:{self.__class__.__name__.lower()}", severity="error", category="auth" if status in {401,403} else "connector", retryable=False, user_action_required=True, message="Connector request failed.", technical_detail=f"HTTP {status} {method} {url}: {error_body}", root_cause_hint="Invalid credentials, permissions, or request payload.", remediation="Verify connector credentials/permissions and retry.", source_exception=str(exc))
+                    raise RuntimeError(json.dumps(envelope, sort_keys=True)) from exc
 
                 if status == 429:
                     retry_after = float(exc.headers.get("Retry-After", backoff))
