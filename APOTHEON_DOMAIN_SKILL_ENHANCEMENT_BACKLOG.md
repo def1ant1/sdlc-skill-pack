@@ -1,7 +1,7 @@
 # APOTHEON — DOMAIN SKILL ENHANCEMENT BACKLOG
 
 **Status:** DOMAIN EXPANSION PLAN  
-**Purpose:** Improve and extend skills for financial management, trading research, arbitrage analysis, tax strategy support, business entity management, legal/regulatory intelligence, HR management, sales assistance, and knowledge/research management.
+**Purpose:** Improve and extend skills for financial management, trading research, arbitrage analysis, tax strategy support, business entity management, legal/regulatory intelligence, economic analysis/reporting, logistics, learning and development, materials management/science, data security, HR management, sales assistance, and knowledge/research management.
 
 ---
 
@@ -19,7 +19,8 @@ They must not autonomously:
 - Send customer-facing communications without policy approval.
 - Submit legal filings.
 - Interpret law as final legal advice.
-- Provide legal, tax, investment, or employment advice as final professional advice.
+- Modify security policy, secrets, IAM, encryption, or access controls without approval.
+- Provide legal, tax, investment, employment, engineering safety, or security advice as final professional advice.
 
 Required language in high-risk domains:
 
@@ -37,7 +38,8 @@ Required governance:
 - Compliance boundary checks.
 - Audit trail events.
 - Jurisdiction and effective-date tracking for legal/tax/regulatory outputs.
-- Citation to authoritative sources where legal, tax, or regulatory information is used.
+- Citation to authoritative sources where legal, tax, regulatory, economic, scientific, or security information is used.
+- Clear separation of observed data, derived analysis, inference, and recommendation.
 
 ---
 
@@ -490,7 +492,335 @@ professional-review question list
 
 ---
 
-# 7. HR Management Skill Pack
+# 7. Economic Analysis and Reporting Skill Pack
+
+## Goal
+
+Create macroeconomic, regional, industry, labor-market, pricing, inflation, interest-rate, and business-cycle intelligence for strategic planning, forecasting, market entry, pricing, and risk management.
+
+## New skills
+
+```text
+skills/economic-analysis/
+skills/macro-economic-reporting/
+skills/regional-economic-analysis/
+skills/industry-economic-analysis/
+skills/inflation-impact-analysis/
+skills/interest-rate-impact-analysis/
+skills/labor-market-analysis/
+skills/consumer-demand-analysis/
+skills/commodity-price-analysis/
+skills/business-cycle-monitoring/
+skills/economic-indicator-ingestion/
+skills/economic-forecast-scenario-support/
+skills/local-market-economic-reporting/
+skills/economic-risk-dashboard/
+```
+
+## Capabilities
+
+- Monitor macro and regional indicators.
+- Track inflation, rates, labor, consumer spending, housing, commodities, and credit conditions.
+- Analyze impact on pricing, demand, inventory, payroll, financing, and cash flow.
+- Produce executive economic outlook reports.
+- Support scenario planning and sensitivity analysis.
+- Connect economic indicators to company KPIs.
+
+## Source priority
+
+Prefer authoritative and primary data sources, such as:
+
+```text
+BLS
+BEA
+Federal Reserve / FRED
+Census Bureau
+Treasury
+state labor departments
+state economic development agencies
+county/city economic dashboards
+industry associations
+commodity exchanges where permitted
+```
+
+## Required outputs
+
+```text
+economic outlook report
+regional market brief
+industry trend report
+inflation impact memo
+interest-rate impact memo
+labor-market report
+scenario assumptions table
+executive risk dashboard
+```
+
+## Governance
+
+- Forecasts must be labeled as forecasts, not facts.
+- Every economic report must separate observed indicators, assumptions, model outputs, and recommendations.
+- Use source timestamps and revision dates where available.
+
+## Acceptance criteria
+
+- Skills include source timestamps and indicator definitions.
+- Skills flag stale or revised data.
+- Outputs include confidence and scenario ranges.
+- Economic assumptions can feed finance, pricing, inventory, trading research, and strategy workflows.
+
+---
+
+# 8. Logistics and Transportation Skill Pack
+
+## Goal
+
+Support transportation planning, freight/route optimization, carrier/vendor selection, delivery scheduling, warehouse movement, fleet operations, shipping cost analysis, and logistics risk management.
+
+## New skills
+
+```text
+skills/logistics-management/
+skills/route-optimization-support/
+skills/freight-cost-analysis/
+skills/carrier-selection-support/
+skills/shipping-rate-comparison/
+skills/delivery-schedule-planning/
+skills/warehouse-flow-optimization/
+skills/fleet-maintenance-planning/
+skills/transport-risk-analysis/
+skills/reverse-logistics-management/
+skills/last-mile-delivery-analysis/
+skills/logistics-exception-management/
+skills/vehicle-transport-coordination/
+skills/bill-of-lading-review-support/
+```
+
+## Capabilities
+
+- Compare carriers, routes, and shipping options.
+- Estimate freight, transport, fuel, handling, storage, and delay costs.
+- Plan pickup/delivery windows.
+- Track exceptions and delays.
+- Support inbound/outbound logistics.
+- Coordinate vehicle transport for dealership workflows.
+- Analyze logistics impact on margin and customer experience.
+
+## Required outputs
+
+```text
+route plan
+carrier comparison
+shipping cost estimate
+transport risk report
+delivery schedule
+logistics exception report
+vehicle transport checklist
+freight margin impact report
+```
+
+## Governance
+
+- No autonomous carrier booking, shipment release, payment, or legal transport document signature without approval.
+- Regulated transport, hazardous materials, title/vehicle movement, and interstate commerce issues require professional review where applicable.
+
+## Acceptance criteria
+
+- Skills support dry-run fixture data.
+- Outputs include assumptions, costs, timing, risk, and approval requirements.
+- Integrates with inventory, procurement, customer onboarding, vendor management, and OldFarmTrucks vehicle transport workflows.
+
+---
+
+# 9. Learning and Development Skill Pack
+
+## Goal
+
+Support employee training, role-based learning paths, skills gap analysis, onboarding curricula, knowledge retention, certification tracking, coaching, and adaptive learning workflows.
+
+## New skills
+
+```text
+skills/learning-development/
+skills/skills-gap-analysis/
+skills/role-based-learning-paths/
+skills/onboarding-curriculum-design/
+skills/training-content-generation/
+skills/learning-assessment-design/
+skills/certification-tracking/
+skills/coaching-plan-generation/
+skills/knowledge-retention-analysis/
+skills/adaptive-learning-recommendations/
+skills/team-capability-mapping/
+skills/learning-roi-analysis/
+```
+
+## Capabilities
+
+- Map roles to required skills.
+- Identify individual/team skill gaps.
+- Create onboarding and training plans.
+- Generate learning objectives, assessments, and practice tasks.
+- Track certifications and policy acknowledgements.
+- Recommend learning content based on role, goals, and performance evidence.
+- Measure learning effectiveness and business impact.
+
+## Required outputs
+
+```text
+skills matrix
+learning path
+onboarding curriculum
+training module outline
+assessment rubric
+certification tracker
+coaching plan
+learning ROI report
+```
+
+## Governance
+
+- Learning recommendations must not be used as final HR performance decisions.
+- Sensitive/protected attributes must not drive learning-path recommendations.
+- Performance-related insights require human review before employment impact.
+
+## Acceptance criteria
+
+- Integrates with HR management, knowledge management, meeting intelligence, and employee record workflows.
+- Skills include bias/fairness safeguards.
+- Outputs include evidence, objectives, timeline, and review cadence.
+
+---
+
+# 10. Materials Management and Materials Science Skill Pack
+
+## Goal
+
+Support materials inventory, procurement, substitution analysis, supplier/material risk, quality documentation, material compatibility, failure analysis support, and materials-science research for product, manufacturing, construction, repair, and restoration workflows.
+
+## New skills
+
+```text
+skills/materials-management/
+skills/materials-inventory-control/
+skills/bill-of-materials-management/
+skills/material-requirements-planning/
+skills/material-substitution-analysis/
+skills/material-cost-analysis/
+skills/supplier-material-risk-analysis/
+skills/material-quality-documentation/
+skills/material-traceability/
+skills/material-compatibility-research/
+skills/material-failure-analysis-support/
+skills/corrosion-risk-analysis/
+skills/coatings-and-finishes-research/
+skills/metals-and-alloys-research/
+skills/restoration-materials-planning/
+```
+
+## Capabilities
+
+- Manage material inventories and BOMs.
+- Forecast material requirements.
+- Compare substitute materials by cost, availability, performance, and risk.
+- Track material certificates, lots, batches, and traceability.
+- Support corrosion, coatings, metals/alloys, and restoration-material research.
+- Analyze material choice impact on cost, durability, safety, and compliance.
+
+## Required outputs
+
+```text
+bill of materials
+material inventory report
+substitution analysis
+supplier/material risk report
+traceability record
+quality documentation checklist
+material compatibility memo
+failure analysis support memo
+restoration materials plan
+```
+
+## Governance
+
+- Materials outputs involving safety-critical, structural, hazardous, regulated, or engineering-certified applications require qualified professional review.
+- No final engineering safety certification.
+- Hazardous materials handling must reference applicable safety and regulatory requirements.
+
+## Acceptance criteria
+
+- Integrates with inventory, procurement, logistics, product operations, and OldFarmTrucks restoration workflows.
+- Outputs include assumptions, source references, material properties, constraints, and review flags.
+- Supports citation-backed research for materials science claims.
+
+---
+
+# 11. Data Security and Information Protection Skill Pack
+
+## Goal
+
+Strengthen data security, privacy, access control, secrets management, data classification, retention, DLP, incident response, vendor security review, and secure workflow governance.
+
+## New skills
+
+```text
+skills/data-security-management/
+skills/data-classification/
+skills/data-loss-prevention-analysis/
+skills/secrets-management-review/
+skills/access-control-review/
+skills/iam-policy-analysis/
+skills/security-configuration-review/
+skills/encryption-policy-management/
+skills/data-retention-policy-enforcement/
+skills/privacy-impact-assessment/
+skills/vendor-security-review/
+skills/security-incident-triage/
+skills/backup-and-recovery-security/
+skills/audit-log-review/
+skills/secure-data-sharing-review/
+skills/ai-data-security-review/
+```
+
+## Capabilities
+
+- Classify data by sensitivity, privacy, and business criticality.
+- Review access policies, IAM, secrets, encryption, and retention.
+- Identify risky data flows and external sharing.
+- Review vendor/security questionnaires.
+- Support incident triage and evidence collection.
+- Evaluate AI workflow data exposure risks.
+- Enforce least privilege and approval gates.
+
+## Required outputs
+
+```text
+data classification report
+access review report
+secrets exposure risk report
+data flow risk map
+privacy impact assessment
+vendor security review
+incident triage report
+secure sharing recommendation
+audit evidence pack
+```
+
+## Governance
+
+- No autonomous permission changes, secret rotation, data deletion, encryption changes, or security configuration changes without approval.
+- Security incident outputs must preserve evidence and avoid destructive actions unless approved.
+- Sensitive findings must be access-controlled.
+
+## Acceptance criteria
+
+- Integrates with privacy runtime, zero-trust runtime, local security, governance, audit ledger, connector hub, and knowledge management.
+- Skills produce actionable but approval-gated remediation recommendations.
+- Dry-run tests verify no security mutations occur.
+
+---
+
+# 12. HR Management Skill Pack
 
 ## Goal
 
@@ -549,7 +879,7 @@ These require human review and bias checks.
 
 ---
 
-# 8. Sales Assistant and Revenue Enablement Skill Pack
+# 13. Sales Assistant and Revenue Enablement Skill Pack
 
 ## Goal
 
@@ -598,7 +928,7 @@ skills/customer-research-briefing/
 
 ---
 
-# 9. Knowledge Management and Research Skill Pack
+# 14. Knowledge Management and Research Skill Pack
 
 ## Goal
 
@@ -655,7 +985,7 @@ research gap report
 
 ---
 
-# 10. Canonical Entity Expansion
+# 15. Canonical Entity Expansion
 
 Add or verify schemas for:
 
@@ -690,6 +1020,40 @@ Contract
 Clause
 LegalObligation
 LegalDeadline
+EconomicIndicator
+EconomicReport
+ForecastScenario
+RegionalMarket
+IndustryTrend
+CommodityPrice
+LogisticsRoute
+Carrier
+Shipment
+FreightQuote
+WarehouseLocation
+DeliverySchedule
+FleetAsset
+LearningPath
+TrainingModule
+Assessment
+Certification
+SkillProfile
+CapabilityMatrix
+Material
+BillOfMaterials
+MaterialLot
+MaterialCertificate
+MaterialProperty
+MaterialSubstitution
+SupplierMaterial
+DataAsset
+DataClassification
+DataFlow
+AccessPolicy
+Secret
+SecurityFinding
+SecurityIncident
+PrivacyImpactAssessment
 Employee
 Candidate
 JobRole
@@ -707,7 +1071,7 @@ KnowledgeArtifact
 
 ---
 
-# 11. Event Model Expansion
+# 16. Event Model Expansion
 
 Add or verify events:
 
@@ -733,6 +1097,29 @@ legal.deadline_due
 legal.professional_review_requested
 permit.requirement_detected
 license.renewal_due
+economic.indicator_updated
+economic.report_generated
+economic.scenario_updated
+economic.risk_alert_created
+logistics.shipment_planned
+logistics.carrier_selected_for_review
+logistics.exception_detected
+logistics.delivery_schedule_updated
+logistics.transport_risk_flagged
+learning.skill_gap_detected
+learning.path_assigned_for_review
+learning.assessment_completed
+learning.certification_due
+materials.bom_updated
+materials.shortage_detected
+materials.substitution_recommended
+materials.quality_document_received
+materials.traceability_gap_detected
+security.data_classified
+security.access_review_required
+security.secret_risk_detected
+security.incident_triaged
+security.privacy_impact_assessment_created
 hr.candidate_scored
 hr.onboarding_started
 hr.policy_acknowledgement_missing
@@ -745,7 +1132,7 @@ knowledge.decision_recorded
 
 ---
 
-# 12. Required Governance Documents
+# 17. Required Governance Documents
 
 Create or update:
 
@@ -758,6 +1145,12 @@ docs/governance/legal-research-boundaries.md
 docs/governance/regulatory-monitoring-policy.md
 docs/governance/tax-rate-source-policy.md
 docs/governance/government-source-verification-policy.md
+docs/governance/economic-forecasting-boundaries.md
+docs/governance/logistics-external-action-policy.md
+docs/governance/learning-development-fairness-policy.md
+docs/governance/materials-science-review-boundaries.md
+docs/governance/data-security-action-policy.md
+docs/governance/incident-response-boundaries.md
 docs/governance/hr-high-impact-decision-policy.md
 docs/governance/customer-communication-policy.md
 docs/governance/research-citation-integrity-policy.md
@@ -765,7 +1158,7 @@ docs/governance/research-citation-integrity-policy.md
 
 ---
 
-# 13. Planner and Schedule Integration
+# 18. Planner and Schedule Integration
 
 ## Planner updates
 
@@ -778,6 +1171,11 @@ scripts/orchestration/plan_tax_workflow.py
 scripts/orchestration/plan_entity_management_workflow.py
 scripts/orchestration/plan_legal_workflow.py
 scripts/orchestration/plan_regulatory_monitoring_workflow.py
+scripts/orchestration/plan_economic_analysis_workflow.py
+scripts/orchestration/plan_logistics_workflow.py
+scripts/orchestration/plan_learning_development_workflow.py
+scripts/orchestration/plan_materials_workflow.py
+scripts/orchestration/plan_data_security_workflow.py
 scripts/orchestration/plan_hr_workflow.py
 scripts/orchestration/plan_sales_workflow.py
 scripts/orchestration/plan_research_workflow.py
@@ -799,6 +1197,16 @@ schedules/examples/monthly-business-license-review.yaml
 schedules/examples/weekly-regulatory-change-monitor.yaml
 schedules/examples/monthly-local-law-monitor.yaml
 schedules/examples/quarterly-federal-law-review.yaml
+schedules/examples/weekly-economic-outlook-report.yaml
+schedules/examples/monthly-regional-economic-review.yaml
+schedules/examples/weekly-logistics-exception-review.yaml
+schedules/examples/monthly-carrier-performance-review.yaml
+schedules/examples/monthly-learning-skills-gap-review.yaml
+schedules/examples/quarterly-certification-review.yaml
+schedules/examples/weekly-materials-shortage-review.yaml
+schedules/examples/monthly-material-quality-review.yaml
+schedules/examples/weekly-data-security-access-review.yaml
+schedules/examples/daily-security-incident-triage-review.yaml
 schedules/examples/weekly-hr-onboarding-review.yaml
 schedules/examples/daily-sales-follow-up-review.yaml
 schedules/examples/weekly-knowledge-curation-review.yaml
@@ -806,7 +1214,7 @@ schedules/examples/weekly-knowledge-curation-review.yaml
 
 ---
 
-# 14. Example Workflows
+# 19. Example Workflows
 
 Add docs/examples for:
 
@@ -819,6 +1227,11 @@ docs/examples/business-entity-management-workflows.md
 docs/examples/legal-regulatory-intelligence-workflows.md
 docs/examples/local-state-federal-law-monitoring-workflows.md
 docs/examples/tax-rate-monitoring-workflows.md
+docs/examples/economic-analysis-reporting-workflows.md
+docs/examples/logistics-management-workflows.md
+docs/examples/learning-development-workflows.md
+docs/examples/materials-management-science-workflows.md
+docs/examples/data-security-workflows.md
 docs/examples/hr-management-workflows.md
 docs/examples/sales-assistant-workflows.md
 docs/examples/knowledge-research-management-workflows.md
@@ -826,7 +1239,7 @@ docs/examples/knowledge-research-management-workflows.md
 
 ---
 
-# 15. Test and Evaluation Requirements
+# 20. Test and Evaluation Requirements
 
 Create tests:
 
@@ -838,12 +1251,19 @@ tests/domain/test_tax_strategy_skills.py
 tests/domain/test_entity_management_skills.py
 tests/domain/test_legal_regulatory_skills.py
 tests/domain/test_tax_rate_monitoring_skills.py
+tests/domain/test_economic_analysis_skills.py
+tests/domain/test_logistics_skills.py
+tests/domain/test_learning_development_skills.py
+tests/domain/test_materials_management_skills.py
+tests/domain/test_data_security_skills.py
 tests/domain/test_hr_management_skills.py
 tests/domain/test_sales_assistant_skills.py
 tests/domain/test_knowledge_research_skills.py
 tests/orchestration/test_domain_planner_expansion.py
 tests/governance/test_high_risk_domain_boundaries.py
 tests/governance/test_legal_tax_professional_boundaries.py
+tests/governance/test_data_security_action_boundaries.py
+tests/governance/test_materials_science_review_boundaries.py
 ```
 
 Required eval dimensions:
@@ -861,39 +1281,55 @@ Required eval dimensions:
 - authoritative-source preference
 - stale-source detection
 - conflicting-source detection
+- forecast assumption quality
+- logistics cost/timing accuracy
+- learning recommendation fairness
+- material property citation quality
+- security action safety
+- privacy and data classification correctness
 
 ---
 
-# 16. Recommended Implementation Order
+# 21. Recommended Implementation Order
 
-1. Governance boundary docs for trading, tax, legal/regulatory, HR, entity management, research.
+1. Governance boundary docs for trading, tax, legal/regulatory, economics, logistics, L&D, materials science, data security, HR, entity management, research.
 2. Canonical entity and event schemas.
-3. Legal/regulatory/tax-rate monitoring skills.
-4. Financial management skills.
-5. Knowledge/research skills.
-6. Sales assistant skills.
-7. Entity management skills.
-8. HR management skills.
-9. Tax strategy support skills.
-10. Trading research skills.
-11. Arbitrage analysis skills.
-12. Planner integrations.
-13. Schedule examples.
-14. Domain examples.
-15. Tests and evals.
+3. Data security skills and governance validators.
+4. Legal/regulatory/tax-rate monitoring skills.
+5. Economic analysis/reporting skills.
+6. Financial management skills.
+7. Logistics skills.
+8. Materials management/science skills.
+9. Knowledge/research skills.
+10. Learning and development skills.
+11. Sales assistant skills.
+12. Entity management skills.
+13. HR management skills.
+14. Tax strategy support skills.
+15. Trading research skills.
+16. Arbitrage analysis skills.
+17. Planner integrations.
+18. Schedule examples.
+19. Domain examples.
+20. Tests and evals.
 
 ---
 
-# 17. Release Acceptance Criteria
+# 22. Release Acceptance Criteria
 
 This enhancement is complete when:
 
 - All new skills pass V9 skill contract validation.
 - All high-risk domains reference governance boundary docs.
-- Trading/tax/legal/HR skills are decision-support only.
+- Trading/tax/legal/HR/security/materials skills are decision-support only where professional review is required.
 - Legal and tax-rate outputs include jurisdiction, source, effective date where available, and last-verified timestamp.
-- Authoritative government sources are preferred and secondary sources are labeled.
-- No autonomous trades, filings, payments, entity actions, HR decisions, legal submissions, government filings, or customer messages occur.
+- Economic reports include source timestamps, assumptions, and scenario ranges.
+- Logistics outputs include cost, timing, risk, and approval requirements.
+- Learning/development outputs include fairness safeguards and human-review boundaries.
+- Materials science outputs include source-backed material properties and professional-review flags for safety-critical use.
+- Data security outputs never perform access, secret, encryption, deletion, or configuration changes without approval.
+- Authoritative government/primary sources are preferred and secondary sources are labeled.
+- No autonomous trades, filings, payments, entity actions, HR decisions, legal submissions, government filings, security mutations, logistics bookings, or customer messages occur.
 - Domain planners can route representative workflows.
 - Example schedules validate.
 - Dry-run tests prove no external side effects.
