@@ -1,5 +1,11 @@
 ## 2026-05-11
 
+## [8.0.20] — 2026-05-11 — Skill Pipeline Compiler MVP (MB-P0-018)
+
+- Added deterministic skill pipeline generator at `scripts/skill_pipeline.py` and generated reports `reports/skill_pipeline_report.md` + `reports/skill_pipeline_report.json`.
+- Added compiler scaffolding under `core/skill-compiler/` with compile/runtime stubs, governance wrapper, telemetry/rate-limit/cost stubs, schema bindings, and unit tests.
+- Added `schemas/compiled-skill.schema.json` and `references/skill-pipeline-standard.md` to formalize compiled skill output and deterministic pipeline behavior.
+
 ## [8.0.19] — 2026-05-11 — Dashboard / Control-Plane MVP (MB-P0-017)
 
 - Added Streamlit dashboard MVP at `apps/dashboard/streamlit_dashboard.py` with workflow/schedule progress, approvals, budgets, rate limits, connector and local-app health, memory, telemetry, skill maturity, and OldFarmTrucks template status views.

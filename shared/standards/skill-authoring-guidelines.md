@@ -201,3 +201,14 @@ python scripts/validation/validate_skill_yaml.py --mvp
 
 This enables metadata-only planner loading without hydrating full runtime references.
 
+
+
+## Skill Pipeline Compiler (MB-P0-018)
+
+When authoring new skills, validate compiler compatibility by ensuring generated artifacts can be produced deterministically via:
+
+```bash
+python scripts/skill_pipeline.py --version 0.1.0
+```
+
+Compiled outputs should conform to `schemas/compiled-skill.schema.json` and follow `references/skill-pipeline-standard.md`.
