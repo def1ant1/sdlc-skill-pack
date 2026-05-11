@@ -20,7 +20,7 @@ ALLOWLIST_PREFIXES = [
     'scripts/',
     'reports/',
 ]
-ALLOWLIST_FILES = {'README.md', 'CHANGELOG.md', 'LICENSE'}
+ALLOWLIST_FILES = {'README.md', 'CHANGELOG.md', 'RELEASE_NOTES.md', 'VERSION', 'LICENSE'}
 DENYLIST_PATTERNS = [
     '.git/*',
     '**/.git/*',
