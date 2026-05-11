@@ -3,10 +3,10 @@ objectives: [one]
 steps:
   - id: s1
     order: 1
-    title: Missing skill
-    skill: not-a-real-skill
+    title: Step 1
+    skill: workflow-engine
     depends_on: []
-    governance_policy_refs: [references/business-policy-standard.md]
+    governance_policy_refs: []
 governance_gates:
   - id: gate
     policy_ref: references/business-policy-standard.md

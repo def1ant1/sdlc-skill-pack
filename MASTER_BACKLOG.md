@@ -212,7 +212,7 @@ Acceptance criteria:
 ## MB-P0-005 — Build workflow plan schema and validator
 
 **Source:** Local Workflow Scheduling Backlog  
-**Status:** Open
+**Status:** Completed (2026-05-11)
 
 Create:
 
