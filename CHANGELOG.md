@@ -1,5 +1,11 @@
 ## 2026-05-11
 
+## [8.0.16] — 2026-05-11 — Domain Planner Completion + Validation
+
+- Added/updated domain planners for business, customer, finance, inventory, legal, and data-security with required `--dry-run --json --output` flags and inventory/graph skill checks.
+- Planner outputs now conform to `schemas/workflow-plan.schema.json` and are validated by `scripts/validation/validate_workflow_plan.py` in planner tests.
+- Added planner regression coverage for missing-skill diagnostics and required-flag enforcement.
+
 ## [8.0.15] — 2026-05-11 — Local Schedule Schema + Deterministic Due Runner
 
 - Added schedule schemas: `schemas/workflow-schedule.schema.json` and `schemas/schedule-run-record.schema.json`.

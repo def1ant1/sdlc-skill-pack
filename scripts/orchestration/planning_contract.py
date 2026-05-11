@@ -1,86 +1,122 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
-import datetime
-import hashlib
+import argparse
+import datetime as dt
 import json
 from pathlib import Path
 
-from scripts.runtime.error_envelope import build_error_envelope
-
-SHARED_SKILLS: dict[str, dict] = {
-    "finance-operations": {"domain": "finance", "signals": ["finance", "budget", "forecast", "cash", "expense", "invoice", "ap/ar", "close", "variance"]},
-    "procurement-operations": {"domain": "procurement", "signals": ["procurement", "vendor", "supplier", "sourcing", "purchase", "po", "contract", "rfx"]},
-    "customer-operations": {"domain": "customer", "signals": ["customer", "support", "onboarding", "retention", "churn", "csat", "crm", "ticket"]},
-    "inventory-operations": {"domain": "inventory", "signals": ["inventory", "stock", "warehouse", "replenishment", "sku", "safety stock", "fulfillment"]},
-    "hr-operations": {"domain": "hr", "signals": ["hr", "hiring", "headcount", "payroll", "workforce", "policy", "performance"]},
-    "legal-operations": {"domain": "legal", "signals": ["legal", "compliance", "regulatory", "contract review", "terms", "risk", "privacy"]},
-    "executive-reporting": {"domain": "reporting", "signals": ["report", "dashboard", "executive", "kpi", "board", "summary"]},
-}
+ROOT = Path(__file__).resolve().parents[2]
+POLICY_REFS = [
+    "references/business-policy-standard.md",
+    "references/semantic-cache-policy.md",
+]
 DOMAIN_DEFAULTS: dict[str, list[str]] = {
-    "finance": ["finance-operations", "procurement-operations", "legal-operations", "executive-reporting"],
-    "customer": ["customer-operations", "finance-operations", "legal-operations", "executive-reporting"],
-    "inventory": ["inventory-operations", "procurement-operations", "finance-operations", "executive-reporting"],
-    "business": ["finance-operations", "procurement-operations", "customer-operations", "inventory-operations", "hr-operations", "legal-operations", "executive-reporting"],
-}
-_APPROVAL_POLICIES: dict[str, dict] = {
-    "finance-operations": {"approver_role": "finance-controller", "policy_tags": ["budget-control", "spend-authorization"]},
-    "procurement-operations": {"approver_role": "procurement-manager", "policy_tags": ["vendor-governance", "third-party-risk"]},
-    "hr-operations": {"approver_role": "hr-business-partner", "policy_tags": ["workforce-policy", "separation-of-duties"]},
-    "legal-operations": {"approver_role": "legal-counsel", "policy_tags": ["regulatory-compliance", "contract-risk"]},
+    "business": ["business-orchestration", "governance", "audit-trail"],
+    "customer": ["meeting-intelligence", "business-orchestration", "governance"],
+    "finance": ["billing-runtime", "business-policy-engine", "audit-trail"],
+    "inventory": ["master-data-management", "business-orchestration", "audit-trail"],
+    "legal": ["compliance-runtime", "governance", "business-policy-engine"],
+    "data-security": ["sandbox-execution", "policy-engine", "compliance-runtime"],
 }
 
-def route_objective(objective: str, domain: str) -> list[str]:
-    lowered = objective.lower()
-    selected = [name for name, meta in SHARED_SKILLS.items() if any(sig in lowered for sig in meta["signals"])]
-    if not selected:
-        return DOMAIN_DEFAULTS[domain]
-    ordered = DOMAIN_DEFAULTS[domain]
-    return [s for s in ordered if s in selected] or ordered
 
-def _skill_exists(skill: str) -> bool:
-    repo_root = Path(__file__).resolve().parents[2]
-    return any((repo_root / prefix / skill / "SKILL.md").exists() for prefix in ("skills", "core"))
+def _load_skill_inventory(path: Path) -> set[str]:
+    data = json.loads(path.read_text(encoding="utf-8"))
+    return {row.get("id", "") for row in data if isinstance(row, dict)}
 
-def _diagnose_routing(objective: str, routed: list[str]) -> dict:
-    lowered = objective.strip().lower()
-    signal_hits = {name: sum(1 for sig in meta["signals"] if sig in lowered) for name, meta in SHARED_SKILLS.items()}
-    top = max(signal_hits.values()) if signal_hits else 0
-    missing_required = sorted([s for s in routed if not _skill_exists(s)])
+
+def _load_skill_graph(path: Path) -> set[str]:
+    data = json.loads(path.read_text(encoding="utf-8"))
+    return {n.get("name", "") for n in data.get("nodes", []) if isinstance(n, dict)}
+
+
+def build_domain_plan(objective: str, domain: str, *, dry_run: bool, inventory_path: Path, graph_path: Path) -> dict:
+    if not objective.strip():
+        raise ValueError("objective is required")
+    if domain not in DOMAIN_DEFAULTS:
+        raise ValueError(f"unsupported domain: {domain}")
+
+    missing_inputs = [str(p) for p in (inventory_path, graph_path) if not p.exists()]
+    if missing_inputs:
+        raise ValueError(
+            "missing skill metadata inputs: " + ", ".join(missing_inputs) +
+            ". Generate them with scripts/generate_skill_inventory.py and scripts/skills/build_skill_graph.py"
+        )
+
+    inventory_skills = _load_skill_inventory(inventory_path)
+    graph_skills = _load_skill_graph(graph_path)
+    required = DOMAIN_DEFAULTS[domain]
+    missing_from_inventory = sorted([s for s in required if s not in inventory_skills])
+    missing_from_graph = sorted([s for s in required if s not in graph_skills])
+    missing = sorted(set(missing_from_inventory + missing_from_graph))
+    if missing:
+        raise ValueError(
+            "required skills unavailable. "
+            f"missing_in_inventory={missing_from_inventory}; missing_in_graph={missing_from_graph}; "
+            "install/add skills and regenerate reports."
+        )
+
+    created = dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+    steps = []
+    for i, skill in enumerate(required, start=1):
+        sid = f"{domain.replace('-', '')}-{i}"
+        steps.append({
+            "id": sid,
+            "order": i,
+            "title": f"Run {skill}",
+            "skill": skill,
+            "depends_on": [steps[-1]["id"]] if steps else [],
+            "governance_policy_refs": POLICY_REFS,
+            "outputs": [f"reports/{domain}-{skill}-output.json"],
+        })
+
     return {
-        "objective_non_empty": bool(objective.strip()),
-        "selected_skills_exist": len(missing_required) == 0,
-        "dependency_completeness": True,
-        "ambiguous_routing": top > 0 and list(signal_hits.values()).count(top) > 1,
-        "missing_required_skills": missing_required,
-        "missing_optional_skills": [],
-        "remediation": "Install or add missing skills before execution: " + ", ".join(missing_required) if missing_required else None,
-        "warnings": [],
+        "id": "sample-sdlc-plan",
+        "description": f"Auto-generated {domain} workflow plan",
+        "objectives": [objective.strip()],
+        "steps": steps,
+        "governance_gates": [
+            {"id": "gate-policy", "policy_ref": "references/business-policy-standard.md", "enforcement": "blocking"},
+            {"id": "gate-docs", "policy_ref": "docs/standards/documentation-governance.md", "enforcement": "advisory"},
+        ],
+        "dry_run_safety": {
+            "enabled": dry_run,
+            "no_external_writes": True,
+            "require_human_approval_for_mutations": True,
+        },
+        "deterministic_artifacts": [
+            {"name": "workflow-plan", "path": "reports/generated-workflow-plan.json", "format": "json"}
+        ],
+        "planner_metadata": {"planner": f"{domain}-workflow-planner", "version": "1.0.0", "created_at": created},
     }
 
-def _governance_annotation(skill: str) -> dict:
-    policy = _APPROVAL_POLICIES.get(skill)
-    if not policy:
-        return {"approval_required": False, "approver_role": None, "policy_tags": [], "reason": "No elevated governance policy mapped for this step."}
-    return {"approval_required": True, "approver_role": policy["approver_role"], "policy_tags": policy["policy_tags"], "reason": "Step impacts controlled business processes and requires explicit approval."}
 
-def build_domain_plan(objective: str, domain: str) -> dict:
-    routed = route_objective(objective, domain)
-    diagnostics = _diagnose_routing(objective, routed)
-    if not diagnostics["objective_non_empty"]:
-        envelope = build_error_envelope(correlation_id="corr-planner", workflow_run_id="n/a", skill="planner", step="plan", category="validation", retryable=False, user_action_required=True, message="Planner objective is empty.", technical_detail="Objective must not be empty.", root_cause_hint="Caller provided blank objective input.", remediation="Provide a non-empty objective and rerun planner.", source_exception="ValueError")
-        raise ValueError(json.dumps(envelope, sort_keys=True))
-    if diagnostics["missing_required_skills"]:
-        envelope = build_error_envelope(correlation_id="corr-planner", workflow_run_id="n/a", skill="planner", step="skill_resolution", category="config", retryable=False, user_action_required=True, message="Planner could not resolve required skills.", technical_detail=f"Missing skills: {', '.join(diagnostics['missing_required_skills'])}", root_cause_hint="Required skills are not installed in skills/ or core/.", remediation=diagnostics["remediation"] or "Install missing skills and rerun planner.", source_exception="ValueError")
-        raise ValueError(json.dumps(envelope, sort_keys=True))
-    plan_id = f"{domain.upper()}-{datetime.date.today().strftime('%Y%m%d')}-{hashlib.sha1(f'{domain}:{objective.strip().lower()}'.encode()).hexdigest()[:8]}"
-    skill_chain = [{"step": i, "skill": skill, "phase": SHARED_SKILLS[skill]["domain"], "depends_on": [routed[i - 2]] if i > 1 else [], "governance": _governance_annotation(skill)} for i, skill in enumerate(routed, start=1)]
-    return {
-        "plan_id": plan_id, "created": datetime.date.today().isoformat(), "planner": f"{domain}-workflow-planner", "objective": objective,
-        "planning_contract": {"version": "1.0", "routed_domains": sorted({SHARED_SKILLS[s]["domain"] for s in routed}), "shared_skill_registry": list(SHARED_SKILLS.keys()), "schema": "workflow-plan@1.0"},
-        "skill_chain": skill_chain,
-        "governance_checks": [{"name": "policy-compliance-review", "owner": "legal-operations", "fail_action": "block"}, {"name": "separation-of-duties", "owner": "hr-operations", "fail_action": "escalate"}],
-        "hitl_checkpoints": [{"checkpoint": "objective-approval", "required": True, "approver_role": "business-owner"}, {"checkpoint": "pre-execution-risk-review", "required": True, "approver_role": "risk-committee"}, {"checkpoint": "final-signoff", "required": True, "approver_role": "executive-sponsor"}],
-        "next_action": {"skill": routed[0], "reason": "highest-priority routed skill"},
-        "planner_diagnostics": diagnostics,
-    }
+def run_planner_cli(domain: str) -> int:
+    p = argparse.ArgumentParser(description=f"Generate {domain} workflow plan")
+    p.add_argument("objective", nargs="?", help="Objective text")
+    p.add_argument("--stdin", action="store_true", help="Read objective from stdin")
+    p.add_argument("--dry-run", action="store_true", required=True, help="Required safety flag")
+    p.add_argument("--json", action="store_true", required=True, help="Emit JSON output")
+    p.add_argument("--output", type=Path, required=True, help="Output path for plan JSON")
+    p.add_argument("--inventory", type=Path, default=ROOT / "reports" / "skill_inventory.json")
+    p.add_argument("--graph", type=Path, default=ROOT / "reports" / "skill_graph.json")
+    a = p.parse_args()
+
+    objective = (Path("-").read_text() if False else "")
+    objective = a.objective if a.objective else ""
+    if a.stdin or not a.objective:
+        import sys
+        objective = sys.stdin.read().strip()
+    try:
+        plan = build_domain_plan(objective, domain, dry_run=a.dry_run, inventory_path=a.inventory, graph_path=a.graph)
+    except ValueError as exc:
+        import sys
+        print(f"Error: {exc}", file=sys.stderr)
+        return 1
+
+    a.output.parent.mkdir(parents=True, exist_ok=True)
+    a.output.write_text(json.dumps(plan, indent=2) + "\n", encoding="utf-8")
+    if a.json:
+        print(json.dumps(plan, indent=2, sort_keys=True))
+    return 0

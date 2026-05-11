@@ -73,8 +73,53 @@
   },
   {
     "category": "core",
+    "id": "business-approval-gateway",
+    "name": "business-approval-gateway",
+    "version": null,
+    "owner": null,
+    "maturity": null,
+    "hitl_gates": 0
+  },
+  {
+    "category": "core",
+    "id": "business-audit-ledger",
+    "name": "business-audit-ledger",
+    "version": null,
+    "owner": null,
+    "maturity": null,
+    "hitl_gates": 0
+  },
+  {
+    "category": "core",
+    "id": "business-event-model",
+    "name": "business-event-model",
+    "version": null,
+    "owner": null,
+    "maturity": null,
+    "hitl_gates": 0
+  },
+  {
+    "category": "core",
     "id": "business-orchestration",
     "name": "business-orchestration",
+    "version": null,
+    "owner": null,
+    "maturity": null,
+    "hitl_gates": 0
+  },
+  {
+    "category": "core",
+    "id": "business-policy-engine",
+    "name": "business-policy-engine",
+    "version": null,
+    "owner": null,
+    "maturity": null,
+    "hitl_gates": 0
+  },
+  {
+    "category": "core",
+    "id": "canonical-entity-model",
+    "name": "canonical-entity-model",
     "version": null,
     "owner": null,
     "maturity": null,
@@ -111,6 +156,15 @@
     "category": "core",
     "id": "connector-hub",
     "name": "connector-hub",
+    "version": null,
+    "owner": null,
+    "maturity": null,
+    "hitl_gates": 0
+  },
+  {
+    "category": "core",
+    "id": "data-contract-registry",
+    "name": "data-contract-registry",
     "version": null,
     "owner": null,
     "maturity": null,
@@ -721,6 +775,15 @@
   },
   {
     "category": "skills",
+    "id": "arbitrage-analysis",
+    "name": "arbitrage-analysis",
+    "version": null,
+    "owner": null,
+    "maturity": null,
+    "hitl_gates": 0
+  },
+  {
+    "category": "skills",
     "id": "arbitrage-opportunity-detection",
     "name": "arbitrage-opportunity-detection",
     "version": null,
@@ -750,6 +813,15 @@
     "category": "skills",
     "id": "backend-engineering",
     "name": "backend-engineering",
+    "version": null,
+    "owner": null,
+    "maturity": null,
+    "hitl_gates": 0
+  },
+  {
+    "category": "skills",
+    "id": "backtesting-research",
+    "name": "backtesting-research",
     "version": null,
     "owner": null,
     "maturity": null,
@@ -874,6 +946,15 @@
   },
   {
     "category": "skills",
+    "id": "cash-management",
+    "name": "cash-management",
+    "version": null,
+    "owner": null,
+    "maturity": null,
+    "hitl_gates": 0
+  },
+  {
+    "category": "skills",
     "id": "causal-analysis",
     "name": "causal-analysis",
     "version": null,
@@ -948,6 +1029,15 @@
     "category": "skills",
     "id": "communication-analytics",
     "name": "communication-analytics",
+    "version": null,
+    "owner": null,
+    "maturity": null,
+    "hitl_gates": 0
+  },
+  {
+    "category": "skills",
+    "id": "comparison-engines",
+    "name": "comparison-engines",
     "version": null,
     "owner": null,
     "maturity": null,
@@ -1047,6 +1137,15 @@
     "category": "skills",
     "id": "crm-integration",
     "name": "crm-integration",
+    "version": null,
+    "owner": null,
+    "maturity": null,
+    "hitl_gates": 0
+  },
+  {
+    "category": "skills",
+    "id": "crypto-fx-research",
+    "name": "crypto-fx-research",
     "version": null,
     "owner": null,
     "maturity": null,
@@ -1270,6 +1369,15 @@
   },
   {
     "category": "skills",
+    "id": "expense-policy-compliance",
+    "name": "expense-policy-compliance",
+    "version": null,
+    "owner": null,
+    "maturity": null,
+    "hitl_gates": 0
+  },
+  {
+    "category": "skills",
     "id": "feature-prioritization",
     "name": "feature-prioritization",
     "version": null,
@@ -1281,6 +1389,24 @@
     "category": "skills",
     "id": "finance-accounting-phase-pack",
     "name": "finance-accounting-phase-pack",
+    "version": null,
+    "owner": null,
+    "maturity": null,
+    "hitl_gates": 0
+  },
+  {
+    "category": "skills",
+    "id": "financial-control-monitoring",
+    "name": "financial-control-monitoring",
+    "version": null,
+    "owner": null,
+    "maturity": null,
+    "hitl_gates": 0
+  },
+  {
+    "category": "skills",
+    "id": "financial-management",
+    "name": "financial-management",
     "version": null,
     "owner": null,
     "maturity": null,
@@ -1666,6 +1792,15 @@
   },
   {
     "category": "skills",
+    "id": "market-ingestion-research",
+    "name": "market-ingestion-research",
+    "version": null,
+    "owner": null,
+    "maturity": null,
+    "hitl_gates": 0
+  },
+  {
+    "category": "skills",
     "id": "market-pricing-intelligence",
     "name": "market-pricing-intelligence",
     "version": null,
@@ -1774,6 +1909,15 @@
   },
   {
     "category": "skills",
+    "id": "news-synthesis-research",
+    "name": "news-synthesis-research",
+    "version": null,
+    "owner": null,
+    "maturity": null,
+    "hitl_gates": 0
+  },
+  {
+    "category": "skills",
     "id": "observability",
     "name": "observability",
     "version": null,
@@ -1875,6 +2019,15 @@
     "category": "skills",
     "id": "portfolio-optimization",
     "name": "portfolio-optimization",
+    "version": null,
+    "owner": null,
+    "maturity": null,
+    "hitl_gates": 0
+  },
+  {
+    "category": "skills",
+    "id": "position-sizing-research",
+    "name": "position-sizing-research",
     "version": null,
     "owner": null,
     "maturity": null,
@@ -2127,6 +2280,24 @@
     "category": "skills",
     "id": "revenue-optimization",
     "name": "revenue-optimization",
+    "version": null,
+    "owner": null,
+    "maturity": null,
+    "hitl_gates": 0
+  },
+  {
+    "category": "skills",
+    "id": "risk-limits-research",
+    "name": "risk-limits-research",
+    "version": null,
+    "owner": null,
+    "maturity": null,
+    "hitl_gates": 0
+  },
+  {
+    "category": "skills",
+    "id": "risk-research",
+    "name": "risk-research",
     "version": null,
     "owner": null,
     "maturity": null,
@@ -2413,6 +2584,15 @@
   },
   {
     "category": "skills",
+    "id": "technical-fundamental-analysis-research",
+    "name": "technical-fundamental-analysis-research",
+    "version": null,
+    "owner": null,
+    "maturity": null,
+    "hitl_gates": 0
+  },
+  {
+    "category": "skills",
     "id": "temporal-memory-replay",
     "name": "temporal-memory-replay",
     "version": null,
@@ -2431,8 +2611,26 @@
   },
   {
     "category": "skills",
+    "id": "trading-journal-research",
+    "name": "trading-journal-research",
+    "version": null,
+    "owner": null,
+    "maturity": null,
+    "hitl_gates": 0
+  },
+  {
+    "category": "skills",
     "id": "uncertainty-aware-routing",
     "name": "uncertainty-aware-routing",
+    "version": null,
+    "owner": null,
+    "maturity": null,
+    "hitl_gates": 0
+  },
+  {
+    "category": "skills",
+    "id": "unit-economics-analysis",
+    "name": "unit-economics-analysis",
     "version": null,
     "owner": null,
     "maturity": null,
@@ -2503,6 +2701,15 @@
   },
   {
     "category": "skills",
+    "id": "watchlist-research",
+    "name": "watchlist-research",
+    "version": null,
+    "owner": null,
+    "maturity": null,
+    "hitl_gates": 0
+  },
+  {
+    "category": "skills",
     "id": "win-loss-analysis",
     "name": "win-loss-analysis",
     "version": null,
@@ -2541,6 +2748,15 @@
     "category": "skills",
     "id": "workforce-management",
     "name": "workforce-management",
+    "version": null,
+    "owner": null,
+    "maturity": null,
+    "hitl_gates": 0
+  },
+  {
+    "category": "skills",
+    "id": "working-capital-optimization",
+    "name": "working-capital-optimization",
     "version": null,
     "owner": null,
     "maturity": null,
