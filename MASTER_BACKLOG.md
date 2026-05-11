@@ -502,7 +502,7 @@ Acceptance criteria:
 ## MB-P0-016 — Add chat UI MVP
 
 **Source:** Docker/Productization Backlog  
-**Status:** Open
+**Status:** Done (2026-05-11)
 
 Create:
 

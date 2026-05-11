@@ -1,5 +1,11 @@
 ## 2026-05-11
 
+## [8.0.18] — 2026-05-11 — Chat UI MVP (MB-P0-016)
+
+- Added Chat UI MVP under `apps/chat-ui/` with objective submission, domain planner selection, plan/result rendering, approval-gated safety mode, schedule visibility, health/cost/rate-limit status views, and OldFarmTrucks template import.
+- Added `scripts/api/apotheon_api.py` API helper module for planner invocation and report/template loading used by the UI.
+- Updated onboarding and backlog status to document the Chat UI workflow and completion state for MB-P0-016.
+
 ## [8.0.17] — 2026-05-11 — Governance Runtime Enforcement (MB-P0-012)
 
 - Added runtime governance enforcement scripts: `scripts/governance/enforce_runtime_policy.py` and `scripts/governance/generate_evidence_pack.py` with fail-closed decisions for high-risk actions.

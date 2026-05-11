@@ -64,3 +64,22 @@ apotheon backup restore --dry-run dist/<backup-archive>.tar.gz
 
 ### Scheduling update (MB-P0-010)
 Scheduling tooling is implemented under `scripts/schedules/` with schema + runtime run recording in `runtime/schedule_runs/`. Use `python scripts/schedules/run_due_schedules.py --dry-run` for safe due-window checks.
+
+## Chat UI MVP operations
+
+### Launch
+```bash
+streamlit run apps/chat-ui/streamlit_app.py
+```
+
+### Safety defaults
+- UI defaults to read-only/dry-run planning mode.
+- Live writes remain blocked until operator checks approval intent and enters an approval ticket/reference.
+- Even in approval-ready state, planner invocation in MVP is still `--dry-run`.
+
+### UI data sources
+- Health: `reports/runtime_diagnostics.json`
+- Cost: `reports/cost_dashboard.json`
+- Rate limits: `reports/rate_limit_report.json`
+- Schedules: `schedules/registry.yaml`
+- OldFarmTrucks templates: `workflows/examples/oldfarmtrucks-*.json`
