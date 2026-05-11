@@ -38,6 +38,46 @@ def verify(backup_dir: Path) -> list[str]:
     return errors
 
 
+def safe_extract_archive(archive: Path, destination: Path) -> Path:
+    destination.mkdir(parents=True, exist_ok=True)
+    with tarfile.open(archive, "r:gz") as tar:
+        members = tar.getmembers()
+        for member in members:
+            member_path = destination / member.name
+            resolved = member_path.resolve()
+            if member_path.is_absolute() or not str(resolved).startswith(str(destination.resolve())):
+                raise SystemExit(f"Unsafe archive member path blocked: {member.name}")
+        tar.extractall(destination, members=members)
+
+    dirs = [p for p in destination.iterdir() if p.is_dir()]
+    if not dirs:
+        raise SystemExit("Archive did not contain backup directory")
+    return dirs[0]
+
+
+def resolve_destination(entry: dict, backup_root: Path, target_root: Path) -> tuple[Path, Path] | None:
+    rel = entry.get("path")
+    if not rel:
+        return None
+
+    src = backup_root / rel
+    source_path = entry.get("source")
+    manifest_root = entry.get("manifest_root")
+
+    if source_path and manifest_root:
+        try:
+            source_rel = Path(source_path).resolve().relative_to(Path(manifest_root).resolve())
+            return src, target_root / source_rel
+        except Exception:
+            pass
+
+    if source_path:
+        source_name = Path(source_path).name
+        return src, target_root / source_name
+
+    return src, target_root / rel
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("backup", help="Path to backup dir or .tar.gz archive")
@@ -51,12 +91,7 @@ def main() -> int:
     temp_dir_obj = None
     if backup.is_file() and backup.suffixes[-2:] == [".tar", ".gz"]:
         temp_dir_obj = tempfile.TemporaryDirectory()
-        with tarfile.open(backup, "r:gz") as tar:
-            tar.extractall(temp_dir_obj.name)
-        dirs = [p for p in Path(temp_dir_obj.name).iterdir() if p.is_dir()]
-        if not dirs:
-            raise SystemExit("Archive did not contain backup directory")
-        backup_dir = dirs[0]
+        backup_dir = safe_extract_archive(backup, Path(temp_dir_obj.name))
     else:
         backup_dir = backup
 
@@ -68,13 +103,12 @@ def main() -> int:
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
 
     planned = []
+    manifest_root = manifest.get("root")
     for entry in manifest.get("entries", []):
-        rel = entry.get("path")
-        if not rel:
-            continue
-        src = backup_dir / rel
-        dst = target_root / rel
-        planned.append((src, dst))
+        entry["manifest_root"] = manifest_root
+        mapped = resolve_destination(entry, backup_dir, target_root)
+        if mapped:
+            planned.append(mapped)
 
     if args.dry_run:
         print("DRY RUN: planned restore actions")
