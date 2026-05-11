@@ -1,0 +1,4 @@
+portfolio,symbol,side,quantity,entry_price,stop_price,risk_budget_usd
+model_alpha,BTCUSD,long,0.45,60500,57500,1800
+model_alpha,ETHUSD,long,8.2,3000,2810,1600
+model_alpha,EURUSD,short,150000,1.0890,1.0975,1200
