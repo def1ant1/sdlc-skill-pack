@@ -19,3 +19,8 @@ Define baseline controls for financial recommendations and money-moving workflow
 - Scheduler must evaluate projected per-run estimated cost before execution.
 - Policy actions: `allow`, `warn`, `block` based on plan-tier budget thresholds.
 - Cost events SHOULD be emitted using `schemas/cost-event.schema.json` for auditability.
+
+## Trading research boundary
+
+- Trading/portfolio/arbitrage skills are research-only and governed by `docs/governance/trading-research-governance.md`.
+- No autonomous trading or manipulative/evasive conduct guidance is permitted.

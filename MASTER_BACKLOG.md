@@ -1031,7 +1031,7 @@ Acceptance criteria:
 ## MB-P2-005 — Trading, portfolio, and arbitrage research skill pack
 
 **Source:** Domain Backlog  
-**Status:** Open
+**Status:** Completed (2026-05-11)
 
 Implement/complete skills for:
 

@@ -1,3 +1,12 @@
+## 2026-05-11 — MB-P2-005 trading research pack completion
+
+- Completed MB-P2-005 skill list with 20 trading/portfolio/arbitrage research skills under `skills/` and normalized safety sections.
+- Enforced hypothesis labeling requirements (assumptions, risk factors, time horizon, invalidation criteria) and explicit prohibitions on autonomous trading plus manipulative/evasive guidance.
+- Added offline fixture bundle for dry-run-compatible trading research validation under `tests/fixtures/trading-research/`.
+- Added governance policy baseline in `docs/governance/trading-research-governance.md` and linked financial controls to trading research boundaries.
+- Expanded safety/governance/backtesting coverage in `tests/skills/test_trading_research_safety.py`.
+
+
 ## 2026-05-11 — Customer lifecycle pack MB-P2-002 completion
 
 - Completed MB-P2-002 customer-domain phase-pack governance by adding canonical customer/lead/opportunity/campaign/ticket entity coverage and explicit lifecycle taxonomy in `skills/sales-marketing-customer-phase-pack/`.

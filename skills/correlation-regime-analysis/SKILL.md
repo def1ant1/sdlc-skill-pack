@@ -1,6 +1,6 @@
 ---
-name: trading-journal-research
-description: Trading research skill operating in offline/dry-run mode with HITL execution safeguards.
+name: correlation-regime-analysis
+description: Trading/portfolio/arbitrage research skill operating in offline/dry-run mode with HITL safeguards.
 metadata:
   version: 0.1.0
   category: trading-research
@@ -8,7 +8,7 @@ metadata:
   maturity: alpha
 ---
 
-# Trading Journal Research
+# Correlation Regime Analysis
 
 ## Operating Mode
 - Default mode is **offline/dry-run**.

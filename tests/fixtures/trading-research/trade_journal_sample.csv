@@ -1,0 +1,3 @@
+trade_id,date,symbol,hypothesis,risk_factors,assumptions,time_horizon,invalidation_criteria,outcome
+TJ-1001,2026-04-22,BTCUSD,Range breakout continuation,volatility shock; policy headlines,volume expansion persists,5d,daily close below breakout level,open
+TJ-1002,2026-04-24,EURUSD,Mean reversion to 20D VWAP,macro surprise; spread widening,liquidity normalizes,3d,close >2 sigma away from VWAP,stopped

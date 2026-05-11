@@ -1,0 +1,4 @@
+symbol,venue,est_fee_bps,est_slippage_bps,depth_usd_1pct
+BTCUSD,exchange_a,8,14,850000
+ETHUSD,exchange_a,9,18,470000
+EURUSD,broker_x,2,4,5000000
