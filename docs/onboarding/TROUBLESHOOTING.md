@@ -70,3 +70,14 @@
 ### Docker stack remediation
 
 For container-first startup and failure recovery, follow `docs/onboarding/DOCKER_TROUBLESHOOTING.md`.
+
+### 8) Structured error envelope failures
+**Symptoms**
+- Errors return JSON with `error_id`, `correlation_id`, and `remediation` fields.
+- Validation script fails: `scripts/validation/validate_error_contracts.py`.
+
+**Remediation**
+1. Validate envelope contract: `python scripts/validation/validate_error_contracts.py`.
+2. Confirm boundary emitter (`runtime`, `planner`, `scheduler`, or `connector:*`) is set in `skill`.
+3. Ensure `retryable=false` for auth/config/validation and high-risk side effects.
+4. Ensure remediation text is actionable for operators before rerun/escalation.

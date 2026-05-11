@@ -288,7 +288,7 @@ Acceptance criteria:
 ## MB-P0-008 — Add structured error envelope and runtime hardening
 
 **Source:** Hardening Backlog  
-**Status:** Open
+**Status:** Completed (2026-05-11)
 
 Create:
 

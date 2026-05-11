@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://apotheon.local/schemas/error-envelope.schema.json",
-  "title": "Apotheon Error Envelope",
+  "title": "Error Envelope",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -23,21 +23,76 @@
     "created_at"
   ],
   "properties": {
-    "error_id": {"type": "string", "minLength": 1},
-    "correlation_id": {"type": "string", "minLength": 1},
-    "workflow_run_id": {"type": "string", "minLength": 1},
-    "schedule_run_id": {"type": "string", "minLength": 1},
-    "skill": {"type": "string", "minLength": 1},
-    "step": {"type": ["integer", "string"]},
-    "severity": {"type": "string", "enum": ["info", "warning", "error", "critical"]},
-    "category": {"type": "string", "enum": ["validation", "config", "auth", "network", "rate_limit", "timeout", "dependency", "connector", "data_quality", "schema", "governance", "hitl", "model", "memory", "schedule", "runtime", "security", "unknown"]},
-    "retryable": {"type": "boolean"},
-    "user_action_required": {"type": "boolean"},
-    "message": {"type": "string", "minLength": 1},
-    "technical_detail": {"type": "string"},
-    "root_cause_hint": {"type": "string"},
-    "remediation": {"type": "string", "minLength": 1},
-    "source_exception": {"type": "string"},
-    "created_at": {"type": "string", "format": "date-time"}
+    "error_id": {
+      "type": "string",
+      "pattern": "^err-[a-f0-9]{8}$"
+    },
+    "correlation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workflow_run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "schedule_run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "skill": {
+      "type": "string",
+      "minLength": 1
+    },
+    "step": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "info",
+        "warning",
+        "error",
+        "critical"
+      ]
+    },
+    "category": {
+      "type": "string",
+      "minLength": 1
+    },
+    "retryable": {
+      "type": "boolean"
+    },
+    "user_action_required": {
+      "type": "boolean"
+    },
+    "message": {
+      "type": "string",
+      "minLength": 1
+    },
+    "technical_detail": {
+      "type": "string"
+    },
+    "root_cause_hint": {
+      "type": "string"
+    },
+    "remediation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_exception": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
   }
 }
