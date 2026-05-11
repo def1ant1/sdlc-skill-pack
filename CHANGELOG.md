@@ -43,6 +43,13 @@
 All notable changes to the Apotheon AI Company OS are documented here.
 
 
+
+## [8.0.32] — 2026-05-11 — Commercial/Open-Core Boundary Docs Publication (MB-P3-003)
+
+- Added `COMMERCIAL.md` clarifying current OSS-local capabilities versus potential future hosted/cloud/enterprise feature tiers.
+- Added `LICENSE_REVIEW.md` with release-oriented licensing and boundary verification checklist guidance.
+- Added `docs/commercial/open-core-boundary.md` as canonical boundary reference and linked it from top-level README documentation links and onboarding (`docs/onboarding/getting-started.md`).
+
 ## [8.0.31] — 2026-05-11 — Evolution Improvement Workflow + Review Gate (MB-P3-002)
 
 - Added evolution automation scripts in `scripts/evolution/` to generate PR-ready patch/test/eval proposals from failed workflow evidence and enforce no auto-apply/auto-merge defaults.

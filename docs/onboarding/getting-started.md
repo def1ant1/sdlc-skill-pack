@@ -73,3 +73,14 @@ python scripts/company_templates/import_template.py --validate-workflows
 ```
 
 This imports/provisions workflows, schedules, dashboards, connectors, approvals, budgets, and sample data into `reports/company_templates/oldfarmtrucks-import.json`, and validates one short-term plus one long-term workflow with runtime dry-runs.
+
+
+## OSS vs commercial boundary
+
+To avoid confusion between current local open-source capabilities and potential future hosted/cloud/enterprise offerings, review:
+
+- `COMMERCIAL.md`
+- `LICENSE_REVIEW.md`
+- `docs/commercial/open-core-boundary.md`
+
+Use these documents as the source of truth for licensing and feature-boundary interpretation during onboarding and deployment planning.

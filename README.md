@@ -486,6 +486,9 @@ Full reference: `docs/onboarding/DEPLOYMENT.md`
 | Skill authoring | `docs/onboarding/SKILL_AUTHORING_GUIDE.md` |
 | GTM planner guide | `docs/onboarding/GTM_PLANNER_GUIDE.md` |
 | Getting started | `docs/onboarding/getting-started.md` |
+| Commercial model overview | `COMMERCIAL.md` |
+| License review checklist | `LICENSE_REVIEW.md` |
+| Open-core boundary | `docs/commercial/open-core-boundary.md` |
 | Runtime architecture | `docs/architecture/runtime-components.md` |
 | Agent fleet | `docs/architecture/agent-fleet.md` |
 | HITL gate audit | `docs/governance/hitl-gate-audit.md` |
