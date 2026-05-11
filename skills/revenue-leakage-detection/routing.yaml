@@ -1,9 +1,17 @@
-trigger_id: revenue_leakage_detection_trigger
+version: 1
 skill: revenue-leakage-detection
-use_when:
-  - "intent contains revenue"
-  - "canonical context available"
-do_not_use_when:
-  - "request requires prohibited autonomous external mutation"
-  - "policy profile missing"
-collision_strategy: "prefer higher confidence then lexicographic skill name"
+routes:
+  - when_intent_in:
+      - finance
+      - fp&a
+      - treasury
+    then: revenue-leakage-detection
+  - when_contains_any:
+      - runway
+      - 13-week cash forecast
+      - ar aging
+      - ap aging
+      - margin
+      - anomaly
+      - lineage
+    then: revenue-leakage-detection

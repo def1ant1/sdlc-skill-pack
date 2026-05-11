@@ -1,9 +1,17 @@
-trigger_id: month_end_close_support_trigger
+version: 1
 skill: month-end-close-support
-use_when:
-  - "intent contains month"
-  - "canonical context available"
-do_not_use_when:
-  - "request requires prohibited autonomous external mutation"
-  - "policy profile missing"
-collision_strategy: "prefer higher confidence then lexicographic skill name"
+routes:
+  - when_intent_in:
+      - finance
+      - fp&a
+      - treasury
+    then: month-end-close-support
+  - when_contains_any:
+      - runway
+      - 13-week cash forecast
+      - ar aging
+      - ap aging
+      - margin
+      - anomaly
+      - lineage
+    then: month-end-close-support

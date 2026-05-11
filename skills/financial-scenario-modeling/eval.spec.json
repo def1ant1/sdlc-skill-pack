@@ -1,0 +1,68 @@
+{
+  "skill_name": "financial-scenario-modeling",
+  "priority": "P1",
+  "owner": "Apotheon.ai",
+  "last_updated": "2026-05-11",
+  "datasets": [
+    {
+      "id": "financial-scenario-modeling-calc-golden",
+      "description": "Golden finance scenarios with expected KPI outputs"
+    },
+    {
+      "id": "financial-scenario-modeling-lineage-completeness",
+      "description": "Samples with partial/complete source lineage"
+    },
+    {
+      "id": "financial-scenario-modeling-governance-negative",
+      "description": "Policy and freshness violation cases"
+    }
+  ],
+  "metrics": [
+    {
+      "name": "runway_mae",
+      "target": 0.01,
+      "direction": "lte"
+    },
+    {
+      "name": "forecast_13w_mape",
+      "target": 0.05,
+      "direction": "lte"
+    },
+    {
+      "name": "aging_bucket_accuracy",
+      "target": 0.99,
+      "direction": "gte"
+    },
+    {
+      "name": "margin_accuracy",
+      "target": 0.995,
+      "direction": "gte"
+    },
+    {
+      "name": "anomaly_precision",
+      "target": 0.9,
+      "direction": "gte"
+    },
+    {
+      "name": "source_lineage_completeness",
+      "target": 1.0,
+      "direction": "gte"
+    },
+    {
+      "name": "stale_data_detection_recall",
+      "target": 1.0,
+      "direction": "gte"
+    },
+    {
+      "name": "governance_compliance_rate",
+      "target": 1.0,
+      "direction": "gte"
+    }
+  ],
+  "acceptance_gates": [
+    "all_required_outputs_present == true",
+    "source_lineage_completeness == 1.0",
+    "stale_data_detection_recall == 1.0",
+    "governance_compliance_rate == 1.0"
+  ]
+}

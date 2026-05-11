@@ -1,9 +1,17 @@
-trigger_id: financial_scenario_modeling_trigger
+version: 1
 skill: financial-scenario-modeling
-use_when:
-  - "intent contains financial"
-  - "canonical context available"
-do_not_use_when:
-  - "request requires prohibited autonomous external mutation"
-  - "policy profile missing"
-collision_strategy: "prefer higher confidence then lexicographic skill name"
+routes:
+  - when_intent_in:
+      - finance
+      - fp&a
+      - treasury
+    then: financial-scenario-modeling
+  - when_contains_any:
+      - runway
+      - 13-week cash forecast
+      - ar aging
+      - ap aging
+      - margin
+      - anomaly
+      - lineage
+    then: financial-scenario-modeling

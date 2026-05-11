@@ -1,9 +1,17 @@
-trigger_id: fpa_analysis_trigger
+version: 1
 skill: fpa-analysis
-use_when:
-  - "intent contains fpa"
-  - "canonical context available"
-do_not_use_when:
-  - "request requires prohibited autonomous external mutation"
-  - "policy profile missing"
-collision_strategy: "prefer higher confidence then lexicographic skill name"
+routes:
+  - when_intent_in:
+      - finance
+      - fp&a
+      - treasury
+    then: fpa-analysis
+  - when_contains_any:
+      - runway
+      - 13-week cash forecast
+      - ar aging
+      - ap aging
+      - margin
+      - anomaly
+      - lineage
+    then: fpa-analysis

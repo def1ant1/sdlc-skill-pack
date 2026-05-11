@@ -1,11 +1,11 @@
 version: 1
-skill: reconciliation-automation
+skill: financial-management
 routes:
   - when_intent_in:
       - finance
       - fp&a
       - treasury
-    then: reconciliation-automation
+    then: financial-management
   - when_contains_any:
       - runway
       - 13-week cash forecast
@@ -14,4 +14,4 @@ routes:
       - margin
       - anomaly
       - lineage
-    then: reconciliation-automation
+    then: financial-management

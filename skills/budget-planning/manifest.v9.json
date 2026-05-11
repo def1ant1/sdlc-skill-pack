@@ -1,5 +1,5 @@
 {
-  "name": "budget-variance-analysis",
+  "name": "budget-planning",
   "type": "skill",
   "domain": "finance",
   "subdomain": "office-of-cfo",
@@ -12,7 +12,7 @@
     "core/business-event-model"
   ],
   "activation_triggers": [
-    "budget_variance_analysis",
+    "budget_planning",
     "finance_ops"
   ],
   "required_context": [
@@ -38,10 +38,10 @@
       "core/canonical-entity-model/README.md",
       "core/business-event-model/README.md",
       "schemas/entities/budget.schema.json",
-      "schemas/entities/actuals.schema.json",
-      "schemas/entities/variance.schema.json",
       "schemas/entities/department.schema.json",
       "schemas/entities/account.schema.json",
+      "schemas/entities/forecast.schema.json",
+      "schemas/entities/scenario.schema.json",
       "schemas/events/business_policy_violation.schema.json"
     ]
   },
@@ -69,10 +69,10 @@
       "core/canonical-entity-model/README.md",
       "core/business-event-model/README.md",
       "schemas/entities/budget.schema.json",
-      "schemas/entities/actuals.schema.json",
-      "schemas/entities/variance.schema.json",
       "schemas/entities/department.schema.json",
       "schemas/entities/account.schema.json",
+      "schemas/entities/forecast.schema.json",
+      "schemas/entities/scenario.schema.json",
       "schemas/events/business_policy_violation.schema.json"
     ],
     "approval_gate": "required-for-external-actions"
@@ -147,10 +147,10 @@
   "canonical_schema_refs": {
     "entities": [
       "schemas/entities/budget.schema.json",
-      "schemas/entities/actuals.schema.json",
-      "schemas/entities/variance.schema.json",
       "schemas/entities/department.schema.json",
-      "schemas/entities/account.schema.json"
+      "schemas/entities/account.schema.json",
+      "schemas/entities/forecast.schema.json",
+      "schemas/entities/scenario.schema.json"
     ],
     "events": [
       "schemas/events/business_policy_violation.schema.json"

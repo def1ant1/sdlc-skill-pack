@@ -1,4 +1,4 @@
-# budget-planning
+# financial-control-monitoring
 
 Provides finance analytics with required KPI calculations and governance checks.
 

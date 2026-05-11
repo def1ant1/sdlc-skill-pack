@@ -1,4 +1,4 @@
-# budget-planning
+# expense-policy-compliance
 
 Provides finance analytics with required KPI calculations and governance checks.
 
