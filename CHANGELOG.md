@@ -84,3 +84,6 @@ All notable changes to the Apotheon AI Company OS are documented here.
 ### Changed
 - Hardened approval gates for purchase, listing publication, and vendor outreach actions.
 - Updated OldFarmTrucks market scarcity workflow fixtures for acquisition/pricing dry-run validation and richer expected artifacts.
+
+- Completed MB-P2-004 legal/tax/entity/regulatory intelligence hardening by enforcing decision-support-only boundaries, authoritative citation policy, structured jurisdiction/authority/effective-date/retrieval-verification/confidence/review fields, and filing/submission approval gates in the legal operations phase pack.
+- Added legal-tax governance policy documentation and MB-P2-004 policy tests for citation, schema-field, and action-gating controls.

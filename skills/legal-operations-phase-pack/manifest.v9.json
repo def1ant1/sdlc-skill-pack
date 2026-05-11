@@ -26,7 +26,10 @@
   "execution_mode": "support-only",
   "approval_controls": {
     "required_for_outbound_customer_communication": true,
-    "required_for_external_mutations": true
+    "required_for_external_mutations": true,
+    "required_for_filings_and_submissions": true,
+    "required_for_regulatory_actions": true,
+    "required_for_tax_or_legal_entity_mutations": true
   },
   "approval_policy": {
     "threshold_field": "impact_score",
@@ -74,25 +77,67 @@
       "schemas/events/business_policy_violation.schema.json"
     ],
     "entities": [
-      "schemas/entities/customer.schema.json"
+      "schemas/entities/task.schema.json",
+      "schemas/entities/decision.schema.json",
+      "schemas/entities/policy-context.schema.json"
     ]
   },
   "input_contract": {
     "schema_refs": [
-      "schemas/events/approval_requested.schema.json",
+      "schemas/entities/customer.schema.json",
+      "schemas/entities/decision.schema.json",
+      "schemas/entities/policy-context.schema.json",
+      "schemas/entities/task.schema.json",
       "schemas/events/approval_decided.schema.json",
-      "schemas/events/workflow_completed.schema.json",
+      "schemas/events/approval_requested.schema.json",
       "schemas/events/business_policy_violation.schema.json",
-      "schemas/entities/customer.schema.json"
+      "schemas/events/workflow_completed.schema.json"
     ]
   },
   "output_contract": {
     "schema_refs": [
-      "schemas/events/approval_requested.schema.json",
+      "schemas/entities/customer.schema.json",
+      "schemas/entities/decision.schema.json",
+      "schemas/entities/policy-context.schema.json",
+      "schemas/entities/task.schema.json",
       "schemas/events/approval_decided.schema.json",
-      "schemas/events/workflow_completed.schema.json",
+      "schemas/events/approval_requested.schema.json",
       "schemas/events/business_policy_violation.schema.json",
-      "schemas/entities/customer.schema.json"
+      "schemas/events/workflow_completed.schema.json"
     ]
+  },
+  "mb_backlog_ref": "MB-P2-004",
+  "decision_support_boundaries": {
+    "support_only": true,
+    "prohibit_final_legal_or_tax_advice": true,
+    "mandatory_non_advisory_notice": true
+  },
+  "authoritative_citation_policy": {
+    "required": true,
+    "source_priority": [
+      "primary-law",
+      "regulatory-agency",
+      "court-record",
+      "county-record",
+      "state-record",
+      "federal-record"
+    ],
+    "allow_secondary_only_with_flag": true
+  },
+  "finding_schema_requirements": {
+    "required_fields": [
+      "jurisdiction",
+      "authority_level",
+      "effective_date",
+      "retrieved_at",
+      "verified_at",
+      "confidence",
+      "professional_review_required"
+    ],
+    "confidence_range": [
+      0,
+      1
+    ],
+    "timestamp_format": "iso8601"
   }
 }
