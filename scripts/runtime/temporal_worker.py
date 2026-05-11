@@ -37,6 +37,7 @@ TEMPORAL_HOST = os.environ.get("TEMPORAL_HOST", "localhost:7233")
 TEMPORAL_NAMESPACE = os.environ.get("TEMPORAL_NAMESPACE", "apotheon-dev")
 TEMPORAL_TASK_QUEUE = os.environ.get("TEMPORAL_TASK_QUEUE", "apotheon-sdlc")
 MAX_CONCURRENT = int(os.environ.get("MAX_CONCURRENT_ACTIVITIES", "10"))
+DEFAULT_STEP_TIMEOUT_SECONDS = int(os.environ.get("MAX_STEP_RUNTIME", "600"))
 
 
 # ---------------------------------------------------------------------------
@@ -167,7 +168,7 @@ def build_workflow():
                     result_dict = await workflow.execute_activity(
                         "run_skill",
                         inp_dict,
-                        start_to_close_timeout=timedelta(minutes=10),
+                        start_to_close_timeout=timedelta(seconds=DEFAULT_STEP_TIMEOUT_SECONDS),
                         retry_policy=retry_policy,
                     )
 
