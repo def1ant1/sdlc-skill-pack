@@ -103,3 +103,9 @@ The dashboard surfaces workflow progress, schedules, approvals, budgets, rate li
 ### HITL approve/reject actions
 
 Use the **Approve** / **Reject** buttons in the `HITL Approval Queue` section. Decisions are written back to `reports/dashboard_state.json` with `decided_at` timestamps for auditability.
+
+
+## Connector health reporting
+
+- Run `python scripts/reports/generate_connector_health_report.py` to generate `reports/connector_health_report.md` and `reports/connector_health_report.json`.
+- Connector writes remain blocked by default (`APOTHEON_CONNECTORS_READ_ONLY=true`) and require HITL approval + idempotency keys for live writes.

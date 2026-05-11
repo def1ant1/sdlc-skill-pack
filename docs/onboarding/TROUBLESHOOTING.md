@@ -81,3 +81,9 @@ For container-first startup and failure recovery, follow `docs/onboarding/DOCKER
 2. Confirm boundary emitter (`runtime`, `planner`, `scheduler`, or `connector:*`) is set in `skill`.
 3. Ensure `retryable=false` for auth/config/validation and high-risk side effects.
 4. Ensure remediation text is actionable for operators before rerun/escalation.
+
+
+## Connector health reporting
+
+- Run `python scripts/reports/generate_connector_health_report.py` to generate `reports/connector_health_report.md` and `reports/connector_health_report.json`.
+- Connector writes remain blocked by default (`APOTHEON_CONNECTORS_READ_ONLY=true`) and require HITL approval + idempotency keys for live writes.

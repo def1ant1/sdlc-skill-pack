@@ -25,6 +25,13 @@ def _trigger_summary(root: Path) -> dict:
    blocked += 1
  return {"events_24h":events,"launches_24h":launches,"blocked_by_governance_24h":blocked}
 
+def _connector_export(root: Path) -> dict:
+ p = root/"reports"/"connector_health_report.json"
+ if not p.exists():
+  return {"healthy":9,"degraded":1,"down":0}
+ obj=json.loads(p.read_text(encoding="utf-8"))
+ return obj.get("dashboard_export",{}).get("connector_health",{"healthy":9,"degraded":1,"down":0})
+
 def main()->int:
  root=Path(__file__).resolve().parents[2]
  data={
@@ -38,7 +45,7 @@ def main()->int:
   ],
   "budgets":{"monthly_budget_usd":50000,"month_to_date_burn_usd":28750,"forecast_month_end_usd":46200},
   "rate_limits":{"violations_24h":3,"throttled_requests_24h":14,"highest_utilization_pct":93},
-  "connectors":{"healthy":9,"degraded":1,"down":0},
+  "connectors":_connector_export(root),
   "local_apps":{"healthy":4,"degraded":0,"down":1},
   "memory":{"health":"ok","collection_coverage_pct":96,"stale_embeddings":12},
   "telemetry":{"events_24h":12432,"errors_24h":16,"p95_latency_ms":285},

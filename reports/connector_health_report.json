@@ -1,0 +1,123 @@
+{
+  "generated_at": "2026-05-11T21:02:14.322733+00:00",
+  "summary": {
+    "total": 11,
+    "ok": 0,
+    "degraded": 0,
+    "unreachable": 11,
+    "by_failure_type": {
+      "unknown": 11
+    }
+  },
+  "connectors": [
+    {
+      "connector": "salesforce",
+      "status": "UNREACHABLE",
+      "latency_ms": null,
+      "error": "No module named 'scripts'",
+      "circuit_state": null,
+      "read_only_default": null,
+      "failure_type": "unknown"
+    },
+    {
+      "connector": "servicenow",
+      "status": "UNREACHABLE",
+      "latency_ms": null,
+      "error": "No module named 'scripts'",
+      "circuit_state": null,
+      "read_only_default": null,
+      "failure_type": "unknown"
+    },
+    {
+      "connector": "ga4",
+      "status": "UNREACHABLE",
+      "latency_ms": null,
+      "error": "No module named 'scripts'",
+      "circuit_state": null,
+      "read_only_default": null,
+      "failure_type": "unknown"
+    },
+    {
+      "connector": "slack",
+      "status": "UNREACHABLE",
+      "latency_ms": null,
+      "error": "No module named 'scripts'",
+      "circuit_state": null,
+      "read_only_default": null,
+      "failure_type": "unknown"
+    },
+    {
+      "connector": "jira",
+      "status": "UNREACHABLE",
+      "latency_ms": null,
+      "error": "No module named 'scripts'",
+      "circuit_state": null,
+      "read_only_default": null,
+      "failure_type": "unknown"
+    },
+    {
+      "connector": "hubspot",
+      "status": "UNREACHABLE",
+      "latency_ms": null,
+      "error": "No module named 'scripts'",
+      "circuit_state": null,
+      "read_only_default": null,
+      "failure_type": "unknown"
+    },
+    {
+      "connector": "stripe",
+      "status": "UNREACHABLE",
+      "latency_ms": null,
+      "error": "No module named 'scripts'",
+      "circuit_state": null,
+      "read_only_default": null,
+      "failure_type": "unknown"
+    },
+    {
+      "connector": "mixpanel",
+      "status": "UNREACHABLE",
+      "latency_ms": null,
+      "error": "No module named 'scripts'",
+      "circuit_state": null,
+      "read_only_default": null,
+      "failure_type": "unknown"
+    },
+    {
+      "connector": "amplitude",
+      "status": "UNREACHABLE",
+      "latency_ms": null,
+      "error": "No module named 'scripts'",
+      "circuit_state": null,
+      "read_only_default": null,
+      "failure_type": "unknown"
+    },
+    {
+      "connector": "filesystem_local",
+      "status": "UNREACHABLE",
+      "latency_ms": null,
+      "error": "No module named 'scripts'",
+      "circuit_state": null,
+      "read_only_default": null,
+      "failure_type": "unknown"
+    },
+    {
+      "connector": "sqlite_local",
+      "status": "UNREACHABLE",
+      "latency_ms": null,
+      "error": "No module named 'scripts'",
+      "circuit_state": null,
+      "read_only_default": null,
+      "failure_type": "unknown"
+    }
+  ],
+  "dashboard_export": {
+    "connector_health": {
+      "healthy": 0,
+      "degraded": 0,
+      "down": 11,
+      "failure_breakdown": {
+        "unknown": 11
+      }
+    }
+  }
+}
