@@ -1,0 +1,81 @@
+{
+  "name": "hr-learning-development-pack",
+  "type": "skill",
+  "domain": "people-operations",
+  "subdomain": "hr-learning-development",
+  "version": "9.0.0",
+  "owner": "Apotheon",
+  "maturity": "beta",
+  "dependencies": [
+    "core/master-data-management",
+    "core/policy-engine",
+    "core/business-approval-gateway",
+    "core/audit-trail"
+  ],
+  "required_context": [
+    "tenant_profile",
+    "canonical_entities",
+    "policy_profile",
+    "approval_thresholds",
+    "hr_governance_policy"
+  ],
+  "governance_level": "L3",
+  "human_approval_required": true,
+  "execution_mode": "support-only",
+  "approval_policy": {
+    "threshold_field": "employment_impact_score",
+    "auto_block_if_gte": 70,
+    "mandatory_review_if_gte": 40
+  },
+  "bias_guardrails": {
+    "enabled": true,
+    "require_human_sensitive_review": true,
+    "forbid_protected_attribute_usage_in_scoring": true,
+    "fairness_checks_required": [
+      "subgroup_disparity_ratio",
+      "adverse_impact_rule",
+      "proxy_feature_scan"
+    ],
+    "protected_attributes": [
+      "age",
+      "race",
+      "ethnicity",
+      "sex",
+      "gender_identity",
+      "sexual_orientation",
+      "disability",
+      "religion",
+      "nationality",
+      "veteran_status"
+    ]
+  },
+  "high_impact_markers": {
+    "mandatory_review": true,
+    "required_fields": [
+      "review_owner",
+      "review_due_by",
+      "employment_impact_scope",
+      "human_decision_required"
+    ]
+  },
+  "ld_outcome_tracking": {
+    "required": true,
+    "metrics": [
+      "competency_gain",
+      "assessment_improvement",
+      "completion_rate",
+      "manager_validated_transfer",
+      "time_to_proficiency"
+    ]
+  },
+  "certification_workflow": {
+    "required": true,
+    "statuses": [
+      "assigned",
+      "in_progress",
+      "completed",
+      "expired",
+      "renewal_due"
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "program_id": "ld-prog-2026-q2-sales-onboarding",
+  "role_family": "account_executive",
+  "cohort_id": "cohort-2026-04",
+  "baseline_assessment_avg": 62,
+  "post_assessment_avg": 81,
+  "completion_rate": 0.94,
+  "manager_validated_transfer_rate": 0.78,
+  "time_to_proficiency_days_median": 36,
+  "competency_outcomes": [
+    {"competency": "product_narrative", "target_level": 4, "achieved_level": 4},
+    {"competency": "discovery_qualification", "target_level": 4, "achieved_level": 3},
+    {"competency": "objection_handling", "target_level": 3, "achieved_level": 3}
+  ]
+}

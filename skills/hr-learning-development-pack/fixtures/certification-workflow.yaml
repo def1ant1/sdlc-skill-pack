@@ -1,0 +1,28 @@
+workflow_id: certification-renewal-q3
+certification_code: SEC-AWARENESS-L2
+owner_team: learning_and_development
+steps:
+  - id: assign_requirement
+    action: assign
+    status: completed
+  - id: notify_learner
+    action: remind
+    status: completed
+  - id: collect_evidence
+    action: upload_artifact
+    status: in_progress
+  - id: evaluator_attestation
+    action: human_attest
+    status: pending
+  - id: governance_exception_review
+    action: escalate_if_overdue
+    status: pending
+  - id: close_and_schedule_renewal
+    action: finalize
+    status: pending
+sla:
+  completion_due_days: 30
+  escalation_after_days: 35
+audit:
+  require_human_signoff: true
+  evidence_retention_days: 2555
