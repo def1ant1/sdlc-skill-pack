@@ -276,6 +276,7 @@ def execute_local(plan: dict, dry_run: bool = False, *, options: RuntimeOptions 
         "status": "running",
         "started_at": _stable_timestamp(dry_run),
         "completed_at": None,
+        "cost_estimate_usd": 0.0,
     }
     completed_steps = {s.get("step") for s in execution_log.get("steps", []) if s.get("status") == "completed"}
 
@@ -342,7 +343,7 @@ def execute_local(plan: dict, dry_run: bool = False, *, options: RuntimeOptions 
                 _emit_runtime_event(run_id, "workflow.retries.timeout", "error", {"step": step_num})
                 break
 
-            step_record.update({"status": "completed" if result.success else "failed", "output": result.output[:500] if result.output else None, "error": result.error or None, "duration_ms": duration_ms, "hitl_required": result.requires_hitl})
+            step_record.update({"status": "completed" if result.success else "failed", "output": result.output[:500] if result.output else None, "error": result.error or None, "duration_ms": duration_ms, "hitl_required": result.requires_hitl, "correlation_id": getattr(result, "correlation_id", run_id), "estimated_cost_usd": getattr(result, "estimated_cost_usd", 0.0), "structured_output": getattr(result, "structured_output", {})})
             if result.requires_hitl:
                 step_record["status"] = "pending_hitl"
                 execution_log.update({"status": "paused_for_hitl", "paused_at_step": step_num})
@@ -389,6 +390,7 @@ def execute_local(plan: dict, dry_run: bool = False, *, options: RuntimeOptions 
             else:
                 os.environ["APOTHEON_DRY_RUN"] = prev_dry_run_env
 
+    execution_log["cost_estimate_usd"] = round(sum(float(s.get("estimated_cost_usd",0.0)) for s in execution_log["steps"]),6)
     _record_workflow(execution_log["status"], "local", sum(s.get("duration_ms", 0) for s in execution_log["steps"]) / 1000.0)
     _persist_execution_artifact(execution_log)
     return execution_log

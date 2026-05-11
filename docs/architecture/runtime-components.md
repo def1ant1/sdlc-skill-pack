@@ -152,3 +152,10 @@ reference and deployment procedures.
   During dry-run, mutating steps are surfaced as `simulated-mutation`.
 - **Deterministic artifacts:** dry-run emits reproducible metadata, including a deterministic run id (`DRYRUN-<plan-hash>`), fixed timestamps (`1970-01-01T00:00:00Z`), sorted step output in CLI JSON, and stable key ordering.
 - **Governance behavior preserved:** workflow governance semantics (including high-risk step tagging and HITL-relevant classification context) remain visible in dry-run logs even when execution is non-invasive.
+
+
+## Runtime Hardening (MB-P0-007)
+- Live mode now enforces controlled provider selection via `APOTHEON_PROVIDER` allow-list (`anthropic`, `local`).
+- Dry-run forces `local-stub` model fallback and never calls external inference APIs.
+- Skill outputs must parse as structured JSON and include required fields (`status`, `summary`).
+- Run records now persist estimated cost and correlation IDs per step for operator traceability.

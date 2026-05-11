@@ -31,6 +31,7 @@ import os
 import re
 import sys
 import time
+import uuid
 from pathlib import Path
 from typing import Any
 
@@ -78,6 +79,11 @@ SKILLS_ROOT = Path(os.environ.get("SKILLS_ROOT", str(REPO_ROOT / "skills")))
 CORE_ROOT = REPO_ROOT / "core"
 CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-sonnet-4-6")
 MAX_TOKENS = int(os.environ.get("MAX_TOKENS", "4096"))
+
+from model_router import resolve_provider
+from local_model_fallback import fallback_response
+from output_parser import parse_structured_output
+from schema_validation import validate_structured_skill_output
 
 
 # ---------------------------------------------------------------------------
@@ -330,6 +336,9 @@ class SkillActivityOutput:
         error: str = "",
         requires_hitl: bool = False,
         hitl_reason: str = "",
+        structured_output: dict | None = None,
+        estimated_cost_usd: float = 0.0,
+        correlation_id: str = "",
     ):
         self.skill_name = skill_name
         self.success = success
@@ -337,6 +346,9 @@ class SkillActivityOutput:
         self.error = error
         self.requires_hitl = requires_hitl
         self.hitl_reason = hitl_reason
+        self.structured_output = structured_output or {}
+        self.estimated_cost_usd = estimated_cost_usd
+        self.correlation_id = correlation_id
 
     def to_dict(self) -> dict:
         return {
@@ -346,6 +358,9 @@ class SkillActivityOutput:
             "error": self.error,
             "requires_hitl": self.requires_hitl,
             "hitl_reason": self.hitl_reason,
+            "structured_output": self.structured_output,
+            "estimated_cost_usd": self.estimated_cost_usd,
+            "correlation_id": self.correlation_id,
         }
 
 
@@ -362,6 +377,9 @@ def run_skill_activity(inp: SkillActivityInput) -> SkillActivityOutput:
       4. Return structured output
     """
     logger.info("Running skill activity: %s", inp.skill_name)
+    correlation_id = f"skill-{uuid.uuid4().hex[:10]}"
+    dry_run = os.environ.get("APOTHEON_DRY_RUN", "").lower() in {"1", "true", "yes"}
+    provider = resolve_provider(dry_run=dry_run)
 
     try:
         system_prompt = load_skill_contract(inp.skill_name)
@@ -390,14 +408,21 @@ def run_skill_activity(inp: SkillActivityInput) -> SkillActivityOutput:
 
     t0 = time.perf_counter()
     try:
-        output_text, input_tokens, output_tokens = call_claude(system_prompt, user_message)
+        if provider == "local-stub":
+            output_text = fallback_response(inp.skill_name, inp.objective)
+            input_tokens, output_tokens = 0, 0
+        else:
+            output_text, input_tokens, output_tokens = call_claude(system_prompt, user_message)
         duration_s = time.perf_counter() - t0
         logger.info("Skill %s completed successfully (%d chars)", inp.skill_name, len(output_text))
 
         _record_tokens(inp.skill_name, CLAUDE_MODEL, input_tokens, output_tokens)
         _record_skill(inp.skill_name, "completed", duration_s)
 
+        parsed = parse_structured_output(output_text)
+        validate_structured_skill_output(parsed.structured)
         requires_hitl, hitl_reason = detect_hitl(inp.skill_name, output_text)
+        estimated_cost_usd = round((input_tokens * 0.000003) + (output_tokens * 0.000015), 6)
         if requires_hitl:
             logger.info("HITL gate triggered for %s: %s", inp.skill_name, hitl_reason)
             _record_hitl(inp.skill_name, "triggered")
@@ -408,6 +433,9 @@ def run_skill_activity(inp: SkillActivityInput) -> SkillActivityOutput:
             output=output_text,
             requires_hitl=requires_hitl,
             hitl_reason=hitl_reason,
+            structured_output=parsed.structured,
+            estimated_cost_usd=estimated_cost_usd,
+            correlation_id=correlation_id,
         )
     except Exception as exc:
         duration_s = time.perf_counter() - t0

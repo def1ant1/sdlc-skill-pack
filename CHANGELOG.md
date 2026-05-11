@@ -1,5 +1,12 @@
 ## 2026-05-11
 
+## [8.0.12] — 2026-05-11 — Runtime Hardening: Dry-Run Boundaries + Structured Outputs
+
+- Hardened runtime execution path with explicit provider routing (`scripts/runtime/model_router.py`) and dry-run local fallback (`scripts/runtime/local_model_fallback.py`) so `--dry-run` avoids external model calls.
+- Added structured output parsing and validation (`scripts/runtime/output_parser.py`, `scripts/runtime/schema_validation.py`) and enforced checks in skill activity execution.
+- Extended runtime run records with step-level correlation IDs, structured payload snapshots, and per-step/workflow cost estimates in `scripts/runtime/execute_workflow.py` and `scripts/runtime/skill_activity.py`.
+- Added regression tests for dry-run boundary enforcement and structured output requirements in `tests/runtime/test_runtime_hardening_regressions.py`.
+
 - Added local workflow registry scaffolding with `workflows/examples/`, `workflows/library/`, and `workflows/generated/.gitkeep`.
 - Added `scripts/workflows/register_workflow.py` and `scripts/workflows/list_workflows.py` for fixture registration and registry introspection.
 - Added five OldFarmTrucks reference workflow fixtures under `workflows/examples/` with expected artifacts and failure fixture contracts.

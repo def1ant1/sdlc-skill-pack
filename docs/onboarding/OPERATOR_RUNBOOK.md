@@ -47,3 +47,9 @@ apotheon backup restore --dry-run dist/<backup-archive>.tar.gz
 1. `apotheon backup create --output dist`
 2. `apotheon backup restore --dry-run <archive>`
 3. Review planned file operations before any live restore.
+
+
+## Runtime Hardening Notes
+- Use `--dry-run` to validate plans without any external model or connector side effects.
+- For live runs, set `APOTHEON_PROVIDER` to `anthropic` or `local`; other providers are rejected by policy.
+- If a run fails with structured output errors, inspect step payloads in `runtime/workflow_history/<run_id>.json` and verify model responses are JSON objects with `status` and `summary`.
