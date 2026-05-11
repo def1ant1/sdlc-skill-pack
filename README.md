@@ -97,6 +97,16 @@ python scripts/orchestration/plan_gtm_workflow.py "Reduce churn rate by 20%" | \
   python scripts/runtime/execute_workflow.py --dry-run
 ```
 
+### Automation triggers
+
+```bash
+# Register a trigger definition
+python scripts/automation/register_trigger.py --trigger runtime/automation/example_trigger.json
+
+# Execute matching triggers for an event type (governance-gated, supports dry-run workflows)
+python scripts/automation/run_event_trigger.py --event-type invoice.created --event-payload runtime/automation/example_event.json
+```
+
 ### Detect skill gaps
 
 ```bash

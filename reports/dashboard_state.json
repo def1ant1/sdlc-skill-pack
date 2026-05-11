@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-11T20:10:27.060935+00:00",
+  "last_updated": "2026-05-11T20:52:03.690412+00:00",
   "workflow_progress": {
     "active": 6,
     "completed_today": 14,
@@ -69,5 +69,10 @@
     "imported": true,
     "workflow_templates": 5,
     "schedule_templates": 3
+  },
+  "trigger_history": {
+    "events_24h": 0,
+    "launches_24h": 0,
+    "blocked_by_governance_24h": 0
   }
 }
