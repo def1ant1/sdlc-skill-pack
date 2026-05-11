@@ -1,7 +1,6 @@
-<!-- traceability: commit_sha=a96ac1f9902f77cc1d4b42447a30e21380b30a5a generated_at_utc=2026-05-10T21:58:01-04:00 generator=scripts/generate_release_reports.py -->
 # Skill Inventory
 
-Total: 284
+Total: 308
 
 | category | id | name | version | owner | maturity | hitl_gates |
 |---|---|---|---|---|---|---|
@@ -13,11 +12,17 @@ Total: 284
 | core | autonomous-os | autonomous-os |  |  |  | 0 |
 | core | benchmark-factory | benchmark-factory |  |  |  | 0 |
 | core | billing-runtime | billing-runtime |  |  |  | 0 |
+| core | business-approval-gateway | business-approval-gateway |  |  |  | 0 |
+| core | business-audit-ledger | business-audit-ledger |  |  |  | 0 |
+| core | business-event-model | business-event-model |  |  |  | 0 |
 | core | business-orchestration | business-orchestration |  |  |  | 0 |
+| core | business-policy-engine | business-policy-engine |  |  |  | 0 |
+| core | canonical-entity-model | canonical-entity-model |  |  |  | 0 |
 | core | cluster-management | cluster-management |  |  |  | 0 |
 | core | cognitive-runtime | cognitive-runtime |  |  |  | 0 |
 | core | compliance-runtime | compliance-runtime |  |  |  | 0 |
 | core | connector-hub | connector-hub |  |  |  | 0 |
+| core | data-contract-registry | data-contract-registry |  |  |  | 0 |
 | core | data-fabric | data-fabric |  |  |  | 0 |
 | core | developer-portal | developer-portal |  |  |  | 0 |
 | core | distributed-agent-runtime | distributed-agent-runtime |  |  |  | 0 |
@@ -85,10 +90,12 @@ Total: 284
 | skills | ai-search-optimization | ai-search-optimization |  |  |  | 0 |
 | skills | alignment-testing | alignment-testing |  |  |  | 0 |
 | skills | analytics-intelligence | analytics-intelligence |  |  |  | 0 |
+| skills | arbitrage-analysis | arbitrage-analysis |  |  |  | 0 |
 | skills | arbitrage-opportunity-detection | arbitrage-opportunity-detection |  |  |  | 0 |
 | skills | audio-video-processing | audio-video-processing |  |  |  | 0 |
 | skills | audit-trail-analysis | audit-trail-analysis |  |  |  | 0 |
 | skills | backend-engineering | backend-engineering |  |  |  | 0 |
+| skills | backtesting-research | backtesting-research |  |  |  | 0 |
 | skills | belief-state-management | belief-state-management |  |  |  | 0 |
 | skills | benchmark-generation | benchmark-generation |  |  |  | 0 |
 | skills | bookkeeping-automation | bookkeeping-automation |  |  |  | 0 |
@@ -102,6 +109,7 @@ Total: 284
 | skills | campaign-optimization | campaign-optimization |  |  |  | 0 |
 | skills | capacity-balancing | capacity-balancing |  |  |  | 0 |
 | skills | cash-flow-forecasting | cash-flow-forecasting |  |  |  | 0 |
+| skills | cash-management | cash-management |  |  |  | 0 |
 | skills | causal-analysis | causal-analysis |  |  |  | 0 |
 | skills | causal-tracing | causal-tracing |  |  |  | 0 |
 | skills | chart-of-accounts-management | chart-of-accounts-management |  |  |  | 0 |
@@ -111,6 +119,7 @@ Total: 284
 | skills | code-review | code-review |  |  |  | 0 |
 | skills | collections-prioritization | collections-prioritization |  |  |  | 0 |
 | skills | communication-analytics | communication-analytics |  |  |  | 0 |
+| skills | comparison-engines | comparison-engines |  |  |  | 0 |
 | skills | competitor-price-scraping | competitor-price-scraping |  |  |  | 0 |
 | skills | compliance-automation | compliance-automation |  |  |  | 0 |
 | skills | compliance-governance | compliance-governance |  |  |  | 0 |
@@ -122,6 +131,7 @@ Total: 284
 | skills | continuous-control-monitoring | continuous-control-monitoring |  |  |  | 0 |
 | skills | conversion-funnel-analysis | conversion-funnel-analysis |  |  |  | 0 |
 | skills | crm-integration | crm-integration |  |  |  | 0 |
+| skills | crypto-fx-research | crypto-fx-research |  |  |  | 0 |
 | skills | customer-health-scoring | customer-health-scoring |  |  |  | 0 |
 | skills | customer-journey-mapping | customer-journey-mapping |  |  |  | 0 |
 | skills | customer-success | customer-success |  |  |  | 0 |
@@ -146,8 +156,11 @@ Total: 284
 | skills | evidence-pack-generation | evidence-pack-generation |  |  |  | 0 |
 | skills | execution-explanation | execution-explanation |  |  |  | 0 |
 | skills | executive-reporting | executive-reporting |  |  |  | 0 |
+| skills | expense-policy-compliance | expense-policy-compliance |  |  |  | 0 |
 | skills | feature-prioritization | feature-prioritization |  |  |  | 0 |
 | skills | finance-accounting-phase-pack | finance-accounting-phase-pack |  |  |  | 0 |
+| skills | financial-control-monitoring | financial-control-monitoring |  |  |  | 0 |
+| skills | financial-management | financial-management |  |  |  | 0 |
 | skills | financial-scenario-modeling | financial-scenario-modeling |  |  |  | 0 |
 | skills | forecasting | forecasting |  |  |  | 0 |
 | skills | fpa-analysis | fpa-analysis |  |  |  | 0 |
@@ -190,6 +203,7 @@ Total: 284
 | skills | lora-management | lora-management |  |  |  | 0 |
 | skills | low-stock-detection | low-stock-detection |  |  |  | 0 |
 | skills | market-data-quality-scoring | market-data-quality-scoring |  |  |  | 0 |
+| skills | market-ingestion-research | market-ingestion-research |  |  |  | 0 |
 | skills | market-pricing-intelligence | market-pricing-intelligence |  |  |  | 0 |
 | skills | marketing-attribution | marketing-attribution |  |  |  | 0 |
 | skills | marketplace-certification | marketplace-certification |  |  |  | 0 |
@@ -202,6 +216,7 @@ Total: 284
 | skills | model-selection-optimization | model-selection-optimization |  |  |  | 0 |
 | skills | month-end-close-support | month-end-close-support |  |  |  | 0 |
 | skills | network-topology-analysis | network-topology-analysis |  |  |  | 0 |
+| skills | news-synthesis-research | news-synthesis-research |  |  |  | 0 |
 | skills | observability | observability |  |  |  | 0 |
 | skills | opportunity-risk-analysis | opportunity-risk-analysis |  |  |  | 0 |
 | skills | outcome-feedback-analysis | outcome-feedback-analysis |  |  |  | 0 |
@@ -214,6 +229,7 @@ Total: 284
 | skills | policy-justification | policy-justification |  |  |  | 0 |
 | skills | policy-simulation | policy-simulation |  |  |  | 0 |
 | skills | portfolio-optimization | portfolio-optimization |  |  |  | 0 |
+| skills | position-sizing-research | position-sizing-research |  |  |  | 0 |
 | skills | pricing-optimization | pricing-optimization |  |  |  | 0 |
 | skills | process-optimization-governance-support | process-optimization-governance-support |  |  |  | 0 |
 | skills | process-optimization-phase-pack | process-optimization-phase-pack |  |  |  | 0 |
@@ -242,6 +258,8 @@ Total: 284
 | skills | revenue-leakage-detection | revenue-leakage-detection |  |  |  | 0 |
 | skills | revenue-operations | revenue-operations |  |  |  | 0 |
 | skills | revenue-optimization | revenue-optimization |  |  |  | 0 |
+| skills | risk-limits-research | risk-limits-research |  |  |  | 0 |
+| skills | risk-research | risk-research |  |  |  | 0 |
 | skills | roadmap-impact-analysis | roadmap-impact-analysis |  |  |  | 0 |
 | skills | roi-estimation | roi-estimation |  |  |  | 0 |
 | skills | routing-collision-analysis | routing-collision-analysis |  |  |  | 0 |
@@ -273,9 +291,12 @@ Total: 284
 | skills | system-architecture | system-architecture |  |  |  | 0 |
 | skills | talent-risk-screening-support | talent-risk-screening-support |  |  |  | 0 |
 | skills | tax-planning-support | tax-planning-support |  |  |  | 0 |
+| skills | technical-fundamental-analysis-research | technical-fundamental-analysis-research |  |  |  | 0 |
 | skills | temporal-memory-replay | temporal-memory-replay |  |  |  | 0 |
 | skills | token-cost-analysis | token-cost-analysis |  |  |  | 0 |
+| skills | trading-journal-research | trading-journal-research |  |  |  | 0 |
 | skills | uncertainty-aware-routing | uncertainty-aware-routing |  |  |  | 0 |
+| skills | unit-economics-analysis | unit-economics-analysis |  |  |  | 0 |
 | skills | vendor-obligation-tracking | vendor-obligation-tracking |  |  |  | 0 |
 | skills | vendor-procurement | vendor-procurement |  |  |  | 0 |
 | skills | vendor-procurement-phase-pack | vendor-procurement-phase-pack |  |  |  | 0 |
@@ -283,9 +304,11 @@ Total: 284
 | skills | visual-analytics | visual-analytics |  |  |  | 0 |
 | skills | voice-of-customer-analysis | voice-of-customer-analysis |  |  |  | 0 |
 | skills | warehouse-optimization | warehouse-optimization |  |  |  | 0 |
+| skills | watchlist-research | watchlist-research |  |  |  | 0 |
 | skills | win-loss-analysis | win-loss-analysis |  |  |  | 0 |
 | skills | workflow-ab-testing | workflow-ab-testing |  |  |  | 0 |
 | skills | workflow-optimization-loop | workflow-optimization-loop |  |  |  | 0 |
 | skills | workflow-replay | workflow-replay |  |  |  | 0 |
 | skills | workforce-management | workforce-management |  |  |  | 0 |
+| skills | working-capital-optimization | working-capital-optimization |  |  |  | 0 |
 | skills | zero-trust-policy-authoring | zero-trust-policy-authoring |  |  |  | 0 |

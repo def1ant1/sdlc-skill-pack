@@ -371,7 +371,7 @@ Acceptance criteria:
 ## MB-P0-011 — Implement core domain planners
 
 **Source:** Local Workflow Scheduling + Domain Backlogs  
-**Status:** Open / not proven complete
+**Status:** Completed (2026-05-11)
 
 Required planners:
 
@@ -596,7 +596,7 @@ Acceptance criteria:
 ## MB-P0-020 — Add release readiness aggregator and deterministic package flow
 
 **Source:** RC1 Release Finalization Backlog  
-**Status:** Open / not proven complete
+**Status:** Completed (2026-05-11)
 
 Create:
 

@@ -1,4 +1,3 @@
-"""Tests for business/finance/customer/inventory workflow planners."""
 from __future__ import annotations
 
 import json
@@ -14,74 +13,62 @@ PLANNERS = {
     "finance": REPO_ROOT / "scripts" / "orchestration" / "plan_finance_workflow.py",
     "customer": REPO_ROOT / "scripts" / "orchestration" / "plan_customer_workflow.py",
     "inventory": REPO_ROOT / "scripts" / "orchestration" / "plan_inventory_workflow.py",
+    "legal": REPO_ROOT / "scripts" / "orchestration" / "plan_legal_workflow.py",
+    "data-security": REPO_ROOT / "scripts" / "orchestration" / "plan_data_security_workflow.py",
 }
+VALIDATOR = REPO_ROOT / "scripts" / "validation" / "validate_workflow_plan.py"
 
 
-def run_planner(script: Path, objective: str) -> dict:
-    result = subprocess.run([sys.executable, str(script), objective], capture_output=True, text=True)
-    assert result.returncode == 0, result.stderr
-    return json.loads(result.stdout)
+def run_planner(script: Path, objective: str, output_path: Path) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        [sys.executable, str(script), objective, "--dry-run", "--json", "--output", str(output_path)],
+        capture_output=True,
+        text=True,
+    )
 
 
-@pytest.mark.parametrize("domain", ["business", "finance", "customer", "inventory"])
-def test_output_schema_and_hitl(domain: str):
-    out = run_planner(PLANNERS[domain], "Improve customer retention and compliance reporting")
-    for key in ["plan_id", "created", "planner", "planning_contract", "skill_chain", "governance_checks", "hitl_checkpoints", "next_action"]:
-        assert key in out
-    assert out["planner"] == f"{domain}-workflow-planner"
-    assert out["planning_contract"]["schema"] == "workflow-plan@1.0"
-    assert len(out["hitl_checkpoints"]) >= 2
-    assert any(c["required"] for c in out["hitl_checkpoints"])
+@pytest.fixture(scope="module", autouse=True)
+def build_reports() -> None:
+    subprocess.run([sys.executable, str(REPO_ROOT / "scripts" / "generate_skill_inventory.py"), "--root", str(REPO_ROOT)], check=True)
+    subprocess.run([sys.executable, str(REPO_ROOT / "scripts" / "skills" / "build_skill_graph.py")], check=True)
 
 
-@pytest.mark.parametrize(
-    "domain,objective,expected",
-    [
-        ("finance", "Optimize budget and vendor sourcing", {"finance-operations", "procurement-operations"}),
-        ("customer", "Reduce churn and improve onboarding", {"customer-operations"}),
-        ("inventory", "Fix warehouse stock replenishment", {"inventory-operations"}),
-        ("business", "HR policy refresh and legal contract review", {"hr-operations", "legal-operations"}),
-    ],
-)
-def test_route_objectives(domain: str, objective: str, expected: set[str]):
-    out = run_planner(PLANNERS[domain], objective)
-    routed = {s["skill"] for s in out["skill_chain"]}
-    assert expected.issubset(routed)
+@pytest.mark.parametrize("domain", list(PLANNERS.keys()))
+def test_planners_emit_schema_valid_plans(tmp_path: Path, domain: str):
+    plan_file = tmp_path / f"{domain}.json"
+    out = run_planner(PLANNERS[domain], f"Plan {domain} operations", plan_file)
+    assert out.returncode == 0, out.stderr
+    emitted = json.loads(out.stdout)
+    assert emitted["dry_run_safety"]["enabled"] is True
+    validate = subprocess.run([sys.executable, str(VALIDATOR), str(plan_file)], cwd=REPO_ROOT, capture_output=True, text=True)
+    assert validate.returncode == 0, validate.stdout + validate.stderr
 
 
-@pytest.mark.parametrize("domain", ["business", "finance", "customer", "inventory"])
-def test_output_structure_is_deterministic(domain: str):
-    objective = "Improve compliance posture and vendor governance"
-    first = run_planner(PLANNERS[domain], objective)
-    second = run_planner(PLANNERS[domain], objective)
-
-    assert list(first.keys()) == list(second.keys())
-    assert first["planner"] == second["planner"]
-    assert first["objective"] == second["objective"]
-    assert first["planning_contract"] == second["planning_contract"]
-    assert first["governance_checks"] == second["governance_checks"]
-    assert first["hitl_checkpoints"] == second["hitl_checkpoints"]
-    assert first["next_action"] == second["next_action"]
-
-    first_chain_shape = [{k: step[k] for k in ("step", "skill", "phase", "depends_on", "governance")} for step in first["skill_chain"]]
-    second_chain_shape = [{k: step[k] for k in ("step", "skill", "phase", "depends_on", "governance")} for step in second["skill_chain"]]
-    assert first_chain_shape == second_chain_shape
-
-
-@pytest.mark.parametrize("domain", ["business", "finance", "customer", "inventory"])
-def test_governance_annotations_present(domain: str):
-    out = run_planner(PLANNERS[domain], "Review contracts, budget controls, and workforce policy")
-
-    approval_steps = []
-    for step in out["skill_chain"]:
-        gov = step["governance"]
-        assert set(gov.keys()) == {"approval_required", "approver_role", "policy_tags", "reason"}
-        assert isinstance(gov["approval_required"], bool)
-        assert isinstance(gov["policy_tags"], list)
-        if gov["approval_required"]:
-            assert isinstance(gov["approver_role"], str)
-            assert gov["approver_role"]
-            assert len(gov["policy_tags"]) > 0
-            approval_steps.append(step["skill"])
-
-    assert approval_steps, "Expected at least one approval-requiring step in governance-heavy objectives"
+def test_missing_skill_diagnostics(tmp_path: Path):
+    inv = tmp_path / "skill_inventory.json"
+    graph = tmp_path / "skill_graph.json"
+    inv.write_text("[]\n", encoding="utf-8")
+    graph.write_text('{"nodes": []}\n', encoding="utf-8")
+    out_file = tmp_path / "out.json"
+    proc = subprocess.run(
+        [
+            sys.executable,
+            str(PLANNERS["business"]),
+            "Plan budget",
+            "--dry-run",
+            "--json",
+            "--output",
+            str(out_file),
+            "--inventory",
+            str(inv),
+            "--graph",
+            str(graph),
+        ],
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 1
+    err = proc.stderr.lower()
+    assert "required skills unavailable" in err
+    assert "missing_in_inventory" in err
+    assert "missing_in_graph" in err

@@ -155,3 +155,19 @@ configuration, and content strategy when it runs.
 | `detect_skill_gaps.py` flags GTM dependency | Alias not in `_KNOWN_ALIASES` | Add to the alias set |
 | Execution fails at Step 1 | Missing `ANTHROPIC_API_KEY` | Export the env var |
 | HITL gate triggers unexpectedly | Output contains approval keyword | Review skill output or adjust detection phrases in `skill_activity.py` |
+
+## Domain Planner CLI Requirements
+
+For non-GTM domain planners in `scripts/orchestration/plan_*_workflow.py`, always pass:
+
+```bash
+python scripts/orchestration/plan_business_workflow.py "<objective>" --dry-run --json --output reports/business-plan.json
+```
+
+All domain planners require `--dry-run`, `--json`, and `--output`, and they validate required skills against `reports/skill_inventory.json` and `reports/skill_graph.json`.
+Generate reports first if missing:
+
+```bash
+python scripts/generate_skill_inventory.py --root .
+python scripts/skills/build_skill_graph.py
+```
