@@ -2,6 +2,12 @@
 last_updated: 2026-05-11
 ---
 
+## [8.0.8] — 2026-05-11 — Profile Capability Boundaries + Validation
+
+- Added product profile definitions in `profiles/` for `local-solo`, `mvp`, `team`, `enterprise`, and `full-domain-lab` with explicit MVP-only boundaries and high-risk defaults disabled/guarded.
+- Added `schemas/profile.schema.json` and `scripts/validation/validate_profiles.py` for schema-driven profile validation with fallback required-key checks.
+- Added onboarding/reference docs for profile selection, compose-profile alignment, validation examples, usage guidance, and profile constraints.
+
 ## [8.0.7] — 2026-05-11 — Docker Runtime Baseline + Onboarding Runbooks
 
 - Added Docker runtime artifacts: `Dockerfile`, `Dockerfile.dev`, `.dockerignore`, `.env.example`, `docker-compose.yml`, and `docker-compose.override.yml` with reproducible base image pinning and explicit health checks for Postgres, Redis, Qdrant, Temporal, and runtime API.

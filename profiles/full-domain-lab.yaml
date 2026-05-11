@@ -1,0 +1,34 @@
+profile_id: full-domain-lab
+display_name: Full Domain Lab
+tier: full-domain-lab
+description: Research and simulation profile that enables the widest domain and skill exploration.
+compose_profiles:
+  - full-domain-lab
+  - core
+  - observability
+  - governance
+  - integrations
+  - experiments
+enabled_capabilities:
+  - all-domain-workflow-planning
+  - simulation-and-replay
+  - benchmark-generation
+  - skill-gap-analysis
+disabled_by_default:
+  - autonomous-external-actions
+capability_boundaries:
+  mvp_only: false
+  high_risk_default: guarded
+  notes:
+    - Full-domain lab enables broad experimentation but still keeps high-risk actions disabled by default.
+    - Use explicit overrides and HITL for any sensitive mutation workflows.
+high_risk:
+  enabled: false
+  requires_hitl: true
+  categories:
+    - financial-transfers
+    - security-policy-changes
+    - legal-advice
+    - hr-high-impact
+    - data-deletion
+    - infrastructure-mutations

@@ -10,6 +10,7 @@ x-health-defaults: &health_defaults
 
 services:
   postgres:
+    profiles: ["core", "local-solo", "mvp", "team", "enterprise", "full-domain-lab"]
     image: postgres:16.3-alpine
     container_name: apotheon-postgres
     restart: unless-stopped
@@ -26,6 +27,7 @@ services:
       <<: *health_defaults
 
   redis:
+    profiles: ["core", "local-solo", "mvp", "team", "enterprise", "full-domain-lab"]
     image: redis:7.2.5-alpine
     container_name: apotheon-redis
     restart: unless-stopped
@@ -39,6 +41,7 @@ services:
       <<: *health_defaults
 
   qdrant:
+    profiles: ["core", "local-solo", "mvp", "team", "enterprise", "full-domain-lab"]
     image: qdrant/qdrant:v1.9.5
     container_name: apotheon-qdrant
     restart: unless-stopped
@@ -52,6 +55,7 @@ services:
       <<: *health_defaults
 
   temporal:
+    profiles: ["core", "mvp", "team", "enterprise", "full-domain-lab"]
     image: temporalio/auto-setup:1.24.2
     container_name: apotheon-temporal
     restart: unless-stopped
@@ -75,6 +79,7 @@ services:
       start_period: 30s
 
   temporal-ui:
+    profiles: ["observability", "mvp", "team", "enterprise", "full-domain-lab"]
     image: temporalio/ui:2.27.2
     container_name: apotheon-temporal-ui
     restart: unless-stopped
@@ -87,6 +92,7 @@ services:
       - "8080:8080"
 
   runtime:
+    profiles: ["core", "local-solo", "mvp", "team", "enterprise", "full-domain-lab"]
     build:
       context: .
       dockerfile: Dockerfile

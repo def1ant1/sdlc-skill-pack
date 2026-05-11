@@ -128,7 +128,7 @@ Acceptance criteria:
 ## MB-P0-002 — Add local-solo MVP profile
 
 **Source:** Docker Deployment Backlog  
-**Status:** Open
+**Status:** Completed (2026-05-11)
 
 Create:
 

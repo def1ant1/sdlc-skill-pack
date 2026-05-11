@@ -1,0 +1,33 @@
+profile_id: mvp
+display_name: MVP
+tier: mvp
+description: Release-critical feature set for shipping and validating the MVP scope.
+compose_profiles:
+  - mvp
+  - core
+  - observability
+enabled_capabilities:
+  - release-readiness
+  - governance-validation
+  - workflow-planning
+  - telemetry-reporting
+disabled_by_default:
+  - experimental-skill-packs
+  - autonomous-external-actions
+  - production-data-writebacks
+capability_boundaries:
+  mvp_only: true
+  high_risk_default: disabled
+  notes:
+    - Includes only release-critical skills, workflows, and guardrails.
+    - High-risk capabilities remain disabled and require explicit policy override.
+high_risk:
+  enabled: false
+  requires_hitl: true
+  categories:
+    - financial-transfers
+    - security-policy-changes
+    - legal-advice
+    - hr-high-impact
+    - data-deletion
+    - infrastructure-mutations

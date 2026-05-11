@@ -1,0 +1,33 @@
+profile_id: enterprise
+display_name: Enterprise
+tier: enterprise
+description: Enterprise deployment baseline with compliance, governance, and multi-team controls.
+compose_profiles:
+  - enterprise
+  - core
+  - observability
+  - governance
+  - integrations
+enabled_capabilities:
+  - compliance-reporting
+  - governance-validation
+  - multi-domain-orchestration
+  - integration-health
+disabled_by_default:
+  - autonomous-external-actions
+capability_boundaries:
+  mvp_only: false
+  high_risk_default: guarded
+  notes:
+    - Enterprise profile permits broad capability coverage with enforced governance.
+    - High-risk categories are gated and off by default until approval paths are configured.
+high_risk:
+  enabled: false
+  requires_hitl: true
+  categories:
+    - financial-transfers
+    - security-policy-changes
+    - legal-advice
+    - hr-high-impact
+    - data-deletion
+    - infrastructure-mutations
