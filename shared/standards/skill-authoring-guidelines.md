@@ -180,3 +180,24 @@ Always increment its version when the routing or handoff protocol changes.
 - Description length ≤ 1024 characters
 
 Both validators run in CI on every push and PR.
+---
+
+
+## `skill.yaml` / Manifest Metadata Parity (MVP Requirement)
+
+For MVP shipping compatibility, each skill must provide either:
+
+- `skill.yaml` validated by `schemas/skill.yaml.schema.json`, or
+- `manifest.v9.json` with metadata parity fields:
+  - `metadata.token_budget`
+  - `metadata.governance`
+  - `metadata.load_modes` containing `metadata_only`
+
+Use:
+
+```bash
+python scripts/validation/validate_skill_yaml.py --mvp
+```
+
+This enables metadata-only planner loading without hydrating full runtime references.
+

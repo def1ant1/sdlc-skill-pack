@@ -2,6 +2,13 @@
 last_updated: 2026-05-11
 ---
 
+## [8.0.9] — 2026-05-11 — Skill YAML Spec Hardening + MVP Migration Notes
+
+- Added hardened skill specification schemas: `schemas/skill.yaml.schema.json` and `schemas/skill-metadata.schema.json`.
+- Added `references/skill-specification-standard.md` defining machine-readable token budget and governance requirements plus metadata-only load mode.
+- Added `scripts/validation/validate_skill_yaml.py` to validate `skill.yaml`, validate V9 manifest compatibility, and run bulk MVP checks.
+- Migration note: `python scripts/validation/validate_skill_yaml.py --mvp` currently reports non-compliant MVP manifests that must add `metadata.token_budget`, `metadata.governance`, and `metadata.load_modes` including `metadata_only`.
+
 ## [8.0.8] — 2026-05-11 — Profile Capability Boundaries + Validation
 
 - Added product profile definitions in `profiles/` for `local-solo`, `mvp`, `team`, `enterprise`, and `full-domain-lab` with explicit MVP-only boundaries and high-risk defaults disabled/guarded.

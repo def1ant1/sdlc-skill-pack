@@ -154,7 +154,7 @@ Acceptance criteria:
 ## MB-P0-003 — Formalize `skill.yaml` specification
 
 **Source:** Docker/Productization + V9 Backlog  
-**Status:** Open / partially covered by V9 manifests
+**Status:** Completed (2026-05-11)
 
 Create or harden:
 
@@ -166,6 +166,17 @@ scripts/validation/validate_skill_yaml.py
 ```
 
 Acceptance criteria:
+
+
+Validation evidence (2026-05-11):
+
+- Added hardened schemas and validator:
+  - `schemas/skill.yaml.schema.json`
+  - `schemas/skill-metadata.schema.json`
+  - `references/skill-specification-standard.md`
+  - `scripts/validation/validate_skill_yaml.py`
+- Ran `python scripts/validation/validate_skill_yaml.py --mvp`.
+- Result: 87 MVP manifests checked, non-compliant manifests require migration for metadata parity fields (`metadata.token_budget`, `metadata.governance`, and `metadata.load_modes` with `metadata_only`).
 
 - Every MVP skill has `skill.yaml` or equivalent manifest.
 - Skill metadata can load without full skill references.
