@@ -48,6 +48,9 @@ scraping governance
 
 ## MB-ECOM-P0-001 — Marketplace ontology and canonical commerce entities
 
+**Status:** Completed (2026-05-11)
+
+
 Create:
 
 ```text
@@ -71,6 +74,8 @@ Acceptance criteria:
 - Supports used/refurbished/collector inventory.
 - Tracks condition grading and acquisition confidence.
 - Supports marketplace fee modeling.
+- Implemented canonical schemas in `schemas/entities/*-schema.json` for all listed commerce entities.
+- Added ontology reference with relationships, key normalization strategy, and payload examples in `references/ecommerce-ontology.md`.
 
 ---
 
