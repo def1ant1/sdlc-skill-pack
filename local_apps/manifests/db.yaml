@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: local-db-pvc
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: local-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: local-db }
+  template:
+    metadata:
+      labels: { app: local-db }
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16
+          envFrom:
+            - secretRef:
+                name: local-apps-secrets
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: db-data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: db-data
+          persistentVolumeClaim:
+            claimName: local-db-pvc
