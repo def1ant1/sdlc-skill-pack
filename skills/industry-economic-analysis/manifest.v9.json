@@ -1,0 +1,28 @@
+{
+  "name": "industry-economic-analysis",
+  "type": "skill",
+  "domain": "economics",
+  "version": "9.0.0",
+  "owner": "Apotheon",
+  "maturity": "beta",
+  "activation_triggers": [
+    "industry_economic_analysis",
+    "economics"
+  ],
+  "required_context": [
+    "tenant_profile",
+    "policy_profile"
+  ],
+  "output_contract": {
+    "required_sections": [
+      "summary",
+      "governance_assertions",
+      "source_timestamps",
+      "scenario_ranges"
+    ],
+    "approval_gate": "required-for-external-actions"
+  },
+  "governance_level": "L2",
+  "human_approval_required": false,
+  "execution_mode": "semi-autonomous"
+}

@@ -1,0 +1,9 @@
+version: 1
+skill: audit-log-review
+routes:
+  - when_intent_in:
+      - security
+    then: audit-log-review
+  - when_contains_any:
+      - audit log review
+    then: audit-log-review

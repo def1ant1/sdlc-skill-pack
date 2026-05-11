@@ -1,0 +1,9 @@
+version: 1
+skill: route-optimization-support
+routes:
+  - when_intent_in:
+      - logistics
+    then: route-optimization-support
+  - when_contains_any:
+      - route optimization support
+    then: route-optimization-support

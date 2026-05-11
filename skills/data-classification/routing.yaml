@@ -1,0 +1,9 @@
+version: 1
+skill: data-classification
+routes:
+  - when_intent_in:
+      - security
+    then: data-classification
+  - when_contains_any:
+      - data classification
+    then: data-classification

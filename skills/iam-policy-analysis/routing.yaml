@@ -1,0 +1,9 @@
+version: 1
+skill: iam-policy-analysis
+routes:
+  - when_intent_in:
+      - security
+    then: iam-policy-analysis
+  - when_contains_any:
+      - iam policy analysis
+    then: iam-policy-analysis

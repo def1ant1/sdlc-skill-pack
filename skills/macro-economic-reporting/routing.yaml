@@ -1,0 +1,9 @@
+version: 1
+skill: macro-economic-reporting
+routes:
+  - when_intent_in:
+      - economics
+    then: macro-economic-reporting
+  - when_contains_any:
+      - macro economic reporting
+    then: macro-economic-reporting

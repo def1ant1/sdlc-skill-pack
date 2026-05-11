@@ -1,0 +1,9 @@
+version: 1
+skill: bill-of-materials-management
+routes:
+  - when_intent_in:
+      - materials
+    then: bill-of-materials-management
+  - when_contains_any:
+      - bill of materials management
+    then: bill-of-materials-management

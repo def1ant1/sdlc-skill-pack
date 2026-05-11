@@ -1,3 +1,12 @@
+## 2026-05-11 — MB-P2-007 multi-domain pack completion
+
+- Completed MB-P2-007 by adding 28 domain skills across economics, logistics, materials, and data-security under `skills/` with standardized manifests/routing/evals.
+- Enforced economic output requirements for source timestamps and scenario ranges in all economics skill contracts.
+- Enforced mandatory approvals for logistics bookings, payments, and shipping-document actions.
+- Enforced safety-critical/professional-review flags for materials recommendations.
+- Enforced approval gates plus evidence-preservation requirements for security mutations.
+- Updated governance documentation for runtime enforcement and professional-review boundaries.
+
 ## 2026-05-11 — HR/L&D governance + MB-P2-006 completion
 
 - Completed MB-P2-006 by adding `skills/hr-learning-development-pack` with explicit coverage for HR and L&D capabilities, support-only operation, and high-impact human review gates.

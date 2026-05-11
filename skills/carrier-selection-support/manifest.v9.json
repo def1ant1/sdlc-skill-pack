@@ -1,0 +1,26 @@
+{
+  "name": "carrier-selection-support",
+  "type": "skill",
+  "domain": "logistics",
+  "version": "9.0.0",
+  "owner": "Apotheon",
+  "maturity": "beta",
+  "activation_triggers": [
+    "carrier_selection_support",
+    "logistics"
+  ],
+  "required_context": [
+    "tenant_profile",
+    "policy_profile"
+  ],
+  "output_contract": {
+    "required_sections": [
+      "summary",
+      "governance_assertions"
+    ],
+    "approval_gate": "required-for-external-actions"
+  },
+  "governance_level": "L2",
+  "human_approval_required": true,
+  "execution_mode": "semi-autonomous"
+}

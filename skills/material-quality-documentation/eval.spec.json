@@ -1,0 +1,22 @@
+{
+  "skill_name": "material-quality-documentation",
+  "priority": "P2",
+  "owner": "Apotheon.ai",
+  "last_updated": "2026-05-11",
+  "datasets": [
+    {
+      "id": "material-quality-documentation-governance-golden",
+      "description": "Governance and output-contract scenarios"
+    }
+  ],
+  "metrics": [
+    {
+      "name": "governance_compliance_rate",
+      "target": 1.0,
+      "direction": "gte"
+    }
+  ],
+  "acceptance_gates": [
+    "governance_compliance_rate == 1.0"
+  ]
+}

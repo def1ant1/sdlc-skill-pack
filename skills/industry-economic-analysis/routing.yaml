@@ -1,0 +1,9 @@
+version: 1
+skill: industry-economic-analysis
+routes:
+  - when_intent_in:
+      - economics
+    then: industry-economic-analysis
+  - when_contains_any:
+      - industry economic analysis
+    then: industry-economic-analysis

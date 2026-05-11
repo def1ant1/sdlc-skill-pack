@@ -1,0 +1,9 @@
+version: 1
+skill: interest-rate-impact-analysis
+routes:
+  - when_intent_in:
+      - economics
+    then: interest-rate-impact-analysis
+  - when_contains_any:
+      - interest rate impact analysis
+    then: interest-rate-impact-analysis

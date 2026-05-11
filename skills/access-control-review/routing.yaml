@@ -1,0 +1,9 @@
+version: 1
+skill: access-control-review
+routes:
+  - when_intent_in:
+      - security
+    then: access-control-review
+  - when_contains_any:
+      - access control review
+    then: access-control-review

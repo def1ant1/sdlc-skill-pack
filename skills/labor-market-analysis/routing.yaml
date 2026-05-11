@@ -1,0 +1,9 @@
+version: 1
+skill: labor-market-analysis
+routes:
+  - when_intent_in:
+      - economics
+    then: labor-market-analysis
+  - when_contains_any:
+      - labor market analysis
+    then: labor-market-analysis

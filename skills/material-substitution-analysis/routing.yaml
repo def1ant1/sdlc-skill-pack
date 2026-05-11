@@ -1,0 +1,9 @@
+version: 1
+skill: material-substitution-analysis
+routes:
+  - when_intent_in:
+      - materials
+    then: material-substitution-analysis
+  - when_contains_any:
+      - material substitution analysis
+    then: material-substitution-analysis

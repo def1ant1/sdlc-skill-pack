@@ -1,0 +1,9 @@
+version: 1
+skill: materials-management
+routes:
+  - when_intent_in:
+      - materials
+    then: materials-management
+  - when_contains_any:
+      - materials management
+    then: materials-management

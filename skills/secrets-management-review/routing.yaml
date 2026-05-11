@@ -1,0 +1,9 @@
+version: 1
+skill: secrets-management-review
+routes:
+  - when_intent_in:
+      - security
+    then: secrets-management-review
+  - when_contains_any:
+      - secrets management review
+    then: secrets-management-review
