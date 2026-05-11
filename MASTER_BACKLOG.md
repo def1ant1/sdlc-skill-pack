@@ -989,7 +989,7 @@ Acceptance criteria:
 ## MB-P2-004 — Legal, tax, entity, and regulatory intelligence skill pack
 
 **Source:** Domain Backlog  
-**Status:** Open
+**Status:** Completed
 
 Implement/complete skills for:
 

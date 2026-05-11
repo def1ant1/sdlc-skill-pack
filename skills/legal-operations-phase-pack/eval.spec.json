@@ -4,6 +4,10 @@
     "approval_thresholds",
     "obligation_tracking",
     "kpi_linkage",
-    "bias_guardrails"
+    "bias_guardrails",
+    "decision_support_only_boundary",
+    "authoritative_citation_enforcement",
+    "required_finding_fields",
+    "filing_submission_approval_gates"
   ]
 }
