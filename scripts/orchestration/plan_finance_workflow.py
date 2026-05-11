@@ -23,7 +23,12 @@ def main() -> int:
         return 1
 
     domain = Path(__file__).stem.replace("plan_", "").replace("_workflow", "")
-    print(json.dumps(build_domain_plan(objective, domain), indent=2))
+    try:
+        plan = build_domain_plan(objective, domain)
+    except ValueError as exc:
+        print(f"Error: {exc}", file=sys.stderr)
+        return 1
+    print(json.dumps(plan, indent=2, sort_keys=True))
     return 0
 
 

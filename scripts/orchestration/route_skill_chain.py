@@ -298,7 +298,7 @@ def build_chain(requested: list[str], expand_deps: bool = True) -> dict:
             "skills": group,
         })
 
-    complexity = _infer_complexity(len(known))
+    complexity = _infer_complexity(known)
 
     return {
         "complexity": complexity,
