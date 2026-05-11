@@ -1,4 +1,4 @@
-<!-- traceability: commit_sha=380eb7097bbf460740fab6c25564091bb4ddb3f6 generated_at_utc=2026-05-10T17:12:06-04:00 generator=scripts/generate_release_reports.py -->
+<!-- traceability: commit_sha=a96ac1f9902f77cc1d4b42447a30e21380b30a5a generated_at_utc=2026-05-10T21:58:01-04:00 generator=scripts/generate_release_reports.py -->
 # Orchestration Map
 
 ## Artifact Outputs
@@ -7,7 +7,7 @@
 - `reports/orchestration_map.md`
 
 ## Summary
-- Total nodes: 284 (core: 70, skills: 214)
+- Total nodes: 284 (core: 0, skills: 284)
 - Total dependencies: 625
 - Unresolved dependencies: 0
 

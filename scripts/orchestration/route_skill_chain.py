@@ -237,8 +237,9 @@ def compute_parallel_groups(ordered: list[str]) -> list[list[str]]:
                 if member in candidate_deps or candidate in member_deps:
                     can_parallel = False
                     break
-                # Require explicit parallel_with declaration for safety
-                if candidate not in SKILLS[member]["parallel_with"]:
+                # Require explicit parallel_with declaration for safety (symmetric: either side)
+                if (candidate not in SKILLS[member]["parallel_with"]
+                        and member not in SKILLS[candidate]["parallel_with"]):
                     can_parallel = False
                     break
             if can_parallel:
@@ -297,7 +298,7 @@ def build_chain(requested: list[str], expand_deps: bool = True) -> dict:
             "skills": group,
         })
 
-    complexity = _infer_complexity(ordered)
+    complexity = _infer_complexity(len(known))
 
     return {
         "complexity": complexity,

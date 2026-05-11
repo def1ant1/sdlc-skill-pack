@@ -1,0 +1,42 @@
+{
+  "completed_at": "1970-01-01T00:00:00Z",
+  "mode": "local",
+  "objective": "Build and test a payment service",
+  "plan_id": "WP-20260510-001",
+  "run_id": "DRYRUN-ca98aa32e899",
+  "started_at": "1970-01-01T00:00:00Z",
+  "status": "dry_run",
+  "steps": [
+    {
+      "duration_ms": 0,
+      "error": null,
+      "hitl_required": false,
+      "output": null,
+      "side_effect_classification": "read-only",
+      "skill": "system-architecture",
+      "status": "dry_run",
+      "step": 1
+    },
+    {
+      "duration_ms": 0,
+      "error": null,
+      "hitl_required": false,
+      "output": null,
+      "side_effect_classification": "read-only",
+      "skill": "backend-engineering",
+      "status": "dry_run",
+      "step": 2
+    },
+    {
+      "duration_ms": 0,
+      "error": null,
+      "hitl_required": false,
+      "output": null,
+      "side_effect_classification": "read-only",
+      "skill": "qa-automation",
+      "status": "dry_run",
+      "step": 3
+    }
+  ],
+  "total_steps": 3
+}

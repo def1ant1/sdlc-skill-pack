@@ -1,3 +1,4 @@
+<!-- traceability: commit_sha=a96ac1f9902f77cc1d4b42447a30e21380b30a5a generated_at_utc=2026-05-10T21:58:01-04:00 generator=scripts/generate_release_reports.py -->
 # Skill Maturity Report
 
 Rubric checks: manifest, skill_protocol, contracts, entities_events_refs, governance_refs, hitl, telemetry, eval, examples, failure_modes, boundary_language

@@ -1,0 +1,23 @@
+{
+  "completed_at": "2026-05-11T02:29:18Z",
+  "failed_at_step": 1,
+  "mode": "local",
+  "objective": "Test objective",
+  "plan_id": "TEST-PLAN-001",
+  "run_id": "RUN-1778466558-fa63d751",
+  "started_at": "2026-05-11T02:29:18Z",
+  "status": "failed",
+  "steps": [
+    {
+      "duration_ms": 0,
+      "error": "skill failed",
+      "hitl_required": false,
+      "output": "skill output",
+      "side_effect_classification": "read-only",
+      "skill": "requirements-analysis",
+      "status": "failed",
+      "step": 1
+    }
+  ],
+  "total_steps": 1
+}

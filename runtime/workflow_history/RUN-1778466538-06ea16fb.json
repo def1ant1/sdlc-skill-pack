@@ -1,0 +1,32 @@
+{
+  "completed_at": "2026-05-11T02:28:58Z",
+  "mode": "local",
+  "objective": "Test objective",
+  "plan_id": "TEST-PLAN-001",
+  "run_id": "RUN-1778466538-06ea16fb",
+  "started_at": "2026-05-11T02:28:58Z",
+  "status": "completed",
+  "steps": [
+    {
+      "duration_ms": 0,
+      "error": null,
+      "hitl_required": false,
+      "output": "skill output",
+      "side_effect_classification": "read-only",
+      "skill": "requirements-analysis",
+      "status": "completed",
+      "step": 1
+    },
+    {
+      "duration_ms": 0,
+      "error": null,
+      "hitl_required": false,
+      "output": "skill output",
+      "side_effect_classification": "read-only",
+      "skill": "backend-engineering",
+      "status": "completed",
+      "step": 2
+    }
+  ],
+  "total_steps": 2
+}

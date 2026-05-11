@@ -1,0 +1,42 @@
+{
+  "completed_at": "1970-01-01T00:00:00Z",
+  "mode": "local",
+  "objective": "Test objective",
+  "plan_id": "TEST-PLAN-001",
+  "run_id": "DRYRUN-6f63198d7c3e",
+  "started_at": "1970-01-01T00:00:00Z",
+  "status": "dry_run",
+  "steps": [
+    {
+      "duration_ms": 0,
+      "error": null,
+      "hitl_required": false,
+      "output": null,
+      "side_effect_classification": "read-only",
+      "skill": "requirements-analysis",
+      "status": "dry_run",
+      "step": 1
+    },
+    {
+      "duration_ms": 0,
+      "error": null,
+      "hitl_required": false,
+      "output": null,
+      "side_effect_classification": "read-only",
+      "skill": "backend-engineering",
+      "status": "dry_run",
+      "step": 2
+    },
+    {
+      "duration_ms": 0,
+      "error": null,
+      "hitl_required": false,
+      "output": null,
+      "side_effect_classification": "read-only",
+      "skill": "qa",
+      "status": "dry_run",
+      "step": 3
+    }
+  ],
+  "total_steps": 3
+}

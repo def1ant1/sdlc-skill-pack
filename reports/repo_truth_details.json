@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-05-10T21:13:55Z",
+  "generated_at": "2026-05-11T02:29:17Z",
   "status": "fail",
-  "reference_count": 255,
-  "checked_count": 255,
-  "existing_count": 196,
-  "missing_count": 59,
-  "stale_claim_count": 0,
+  "reference_count": 232,
+  "checked_count": 232,
+  "existing_count": 168,
+  "missing_count": 64,
+  "stale_claim_count": 4,
   "phase_count": 33,
   "phase_completion_count": 24,
   "phase_stats": [
@@ -235,186 +235,216 @@
     },
     {
       "phase": "Unscoped",
-      "total": 76,
-      "existing": 47,
-      "missing": 29,
+      "total": 53,
+      "existing": 19,
+      "missing": 34,
       "complete": false
     }
   ],
   "missing": [
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 30,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 53,
       "phase": "Unscoped",
-      "path": "scripts/smoke_test_release.py"
+      "path": "references/workflow-plan-standard.md"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 31,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 104,
       "phase": "Unscoped",
-      "path": "scripts/orchestration/plan_business_workflow.py"
+      "path": "scripts/workflows/register_workflow.py"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 82,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 105,
       "phase": "Unscoped",
-      "path": "schemas/release-readiness.schema.json"
+      "path": "scripts/workflows/list_workflows.py"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 148,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 179,
       "phase": "Unscoped",
-      "path": "schemas/release-readiness.schema.json"
+      "path": "schemas/workflow-schedule.schema.json"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 252,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 182,
       "phase": "Unscoped",
-      "path": "scripts/validate_version_consistency.py"
+      "path": "references/workflow-scheduling-standard.md"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 253,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 183,
       "phase": "Unscoped",
-      "path": "scripts/generate_release_notes.py"
+      "path": "scripts/schedules/validate_schedule.py"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 267,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 184,
       "phase": "Unscoped",
-      "path": "scripts/validate_version_consistency.py"
+      "path": "scripts/schedules/list_schedules.py"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 269,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 223,
       "phase": "Unscoped",
-      "path": "scripts/generate_release_notes.py"
+      "path": "scripts/schedules/run_due_schedules.py"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 283,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 224,
       "phase": "Unscoped",
-      "path": "scripts/smoke_test_release.py"
+      "path": "scripts/schedules/preview_schedule.py"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 284,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 225,
       "phase": "Unscoped",
-      "path": "tests/release/test_release_smoke.py"
+      "path": "scripts/schedules/mark_schedule_run.py"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 285,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 231,
       "phase": "Unscoped",
-      "path": "reports/release_smoke_test_report.md"
+      "path": "scripts/schedules/preview_schedule.py"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 286,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 232,
       "phase": "Unscoped",
-      "path": "reports/release_smoke_test_report.json"
+      "path": "scripts/schedules/run_due_schedules.py"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 306,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 233,
       "phase": "Unscoped",
-      "path": "scripts/smoke_test_release.py"
+      "path": "scripts/schedules/run_due_schedules.py"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 322,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 278,
       "phase": "Unscoped",
-      "path": "scripts/orchestration/plan_business_workflow.py"
+      "path": "scripts/workflows/list_runs.py"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 323,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 279,
       "phase": "Unscoped",
-      "path": "scripts/orchestration/plan_finance_workflow.py"
+      "path": "scripts/workflows/show_run.py"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 324,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 280,
       "phase": "Unscoped",
-      "path": "scripts/orchestration/plan_customer_workflow.py"
+      "path": "schemas/workflow-run-record.schema.json"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 325,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 319,
       "phase": "Unscoped",
-      "path": "scripts/orchestration/plan_inventory_workflow.py"
+      "path": "references/local-output-policy.md"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 326,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 355,
       "phase": "Unscoped",
-      "path": "tests/orchestration/test_plan_business_workflow.py"
+      "path": "scripts/schedules/promote_to_temporal.py"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 327,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 356,
       "phase": "Unscoped",
-      "path": "tests/orchestration/test_plan_finance_workflow.py"
+      "path": "scripts/schedules/list_temporal_schedules.py"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 328,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 357,
       "phase": "Unscoped",
-      "path": "tests/orchestration/test_plan_customer_workflow.py"
+      "path": "references/temporal-schedule-promotion.md"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 329,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 376,
       "phase": "Unscoped",
-      "path": "tests/orchestration/test_plan_inventory_workflow.py"
+      "path": "scripts/local_operator.py"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 461,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 408,
       "phase": "Unscoped",
-      "path": "reports/doc_freshness_report.md"
+      "path": "scripts/reports/generate_local_ops_report.py"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 462,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 409,
       "phase": "Unscoped",
-      "path": "reports/doc_freshness_report.json"
+      "path": "reports/local_ops_report.md"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 494,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 410,
       "phase": "Unscoped",
-      "path": "scripts/validate_version_consistency.py"
+      "path": "reports/local_ops_report.json"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 495,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 438,
       "phase": "Unscoped",
-      "path": "scripts/smoke_test_release.py"
+      "path": "tests/workflows/test_example_workflows_validate.py"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 537,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 439,
       "phase": "Unscoped",
-      "path": "reports/release_smoke_test_report.md"
+      "path": "tests/schedules/test_example_schedules_validate.py"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 538,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 440,
       "phase": "Unscoped",
-      "path": "reports/release_smoke_test_report.json"
+      "path": "tests/schedules/test_run_due_schedules.py"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 539,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 441,
       "phase": "Unscoped",
-      "path": "reports/doc_freshness_report.md"
+      "path": "tests/runtime/test_dry_run_no_external_calls.py"
     },
     {
-      "backlog_file": "APOTHEON_RC1_RELEASE_FINALIZATION_BACKLOG.md",
-      "line": 540,
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 464,
       "phase": "Unscoped",
-      "path": "reports/doc_freshness_report.json"
+      "path": "scripts/schedules/validate_schedule.py"
+    },
+    {
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 465,
+      "phase": "Unscoped",
+      "path": "scripts/schedules/preview_schedule.py"
+    },
+    {
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 466,
+      "phase": "Unscoped",
+      "path": "scripts/schedules/run_due_schedules.py"
+    },
+    {
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 467,
+      "phase": "Unscoped",
+      "path": "scripts/reports/generate_local_ops_report.py"
+    },
+    {
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 468,
+      "phase": "Unscoped",
+      "path": "tests/workflows"
+    },
+    {
+      "backlog_file": "APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md",
+      "line": 468,
+      "phase": "Unscoped",
+      "path": "tests/schedules"
     },
     {
       "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
@@ -597,10 +627,35 @@
       "path": "core/skills"
     }
   ],
-  "stale_claims": [],
+  "stale_claims": [
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 1148,
+      "phase": "Phase 125",
+      "path": "core/skill-router/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 1148,
+      "phase": "Phase 125",
+      "path": "skills/routing-collision-analysis/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 1148,
+      "phase": "Phase 125",
+      "path": "core/semantic-cache/"
+    },
+    {
+      "backlog_file": "APOTHEON_V9_ENTERPRISE_SKILL_OS_BACKLOG.md",
+      "line": 1148,
+      "phase": "Phase 125",
+      "path": "skills/context-reuse-optimization/"
+    }
+  ],
   "_traceability": {
-    "commit_sha": "380eb7097bbf460740fab6c25564091bb4ddb3f6",
-    "generated_at_utc": "2026-05-10T17:12:06-04:00",
+    "commit_sha": "a96ac1f9902f77cc1d4b42447a30e21380b30a5a",
+    "generated_at_utc": "2026-05-10T21:58:01-04:00",
     "generator": "scripts/generate_release_reports.py"
   }
 }

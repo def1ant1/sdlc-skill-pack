@@ -170,29 +170,42 @@ def check_phase_dependency_order(packet: dict) -> list[dict]:
     return errors
 
 
+_BLOCKING_GATE_STATUSES = {"FAIL", "NOT_EVALUATED"}
+
+
 def check_gate_blocking(packet: dict) -> list[dict]:
     """
     No phase may be in_progress or complete when a gate that guards its
-    entry has status FAIL.
+    entry has status FAIL or NOT_EVALUATED.
+
+    The target phase is resolved from the gate entry's ``transition`` field
+    (e.g. ``"architecture → backend"`` → target ``"backend"``) with fallback
+    to the static ``_GATE_TO_TARGET_PHASE`` registry.
     """
     errors: list[dict] = []
     phase_status: dict[str, str] = packet.get("phase_status") or {}
-    gate_statuses: dict[str, str] = {
-        g["gate_name"]: g["status"]
-        for g in (packet.get("quality_gate_status") or [])
-        if "gate_name" in g and "status" in g
-    }
 
-    for gate_name, target_phase in _GATE_TO_TARGET_PHASE.items():
-        gate_st = gate_statuses.get(gate_name)
-        if gate_st != "FAIL":
+    for entry in (packet.get("quality_gate_status") or []):
+        gate_name = entry.get("gate_name", "")
+        gate_st = entry.get("status", "")
+        if gate_st not in _BLOCKING_GATE_STATUSES:
             continue
+
+        transition = entry.get("transition", "")
+        if "→" in transition:
+            target_phase = transition.split("→")[-1].strip()
+        else:
+            target_phase = _GATE_TO_TARGET_PHASE.get(gate_name)
+
+        if not target_phase:
+            continue
+
         phase_st = phase_status.get(target_phase)
         if phase_st in ("in_progress", "complete"):
             errors.append(_err(
                 "GATE_BLOCKING_VIOLATION",
                 f"Phase '{target_phase}' is '{phase_st}' but gate "
-                f"'{gate_name}' has status FAIL. The gate must pass before "
+                f"'{gate_name}' has status {gate_st}. The gate must pass before "
                 f"this phase can proceed.",
                 f"quality_gate_status[{gate_name}]",
             ))

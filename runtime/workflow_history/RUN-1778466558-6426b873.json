@@ -1,0 +1,22 @@
+{
+  "completed_at": "2026-05-11T02:29:18Z",
+  "mode": "local",
+  "objective": "Test objective",
+  "plan_id": "TEST-PLAN-001",
+  "run_id": "RUN-1778466558-6426b873",
+  "started_at": "2026-05-11T02:29:18Z",
+  "status": "completed",
+  "steps": [
+    {
+      "duration_ms": 0,
+      "error": null,
+      "hitl_required": false,
+      "output": "skill output",
+      "side_effect_classification": "read-only",
+      "skill": "requirements-analysis",
+      "status": "completed",
+      "step": 1
+    }
+  ],
+  "total_steps": 1
+}

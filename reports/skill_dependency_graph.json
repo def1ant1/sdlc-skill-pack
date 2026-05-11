@@ -2,8 +2,8 @@
   "nodes": [
     {
       "name": "agent-identity",
-      "path": "core/agent-identity",
-      "type": "core",
+      "path": "core\\agent-identity",
+      "type": "skill",
       "dependencies": [
         "knowledge-graph",
         "telemetry",
@@ -12,8 +12,8 @@
     },
     {
       "name": "agent-kernel",
-      "path": "core/agent-kernel",
-      "type": "core",
+      "path": "core\\agent-kernel",
+      "type": "skill",
       "dependencies": [
         "economic-coordination",
         "event-bus",
@@ -22,8 +22,8 @@
     },
     {
       "name": "alignment-engine",
-      "path": "core/alignment-engine",
-      "type": "core",
+      "path": "core\\alignment-engine",
+      "type": "skill",
       "dependencies": [
         "governance",
         "telemetry",
@@ -32,8 +32,8 @@
     },
     {
       "name": "api-gateway",
-      "path": "core/api-gateway",
-      "type": "core",
+      "path": "core\\api-gateway",
+      "type": "skill",
       "dependencies": [
         "sdlc-orchestration",
         "sdlc-memory-token-management"
@@ -41,14 +41,14 @@
     },
     {
       "name": "audit-trail",
-      "path": "core/audit-trail",
-      "type": "core",
+      "path": "core\\audit-trail",
+      "type": "skill",
       "dependencies": []
     },
     {
       "name": "autonomous-os",
-      "path": "core/autonomous-os",
-      "type": "core",
+      "path": "core\\autonomous-os",
+      "type": "skill",
       "dependencies": [
         "sdlc-orchestration",
         "gtm-orchestration",
@@ -83,8 +83,8 @@
     },
     {
       "name": "benchmark-factory",
-      "path": "core/benchmark-factory",
-      "type": "core",
+      "path": "core\\benchmark-factory",
+      "type": "skill",
       "dependencies": [
         "synthetic-data",
         "model-evaluation",
@@ -94,8 +94,8 @@
     },
     {
       "name": "billing-runtime",
-      "path": "core/billing-runtime",
-      "type": "core",
+      "path": "core\\billing-runtime",
+      "type": "skill",
       "dependencies": [
         "sdlc-orchestration",
         "audit-trail"
@@ -103,8 +103,8 @@
     },
     {
       "name": "business-orchestration",
-      "path": "core/business-orchestration",
-      "type": "core",
+      "path": "core\\business-orchestration",
+      "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
         "workflow-engine",
@@ -115,8 +115,8 @@
     },
     {
       "name": "cluster-management",
-      "path": "core/cluster-management",
-      "type": "core",
+      "path": "core\\cluster-management",
+      "type": "skill",
       "dependencies": [
         "local-runtime",
         "runtime-economics",
@@ -126,8 +126,8 @@
     },
     {
       "name": "cognitive-runtime",
-      "path": "core/cognitive-runtime",
-      "type": "core",
+      "path": "core\\cognitive-runtime",
+      "type": "skill",
       "dependencies": [
         "workflow-runtime",
         "agent-kernel",
@@ -137,8 +137,8 @@
     },
     {
       "name": "compliance-runtime",
-      "path": "core/compliance-runtime",
-      "type": "core",
+      "path": "core\\compliance-runtime",
+      "type": "skill",
       "dependencies": [
         "governance",
         "telemetry",
@@ -148,16 +148,16 @@
     },
     {
       "name": "connector-hub",
-      "path": "core/connector-hub",
-      "type": "core",
+      "path": "core\\connector-hub",
+      "type": "skill",
       "dependencies": [
         "sdlc-orchestration"
       ]
     },
     {
       "name": "data-fabric",
-      "path": "core/data-fabric",
-      "type": "core",
+      "path": "core\\data-fabric",
+      "type": "skill",
       "dependencies": [
         "knowledge-graph",
         "semantic-layer",
@@ -167,8 +167,8 @@
     },
     {
       "name": "developer-portal",
-      "path": "core/developer-portal",
-      "type": "core",
+      "path": "core\\developer-portal",
+      "type": "skill",
       "dependencies": [
         "sdk-runtime",
         "telemetry"
@@ -176,8 +176,8 @@
     },
     {
       "name": "distributed-agent-runtime",
-      "path": "core/distributed-agent-runtime",
-      "type": "core",
+      "path": "core\\distributed-agent-runtime",
+      "type": "skill",
       "dependencies": [
         "multi-agent",
         "agent-kernel",
@@ -187,8 +187,8 @@
     },
     {
       "name": "economic-coordination",
-      "path": "core/economic-coordination",
-      "type": "core",
+      "path": "core\\economic-coordination",
+      "type": "skill",
       "dependencies": [
         "runtime-economics",
         "agent-kernel",
@@ -198,8 +198,8 @@
     },
     {
       "name": "enterprise-integration-hub",
-      "path": "core/enterprise-integration-hub",
-      "type": "core",
+      "path": "core\\enterprise-integration-hub",
+      "type": "skill",
       "dependencies": [
         "connector-hub",
         "event-bus",
@@ -208,8 +208,8 @@
     },
     {
       "name": "enterprise-search",
-      "path": "core/enterprise-search",
-      "type": "core",
+      "path": "core\\enterprise-search",
+      "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
         "retrieval-engine",
@@ -220,8 +220,8 @@
     },
     {
       "name": "event-bus",
-      "path": "core/event-bus",
-      "type": "core",
+      "path": "core\\event-bus",
+      "type": "skill",
       "dependencies": [
         "telemetry",
         "workflow-runtime",
@@ -230,8 +230,8 @@
     },
     {
       "name": "evolution-engine",
-      "path": "core/evolution-engine",
-      "type": "core",
+      "path": "core\\evolution-engine",
+      "type": "skill",
       "dependencies": [
         "skill-gap-engine",
         "cognitive-runtime",
@@ -242,8 +242,8 @@
     },
     {
       "name": "explainability",
-      "path": "core/explainability",
-      "type": "core",
+      "path": "core\\explainability",
+      "type": "skill",
       "dependencies": [
         "knowledge-graph",
         "cognitive-runtime",
@@ -253,8 +253,8 @@
     },
     {
       "name": "federated-runtime",
-      "path": "core/federated-runtime",
-      "type": "core",
+      "path": "core\\federated-runtime",
+      "type": "skill",
       "dependencies": [
         "local-runtime",
         "distributed-agent-runtime",
@@ -264,8 +264,8 @@
     },
     {
       "name": "governance",
-      "path": "core/governance",
-      "type": "core",
+      "path": "core\\governance",
+      "type": "skill",
       "dependencies": [
         "local-security",
         "compliance-automation",
@@ -276,8 +276,8 @@
     },
     {
       "name": "gtm-orchestration",
-      "path": "core/gtm-orchestration",
-      "type": "core",
+      "path": "core\\gtm-orchestration",
+      "type": "skill",
       "dependencies": [
         "sdlc-orchestration",
         "sdlc-memory-token-management"
@@ -285,8 +285,8 @@
     },
     {
       "name": "hitl-dashboard",
-      "path": "core/hitl-dashboard",
-      "type": "core",
+      "path": "core\\hitl-dashboard",
+      "type": "skill",
       "dependencies": [
         "local-security",
         "telemetry",
@@ -296,8 +296,8 @@
     },
     {
       "name": "inference-engine-fleet",
-      "path": "core/inference-engine-fleet",
-      "type": "core",
+      "path": "core\\inference-engine-fleet",
+      "type": "skill",
       "dependencies": [
         "cluster-management",
         "telemetry",
@@ -306,8 +306,8 @@
     },
     {
       "name": "knowledge-graph",
-      "path": "core/knowledge-graph",
-      "type": "core",
+      "path": "core\\knowledge-graph",
+      "type": "skill",
       "dependencies": [
         "sdlc-orchestration",
         "connector-hub",
@@ -316,8 +316,8 @@
     },
     {
       "name": "kv-cache-management",
-      "path": "core/kv-cache-management",
-      "type": "core",
+      "path": "core\\kv-cache-management",
+      "type": "skill",
       "dependencies": [
         "local-runtime",
         "connector-hub"
@@ -325,8 +325,8 @@
     },
     {
       "name": "local-runtime",
-      "path": "core/local-runtime",
-      "type": "core",
+      "path": "core\\local-runtime",
+      "type": "skill",
       "dependencies": [
         "sdlc-orchestration",
         "connector-hub"
@@ -334,16 +334,16 @@
     },
     {
       "name": "local-security",
-      "path": "core/local-security",
-      "type": "core",
+      "path": "core\\local-security",
+      "type": "skill",
       "dependencies": [
         "sdlc-orchestration"
       ]
     },
     {
       "name": "lora-lifecycle",
-      "path": "core/lora-lifecycle",
-      "type": "core",
+      "path": "core\\lora-lifecycle",
+      "type": "skill",
       "dependencies": [
         "local-runtime",
         "model-evaluation",
@@ -354,8 +354,8 @@
     },
     {
       "name": "master-data-management",
-      "path": "core/master-data-management",
-      "type": "core",
+      "path": "core\\master-data-management",
+      "type": "skill",
       "dependencies": [
         "data-fabric",
         "knowledge-graph",
@@ -365,8 +365,8 @@
     },
     {
       "name": "mcp-integrations",
-      "path": "core/mcp-integrations",
-      "type": "core",
+      "path": "core\\mcp-integrations",
+      "type": "skill",
       "dependencies": [
         "connector-hub",
         "local-security"
@@ -374,8 +374,8 @@
     },
     {
       "name": "meeting-intelligence",
-      "path": "core/meeting-intelligence",
-      "type": "core",
+      "path": "core\\meeting-intelligence",
+      "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
         "knowledge-graph",
@@ -385,14 +385,14 @@
     },
     {
       "name": "sdlc-memory-token-management",
-      "path": "core/memory-token-management",
-      "type": "core",
+      "path": "core\\memory-token-management",
+      "type": "skill",
       "dependencies": []
     },
     {
       "name": "model-evaluation",
-      "path": "core/model-evaluation",
-      "type": "core",
+      "path": "core\\model-evaluation",
+      "type": "skill",
       "dependencies": [
         "local-runtime",
         "telemetry",
@@ -401,8 +401,8 @@
     },
     {
       "name": "model-lifecycle",
-      "path": "core/model-lifecycle",
-      "type": "core",
+      "path": "core\\model-lifecycle",
+      "type": "skill",
       "dependencies": [
         "lora-lifecycle",
         "model-evaluation",
@@ -413,8 +413,8 @@
     },
     {
       "name": "model-routing",
-      "path": "core/model-routing",
-      "type": "core",
+      "path": "core\\model-routing",
+      "type": "skill",
       "dependencies": [
         "cluster-management",
         "economic-coordination",
@@ -423,8 +423,8 @@
     },
     {
       "name": "multi-agent",
-      "path": "core/multi-agent",
-      "type": "core",
+      "path": "core\\multi-agent",
+      "type": "skill",
       "dependencies": [
         "sdlc-orchestration",
         "sdlc-memory-token-management",
@@ -433,8 +433,8 @@
     },
     {
       "name": "multimodal-runtime",
-      "path": "core/multimodal-runtime",
-      "type": "core",
+      "path": "core\\multimodal-runtime",
+      "type": "skill",
       "dependencies": [
         "cognitive-runtime",
         "data-fabric",
@@ -443,8 +443,8 @@
     },
     {
       "name": "notification-orchestration",
-      "path": "core/notification-orchestration",
-      "type": "core",
+      "path": "core\\notification-orchestration",
+      "type": "skill",
       "dependencies": [
         "event-bus",
         "connector-hub",
@@ -453,8 +453,8 @@
     },
     {
       "name": "observability-platform",
-      "path": "core/observability-platform",
-      "type": "core",
+      "path": "core\\observability-platform",
+      "type": "skill",
       "dependencies": [
         "sdlc-orchestration",
         "audit-trail"
@@ -462,8 +462,8 @@
     },
     {
       "name": "operator-console",
-      "path": "core/operator-console",
-      "type": "core",
+      "path": "core\\operator-console",
+      "type": "skill",
       "dependencies": [
         "telemetry",
         "hitl-dashboard",
@@ -473,16 +473,16 @@
     },
     {
       "name": "sdlc-orchestration",
-      "path": "core/orchestration",
-      "type": "core",
+      "path": "core\\orchestration",
+      "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management"
       ]
     },
     {
       "name": "persistent-agent-runtime",
-      "path": "core/persistent-agent-runtime",
-      "type": "core",
+      "path": "core\\persistent-agent-runtime",
+      "type": "skill",
       "dependencies": [
         "agent-kernel",
         "cognitive-runtime",
@@ -492,8 +492,8 @@
     },
     {
       "name": "policy-engine",
-      "path": "core/policy-engine",
-      "type": "core",
+      "path": "core\\policy-engine",
+      "type": "skill",
       "dependencies": [
         "audit-trail",
         "sdlc-orchestration"
@@ -501,8 +501,8 @@
     },
     {
       "name": "predictive-reasoning",
-      "path": "core/predictive-reasoning",
-      "type": "core",
+      "path": "core\\predictive-reasoning",
+      "type": "skill",
       "dependencies": [
         "forecasting",
         "knowledge-graph",
@@ -513,8 +513,8 @@
     },
     {
       "name": "privacy-runtime",
-      "path": "core/privacy-runtime",
-      "type": "core",
+      "path": "core\\privacy-runtime",
+      "type": "skill",
       "dependencies": [
         "governance",
         "data-fabric",
@@ -524,8 +524,8 @@
     },
     {
       "name": "ray-runtime",
-      "path": "core/ray-runtime",
-      "type": "core",
+      "path": "core\\ray-runtime",
+      "type": "skill",
       "dependencies": [
         "cluster-management",
         "distributed-agent-runtime",
@@ -534,8 +534,8 @@
     },
     {
       "name": "reinforcement-optimizer",
-      "path": "core/reinforcement-optimizer",
-      "type": "core",
+      "path": "core\\reinforcement-optimizer",
+      "type": "skill",
       "dependencies": [
         "cognitive-runtime",
         "evolution-engine",
@@ -544,8 +544,8 @@
     },
     {
       "name": "research-runtime",
-      "path": "core/research-runtime",
-      "type": "core",
+      "path": "core\\research-runtime",
+      "type": "skill",
       "dependencies": [
         "enterprise-search",
         "knowledge-graph",
@@ -555,8 +555,8 @@
     },
     {
       "name": "retrieval-engine",
-      "path": "core/retrieval-engine",
-      "type": "core",
+      "path": "core\\retrieval-engine",
+      "type": "skill",
       "dependencies": [
         "knowledge-graph",
         "connector-hub",
@@ -565,8 +565,8 @@
     },
     {
       "name": "runtime-economics",
-      "path": "core/runtime-economics",
-      "type": "core",
+      "path": "core\\runtime-economics",
+      "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
         "local-runtime",
@@ -578,8 +578,8 @@
     },
     {
       "name": "sandbox-execution",
-      "path": "core/sandbox-execution",
-      "type": "core",
+      "path": "core\\sandbox-execution",
+      "type": "skill",
       "dependencies": [
         "local-security",
         "local-runtime",
@@ -589,8 +589,8 @@
     },
     {
       "name": "sdk-runtime",
-      "path": "core/sdk-runtime",
-      "type": "core",
+      "path": "core\\sdk-runtime",
+      "type": "skill",
       "dependencies": [
         "agent-kernel",
         "governance",
@@ -599,14 +599,14 @@
     },
     {
       "name": "sdlc-semantic-cache",
-      "path": "core/semantic-cache",
-      "type": "core",
+      "path": "core\\semantic-cache",
+      "type": "skill",
       "dependencies": []
     },
     {
       "name": "semantic-layer",
-      "path": "core/semantic-layer",
-      "type": "core",
+      "path": "core\\semantic-layer",
+      "type": "skill",
       "dependencies": [
         "data-fabric",
         "knowledge-graph",
@@ -615,8 +615,8 @@
     },
     {
       "name": "simulation-engine",
-      "path": "core/simulation-engine",
-      "type": "core",
+      "path": "core\\simulation-engine",
+      "type": "skill",
       "dependencies": [
         "cognitive-runtime",
         "knowledge-graph",
@@ -626,8 +626,8 @@
     },
     {
       "name": "skill-gap-engine",
-      "path": "core/skill-gap-engine",
-      "type": "core",
+      "path": "core\\skill-gap-engine",
+      "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
         "governance",
@@ -637,14 +637,14 @@
     },
     {
       "name": "sdlc-skill-router",
-      "path": "core/skill-router",
-      "type": "core",
+      "path": "core\\skill-router",
+      "type": "skill",
       "dependencies": []
     },
     {
       "name": "strategic-planning",
-      "path": "core/strategic-planning",
-      "type": "core",
+      "path": "core\\strategic-planning",
+      "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
         "knowledge-graph",
@@ -654,8 +654,8 @@
     },
     {
       "name": "synthetic-data",
-      "path": "core/synthetic-data",
-      "type": "core",
+      "path": "core\\synthetic-data",
+      "type": "skill",
       "dependencies": [
         "local-runtime",
         "lora-lifecycle",
@@ -666,8 +666,8 @@
     },
     {
       "name": "telemetry",
-      "path": "core/telemetry",
-      "type": "core",
+      "path": "core\\telemetry",
+      "type": "skill",
       "dependencies": [
         "sdlc-orchestration",
         "sdlc-memory-token-management"
@@ -675,8 +675,8 @@
     },
     {
       "name": "temporal-integration",
-      "path": "core/temporal-integration",
-      "type": "core",
+      "path": "core\\temporal-integration",
+      "type": "skill",
       "dependencies": [
         "workflow-runtime",
         "event-bus",
@@ -685,8 +685,8 @@
     },
     {
       "name": "tenant-management",
-      "path": "core/tenant-management",
-      "type": "core",
+      "path": "core\\tenant-management",
+      "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
         "local-security",
@@ -696,8 +696,8 @@
     },
     {
       "name": "workflow-engine",
-      "path": "core/workflow-engine",
-      "type": "core",
+      "path": "core\\workflow-engine",
+      "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
         "hitl-dashboard",
@@ -707,8 +707,8 @@
     },
     {
       "name": "workflow-runtime",
-      "path": "core/workflow-runtime",
-      "type": "core",
+      "path": "core\\workflow-runtime",
+      "type": "skill",
       "dependencies": [
         "checkpoint-management",
         "event-bus",
@@ -718,8 +718,8 @@
     },
     {
       "name": "world-model",
-      "path": "core/world-model",
-      "type": "core",
+      "path": "core\\world-model",
+      "type": "skill",
       "dependencies": [
         "cognitive-runtime",
         "data-fabric",
@@ -728,8 +728,8 @@
     },
     {
       "name": "zero-trust-runtime",
-      "path": "core/zero-trust-runtime",
-      "type": "core",
+      "path": "core\\zero-trust-runtime",
+      "type": "skill",
       "dependencies": [
         "governance",
         "local-security",
@@ -738,13 +738,13 @@
     },
     {
       "name": "account-expansion-intelligence",
-      "path": "skills/account-expansion-intelligence",
+      "path": "skills\\account-expansion-intelligence",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "accounting-automation",
-      "path": "skills/accounting-automation",
+      "path": "skills\\accounting-automation",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
@@ -755,25 +755,25 @@
     },
     {
       "name": "accounting-operations",
-      "path": "skills/accounting-operations",
+      "path": "skills\\accounting-operations",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "accounts-payable-automation",
-      "path": "skills/accounts-payable-automation",
+      "path": "skills\\accounts-payable-automation",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "accounts-receivable-automation",
-      "path": "skills/accounts-receivable-automation",
+      "path": "skills\\accounts-receivable-automation",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "adversarial-evaluation",
-      "path": "skills/adversarial-evaluation",
+      "path": "skills\\adversarial-evaluation",
       "type": "skill",
       "dependencies": [
         "alignment-engine",
@@ -783,7 +783,7 @@
     },
     {
       "name": "ai-engineering",
-      "path": "skills/ai-engineering",
+      "path": "skills\\ai-engineering",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
@@ -794,13 +794,13 @@
     },
     {
       "name": "ai-search-optimization",
-      "path": "skills/ai-search-optimization",
+      "path": "skills\\ai-search-optimization",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "alignment-testing",
-      "path": "skills/alignment-testing",
+      "path": "skills\\alignment-testing",
       "type": "skill",
       "dependencies": [
         "alignment-engine",
@@ -810,7 +810,7 @@
     },
     {
       "name": "analytics-intelligence",
-      "path": "skills/analytics-intelligence",
+      "path": "skills\\analytics-intelligence",
       "type": "skill",
       "dependencies": [
         "launch-planning",
@@ -820,13 +820,13 @@
     },
     {
       "name": "arbitrage-opportunity-detection",
-      "path": "skills/arbitrage-opportunity-detection",
+      "path": "skills\\arbitrage-opportunity-detection",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "audio-video-processing",
-      "path": "skills/audio-video-processing",
+      "path": "skills\\audio-video-processing",
       "type": "skill",
       "dependencies": [
         "multimodal-runtime"
@@ -834,13 +834,13 @@
     },
     {
       "name": "audit-trail-analysis",
-      "path": "skills/audit-trail-analysis",
+      "path": "skills\\audit-trail-analysis",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "backend-engineering",
-      "path": "skills/backend-engineering",
+      "path": "skills\\backend-engineering",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
@@ -851,7 +851,7 @@
     },
     {
       "name": "belief-state-management",
-      "path": "skills/belief-state-management",
+      "path": "skills\\belief-state-management",
       "type": "skill",
       "dependencies": [
         "world-model"
@@ -859,7 +859,7 @@
     },
     {
       "name": "benchmark-generation",
-      "path": "skills/benchmark-generation",
+      "path": "skills\\benchmark-generation",
       "type": "skill",
       "dependencies": [
         "benchmark-factory",
@@ -870,19 +870,19 @@
     },
     {
       "name": "bookkeeping-automation",
-      "path": "skills/bookkeeping-automation",
+      "path": "skills\\bookkeeping-automation",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "brand-sentiment-analysis",
-      "path": "skills/brand-sentiment-analysis",
+      "path": "skills\\brand-sentiment-analysis",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "budget-planning",
-      "path": "skills/budget-planning",
+      "path": "skills\\budget-planning",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
@@ -894,13 +894,13 @@
     },
     {
       "name": "budget-variance-analysis",
-      "path": "skills/budget-variance-analysis",
+      "path": "skills\\budget-variance-analysis",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "business-continuity-planning",
-      "path": "skills/business-continuity-planning",
+      "path": "skills\\business-continuity-planning",
       "type": "skill",
       "dependencies": [
         "disaster-recovery-automation",
@@ -909,13 +909,13 @@
     },
     {
       "name": "business-process-optimization",
-      "path": "skills/business-process-optimization",
+      "path": "skills\\business-process-optimization",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "business-simulation",
-      "path": "skills/business-simulation",
+      "path": "skills\\business-simulation",
       "type": "skill",
       "dependencies": [
         "simulation-engine",
@@ -925,7 +925,7 @@
     },
     {
       "name": "cache-placement-optimization",
-      "path": "skills/cache-placement-optimization",
+      "path": "skills\\cache-placement-optimization",
       "type": "skill",
       "dependencies": [
         "cluster-management",
@@ -936,13 +936,13 @@
     },
     {
       "name": "campaign-optimization",
-      "path": "skills/campaign-optimization",
+      "path": "skills\\campaign-optimization",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "capacity-balancing",
-      "path": "skills/capacity-balancing",
+      "path": "skills\\capacity-balancing",
       "type": "skill",
       "dependencies": [
         "portfolio-optimization",
@@ -953,13 +953,13 @@
     },
     {
       "name": "cash-flow-forecasting",
-      "path": "skills/cash-flow-forecasting",
+      "path": "skills\\cash-flow-forecasting",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "causal-analysis",
-      "path": "skills/causal-analysis",
+      "path": "skills\\causal-analysis",
       "type": "skill",
       "dependencies": [
         "data-fabric",
@@ -969,7 +969,7 @@
     },
     {
       "name": "causal-tracing",
-      "path": "skills/causal-tracing",
+      "path": "skills\\causal-tracing",
       "type": "skill",
       "dependencies": [
         "explainability",
@@ -979,13 +979,13 @@
     },
     {
       "name": "chart-of-accounts-management",
-      "path": "skills/chart-of-accounts-management",
+      "path": "skills\\chart-of-accounts-management",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "checkpoint-management",
-      "path": "skills/checkpoint-management",
+      "path": "skills\\checkpoint-management",
       "type": "skill",
       "dependencies": [
         "workflow-runtime",
@@ -995,13 +995,13 @@
     },
     {
       "name": "churn-risk-detection",
-      "path": "skills/churn-risk-detection",
+      "path": "skills\\churn-risk-detection",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "cloud-deployment",
-      "path": "skills/cloud-deployment",
+      "path": "skills\\cloud-deployment",
       "type": "skill",
       "dependencies": [
         "devsecops",
@@ -1012,7 +1012,7 @@
     },
     {
       "name": "code-review",
-      "path": "skills/code-review",
+      "path": "skills\\code-review",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
@@ -1022,13 +1022,13 @@
     },
     {
       "name": "collections-prioritization",
-      "path": "skills/collections-prioritization",
+      "path": "skills\\collections-prioritization",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "communication-analytics",
-      "path": "skills/communication-analytics",
+      "path": "skills\\communication-analytics",
       "type": "skill",
       "dependencies": [
         "inbox-automation",
@@ -1037,13 +1037,13 @@
     },
     {
       "name": "competitor-price-scraping",
-      "path": "skills/competitor-price-scraping",
+      "path": "skills\\competitor-price-scraping",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "compliance-automation",
-      "path": "skills/compliance-automation",
+      "path": "skills\\compliance-automation",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
@@ -1054,7 +1054,7 @@
     },
     {
       "name": "compliance-governance",
-      "path": "skills/compliance-governance",
+      "path": "skills\\compliance-governance",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
@@ -1065,7 +1065,7 @@
     },
     {
       "name": "compliance-posture-reporting",
-      "path": "skills/compliance-posture-reporting",
+      "path": "skills\\compliance-posture-reporting",
       "type": "skill",
       "dependencies": [
         "compliance-runtime",
@@ -1074,7 +1074,7 @@
     },
     {
       "name": "constraint-reasoning",
-      "path": "skills/constraint-reasoning",
+      "path": "skills\\constraint-reasoning",
       "type": "skill",
       "dependencies": [
         "cognitive-runtime",
@@ -1084,7 +1084,7 @@
     },
     {
       "name": "content-marketing",
-      "path": "skills/content-marketing",
+      "path": "skills\\content-marketing",
       "type": "skill",
       "dependencies": [
         "gtm-orchestration",
@@ -1093,19 +1093,19 @@
     },
     {
       "name": "content-strategy",
-      "path": "skills/content-strategy",
+      "path": "skills\\content-strategy",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "context-reuse-optimization",
-      "path": "skills/context-reuse-optimization",
+      "path": "skills\\context-reuse-optimization",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "continuous-control-monitoring",
-      "path": "skills/continuous-control-monitoring",
+      "path": "skills\\continuous-control-monitoring",
       "type": "skill",
       "dependencies": [
         "compliance-runtime",
@@ -1114,13 +1114,13 @@
     },
     {
       "name": "conversion-funnel-analysis",
-      "path": "skills/conversion-funnel-analysis",
+      "path": "skills\\conversion-funnel-analysis",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "crm-integration",
-      "path": "skills/crm-integration",
+      "path": "skills\\crm-integration",
       "type": "skill",
       "dependencies": [
         "enterprise-integration-hub"
@@ -1128,19 +1128,19 @@
     },
     {
       "name": "customer-health-scoring",
-      "path": "skills/customer-health-scoring",
+      "path": "skills\\customer-health-scoring",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "customer-journey-mapping",
-      "path": "skills/customer-journey-mapping",
+      "path": "skills\\customer-journey-mapping",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "customer-success",
-      "path": "skills/customer-success",
+      "path": "skills\\customer-success",
       "type": "skill",
       "dependencies": [
         "gtm-orchestration",
@@ -1151,7 +1151,7 @@
     },
     {
       "name": "data-contract-management",
-      "path": "skills/data-contract-management",
+      "path": "skills\\data-contract-management",
       "type": "skill",
       "dependencies": [
         "data-fabric",
@@ -1162,13 +1162,13 @@
     },
     {
       "name": "data-quality-scoring",
-      "path": "skills/data-quality-scoring",
+      "path": "skills\\data-quality-scoring",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "data-redaction",
-      "path": "skills/data-redaction",
+      "path": "skills\\data-redaction",
       "type": "skill",
       "dependencies": [
         "privacy-runtime",
@@ -1179,7 +1179,7 @@
     },
     {
       "name": "dataset-curation",
-      "path": "skills/dataset-curation",
+      "path": "skills\\dataset-curation",
       "type": "skill",
       "dependencies": [
         "data-fabric",
@@ -1189,7 +1189,7 @@
     },
     {
       "name": "deception-detection",
-      "path": "skills/deception-detection",
+      "path": "skills\\deception-detection",
       "type": "skill",
       "dependencies": [
         "alignment-engine",
@@ -1198,7 +1198,7 @@
     },
     {
       "name": "decision-intelligence",
-      "path": "skills/decision-intelligence",
+      "path": "skills\\decision-intelligence",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
@@ -1209,13 +1209,13 @@
     },
     {
       "name": "demand-planning",
-      "path": "skills/demand-planning",
+      "path": "skills\\demand-planning",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "developer-experience",
-      "path": "skills/developer-experience",
+      "path": "skills\\developer-experience",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
@@ -1226,7 +1226,7 @@
     },
     {
       "name": "devsecops",
-      "path": "skills/devsecops",
+      "path": "skills\\devsecops",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
@@ -1236,7 +1236,7 @@
     },
     {
       "name": "disaster-recovery-automation",
-      "path": "skills/disaster-recovery-automation",
+      "path": "skills\\disaster-recovery-automation",
       "type": "skill",
       "dependencies": [
         "runtime-recovery",
@@ -1245,7 +1245,7 @@
     },
     {
       "name": "discovery-synthesis",
-      "path": "skills/discovery-synthesis",
+      "path": "skills\\discovery-synthesis",
       "type": "skill",
       "dependencies": [
         "research-runtime",
@@ -1256,7 +1256,7 @@
     },
     {
       "name": "distributed-training-orchestration",
-      "path": "skills/distributed-training-orchestration",
+      "path": "skills\\distributed-training-orchestration",
       "type": "skill",
       "dependencies": [
         "ray-runtime",
@@ -1265,7 +1265,7 @@
     },
     {
       "name": "document-intelligence",
-      "path": "skills/document-intelligence",
+      "path": "skills\\document-intelligence",
       "type": "skill",
       "dependencies": [
         "multimodal-runtime"
@@ -1273,7 +1273,7 @@
     },
     {
       "name": "edge-runtime-management",
-      "path": "skills/edge-runtime-management",
+      "path": "skills\\edge-runtime-management",
       "type": "skill",
       "dependencies": [
         "inference-engine-fleet",
@@ -1282,13 +1282,13 @@
     },
     {
       "name": "entity-resolution",
-      "path": "skills/entity-resolution",
+      "path": "skills\\entity-resolution",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "erp-integration",
-      "path": "skills/erp-integration",
+      "path": "skills\\erp-integration",
       "type": "skill",
       "dependencies": [
         "enterprise-integration-hub"
@@ -1296,13 +1296,13 @@
     },
     {
       "name": "escalation-prediction",
-      "path": "skills/escalation-prediction",
+      "path": "skills\\escalation-prediction",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "evaluation-dataset-curation",
-      "path": "skills/evaluation-dataset-curation",
+      "path": "skills\\evaluation-dataset-curation",
       "type": "skill",
       "dependencies": [
         "benchmark-factory",
@@ -1312,13 +1312,13 @@
     },
     {
       "name": "evidence-pack-generation",
-      "path": "skills/evidence-pack-generation",
+      "path": "skills\\evidence-pack-generation",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "execution-explanation",
-      "path": "skills/execution-explanation",
+      "path": "skills\\execution-explanation",
       "type": "skill",
       "dependencies": [
         "explainability",
@@ -1328,7 +1328,7 @@
     },
     {
       "name": "executive-reporting",
-      "path": "skills/executive-reporting",
+      "path": "skills\\executive-reporting",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
@@ -1340,25 +1340,25 @@
     },
     {
       "name": "feature-prioritization",
-      "path": "skills/feature-prioritization",
+      "path": "skills\\feature-prioritization",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "finance-accounting-phase-pack",
-      "path": "skills/finance-accounting-phase-pack",
+      "path": "skills\\finance-accounting-phase-pack",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "financial-scenario-modeling",
-      "path": "skills/financial-scenario-modeling",
+      "path": "skills\\financial-scenario-modeling",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "forecasting",
-      "path": "skills/forecasting",
+      "path": "skills\\forecasting",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
@@ -1370,13 +1370,13 @@
     },
     {
       "name": "fpa-analysis",
-      "path": "skills/fpa-analysis",
+      "path": "skills\\fpa-analysis",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "frontend-engineering",
-      "path": "skills/frontend-engineering",
+      "path": "skills\\frontend-engineering",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
@@ -1387,7 +1387,7 @@
     },
     {
       "name": "goal-decomposition",
-      "path": "skills/goal-decomposition",
+      "path": "skills\\goal-decomposition",
       "type": "skill",
       "dependencies": [
         "cognitive-runtime",
@@ -1397,13 +1397,13 @@
     },
     {
       "name": "golden-record-management",
-      "path": "skills/golden-record-management",
+      "path": "skills\\golden-record-management",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "gpu-cluster-optimization",
-      "path": "skills/gpu-cluster-optimization",
+      "path": "skills\\gpu-cluster-optimization",
       "type": "skill",
       "dependencies": [
         "cluster-management",
@@ -1413,7 +1413,7 @@
     },
     {
       "name": "harm-classification",
-      "path": "skills/harm-classification",
+      "path": "skills\\harm-classification",
       "type": "skill",
       "dependencies": [
         "alignment-engine",
@@ -1423,7 +1423,7 @@
     },
     {
       "name": "hierarchical-planning",
-      "path": "skills/hierarchical-planning",
+      "path": "skills\\hierarchical-planning",
       "type": "skill",
       "dependencies": [
         "cognitive-runtime",
@@ -1433,25 +1433,25 @@
     },
     {
       "name": "hr-case-management-support",
-      "path": "skills/hr-case-management-support",
+      "path": "skills\\hr-case-management-support",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "hr-operations-phase-pack",
-      "path": "skills/hr-operations-phase-pack",
+      "path": "skills\\hr-operations-phase-pack",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "hr-policy-guidance-support",
-      "path": "skills/hr-policy-guidance-support",
+      "path": "skills\\hr-policy-guidance-support",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "hypothesis-generation",
-      "path": "skills/hypothesis-generation",
+      "path": "skills\\hypothesis-generation",
       "type": "skill",
       "dependencies": [
         "research-runtime",
@@ -1462,7 +1462,7 @@
     },
     {
       "name": "inbox-automation",
-      "path": "skills/inbox-automation",
+      "path": "skills\\inbox-automation",
       "type": "skill",
       "dependencies": [
         "enterprise-integration-hub",
@@ -1471,7 +1471,7 @@
     },
     {
       "name": "incident-simulation",
-      "path": "skills/incident-simulation",
+      "path": "skills\\incident-simulation",
       "type": "skill",
       "dependencies": [
         "simulation-engine",
@@ -1481,7 +1481,7 @@
     },
     {
       "name": "inference-batching-optimization",
-      "path": "skills/inference-batching-optimization",
+      "path": "skills\\inference-batching-optimization",
       "type": "skill",
       "dependencies": [
         "cluster-management",
@@ -1491,7 +1491,7 @@
     },
     {
       "name": "inference-engine-benchmarking",
-      "path": "skills/inference-engine-benchmarking",
+      "path": "skills\\inference-engine-benchmarking",
       "type": "skill",
       "dependencies": [
         "inference-engine-fleet",
@@ -1500,7 +1500,7 @@
     },
     {
       "name": "inference-engine-deployment",
-      "path": "skills/inference-engine-deployment",
+      "path": "skills\\inference-engine-deployment",
       "type": "skill",
       "dependencies": [
         "inference-engine-fleet",
@@ -1509,7 +1509,7 @@
     },
     {
       "name": "initiative-prioritization",
-      "path": "skills/initiative-prioritization",
+      "path": "skills\\initiative-prioritization",
       "type": "skill",
       "dependencies": [
         "portfolio-optimization",
@@ -1519,7 +1519,7 @@
     },
     {
       "name": "institutional-knowledge-query",
-      "path": "skills/institutional-knowledge-query",
+      "path": "skills\\institutional-knowledge-query",
       "type": "skill",
       "dependencies": [
         "world-model",
@@ -1528,25 +1528,25 @@
     },
     {
       "name": "inventory-forecasting",
-      "path": "skills/inventory-forecasting",
+      "path": "skills\\inventory-forecasting",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "inventory-product-market-phase-pack",
-      "path": "skills/inventory-product-market-phase-pack",
+      "path": "skills\\inventory-product-market-phase-pack",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "invoice-processing",
-      "path": "skills/invoice-processing",
+      "path": "skills\\invoice-processing",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "iot-data-ingestion",
-      "path": "skills/iot-data-ingestion",
+      "path": "skills\\iot-data-ingestion",
       "type": "skill",
       "dependencies": [
         "data-fabric",
@@ -1555,7 +1555,7 @@
     },
     {
       "name": "itsm-integration",
-      "path": "skills/itsm-integration",
+      "path": "skills\\itsm-integration",
       "type": "skill",
       "dependencies": [
         "enterprise-integration-hub"
@@ -1563,13 +1563,13 @@
     },
     {
       "name": "journal-entry-review",
-      "path": "skills/journal-entry-review",
+      "path": "skills\\journal-entry-review",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "lateral-movement-detection",
-      "path": "skills/lateral-movement-detection",
+      "path": "skills\\lateral-movement-detection",
       "type": "skill",
       "dependencies": [
         "zero-trust-runtime",
@@ -1578,7 +1578,7 @@
     },
     {
       "name": "launch-planning",
-      "path": "skills/launch-planning",
+      "path": "skills\\launch-planning",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
@@ -1588,13 +1588,13 @@
     },
     {
       "name": "lead-scoring",
-      "path": "skills/lead-scoring",
+      "path": "skills\\lead-scoring",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "legal-hold-management",
-      "path": "skills/legal-hold-management",
+      "path": "skills\\legal-hold-management",
       "type": "skill",
       "dependencies": [
         "privacy-runtime",
@@ -1605,25 +1605,25 @@
     },
     {
       "name": "legal-intake-triage-support",
-      "path": "skills/legal-intake-triage-support",
+      "path": "skills\\legal-intake-triage-support",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "legal-obligation-management-support",
-      "path": "skills/legal-obligation-management-support",
+      "path": "skills\\legal-obligation-management-support",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "legal-operations-phase-pack",
-      "path": "skills/legal-operations-phase-pack",
+      "path": "skills\\legal-operations-phase-pack",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "legal-ops",
-      "path": "skills/legal-ops",
+      "path": "skills\\legal-ops",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
@@ -1634,7 +1634,7 @@
     },
     {
       "name": "lessons-learned-extraction",
-      "path": "skills/lessons-learned-extraction",
+      "path": "skills\\lessons-learned-extraction",
       "type": "skill",
       "dependencies": [
         "world-model",
@@ -1643,7 +1643,7 @@
     },
     {
       "name": "lineage-analysis",
-      "path": "skills/lineage-analysis",
+      "path": "skills\\lineage-analysis",
       "type": "skill",
       "dependencies": [
         "data-fabric",
@@ -1653,7 +1653,7 @@
     },
     {
       "name": "literature-review",
-      "path": "skills/literature-review",
+      "path": "skills\\literature-review",
       "type": "skill",
       "dependencies": [
         "research-runtime",
@@ -1663,13 +1663,13 @@
     },
     {
       "name": "local-market-data-collection",
-      "path": "skills/local-market-data-collection",
+      "path": "skills\\local-market-data-collection",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "long-horizon-planning",
-      "path": "skills/long-horizon-planning",
+      "path": "skills\\long-horizon-planning",
       "type": "skill",
       "dependencies": [
         "cognitive-runtime",
@@ -1680,7 +1680,7 @@
     },
     {
       "name": "lora-management",
-      "path": "skills/lora-management",
+      "path": "skills\\lora-management",
       "type": "skill",
       "dependencies": [
         "model-lifecycle",
@@ -1691,37 +1691,37 @@
     },
     {
       "name": "low-stock-detection",
-      "path": "skills/low-stock-detection",
+      "path": "skills\\low-stock-detection",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "market-data-quality-scoring",
-      "path": "skills/market-data-quality-scoring",
+      "path": "skills\\market-data-quality-scoring",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "market-pricing-intelligence",
-      "path": "skills/market-pricing-intelligence",
+      "path": "skills\\market-pricing-intelligence",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "marketing-attribution",
-      "path": "skills/marketing-attribution",
+      "path": "skills\\marketing-attribution",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "marketplace-certification",
-      "path": "skills/marketplace-certification",
+      "path": "skills\\marketplace-certification",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "marketplace-publishing",
-      "path": "skills/marketplace-publishing",
+      "path": "skills\\marketplace-publishing",
       "type": "skill",
       "dependencies": [
         "developer-portal",
@@ -1731,7 +1731,7 @@
     },
     {
       "name": "memory-compression",
-      "path": "skills/memory-compression",
+      "path": "skills\\memory-compression",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management"
@@ -1739,7 +1739,7 @@
     },
     {
       "name": "meta-reasoning",
-      "path": "skills/meta-reasoning",
+      "path": "skills\\meta-reasoning",
       "type": "skill",
       "dependencies": [
         "cognitive-runtime",
@@ -1749,7 +1749,7 @@
     },
     {
       "name": "model-benchmarking",
-      "path": "skills/model-benchmarking",
+      "path": "skills\\model-benchmarking",
       "type": "skill",
       "dependencies": [
         "benchmark-factory",
@@ -1760,7 +1760,7 @@
     },
     {
       "name": "model-distillation",
-      "path": "skills/model-distillation",
+      "path": "skills\\model-distillation",
       "type": "skill",
       "dependencies": [
         "model-lifecycle",
@@ -1771,7 +1771,7 @@
     },
     {
       "name": "model-placement-optimization",
-      "path": "skills/model-placement-optimization",
+      "path": "skills\\model-placement-optimization",
       "type": "skill",
       "dependencies": [
         "cluster-management",
@@ -1782,7 +1782,7 @@
     },
     {
       "name": "model-selection-optimization",
-      "path": "skills/model-selection-optimization",
+      "path": "skills\\model-selection-optimization",
       "type": "skill",
       "dependencies": [
         "model-routing",
@@ -1793,13 +1793,13 @@
     },
     {
       "name": "month-end-close-support",
-      "path": "skills/month-end-close-support",
+      "path": "skills\\month-end-close-support",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "network-topology-analysis",
-      "path": "skills/network-topology-analysis",
+      "path": "skills\\network-topology-analysis",
       "type": "skill",
       "dependencies": [
         "cluster-management",
@@ -1809,7 +1809,7 @@
     },
     {
       "name": "observability",
-      "path": "skills/observability",
+      "path": "skills\\observability",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
@@ -1819,19 +1819,19 @@
     },
     {
       "name": "opportunity-risk-analysis",
-      "path": "skills/opportunity-risk-analysis",
+      "path": "skills\\opportunity-risk-analysis",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "outcome-feedback-analysis",
-      "path": "skills/outcome-feedback-analysis",
+      "path": "skills\\outcome-feedback-analysis",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "paid-acquisition",
-      "path": "skills/paid-acquisition",
+      "path": "skills\\paid-acquisition",
       "type": "skill",
       "dependencies": [
         "launch-planning",
@@ -1842,7 +1842,7 @@
     },
     {
       "name": "patent-analysis",
-      "path": "skills/patent-analysis",
+      "path": "skills\\patent-analysis",
       "type": "skill",
       "dependencies": [
         "research-runtime",
@@ -1853,25 +1853,25 @@
     },
     {
       "name": "payment-matching",
-      "path": "skills/payment-matching",
+      "path": "skills\\payment-matching",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "payroll-audit",
-      "path": "skills/payroll-audit",
+      "path": "skills\\payroll-audit",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "persona-modeling",
-      "path": "skills/persona-modeling",
+      "path": "skills\\persona-modeling",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "pii-detection",
-      "path": "skills/pii-detection",
+      "path": "skills\\pii-detection",
       "type": "skill",
       "dependencies": [
         "privacy-runtime",
@@ -1881,7 +1881,7 @@
     },
     {
       "name": "policy-justification",
-      "path": "skills/policy-justification",
+      "path": "skills\\policy-justification",
       "type": "skill",
       "dependencies": [
         "explainability",
@@ -1892,7 +1892,7 @@
     },
     {
       "name": "policy-simulation",
-      "path": "skills/policy-simulation",
+      "path": "skills\\policy-simulation",
       "type": "skill",
       "dependencies": [
         "simulation-engine",
@@ -1903,7 +1903,7 @@
     },
     {
       "name": "portfolio-optimization",
-      "path": "skills/portfolio-optimization",
+      "path": "skills\\portfolio-optimization",
       "type": "skill",
       "dependencies": [
         "initiative-prioritization",
@@ -1913,31 +1913,31 @@
     },
     {
       "name": "pricing-optimization",
-      "path": "skills/pricing-optimization",
+      "path": "skills\\pricing-optimization",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "process-optimization-governance-support",
-      "path": "skills/process-optimization-governance-support",
+      "path": "skills\\process-optimization-governance-support",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "process-optimization-phase-pack",
-      "path": "skills/process-optimization-phase-pack",
+      "path": "skills\\process-optimization-phase-pack",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "procurement-kpi-optimization-support",
-      "path": "skills/procurement-kpi-optimization-support",
+      "path": "skills\\procurement-kpi-optimization-support",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "product-analytics",
-      "path": "skills/product-analytics",
+      "path": "skills\\product-analytics",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
@@ -1948,25 +1948,25 @@
     },
     {
       "name": "product-feedback-analysis",
-      "path": "skills/product-feedback-analysis",
+      "path": "skills\\product-feedback-analysis",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "product-lifecycle-intelligence",
-      "path": "skills/product-lifecycle-intelligence",
+      "path": "skills\\product-lifecycle-intelligence",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "product-market-fit-analysis",
-      "path": "skills/product-market-fit-analysis",
+      "path": "skills\\product-market-fit-analysis",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "program-governance",
-      "path": "skills/program-governance",
+      "path": "skills\\program-governance",
       "type": "skill",
       "dependencies": [
         "portfolio-optimization",
@@ -1976,7 +1976,7 @@
     },
     {
       "name": "prompt-optimization",
-      "path": "skills/prompt-optimization",
+      "path": "skills\\prompt-optimization",
       "type": "skill",
       "dependencies": [
         "reinforcement-optimizer",
@@ -1985,25 +1985,25 @@
     },
     {
       "name": "prompt-variant-testing",
-      "path": "skills/prompt-variant-testing",
+      "path": "skills\\prompt-variant-testing",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "proposal-automation",
-      "path": "skills/proposal-automation",
+      "path": "skills\\proposal-automation",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "purchase-order-optimization",
-      "path": "skills/purchase-order-optimization",
+      "path": "skills\\purchase-order-optimization",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "qa-automation",
-      "path": "skills/qa-automation",
+      "path": "skills\\qa-automation",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
@@ -2013,7 +2013,7 @@
     },
     {
       "name": "quantization-optimization",
-      "path": "skills/quantization-optimization",
+      "path": "skills\\quantization-optimization",
       "type": "skill",
       "dependencies": [
         "model-lifecycle",
@@ -2024,7 +2024,7 @@
     },
     {
       "name": "ray-serve-management",
-      "path": "skills/ray-serve-management",
+      "path": "skills\\ray-serve-management",
       "type": "skill",
       "dependencies": [
         "ray-runtime",
@@ -2033,7 +2033,7 @@
     },
     {
       "name": "reasoning-depth-estimation",
-      "path": "skills/reasoning-depth-estimation",
+      "path": "skills\\reasoning-depth-estimation",
       "type": "skill",
       "dependencies": [
         "model-routing",
@@ -2043,7 +2043,7 @@
     },
     {
       "name": "reasoning-visualization",
-      "path": "skills/reasoning-visualization",
+      "path": "skills\\reasoning-visualization",
       "type": "skill",
       "dependencies": [
         "explainability",
@@ -2054,13 +2054,13 @@
     },
     {
       "name": "reconciliation-automation",
-      "path": "skills/reconciliation-automation",
+      "path": "skills\\reconciliation-automation",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "release-management",
-      "path": "skills/release-management",
+      "path": "skills\\release-management",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
@@ -2071,13 +2071,13 @@
     },
     {
       "name": "reorder-point-optimization",
-      "path": "skills/reorder-point-optimization",
+      "path": "skills\\reorder-point-optimization",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "repo-intelligence",
-      "path": "skills/repo-intelligence",
+      "path": "skills\\repo-intelligence",
       "type": "skill",
       "dependencies": [
         "knowledge-graph",
@@ -2086,7 +2086,7 @@
     },
     {
       "name": "requirements-engineering",
-      "path": "skills/requirements-engineering",
+      "path": "skills\\requirements-engineering",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
@@ -2096,7 +2096,7 @@
     },
     {
       "name": "research-analysis",
-      "path": "skills/research-analysis",
+      "path": "skills\\research-analysis",
       "type": "skill",
       "dependencies": [
         "research-runtime",
@@ -2107,7 +2107,7 @@
     },
     {
       "name": "residency-analysis",
-      "path": "skills/residency-analysis",
+      "path": "skills\\residency-analysis",
       "type": "skill",
       "dependencies": [
         "privacy-runtime",
@@ -2118,13 +2118,13 @@
     },
     {
       "name": "revenue-leakage-detection",
-      "path": "skills/revenue-leakage-detection",
+      "path": "skills\\revenue-leakage-detection",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "revenue-operations",
-      "path": "skills/revenue-operations",
+      "path": "skills\\revenue-operations",
       "type": "skill",
       "dependencies": [
         "product-analytics",
@@ -2135,7 +2135,7 @@
     },
     {
       "name": "revenue-optimization",
-      "path": "skills/revenue-optimization",
+      "path": "skills\\revenue-optimization",
       "type": "skill",
       "dependencies": [
         "analytics-intelligence",
@@ -2145,13 +2145,13 @@
     },
     {
       "name": "roadmap-impact-analysis",
-      "path": "skills/roadmap-impact-analysis",
+      "path": "skills\\roadmap-impact-analysis",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "roi-estimation",
-      "path": "skills/roi-estimation",
+      "path": "skills\\roi-estimation",
       "type": "skill",
       "dependencies": [
         "runtime-economics",
@@ -2161,19 +2161,19 @@
     },
     {
       "name": "routing-collision-analysis",
-      "path": "skills/routing-collision-analysis",
+      "path": "skills\\routing-collision-analysis",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "routing-policy-optimization",
-      "path": "skills/routing-policy-optimization",
+      "path": "skills\\routing-policy-optimization",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "runtime-recovery",
-      "path": "skills/runtime-recovery",
+      "path": "skills\\runtime-recovery",
       "type": "skill",
       "dependencies": [
         "checkpoint-management",
@@ -2184,7 +2184,7 @@
     },
     {
       "name": "runtime-simulation",
-      "path": "skills/runtime-simulation",
+      "path": "skills\\runtime-simulation",
       "type": "skill",
       "dependencies": [
         "simulation-engine",
@@ -2195,31 +2195,31 @@
     },
     {
       "name": "runway-analysis",
-      "path": "skills/runway-analysis",
+      "path": "skills\\runway-analysis",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "sales-marketing-customer-phase-pack",
-      "path": "skills/sales-marketing-customer-phase-pack",
+      "path": "skills\\sales-marketing-customer-phase-pack",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "sales-pipeline-forecasting",
-      "path": "skills/sales-pipeline-forecasting",
+      "path": "skills\\sales-pipeline-forecasting",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "scarcity-analysis",
-      "path": "skills/scarcity-analysis",
+      "path": "skills\\scarcity-analysis",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "scenario-generation",
-      "path": "skills/scenario-generation",
+      "path": "skills\\scenario-generation",
       "type": "skill",
       "dependencies": [
         "simulation-engine",
@@ -2230,7 +2230,7 @@
     },
     {
       "name": "schema-evolution",
-      "path": "skills/schema-evolution",
+      "path": "skills\\schema-evolution",
       "type": "skill",
       "dependencies": [
         "data-fabric",
@@ -2241,7 +2241,7 @@
     },
     {
       "name": "sdk-authoring",
-      "path": "skills/sdk-authoring",
+      "path": "skills\\sdk-authoring",
       "type": "skill",
       "dependencies": [
         "sdk-runtime",
@@ -2250,7 +2250,7 @@
     },
     {
       "name": "security-war-gaming",
-      "path": "skills/security-war-gaming",
+      "path": "skills\\security-war-gaming",
       "type": "skill",
       "dependencies": [
         "simulation-engine",
@@ -2261,7 +2261,7 @@
     },
     {
       "name": "self-reflection",
-      "path": "skills/self-reflection",
+      "path": "skills\\self-reflection",
       "type": "skill",
       "dependencies": [
         "cognitive-runtime",
@@ -2272,7 +2272,7 @@
     },
     {
       "name": "seo-engineering",
-      "path": "skills/seo-engineering",
+      "path": "skills\\seo-engineering",
       "type": "skill",
       "dependencies": [
         "launch-planning",
@@ -2282,49 +2282,49 @@
     },
     {
       "name": "seo-intelligence",
-      "path": "skills/seo-intelligence",
+      "path": "skills\\seo-intelligence",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "skill-composition",
-      "path": "skills/skill-composition",
+      "path": "skills\\skill-composition",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "skill-factory-v9",
-      "path": "skills/skill-factory-v9",
+      "path": "skills\\skill-factory-v9",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "skill-gap-detection",
-      "path": "skills/skill-gap-detection",
+      "path": "skills\\skill-gap-detection",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "skill-refactoring",
-      "path": "skills/skill-refactoring",
+      "path": "skills\\skill-refactoring",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "sku-margin-analysis",
-      "path": "skills/sku-margin-analysis",
+      "path": "skills\\sku-margin-analysis",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "sla-risk-detection",
-      "path": "skills/sla-risk-detection",
+      "path": "skills\\sla-risk-detection",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "sre-incident-response",
-      "path": "skills/sre-incident-response",
+      "path": "skills\\sre-incident-response",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
@@ -2335,7 +2335,7 @@
     },
     {
       "name": "state-restoration",
-      "path": "skills/state-restoration",
+      "path": "skills\\state-restoration",
       "type": "skill",
       "dependencies": [
         "checkpoint-management",
@@ -2345,19 +2345,19 @@
     },
     {
       "name": "supplier-risk-intelligence",
-      "path": "skills/supplier-risk-intelligence",
+      "path": "skills\\supplier-risk-intelligence",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "support-ticket-intelligence",
-      "path": "skills/support-ticket-intelligence",
+      "path": "skills\\support-ticket-intelligence",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "synthetic-dataset-generation",
-      "path": "skills/synthetic-dataset-generation",
+      "path": "skills\\synthetic-dataset-generation",
       "type": "skill",
       "dependencies": [
         "benchmark-factory",
@@ -2368,7 +2368,7 @@
     },
     {
       "name": "system-architecture",
-      "path": "skills/system-architecture",
+      "path": "skills\\system-architecture",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management"
@@ -2376,19 +2376,19 @@
     },
     {
       "name": "talent-risk-screening-support",
-      "path": "skills/talent-risk-screening-support",
+      "path": "skills\\talent-risk-screening-support",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "tax-planning-support",
-      "path": "skills/tax-planning-support",
+      "path": "skills\\tax-planning-support",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "temporal-memory-replay",
-      "path": "skills/temporal-memory-replay",
+      "path": "skills\\temporal-memory-replay",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
@@ -2397,7 +2397,7 @@
     },
     {
       "name": "token-cost-analysis",
-      "path": "skills/token-cost-analysis",
+      "path": "skills\\token-cost-analysis",
       "type": "skill",
       "dependencies": [
         "runtime-economics",
@@ -2406,7 +2406,7 @@
     },
     {
       "name": "uncertainty-aware-routing",
-      "path": "skills/uncertainty-aware-routing",
+      "path": "skills\\uncertainty-aware-routing",
       "type": "skill",
       "dependencies": [
         "model-routing",
@@ -2416,13 +2416,13 @@
     },
     {
       "name": "vendor-obligation-tracking",
-      "path": "skills/vendor-obligation-tracking",
+      "path": "skills\\vendor-obligation-tracking",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "vendor-procurement",
-      "path": "skills/vendor-procurement",
+      "path": "skills\\vendor-procurement",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
@@ -2434,19 +2434,19 @@
     },
     {
       "name": "vendor-procurement-phase-pack",
-      "path": "skills/vendor-procurement-phase-pack",
+      "path": "skills\\vendor-procurement-phase-pack",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "vendor-procurement-risk-support",
-      "path": "skills/vendor-procurement-risk-support",
+      "path": "skills\\vendor-procurement-risk-support",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "visual-analytics",
-      "path": "skills/visual-analytics",
+      "path": "skills\\visual-analytics",
       "type": "skill",
       "dependencies": [
         "multimodal-runtime"
@@ -2454,25 +2454,25 @@
     },
     {
       "name": "voice-of-customer-analysis",
-      "path": "skills/voice-of-customer-analysis",
+      "path": "skills\\voice-of-customer-analysis",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "warehouse-optimization",
-      "path": "skills/warehouse-optimization",
+      "path": "skills\\warehouse-optimization",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "win-loss-analysis",
-      "path": "skills/win-loss-analysis",
+      "path": "skills\\win-loss-analysis",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "workflow-ab-testing",
-      "path": "skills/workflow-ab-testing",
+      "path": "skills\\workflow-ab-testing",
       "type": "skill",
       "dependencies": [
         "reinforcement-optimizer",
@@ -2481,13 +2481,13 @@
     },
     {
       "name": "workflow-optimization-loop",
-      "path": "skills/workflow-optimization-loop",
+      "path": "skills\\workflow-optimization-loop",
       "type": "skill",
       "dependencies": []
     },
     {
       "name": "workflow-replay",
-      "path": "skills/workflow-replay",
+      "path": "skills\\workflow-replay",
       "type": "skill",
       "dependencies": [
         "workflow-runtime",
@@ -2498,7 +2498,7 @@
     },
     {
       "name": "workforce-management",
-      "path": "skills/workforce-management",
+      "path": "skills\\workforce-management",
       "type": "skill",
       "dependencies": [
         "sdlc-memory-token-management",
@@ -2509,7 +2509,7 @@
     },
     {
       "name": "zero-trust-policy-authoring",
-      "path": "skills/zero-trust-policy-authoring",
+      "path": "skills\\zero-trust-policy-authoring",
       "type": "skill",
       "dependencies": [
         "zero-trust-runtime",
@@ -5650,8 +5650,8 @@
     "unresolved_dependencies": 0
   },
   "_traceability": {
-    "commit_sha": "380eb7097bbf460740fab6c25564091bb4ddb3f6",
-    "generated_at_utc": "2026-05-10T17:12:06-04:00",
+    "commit_sha": "a96ac1f9902f77cc1d4b42447a30e21380b30a5a",
+    "generated_at_utc": "2026-05-10T21:58:01-04:00",
     "generator": "scripts/generate_release_reports.py"
   }
 }

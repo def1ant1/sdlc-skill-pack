@@ -2,11 +2,11 @@
   "generated_from": {
     "skill_inventory": "reports/skill_inventory.json",
     "repo_truth": "reports/repo_truth_report.json",
-    "pytest_collect": "/root/.pyenv/versions/3.12.13/bin/python -m pytest --collect-only -q"
+    "pytest_collect": "C:\\Users\\emers\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe -m pytest --collect-only -q"
   },
   "traceability": {
-    "commit_sha": "380eb7097bbf460740fab6c25564091bb4ddb3f6",
-    "generated_at_utc": "2026-05-10T17:12:06-04:00",
+    "commit_sha": "a96ac1f9902f77cc1d4b42447a30e21380b30a5a",
+    "generated_at_utc": "2026-05-10T21:58:01-04:00",
     "generator": "scripts/generate_release_reports.py"
   },
   "totals": {
@@ -19,8 +19,8 @@
     "tests_collected": 0
   },
   "_traceability": {
-    "commit_sha": "380eb7097bbf460740fab6c25564091bb4ddb3f6",
-    "generated_at_utc": "2026-05-10T17:12:06-04:00",
+    "commit_sha": "a96ac1f9902f77cc1d4b42447a30e21380b30a5a",
+    "generated_at_utc": "2026-05-10T21:58:01-04:00",
     "generator": "scripts/generate_release_reports.py"
   }
 }

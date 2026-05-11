@@ -1,0 +1,22 @@
+{
+  "completed_at": "1970-01-01T00:00:00Z",
+  "mode": "local",
+  "objective": "Test objective",
+  "plan_id": "TEST-PLAN-001",
+  "run_id": "DRYRUN-c1eb6b31e8e1",
+  "started_at": "1970-01-01T00:00:00Z",
+  "status": "dry_run",
+  "steps": [
+    {
+      "duration_ms": 0,
+      "error": null,
+      "hitl_required": false,
+      "output": null,
+      "side_effect_classification": "read-only",
+      "skill": "requirements-analysis",
+      "status": "dry_run",
+      "step": 1
+    }
+  ],
+  "total_steps": 1
+}

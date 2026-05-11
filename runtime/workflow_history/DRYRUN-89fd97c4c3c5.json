@@ -1,0 +1,22 @@
+{
+  "completed_at": "1970-01-01T00:00:00Z",
+  "mode": "local",
+  "objective": "Full SDLC for a SaaS product",
+  "plan_id": "WP-20260510-001",
+  "run_id": "DRYRUN-89fd97c4c3c5",
+  "started_at": "1970-01-01T00:00:00Z",
+  "status": "dry_run",
+  "steps": [
+    {
+      "duration_ms": 0,
+      "error": null,
+      "hitl_required": false,
+      "output": null,
+      "side_effect_classification": "read-only",
+      "skill": "requirements-engineering",
+      "status": "dry_run",
+      "step": 1
+    }
+  ],
+  "total_steps": 1
+}

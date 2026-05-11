@@ -1,0 +1,22 @@
+{
+  "completed_at": "1970-01-01T00:00:00Z",
+  "mode": "local",
+  "objective": "Launch developer tools to enterprise market",
+  "plan_id": "GTM-20260510-882b72a0",
+  "run_id": "DRYRUN-1f837481bb6f",
+  "started_at": "1970-01-01T00:00:00Z",
+  "status": "dry_run",
+  "steps": [
+    {
+      "duration_ms": 0,
+      "error": null,
+      "hitl_required": false,
+      "output": null,
+      "side_effect_classification": "read-only",
+      "skill": "launch-planning",
+      "status": "dry_run",
+      "step": 1
+    }
+  ],
+  "total_steps": 1
+}
