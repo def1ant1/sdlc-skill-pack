@@ -846,7 +846,7 @@ Acceptance criteria:
 ## MB-P1-008 — Add skill maturity/certification reports
 
 **Source:** Docker/Productization + V9 Backlogs  
-**Status:** Open / partially covered by inventory reports
+**Status:** Completed — 2026-05-11
 
 Create:
 

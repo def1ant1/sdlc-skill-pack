@@ -56,3 +56,5 @@ All notable changes to the Apotheon AI Company OS are documented here.
 ## [8.0.21] — 2026-05-11 — OldFarmTrucks Company Template Import (MB-P0-019)
 
 - Added importable template payload at `company_templates/oldfarmtrucks/template.json` with workflows, schedules, dashboards, connectors, approvals, budgets, and sample data.
+
+- Added a skill maturity framework with explicit MVP thresholds (>70% at L3+, >50% at L4+) and enforced L5 for high-risk critical MVP skills via `scripts/grade_skill_maturity.py`, plus certification evidence reporting via `scripts/certify_skill.py`.

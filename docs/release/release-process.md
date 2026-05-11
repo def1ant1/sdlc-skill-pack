@@ -103,3 +103,7 @@ python scripts/validate_release_package.py --zip-path "dist/apotheon-skill-pack-
 ```
 
 This flow yields a deterministic release ZIP plus `.sha256` and `.manifest.json` artifacts tied to the exact package contents.
+
+## Skill certification evidence
+- Certification is repeatable and evidence-based through `scripts/certify_skill.py`.
+- Required evidence pointers are included in `reports/skill_certification_report.md` for eval, security, context, and telemetry artifacts.
