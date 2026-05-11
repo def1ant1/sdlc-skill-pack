@@ -1,0 +1,31 @@
+profile_id: local-solo
+display_name: Local Solo
+tier: local-solo
+description: Minimal single-operator profile intended for laptops and workstation development.
+compose_profiles:
+  - local-solo
+  - core
+enabled_capabilities:
+  - docs-validation
+  - scheduling-preview
+  - local-runtime-smoke
+disabled_by_default:
+  - autonomous-external-actions
+  - finance-disbursement
+  - infrastructure-mutations
+capability_boundaries:
+  mvp_only: true
+  high_risk_default: disabled
+  notes:
+    - MVP-only workflows and release-critical checks are enabled.
+    - Experimental and high-risk actions are blocked unless explicitly promoted.
+high_risk:
+  enabled: false
+  requires_hitl: true
+  categories:
+    - financial-transfers
+    - security-policy-changes
+    - legal-advice
+    - hr-high-impact
+    - data-deletion
+    - infrastructure-mutations

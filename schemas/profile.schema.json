@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apotheon.dev/schemas/profile.schema.json",
+  "title": "Apotheon Product Profile",
+  "type": "object",
+  "required": [
+    "profile_id",
+    "display_name",
+    "tier",
+    "description",
+    "compose_profiles",
+    "capability_boundaries",
+    "high_risk"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "profile_id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "display_name": {"type": "string", "minLength": 1},
+    "tier": {"type": "string", "enum": ["local-solo", "mvp", "team", "enterprise", "full-domain-lab"]},
+    "description": {"type": "string", "minLength": 1},
+    "compose_profiles": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "enabled_capabilities": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "disabled_by_default": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "capability_boundaries": {
+      "type": "object",
+      "required": ["mvp_only", "high_risk_default", "notes"],
+      "additionalProperties": false,
+      "properties": {
+        "mvp_only": {"type": "boolean"},
+        "high_risk_default": {"type": "string", "enum": ["disabled", "guarded"]},
+        "notes": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "high_risk": {
+      "type": "object",
+      "required": ["enabled", "requires_hitl", "categories"],
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {"type": "boolean"},
+        "requires_hitl": {"type": "boolean"},
+        "categories": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": [
+              "financial-transfers",
+              "security-policy-changes",
+              "legal-advice",
+              "hr-high-impact",
+              "data-deletion",
+              "infrastructure-mutations"
+            ]
+          },
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

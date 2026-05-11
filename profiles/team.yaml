@@ -1,0 +1,33 @@
+profile_id: team
+display_name: Team
+tier: team
+description: Collaborative environment for small teams with shared services and staged automation.
+compose_profiles:
+  - team
+  - core
+  - observability
+  - collaboration
+enabled_capabilities:
+  - release-readiness
+  - workflow-planning
+  - incident-drills
+  - business-routing
+disabled_by_default:
+  - autonomous-external-actions
+  - production-data-writebacks
+capability_boundaries:
+  mvp_only: false
+  high_risk_default: guarded
+  notes:
+    - Team profile expands beyond MVP while retaining high-risk guardrails.
+    - High-risk categories can be enabled only through HITL-approved policy paths.
+high_risk:
+  enabled: false
+  requires_hitl: true
+  categories:
+    - financial-transfers
+    - security-policy-changes
+    - legal-advice
+    - hr-high-impact
+    - data-deletion
+    - infrastructure-mutations

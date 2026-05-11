@@ -31,3 +31,17 @@ apotheon runs list
 # List schedule run artifacts as JSON
 apotheon runs list --output json
 ```
+
+## Profile selection and validation
+
+Use product profiles to constrain capabilities and align Compose runtime behavior.
+
+```bash
+# Validate profile definitions
+python scripts/validation/validate_profiles.py
+
+# Choose a profile and run compose with the mapped profile set
+COMPOSE_PROFILES=local-solo,core docker compose up -d
+```
+
+See `docs/reference/profile-selection.md` for profile boundaries, high-risk defaults, and constraints.
