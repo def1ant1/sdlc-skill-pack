@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apotheon.dev/schemas/rate-limit-policy.schema.json",
+  "title": "Rate Limit Policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "connector_id",
+    "requests_per_minute",
+    "degrade_to_cached_at",
+    "degrade_to_read_only_at"
+  ],
+  "properties": {
+    "connector_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requests_per_minute": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "daily_quota": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1
+    },
+    "cache_ttl_seconds": {
+      "type": "integer",
+      "minimum": 1,
+      "default": 300
+    },
+    "degrade_to_cached_at": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "degrade_to_read_only_at": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    }
+  }
+}

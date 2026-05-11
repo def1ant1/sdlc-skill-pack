@@ -159,3 +159,7 @@ reference and deployment procedures.
 - Dry-run forces `local-stub` model fallback and never calls external inference APIs.
 - Skill outputs must parse as structured JSON and include required fields (`status`, `summary`).
 - Run records now persist estimated cost and correlation IDs per step for operator traceability.
+
+
+## Quota-aware connector scheduling
+Connectors now load per-connector rate-limit policy documents and expose quota pressure (`normal`/`elevated`/`critical`). Schedulers can switch execution to cached data under elevated pressure and force read-only degradation at critical pressure.
