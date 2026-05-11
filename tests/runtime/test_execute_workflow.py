@@ -306,3 +306,22 @@ class TestTemporalImportGuard:
         with mock.patch.dict("sys.modules", {"temporalio": None}):
             with pytest.raises((RuntimeError, ImportError)):
                 execute_temporal(_make_plan())
+
+class TestDryRunGovernanceAndDeterminism:
+    def test_dry_run_never_calls_skill_activity(self):
+        plan = _make_plan(skills=["requirements-analysis"])
+        with mock.patch("execute_workflow.run_skill_activity") as run_skill:
+            log = execute_local(plan, dry_run=True)
+        run_skill.assert_not_called()
+        assert log["status"] == "dry_run"
+
+    def test_dry_run_is_deterministic_across_repeated_runs(self):
+        plan = _make_plan(skills=["requirements-analysis", "backend-engineering"])
+        first = execute_local(plan, dry_run=True)
+        second = execute_local(plan, dry_run=True)
+        assert first == second
+
+    def test_governance_hitl_still_enforced_in_dry_run_classification(self):
+        plan = _make_plan(skills=["devsecops"])
+        log = execute_local(plan, dry_run=True)
+        assert log["steps"][0]["side_effect_classification"] == "simulated-mutation"

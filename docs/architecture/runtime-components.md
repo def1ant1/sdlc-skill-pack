@@ -140,3 +140,15 @@ awareness of upstream decisions without requiring shared state.
 
 See `docs/onboarding/DEPLOYMENT.md` for the full environment variable
 reference and deployment procedures.
+## Dry-Run Contract and Guarantees
+
+`execute_workflow.py --dry-run` now enforces a global dry-run execution contract:
+
+- **No outbound connector side-effects:** runtime sets `APOTHEON_DRY_RUN=1` and `BaseConnector._request()` hard-fails with `DryRunSideEffectBlocked` before any external HTTP call.
+- **Per-step side-effect tags:** each step includes `side_effect_classification` as one of:
+  - `read-only`
+  - `simulated-mutation`
+  - `real-mutation`
+  During dry-run, mutating steps are surfaced as `simulated-mutation`.
+- **Deterministic artifacts:** dry-run emits reproducible metadata, including a deterministic run id (`DRYRUN-<plan-hash>`), fixed timestamps (`1970-01-01T00:00:00Z`), sorted step output in CLI JSON, and stable key ordering.
+- **Governance behavior preserved:** workflow governance semantics (including high-risk step tagging and HITL-relevant classification context) remain visible in dry-run logs even when execution is non-invasive.

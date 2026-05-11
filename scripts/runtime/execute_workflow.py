@@ -33,6 +33,7 @@ Environment variables:
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import logging
 import os
@@ -51,6 +52,41 @@ _HERE = Path(__file__).parent
 sys.path.insert(0, str(_HERE))
 from skill_activity import SkillActivityInput, run_skill_activity  # noqa: E402
 
+
+
+SIDE_EFFECT_READ_ONLY = "read-only"
+SIDE_EFFECT_SIMULATED_MUTATION = "simulated-mutation"
+SIDE_EFFECT_REAL_MUTATION = "real-mutation"
+
+
+def classify_side_effect(step: dict, dry_run: bool) -> str:
+    """Classify step side effects for governance and audit logs."""
+    declared = step.get("side_effect")
+    if declared in {SIDE_EFFECT_READ_ONLY, SIDE_EFFECT_SIMULATED_MUTATION, SIDE_EFFECT_REAL_MUTATION}:
+        if dry_run and declared == SIDE_EFFECT_REAL_MUTATION:
+            return SIDE_EFFECT_SIMULATED_MUTATION
+        return declared
+
+    gate = str(step.get("gate_before_next", "")).lower()
+    skill = str(step.get("skill", "")).lower()
+    mutating_hints = ("deploy", "provision", "rotate", "migrate", "release", "write", "update", "delete", "devsecops", "security", "incident")
+    if any(h in gate for h in mutating_hints) or any(h in skill for h in mutating_hints):
+        return SIDE_EFFECT_SIMULATED_MUTATION if dry_run else SIDE_EFFECT_REAL_MUTATION
+    return SIDE_EFFECT_READ_ONLY
+
+
+def _stable_timestamp(dry_run: bool) -> str:
+    if dry_run:
+        return "1970-01-01T00:00:00Z"
+    return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+
+
+def _deterministic_run_id(plan: dict, dry_run: bool) -> str:
+    if not dry_run:
+        return f"RUN-{int(time.time())}-{uuid.uuid4().hex[:8]}"
+    canonical = json.dumps(plan, sort_keys=True, separators=(",", ":"))
+    digest = hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:12]
+    return f"DRYRUN-{digest}"
 EXECUTION_MODE = os.environ.get("EXECUTION_MODE", "local")
 TEMPORAL_HOST = os.environ.get("TEMPORAL_HOST", "localhost:7233")
 TEMPORAL_NAMESPACE = os.environ.get("TEMPORAL_NAMESPACE", "apotheon-dev")
@@ -141,12 +177,11 @@ def _emit_telemetry(
 
 def execute_local(plan: dict, dry_run: bool = False) -> dict:
     """Execute a workflow plan locally, step by step."""
-    run_id = f"RUN-{int(time.time())}-{uuid.uuid4().hex[:8]}"
+    run_id = _deterministic_run_id(plan, dry_run)
     objective = plan.get("objective", "")
     steps = plan.get("skill_chain", [])
 
     logger.info("Starting local workflow execution: %s (%d steps)", run_id, len(steps))
-
     execution_log = {
         "run_id": run_id,
         "mode": "local",
@@ -155,172 +190,96 @@ def execute_local(plan: dict, dry_run: bool = False) -> dict:
         "total_steps": len(steps),
         "steps": [],
         "status": "running",
-        "started_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "started_at": _stable_timestamp(dry_run),
         "completed_at": None,
     }
 
-    # Initialise context — restore from Qdrant snapshot if a prior run exists
     cm = _make_context_manager(run_id, objective) if not dry_run else None
-    context_packet = cm.load() if cm else {
-        "objective": objective,
-        "phase": "",
-        "decisions": [],
-        "constraints": [],
-        "artifacts": [],
-        "risks": [],
-        "next_action": "",
-    }
-
+    context_packet = cm.load() if cm else {"objective": objective, "phase": "", "decisions": [], "constraints": [], "artifacts": [], "risks": [], "next_action": ""}
     prior_outputs: list[str] = []
 
-    for step in steps:
-        skill_name = step.get("skill", "")
-        step_num = step.get("step", 0)
-        gate = step.get("gate_before_next")
+    prev_dry_run_env = os.environ.get("APOTHEON_DRY_RUN")
+    if dry_run:
+        os.environ["APOTHEON_DRY_RUN"] = "1"
 
-        logger.info("Step %d/%d: %s", step_num, len(steps), skill_name)
+    try:
+        for step in steps:
+            skill_name = step.get("skill", "")
+            step_num = step.get("step", 0)
+            gate = step.get("gate_before_next")
+            step_record = {"step": step_num, "skill": skill_name, "status": "skipped" if dry_run else "running", "output": None, "error": None, "duration_ms": 0, "hitl_required": False, "side_effect_classification": classify_side_effect(step, dry_run)}
 
-        step_record: dict = {
-            "step": step_num,
-            "skill": skill_name,
-            "status": "skipped" if dry_run else "running",
-            "output": None,
-            "error": None,
-            "duration_ms": 0,
-            "hitl_required": False,
-        }
-
-        if dry_run:
-            logger.info("[DRY RUN] Would execute skill: %s", skill_name)
-            step_record["status"] = "dry_run"
-            execution_log["steps"].append(step_record)
-            continue
-
-        # Build additional context: recent step outputs + semantically relevant observations
-        additional_context_parts: list[str] = []
-
-        if prior_outputs:
-            recent = prior_outputs[-2:]  # last 2 outputs for chain continuity
-            additional_context_parts.extend(
-                f"[Prior step output]\n{o[:2000]}" for o in recent
-            )
-
-        if cm:
-            # Fetch semantically relevant observations from past runs
-            query = f"{objective} {skill_name}"
-            relevant = cm.retrieve_relevant(query, top_k=3)
-            for obs in relevant:
-                preview = obs.get("payload", {}).get("output_preview", "")
-                obs_skill = obs.get("payload", {}).get("skill", "")
-                if preview and obs_skill != skill_name:
-                    additional_context_parts.append(
-                        f"[Memory: {obs_skill}]\n{preview[:800]}"
-                    )
-
-        additional_context = "\n\n---\n\n".join(additional_context_parts)
-        context_packet["phase"] = step.get("phase", skill_name)
-
-        inp = SkillActivityInput(
-            skill_name=skill_name,
-            objective=objective,
-            context_packet=context_packet,
-            additional_context=additional_context,
-        )
-
-        t0 = time.perf_counter()
-        try:
-            result = run_skill_activity(inp)
-            duration_ms = int((time.perf_counter() - t0) * 1000)
-
-            step_record["status"] = "completed" if result.success else "failed"
-            step_record["output"] = result.output[:500] if result.output else None
-            step_record["error"] = result.error or None
-            step_record["duration_ms"] = duration_ms
-            step_record["hitl_required"] = result.requires_hitl
-
-            if result.requires_hitl:
-                logger.warning(
-                    "Step %d (%s) requires HITL approval: %s",
-                    step_num, skill_name, result.hitl_reason,
-                )
-                step_record["status"] = "pending_hitl"
+            if dry_run:
+                step_record["status"] = "dry_run"
                 execution_log["steps"].append(step_record)
-                execution_log["status"] = "paused_for_hitl"
-                execution_log["paused_at_step"] = step_num
-                _emit_telemetry(
-                    run_id=run_id,
-                    phase=skill_name,
-                    gate_result="PASS_WITH_WARNINGS",
-                    duration_ms=duration_ms,
-                )
-                if cm:
-                    cm.save_context(context_packet)
-                break
+                continue
 
-            if result.success:
-                prior_outputs.append(result.output)
-                context_packet["artifacts"].append(f"{skill_name}_output")
-                if cm:
-                    cm.save_step(step=step_num, skill=skill_name, output=result.output)
-                    cm.save_context(context_packet)
-                _emit_telemetry(
-                    run_id=run_id,
-                    phase=skill_name,
-                    gate_result="PASS",
-                    duration_ms=duration_ms,
-                    artifacts=[f"{skill_name}_output"],
-                )
-            else:
-                logger.error("Step %d (%s) failed: %s", step_num, skill_name, result.error)
-                _emit_telemetry(
-                    run_id=run_id,
-                    phase=skill_name,
-                    gate_result="FAIL",
-                    duration_ms=duration_ms,
-                )
-                execution_log["status"] = "failed"
-                execution_log["failed_at_step"] = step_num
+            additional_context_parts: list[str] = []
+            if prior_outputs:
+                additional_context_parts.extend(f"[Prior step output]\n{o[:2000]}" for o in prior_outputs[-2:])
+            if cm:
+                for obs in cm.retrieve_relevant(f"{objective} {skill_name}", top_k=3):
+                    preview = obs.get("payload", {}).get("output_preview", "")
+                    obs_skill = obs.get("payload", {}).get("skill", "")
+                    if preview and obs_skill != skill_name:
+                        additional_context_parts.append(f"[Memory: {obs_skill}]\n{preview[:800]}")
+
+            context_packet["phase"] = step.get("phase", skill_name)
+            inp = SkillActivityInput(skill_name=skill_name, objective=objective, context_packet=context_packet, additional_context="\n\n---\n\n".join(additional_context_parts))
+            t0 = time.perf_counter()
+            try:
+                result = run_skill_activity(inp)
+            except Exception as exc:
+                duration_ms = int((time.perf_counter() - t0) * 1000)
+                step_record.update({"status": "error", "error": str(exc), "duration_ms": duration_ms})
+                execution_log.update({"status": "failed", "failed_at_step": step_num})
                 execution_log["steps"].append(step_record)
                 if cm:
                     cm.finalize("failed")
                 break
 
-        except Exception as exc:
             duration_ms = int((time.perf_counter() - t0) * 1000)
-            step_record["status"] = "error"
-            step_record["error"] = str(exc)
-            step_record["duration_ms"] = duration_ms
-            logger.error("Step %d (%s) raised exception: %s", step_num, skill_name, exc, exc_info=True)
-            _emit_telemetry(run_id=run_id, phase=skill_name, gate_result="FAIL", duration_ms=duration_ms)
-            execution_log["status"] = "failed"
-            execution_log["failed_at_step"] = step_num
+            step_record.update({"status": "completed" if result.success else "failed", "output": result.output[:500] if result.output else None, "error": result.error or None, "duration_ms": duration_ms, "hitl_required": result.requires_hitl})
+            if result.requires_hitl:
+                step_record["status"] = "pending_hitl"
+                execution_log.update({"status": "paused_for_hitl", "paused_at_step": step_num})
+                execution_log["steps"].append(step_record)
+                if cm:
+                    cm.save_context(context_packet)
+                break
+
+            if not result.success:
+                execution_log.update({"status": "failed", "failed_at_step": step_num})
+                execution_log["steps"].append(step_record)
+                if cm:
+                    cm.finalize("failed")
+                break
+
+            prior_outputs.append(result.output)
+            context_packet["artifacts"].append(f"{skill_name}_output")
+            if cm:
+                cm.save_step(step=step_num, skill=skill_name, output=result.output)
+                cm.save_context(context_packet)
+            if gate:
+                step_record["gate_reached"] = gate
             execution_log["steps"].append(step_record)
-            if cm:
-                cm.finalize("failed")
-            break
+        else:
+            if not dry_run:
+                execution_log["status"] = "completed"
+                if cm:
+                    cm.finalize("completed")
 
-        # Gate check (informational in local mode — no blocking)
-        if gate:
-            logger.info("Gate reached: %s", gate)
-            step_record["gate_reached"] = gate
+        execution_log["completed_at"] = _stable_timestamp(dry_run)
+        if dry_run:
+            execution_log["status"] = "dry_run"
+    finally:
+        if dry_run:
+            if prev_dry_run_env is None:
+                os.environ.pop("APOTHEON_DRY_RUN", None)
+            else:
+                os.environ["APOTHEON_DRY_RUN"] = prev_dry_run_env
 
-        execution_log["steps"].append(step_record)
-
-    else:
-        # All steps completed without a break
-        if not dry_run:
-            execution_log["status"] = "completed"
-            if cm:
-                cm.finalize("completed")
-
-    execution_log["completed_at"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
-    if dry_run:
-        execution_log["status"] = "dry_run"
-
-    # Record workflow-level Prometheus metric
-    total_duration_s = sum(s.get("duration_ms", 0) for s in execution_log["steps"]) / 1000.0
-    _record_workflow(execution_log["status"], "local", total_duration_s)
-
+    _record_workflow(execution_log["status"], "local", sum(s.get("duration_ms", 0) for s in execution_log["steps"]) / 1000.0)
     return execution_log
 
 
@@ -333,7 +292,7 @@ async def _submit_temporal(plan: dict) -> dict:
     from datetime import timedelta
     from temporalio.client import Client
 
-    run_id = f"RUN-{int(time.time())}-{uuid.uuid4().hex[:8]}"
+    run_id = _deterministic_run_id(plan, False)
 
     logger.info(
         "Connecting to Temporal at %s (namespace=%s, queue=%s)",
@@ -411,7 +370,9 @@ def main() -> int:
         else:
             result = execute_local(plan, dry_run=args.dry_run)
 
-        print(json.dumps(result, indent=2))
+        if isinstance(result.get("steps"), list):
+            result["steps"] = sorted(result["steps"], key=lambda r: r.get("step", 0))
+        print(json.dumps(result, indent=2, sort_keys=True))
         return 0 if result.get("status") in ("completed", "dry_run") else 1
     except Exception as exc:
         logger.error("Workflow execution failed: %s", exc, exc_info=True)
