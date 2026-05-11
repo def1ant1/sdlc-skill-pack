@@ -22,16 +22,22 @@ def test_valid_plan_passes() -> None:
     assert result.returncode == 0, result.stdout
 
 
-def test_missing_skill_fails() -> None:
+def test_invalid_skill_reference_fails() -> None:
     result = run_validator("missing-skill.yaml")
     assert result.returncode != 0
     assert "missing prerequisite skill" in result.stdout
 
 
-def test_unknown_governance_policy_fails() -> None:
-    result = run_validator("unknown-policy.yaml")
+def test_missing_step_policies_fail() -> None:
+    result = run_validator("missing-step-policies.yaml")
     assert result.returncode != 0
-    assert "unknown governance policy ref" in result.stdout
+    assert "must include governance_policy_refs" in result.stdout
+
+
+def test_duplicate_step_order_fails() -> None:
+    result = run_validator("duplicate-order.yaml")
+    assert result.returncode != 0
+    assert "duplicate step order values detected" in result.stdout
 
 
 def test_circular_dependencies_fail() -> None:

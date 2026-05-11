@@ -4,13 +4,17 @@ objectives:
   - Validate workflow plan governance and dependency checks.
 steps:
   - id: analyze
+    order: 1
     title: Analyze requirements
     skill: workflow-engine
     depends_on: []
+    governance_policy_refs: [references/business-policy-standard.md]
   - id: govern
+    order: 2
     title: Governance review
     skill: compliance-runtime
     depends_on: [analyze]
+    governance_policy_refs: [references/business-policy-standard.md]
 governance_gates:
   - id: policy-check
     policy_ref: references/business-policy-standard.md

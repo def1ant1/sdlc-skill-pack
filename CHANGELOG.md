@@ -3,6 +3,13 @@ last_updated: 2026-05-11
 ---
 
 
+## [8.0.11] — 2026-05-11 — Workflow Plan Validator Hardening
+
+- Added strict workflow plan schema constraints in `schemas/workflow-plan.schema.json` for step ordering, step-level policy references, dry-run safety constants, deterministic artifact paths, and planner metadata version/date validation.
+- Added `references/workflow-plan-standard.md` documenting the workflow plan format, strict validation semantics, and CLI usage.
+- Hardened `scripts/validation/validate_workflow_plan.py` with stricter schema checks (`integer`, `minimum`, `const`, `uniqueItems`) plus dependency-order validation and strict step policy checks.
+- Expanded workflow plan validator tests and fixtures for invalid skill references, missing policies, duplicate ordering, and cycle detection.
+
 ## [8.0.10] — 2026-05-11 — Skill Graph Engine MVP
 
 - Added `core/skill-graph-engine/` with a planner-consumable skill graph engine that models skills, tools, policies, connectors, memory requirements, and dependency/routing diagnostics.
