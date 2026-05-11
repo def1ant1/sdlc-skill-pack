@@ -461,7 +461,19 @@ Acceptance criteria:
 
 ## 15. Release Acceptance Criteria
 
-This hardening backlog is complete when:
+This hardening backlog is complete when the Section 15 release gate runner passes:
+
+```bash
+python scripts/validate_section15_release_gates.py
+```
+
+CI enforcement:
+
+- `.github/workflows/validate.yml` runs this gate on push/PR.
+- `.github/workflows/validate.yml` runs this gate again for release `published`/`prereleased` events.
+- Release tagging/promotion is blocked by nonzero exit from any Section 15 gate.
+
+Machine-verifiable gate checklist:
 
 ```text
 [ ] Error envelope schema exists and is used

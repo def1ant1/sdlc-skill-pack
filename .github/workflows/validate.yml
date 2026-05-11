@@ -95,6 +95,9 @@ jobs:
       - name: Run release phase gates
         run: python scripts/run_premerge_checks.py --phase release
 
+      - name: Run Section 15 release gates
+        run: python scripts/validate_section15_release_gates.py
+
       - name: Validate release artifacts
         run: python scripts/validate_release_artifacts.py
 
@@ -172,6 +175,9 @@ jobs:
           python scripts/generate_release_reports.py
           python scripts/validate_hitl_coverage.py
           python scripts/grade_skill_maturity.py
+
+      - name: Enforce Section 15 release gates before promotion
+        run: python scripts/validate_section15_release_gates.py
 
       - name: Enforce release report drift check
         run: |
