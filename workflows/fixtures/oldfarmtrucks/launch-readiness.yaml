@@ -1,0 +1,27 @@
+fixture_id: oldfarmtrucks-launch-readiness
+objective: Launch OldFarmTrucks.com as a classic truck dealership in 30 days
+planner_output_ref: docs/examples/oldfarmtrucks-business-workflows.md#short-term-workflow-a--launch-readiness-workflow
+canonical_governance_policies:
+  - references/business-policy-standard.md
+  - docs/standards/documentation-governance.md
+expected_artifacts:
+  - run_id
+  - status
+  - steps
+plan:
+  plan_id: oldfarmtrucks-launch-readiness-001
+  planner: business-workflow-planner
+  planning_contract: workflow-plan-v1
+  skill_chain:
+    - step: 1
+      phase: requirements
+      skill: requirements-engineering
+    - step: 2
+      phase: architecture
+      skill: system-architecture
+    - step: 3
+      phase: qa
+      skill: qa-automation
+    - step: 4
+      phase: compliance
+      skill: compliance-governance

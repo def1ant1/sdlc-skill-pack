@@ -1,0 +1,20 @@
+{
+  "fixture_id": "oldfarmtrucks-weekly-ops-reviews",
+  "objective": "Create weekly operating review for OldFarmTrucks.com",
+  "planner_output_ref": "docs/examples/oldfarmtrucks-business-workflows.md#short-term-workflow-d--weekly-ops-review-and-decision-workflow",
+  "canonical_governance_policies": [
+    "references/business-policy-standard.md",
+    "docs/standards/documentation-governance.md"
+  ],
+  "expected_artifacts": ["run_id", "status", "steps"],
+  "plan": {
+    "plan_id": "oldfarmtrucks-weekly-ops-review-001",
+    "planner": "business-workflow-planner",
+    "planning_contract": "workflow-plan-v1",
+    "skill_chain": [
+      {"step": 1, "phase": "reporting", "skill": "executive-reporting"},
+      {"step": 2, "phase": "observability", "skill": "observability"},
+      {"step": 3, "phase": "compliance", "skill": "compliance-governance"}
+    ]
+  }
+}

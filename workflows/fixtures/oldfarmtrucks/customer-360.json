@@ -1,0 +1,21 @@
+{
+  "fixture_id": "oldfarmtrucks-customer-360",
+  "objective": "Build a Customer 360 and CDP unification workflow for OldFarmTrucks.com",
+  "planner_output_ref": "docs/examples/customer-lifecycle-crm-cdp-marketing-workflows.md#workflow-7--customer-360-and-cdp-unification",
+  "canonical_governance_policies": [
+    "references/business-policy-standard.md",
+    "docs/governance/customer-communication-policy.md"
+  ],
+  "expected_artifacts": ["run_id", "status", "steps"],
+  "plan": {
+    "plan_id": "oldfarmtrucks-customer-360-001",
+    "planner": "business-workflow-planner",
+    "planning_contract": "workflow-plan-v1",
+    "skill_chain": [
+      {"step": 1, "phase": "architecture", "skill": "system-architecture"},
+      {"step": 2, "phase": "backend", "skill": "backend-engineering"},
+      {"step": 3, "phase": "qa", "skill": "qa-automation"},
+      {"step": 4, "phase": "compliance", "skill": "compliance-governance"}
+    ]
+  }
+}
