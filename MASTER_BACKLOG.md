@@ -95,7 +95,7 @@ The following are not proven complete and remain open in this master backlog:
 ## MB-P0-001 — Create Docker runtime baseline
 
 **Source:** Docker Deployment Backlog  
-**Status:** Open
+**Status:** Complete (2026-05-11)
 
 Create:
 

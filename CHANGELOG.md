@@ -2,6 +2,11 @@
 last_updated: 2026-05-11
 ---
 
+## [8.0.7] — 2026-05-11 — Docker Runtime Baseline + Onboarding Runbooks
+
+- Added Docker runtime artifacts: `Dockerfile`, `Dockerfile.dev`, `.dockerignore`, `.env.example`, `docker-compose.yml`, and `docker-compose.override.yml` with reproducible base image pinning and explicit health checks for Postgres, Redis, Qdrant, Temporal, and runtime API.
+- Added Docker helper scripts under `scripts/docker/` for doctor checks, service readiness waiting, stack initialization, smoke tests, and structured compose health validation.
+- Added onboarding docs `docs/onboarding/DOCKER_DEPLOYMENT.md` and `docs/onboarding/DOCKER_TROUBLESHOOTING.md`, and linked Docker-first guidance from existing deployment/troubleshooting docs.
 
 ## [8.0.6] — 2026-05-11 — Local Orchestration Documentation Consolidation
 

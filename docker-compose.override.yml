@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  runtime:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: apotheon/runtime:dev
+    command: ["bash", "-lc", "uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"]
+    volumes:
+      - ./:/app
+    environment:
+      LOG_LEVEL: DEBUG

@@ -214,3 +214,12 @@ All checks must pass before traffic is routed to a new deployment.
 | `VAULT_TOKEN` | — | HashiCorp Vault token (optional) |
 | `LOG_LEVEL` | `INFO` | Python logging level |
 | `SKILLS_ROOT` | `<repo>/skills` | Override skills directory path |
+
+---
+
+## Docker-first local onboarding
+
+Use the Docker-focused runbooks for current startup and verification commands:
+
+- `docs/onboarding/DOCKER_DEPLOYMENT.md`
+- `docs/onboarding/DOCKER_TROUBLESHOOTING.md`

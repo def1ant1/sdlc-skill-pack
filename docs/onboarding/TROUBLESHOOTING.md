@@ -65,3 +65,8 @@
 1. Create backup: `apotheon backup create --output dist`.
 2. Preview restore plan only: `apotheon backup restore --dry-run <backup_path>`.
 3. Execute live restore only after dry-run review.
+
+
+### Docker stack remediation
+
+For container-first startup and failure recovery, follow `docs/onboarding/DOCKER_TROUBLESHOOTING.md`.
