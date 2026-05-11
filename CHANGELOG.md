@@ -161,3 +161,11 @@ All notable changes to the Apotheon AI Company OS are documented here.
 
 - Completed MB-P2-004 legal/tax/entity/regulatory intelligence hardening by enforcing decision-support-only boundaries, authoritative citation policy, structured jurisdiction/authority/effective-date/retrieval-verification/confidence/review fields, and filing/submission approval gates in the legal operations phase pack.
 - Added legal-tax governance policy documentation and MB-P2-004 policy tests for citation, schema-field, and action-gating controls.
+
+## 2026-05-11 — MB-ECOM-P0-002 marketplace ingestion and scraping governance
+
+- Added `core/marketplace-ingestion/` with source adapter contract + sample marketplace adapters that preserve retrieval lineage.
+- Added `core/scraping-governor/` governance interceptors to enforce legal approval, robots/TOS allowability, and throttle sanity before ingestion.
+- Added `schemas/marketplace-source.schema.json` requiring legal metadata, robots/TOS handling declarations, throttling constraints, proxy controls, and lineage fields.
+- Added `scripts/marketplaces/validate_source_policy.py` to fail non-compliant source definitions.
+- Added `references/marketplace-data-policy.md` and refreshed marketplace/governance docs with policy boundaries, rate limits, proxy rules, and violation behavior.

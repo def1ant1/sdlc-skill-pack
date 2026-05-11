@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apotheon.local/schemas/marketplace-source.schema.json",
+  "title": "Marketplace Source Definition",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source_id",
+    "display_name",
+    "base_url",
+    "legal",
+    "robots",
+    "terms_of_service",
+    "throttling",
+    "lineage"
+  ],
+  "properties": {
+    "source_id": {"type": "string", "minLength": 2},
+    "display_name": {"type": "string", "minLength": 2},
+    "base_url": {"type": "string", "format": "uri"},
+    "legal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["owner_team", "jurisdiction", "review_approved", "review_ticket"],
+      "properties": {
+        "owner_team": {"type": "string", "minLength": 2},
+        "jurisdiction": {"type": "string", "minLength": 2},
+        "review_approved": {"type": "boolean"},
+        "review_ticket": {"type": "string", "minLength": 3}
+      }
+    },
+    "robots": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allow_scraping", "checked_at", "ruleset_uri"],
+      "properties": {
+        "allow_scraping": {"type": "boolean"},
+        "checked_at": {"type": "string", "format": "date-time"},
+        "ruleset_uri": {"type": "string", "format": "uri"}
+      }
+    },
+    "terms_of_service": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allow_automation", "reviewed_at", "review_notes"],
+      "properties": {
+        "allow_automation": {"type": "boolean"},
+        "reviewed_at": {"type": "string", "format": "date-time"},
+        "review_notes": {"type": "string", "minLength": 5}
+      }
+    },
+    "throttling": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_requests_per_minute", "burst_limit", "cooldown_seconds", "user_agent"],
+      "properties": {
+        "max_requests_per_minute": {"type": "integer", "minimum": 1},
+        "burst_limit": {"type": "integer", "minimum": 1},
+        "cooldown_seconds": {"type": "integer", "minimum": 0},
+        "user_agent": {"type": "string", "minLength": 3}
+      }
+    },
+    "network": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "proxy_required": {"type": "boolean"},
+        "proxy_pool": {"type": "string"},
+        "allow_residential_proxy": {"type": "boolean"}
+      }
+    },
+    "lineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dataset", "entity_type", "run_id_prefix", "retention_days"],
+      "properties": {
+        "dataset": {"type": "string", "minLength": 2},
+        "entity_type": {"type": "string", "minLength": 2},
+        "run_id_prefix": {"type": "string", "minLength": 2},
+        "retention_days": {"type": "integer", "minimum": 1}
+      }
+    }
+  }
+}
