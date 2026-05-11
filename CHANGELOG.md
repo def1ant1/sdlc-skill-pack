@@ -3,6 +3,12 @@
 All notable changes to the Apotheon AI Company OS are documented here.
 
 
+## [8.0.28] — 2026-05-11 — Local + Docker Backup/Restore Hardening (MB-P1-006)
+
+- Added local backup/restore tooling in `scripts/backup/backup_local_state.py` and `scripts/backup/restore_local_state.py` with manifest + checksum outputs, dry-run restore preview, and post-restore checksum validation.
+- Added Docker stack backup/restore scripts in `scripts/docker/backup-stack.sh` and `scripts/docker/restore-stack.sh` including archive checksum generation and dry-run recovery preview flow.
+- Added backup/restore standards and operator guidance in `references/local-backup-restore-standard.md`, `docs/onboarding/DOCKER_BACKUP_RESTORE.md`, and runbook updates for recovery validation and secret handling approvals.
+
 ## [8.0.27] — 2026-05-11 — Local App Connector Layer + Readiness Reports (MB-P1-005)
 
 - Expanded `local_apps/` with profile-based compose startup, local env template, readiness docs, and canonical priority app mappings for MVP categories.

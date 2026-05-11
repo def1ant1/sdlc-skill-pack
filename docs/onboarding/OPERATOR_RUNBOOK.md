@@ -48,6 +48,18 @@ apotheon backup restore --dry-run dist/<backup-archive>.tar.gz
 2. `apotheon backup restore --dry-run <archive>`
 3. Review planned file operations before any live restore.
 
+### Playbook D: Local/Docker recovery validation
+1. `python scripts/backup/backup_local_state.py --output dist/backups/local`
+2. `python scripts/backup/restore_local_state.py dist/backups/local/<archive>.tar.gz --dry-run`
+3. `scripts/docker/restore-stack.sh dist/backups/docker/<archive>.tar.gz --dry-run`
+4. `scripts/docker/check-compose-health.py`
+5. `scripts/docker/smoke-test-container.sh`
+
+### Secret restore control
+- Secret-bearing files are excluded by default from backup and restore previews.
+- To include encrypted secrets, operator must provide explicit approval ticket: `--include-encrypted-secrets --approval-ticket <ID>`.
+- Do not restore plaintext secrets from archives.
+
 
 ## Runtime Hardening Notes
 - Use `--dry-run` to validate plans without any external model or connector side effects.
