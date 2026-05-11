@@ -11,34 +11,51 @@ if str(ROOT) not in sys.path:
 
 from scripts.runtime.error_envelope import build_error_envelope
 
-REQUIRED = {"error_id","correlation_id","workflow_run_id","schedule_run_id","skill","step","severity","category","retryable","user_action_required","message","technical_detail","root_cause_hint","remediation","source_exception","created_at"}
+SCHEMA_PATH = ROOT / "schemas" / "error-envelope.schema.json"
+REQUIRED_BOUNDARY_PREFIXES = ("runtime", "planner", "scheduler", "connector:")
 
 
-def _validate(e: dict) -> list[str]:
+def _validate_schema(schema: dict, envelope: dict) -> list[str]:
+    try:
+        import jsonschema
+    except ImportError:
+        return []
+    try:
+        jsonschema.validate(instance=envelope, schema=schema)
+        return []
+    except Exception as exc:  # noqa: BLE001
+        return [f"schema validation failed: {exc}"]
+
+
+def _validate(envelope: dict) -> list[str]:
     errs = []
-    missing = REQUIRED - set(e)
-    if missing:
-        errs.append(f"missing fields: {sorted(missing)}")
-    if not str(e.get("remediation", "")).strip():
+    if not str(envelope.get("remediation", "")).strip():
         errs.append("missing remediation")
+    if envelope.get("user_action_required") and "remediation" not in envelope:
+        errs.append("user_action_required error missing remediation")
+    if envelope.get("skill", "").startswith("connector:") and envelope.get("retryable") and envelope.get("category") in {"auth", "validation", "config"}:
+        errs.append("connector auth/validation/config errors must be non-retryable")
     return errs
 
 
 def main() -> int:
+    schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
     reps = [
         build_error_envelope(correlation_id="corr-runtime", workflow_run_id="RUN-1", skill="runtime", step=2, category="runtime", message="Runtime failure", remediation="Fix failing step and rerun.", source_exception="RuntimeError"),
-        build_error_envelope(correlation_id="corr-planner", workflow_run_id="n/a", skill="planner", step="plan", category="validation", message="Planner objective invalid", remediation="Provide non-empty objective.", source_exception="ValueError"),
-        build_error_envelope(correlation_id="corr-scheduler", schedule_run_id="sched-1", skill="scheduler", step="dispatch", category="schedule", message="Schedule misfire", remediation="Adjust schedule misfire policy.", source_exception="RuntimeError"),
-        build_error_envelope(correlation_id="corr-connector", workflow_run_id="RUN-2", skill="connector:salesforce", step=3, category="auth", message="Auth failed", remediation="Rotate credentials and retry.", source_exception="HTTPError"),
+        build_error_envelope(correlation_id="corr-planner", workflow_run_id="n/a", skill="planner", step="plan", category="validation", retryable=False, message="Planner objective invalid", remediation="Provide non-empty objective.", source_exception="ValueError"),
+        build_error_envelope(correlation_id="corr-scheduler", schedule_run_id="sched-1", skill="scheduler", step="dispatch", category="schedule", retryable=False, message="Schedule misfire", remediation="Adjust schedule misfire policy.", source_exception="RuntimeError"),
+        build_error_envelope(correlation_id="corr-connector", workflow_run_id="RUN-2", skill="connector:salesforce", step=3, category="auth", retryable=False, message="Auth failed", remediation="Rotate credentials and retry.", source_exception="HTTPError"),
     ]
     all_errs = []
-    for i, e in enumerate(reps):
-        for err in _validate(e):
+    for i, envelope in enumerate(reps):
+        if not envelope["skill"].startswith(REQUIRED_BOUNDARY_PREFIXES):
+            all_errs.append(f"error[{i}] boundary skill missing prefix: {envelope['skill']}")
+        for err in _validate_schema(schema, envelope) + _validate(envelope):
             all_errs.append(f"error[{i}] {err}")
     if all_errs:
         print("\n".join(all_errs))
         return 1
-    print(json.dumps({"status":"ok","validated":len(reps)}, indent=2))
+    print(json.dumps({"status": "ok", "validated": len(reps), "schema": str(SCHEMA_PATH.relative_to(ROOT))}, indent=2))
     return 0
 
 

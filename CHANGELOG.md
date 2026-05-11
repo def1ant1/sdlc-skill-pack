@@ -1,5 +1,13 @@
 ## 2026-05-11
 
+## [8.0.13] — 2026-05-11 — Structured Error Contract Adoption
+
+- Added canonical error envelope schema `schemas/error-envelope.schema.json` and strengthened boundary validation in `scripts/validation/validate_error_contracts.py`.
+- Standardized planner failure envelopes in `scripts/orchestration/planning_contract.py` and updated operational guidance in `references/error-handling-standard.md`.
+- Confirmed retry safety boundaries: high-risk side effects are non-retryable and operator remediation remains required across runtime/planner/scheduler/connector boundaries.
+
+---
+
 ## [8.0.12] — 2026-05-11 — Runtime Hardening: Dry-Run Boundaries + Structured Outputs
 
 - Hardened runtime execution path with explicit provider routing (`scripts/runtime/model_router.py`) and dry-run local fallback (`scripts/runtime/local_model_fallback.py`) so `--dry-run` avoids external model calls.

@@ -3,7 +3,10 @@ from __future__ import annotations
 
 import datetime
 import hashlib
+import json
 from pathlib import Path
+
+from scripts.runtime.error_envelope import build_error_envelope
 
 SHARED_SKILLS: dict[str, dict] = {
     "finance-operations": {"domain": "finance", "signals": ["finance", "budget", "forecast", "cash", "expense", "invoice", "ap/ar", "close", "variance"]},
@@ -65,9 +68,11 @@ def build_domain_plan(objective: str, domain: str) -> dict:
     routed = route_objective(objective, domain)
     diagnostics = _diagnose_routing(objective, routed)
     if not diagnostics["objective_non_empty"]:
-        raise ValueError("Objective must not be empty.")
+        envelope = build_error_envelope(correlation_id="corr-planner", workflow_run_id="n/a", skill="planner", step="plan", category="validation", retryable=False, user_action_required=True, message="Planner objective is empty.", technical_detail="Objective must not be empty.", root_cause_hint="Caller provided blank objective input.", remediation="Provide a non-empty objective and rerun planner.", source_exception="ValueError")
+        raise ValueError(json.dumps(envelope, sort_keys=True))
     if diagnostics["missing_required_skills"]:
-        raise ValueError(f"Required skills unavailable: {', '.join(diagnostics['missing_required_skills'])}. {diagnostics['remediation']}")
+        envelope = build_error_envelope(correlation_id="corr-planner", workflow_run_id="n/a", skill="planner", step="skill_resolution", category="config", retryable=False, user_action_required=True, message="Planner could not resolve required skills.", technical_detail=f"Missing skills: {', '.join(diagnostics['missing_required_skills'])}", root_cause_hint="Required skills are not installed in skills/ or core/.", remediation=diagnostics["remediation"] or "Install missing skills and rerun planner.", source_exception="ValueError")
+        raise ValueError(json.dumps(envelope, sort_keys=True))
     plan_id = f"{domain.upper()}-{datetime.date.today().strftime('%Y%m%d')}-{hashlib.sha1(f'{domain}:{objective.strip().lower()}'.encode()).hexdigest()[:8]}"
     skill_chain = [{"step": i, "skill": skill, "phase": SHARED_SKILLS[skill]["domain"], "depends_on": [routed[i - 2]] if i > 1 else [], "governance": _governance_annotation(skill)} for i, skill in enumerate(routed, start=1)]
     return {

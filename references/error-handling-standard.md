@@ -27,8 +27,21 @@ All runtime, planner, scheduler, and connector failures must emit a standard **e
 
 1. `remediation` must always be present and actionable for user-facing errors.
 2. `correlation_id` must be logged with the envelope.
-3. Use `retryable=true` only when the operation is safe to retry.
-4. Use `workflow_run_id`/`schedule_run_id` as `n/a` if unknown.
+3. Use `retryable=true` only when the operation is safe to retry and no high-risk side effect is present.
+4. High-risk side-effect operations (`high_risk_side_effect=true`) are **never retried automatically**.
+5. Connector `auth`, `validation`, and `config` errors are non-retryable.
+6. Use `workflow_run_id`/`schedule_run_id` as `n/a` if unknown.
+
+## Boundary Adoption
+
+- Runtime: `scripts/runtime/execute_workflow.py`
+- Planner: `scripts/orchestration/planning_contract.py`
+- Scheduler: `scripts/scheduling/run_due_schedules.py`
+- Connector: `scripts/connectors/base_connector.py`
+
+## JSON Schema
+
+- Canonical schema: `schemas/error-envelope.schema.json`
 
 ## Example
 
