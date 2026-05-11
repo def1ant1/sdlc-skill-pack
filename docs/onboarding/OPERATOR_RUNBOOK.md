@@ -121,3 +121,9 @@ Use the **Approve** / **Reject** buttons in the `HITL Approval Queue` section. D
 
 - Run `python scripts/reports/generate_connector_health_report.py` to generate `reports/connector_health_report.md` and `reports/connector_health_report.json`.
 - Connector writes remain blocked by default (`APOTHEON_CONNECTORS_READ_ONLY=true`) and require HITL approval + idempotency keys for live writes.
+
+
+## Documentation navigation
+- Docs index: `docs/index.md`
+- API/CLI reference: `docs/api/README.md`
+- Governance checks: `docs/examples/RUNNABLE_CLI_EXAMPLES.md`

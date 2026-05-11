@@ -87,3 +87,9 @@ For container-first startup and failure recovery, follow `docs/onboarding/DOCKER
 
 - Run `python scripts/reports/generate_connector_health_report.py` to generate `reports/connector_health_report.md` and `reports/connector_health_report.json`.
 - Connector writes remain blocked by default (`APOTHEON_CONNECTORS_READ_ONLY=true`) and require HITL approval + idempotency keys for live writes.
+
+
+## Additional references
+- Operator runbook: `docs/onboarding/OPERATOR_RUNBOOK.md`
+- Docker troubleshooting: `docs/onboarding/DOCKER_TROUBLESHOOTING.md`
+- Diagnostics commands: `docs/examples/RUNNABLE_CLI_EXAMPLES.md`

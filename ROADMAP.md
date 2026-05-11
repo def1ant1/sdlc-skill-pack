@@ -46,3 +46,8 @@ Core infrastructure is operational for local development and testing.
 - Centralized docs index and onboarding navigation.
 - OldFarmTrucks demo quickstart + video script.
 - API/docs/examples coverage with automated docs integrity checks.
+
+
+## Documentation baseline (MB-P3-005)
+
+Keep top-level docs, onboarding runbooks, API/examples pages, and docs index navigation consistent with current script paths and runtime behavior.

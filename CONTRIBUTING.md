@@ -80,3 +80,8 @@ python scripts/docs/validate_docs_integrity.py
 python scripts/docs/validate_readme_claims.py
 python scripts/docs/validate_doc_uniqueness.py
 ```
+
+
+## Documentation baseline (MB-P3-005)
+
+Keep top-level docs, onboarding runbooks, API/examples pages, and docs index navigation consistent with current script paths and runtime behavior.
