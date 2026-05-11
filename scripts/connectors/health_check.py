@@ -43,6 +43,8 @@ CONNECTOR_REGISTRY: dict[str, tuple[str, str]] = {
     "stripe": ("stripe_connector", "StripeConnector"),
     "mixpanel": ("mixpanel_connector", "MixpanelConnector"),
     "amplitude": ("amplitude_connector", "AmplitudeConnector"),
+    "filesystem_local": ("local_apps.filesystem_connector", "FilesystemConnector"),
+    "sqlite_local": ("local_apps.sqlite_connector", "SQLiteConnector"),
 }
 
 
@@ -53,6 +55,8 @@ def check_connector(name: str, module_name: str, class_name: str) -> dict:
         "status": "UNKNOWN",
         "latency_ms": None,
         "error": None,
+        "circuit_state": None,
+        "read_only_default": None,
     }
     try:
         sys.path.insert(0, str(_HERE))
@@ -66,6 +70,8 @@ def check_connector(name: str, module_name: str, class_name: str) -> dict:
 
         result["status"] = "OK" if healthy else "DEGRADED"
         result["latency_ms"] = latency_ms
+        result["circuit_state"] = getattr(getattr(connector, "_circuit", None), "state", None)
+        result["read_only_default"] = bool(getattr(connector, "_read_only_mode", False))
     except Exception as exc:
         result["status"] = "UNREACHABLE"
         result["error"] = str(exc)
