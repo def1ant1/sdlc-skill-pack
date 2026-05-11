@@ -1070,7 +1070,7 @@ Acceptance criteria:
 ## MB-P2-006 — HR and learning/development skill pack
 
 **Source:** V9 + Domain Backlogs  
-**Status:** Open
+**Status:** Completed (2026-05-11)
 
 Implement/complete skills for:
 

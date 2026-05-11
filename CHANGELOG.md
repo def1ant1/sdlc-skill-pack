@@ -1,3 +1,10 @@
+## 2026-05-11 — HR/L&D governance + MB-P2-006 completion
+
+- Completed MB-P2-006 by adding `skills/hr-learning-development-pack` with explicit coverage for HR and L&D capabilities, support-only operation, and high-impact human review gates.
+- Added explicit protections preventing use of sensitive/protected attributes in scoring and ranking, including fairness checks and proxy-feature scan requirements.
+- Added L&D outcome tracking and certification workflow fixtures for dry-run/offline validation.
+- Updated HR governance policy and added dedicated L&D fairness/employment-impact governance documentation.
+
 ## 2026-05-11 — MB-P2-005 trading research pack completion
 
 - Completed MB-P2-005 skill list with 20 trading/portfolio/arbitrage research skills under `skills/` and normalized safety sections.

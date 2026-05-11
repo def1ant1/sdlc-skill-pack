@@ -1,0 +1,13 @@
+insight_id: perf-insight-2026-05-001
+employment_impact_score: 58
+candidate_action: coaching_plan_update
+requires_human_review: true
+review_owner: hr_business_partner
+review_due_by: 2026-05-20
+guardrails:
+  protected_attribute_scoring_check: pass
+  fairness_subgroup_check: pass
+  proxy_feature_scan: pass
+decision:
+  automated_decision_allowed: false
+  final_decision: pending_human
