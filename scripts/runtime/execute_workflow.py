@@ -95,6 +95,22 @@ TEMPORAL_TIMEOUT_HOURS = int(os.environ.get("TEMPORAL_TIMEOUT_HOURS", "4"))
 
 
 # ---------------------------------------------------------------------------
+
+WORKFLOW_HISTORY_DIR = Path(__file__).resolve().parents[2] / "runtime" / "workflow_history"
+
+
+def _persist_execution_artifact(execution_log: dict, history_dir: Path = WORKFLOW_HISTORY_DIR) -> None:
+    history_dir.mkdir(parents=True, exist_ok=True)
+    run_id = execution_log.get("run_id")
+    if not run_id:
+        raise ValueError("execution artifact missing run_id")
+    if not execution_log.get("started_at"):
+        raise ValueError("execution artifact missing started_at")
+    if execution_log.get("status") != "running" and not execution_log.get("completed_at"):
+        raise ValueError("terminal execution artifact missing completed_at")
+    out = history_dir / f"{run_id}.json"
+    out.write_text(json.dumps(execution_log, indent=2, sort_keys=True)+"\n")
+
 # Context manager (graceful — Qdrant may not be running)
 # ---------------------------------------------------------------------------
 
@@ -280,6 +296,7 @@ def execute_local(plan: dict, dry_run: bool = False) -> dict:
                 os.environ["APOTHEON_DRY_RUN"] = prev_dry_run_env
 
     _record_workflow(execution_log["status"], "local", sum(s.get("duration_ms", 0) for s in execution_log["steps"]) / 1000.0)
+    _persist_execution_artifact(execution_log)
     return execution_log
 
 
