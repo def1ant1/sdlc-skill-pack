@@ -1,14 +1,17 @@
 {
   "fixture_id": "oldfarmtrucks-market-scarcity-scan",
-  "objective": "Identify underpriced classic truck inventory in nearby markets for OldFarmTrucks.com",
+  "objective": "Identify underpriced classic truck inventory and recommend approval-gated acquisition/pricing actions for OldFarmTrucks.com",
   "canonical_governance_policies": [
     "references/business-policy-standard.md",
-    "docs/standards/documentation-governance.md"
+    "docs/governance/data-scraping-policy.md",
+    "docs/governance/external-action-policy.md"
   ],
   "expected_artifacts": [
     "run_id",
     "status",
-    "steps"
+    "steps",
+    "approvals_required",
+    "scraping_policy_checks"
   ],
   "failure_fixtures": [
     {
@@ -22,18 +25,18 @@
   ],
   "plan": {
     "plan_id": "oldfarmtrucks-market-scarcity-scan-001",
-    "objective": "Identify underpriced classic truck inventory in nearby markets for OldFarmTrucks.com",
+    "objective": "Identify underpriced classic truck inventory and recommend approval-gated acquisition/pricing actions for OldFarmTrucks.com",
     "skill_chain": [
       {
         "step": 1,
         "phase": "phase-1",
-        "skill": "market-research",
+        "skill": "local-market-data-collection",
         "depends_on": []
       },
       {
         "step": 2,
         "phase": "phase-2",
-        "skill": "pricing-analysis",
+        "skill": "demand-planning",
         "depends_on": [
           1
         ]
@@ -41,7 +44,7 @@
       {
         "step": 3,
         "phase": "phase-3",
-        "skill": "inventory-optimization",
+        "skill": "sku-margin-analysis",
         "depends_on": [
           2
         ]
@@ -49,11 +52,51 @@
       {
         "step": 4,
         "phase": "phase-4",
-        "skill": "risk-assessment",
+        "skill": "stockout-risk-detection",
         "depends_on": [
           3
         ]
+      },
+      {
+        "step": 5,
+        "phase": "phase-5",
+        "skill": "supplier-risk-intelligence",
+        "depends_on": [
+          4
+        ]
+      },
+      {
+        "step": 6,
+        "phase": "phase-6",
+        "skill": "purchase-approval-routing",
+        "depends_on": [
+          5
+        ]
+      },
+      {
+        "step": 7,
+        "phase": "phase-7",
+        "skill": "scarcity-analysis",
+        "depends_on": [
+          6
+        ]
+      },
+      {
+        "step": 8,
+        "phase": "phase-8",
+        "skill": "arbitrage-analysis",
+        "depends_on": [
+          7
+        ]
       }
+    ]
+  },
+  "dry_run_validation": {
+    "required": true,
+    "mode": "offline-safe",
+    "scenarios": [
+      "acquisition-screening",
+      "pricing-adjustment-simulation"
     ]
   }
 }

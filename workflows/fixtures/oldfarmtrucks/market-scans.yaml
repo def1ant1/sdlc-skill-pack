@@ -1,27 +1,49 @@
 fixture_id: oldfarmtrucks-market-scans
-objective: Run recurring market scans for pricing, inventory, and competitor positioning
+objective: Run recurring market scans for demand, margin, stockout, and scarcity/arbitrage-aware
+  acquisition routing
 planner_output_ref: docs/examples/oldfarmtrucks-business-workflows.md#short-term-workflow-b--market-scan-and-pricing-intelligence-workflow
 canonical_governance_policies:
-  - references/business-policy-standard.md
-  - docs/governance/data-scraping-policy.md
+- references/business-policy-standard.md
+- docs/governance/data-scraping-policy.md
 expected_artifacts:
-  - run_id
-  - status
-  - steps
+- run_id
+- status
+- steps
 plan:
   plan_id: oldfarmtrucks-market-scans-001
   planner: business-workflow-planner
   planning_contract: workflow-plan-v1
   skill_chain:
-    - step: 1
-      phase: requirements
-      skill: requirements-engineering
-    - step: 2
-      phase: backend
-      skill: backend-engineering
-    - step: 3
-      phase: observability
-      skill: observability
-    - step: 4
-      phase: compliance
-      skill: compliance-governance
+  - step: 1
+    phase: market-intel
+    skill: local-market-data-collection
+  - step: 2
+    phase: demand
+    skill: demand-planning
+  - step: 3
+    phase: margin
+    skill: sku-margin-analysis
+  - step: 4
+    phase: stockout
+    skill: stockout-risk-detection
+  - step: 5
+    phase: vendor-risk
+    skill: supplier-risk-intelligence
+  - step: 6
+    phase: procurement
+    skill: purchase-approval-routing
+  - step: 7
+    phase: scarcity
+    skill: scarcity-analysis
+  - step: 8
+    phase: arbitrage
+    skill: arbitrage-analysis
+  objective: Run recurring market scans for demand, margin, stockout, and scarcity/arbitrage-aware
+    acquisition routing
+dry_run_validation:
+  required: true
+  mode: offline-safe
+  scenarios:
+  - vendor-risk-screening
+  - purchase-routing
+  - pricing-simulation

@@ -73,3 +73,14 @@ All notable changes to the Apotheon AI Company OS are documented here.
 - Added importable template payload at `company_templates/oldfarmtrucks/template.json` with workflows, schedules, dashboards, connectors, approvals, budgets, and sample data.
 
 - Added a skill maturity framework with explicit MVP thresholds (>70% at L3+, >50% at L4+) and enforced L5 for high-risk critical MVP skills via `scripts/grade_skill_maturity.py`, plus certification evidence reporting via `scripts/certify_skill.py`.
+
+
+## [8.0.22] — 2026-05-11 — MB-P2-003 Supply-Chain Skill Pack Completion
+
+### Added
+- Expanded `inventory-product-market-phase-pack` coverage for demand planning, SKU margin analysis, stockout risk, supplier/vendor risk, procurement routing, and scarcity/arbitrage support.
+- Added explicit scraping policy controls requiring robots checks, terms checks, rate-limit enforcement, and operator approval for restricted data collection.
+
+### Changed
+- Hardened approval gates for purchase, listing publication, and vendor outreach actions.
+- Updated OldFarmTrucks market scarcity workflow fixtures for acquisition/pricing dry-run validation and richer expected artifacts.

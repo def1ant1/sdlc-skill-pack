@@ -16,7 +16,9 @@ do_not_use_when:
 # Inventory, Product & Market Phase Pack
 
 ## Role
-Drive phase 110-112 workflows with schema-valid canonical outputs and approval-gated side effects.
+Drive MB-P2-003 inventory/product/procurement/market workflows with schema-valid canonical outputs and approval-gated side effects.
+
+Covered capabilities include demand planning, sku margin analysis, stockout detection, supplier/vendor risk intelligence, procurement routing, and scarcity/arbitrage analysis for acquisition and pricing support.
 
 ## Contracts & Context Loading
 - Use canonical schemas for product/order/workflow/decision/task and approval/workflow events.
@@ -25,7 +27,8 @@ Drive phase 110-112 workflows with schema-valid canonical outputs and approval-g
 
 ## Governance
 - Human approval is mandatory for any customer-facing update.
-- Human approval is mandatory for external mutations (supplier portal updates, catalog repricing, PO changes).
+- Human approval is mandatory for external mutations (supplier portal updates, catalog repricing, PO changes, listing publication, and vendor outreach).
+- Scraping tasks must validate robots directives, terms-of-use constraints, connector rate limits, and explicit operator approval before any non-public or high-frequency collection.
 - If approval is absent, emit approval_requested and hold execution.
 
 ## Failure & Fallback
