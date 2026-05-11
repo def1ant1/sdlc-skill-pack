@@ -689,7 +689,7 @@ Acceptance criteria:
 ## MB-P1-003 — Add graph-based workflow execution
 
 **Source:** Docker/Productization Backlog  
-**Status:** Open
+**Status:** Completed (2026-05-11)
 
 Create or harden:
 
@@ -1133,7 +1133,7 @@ Acceptance criteria:
 ## MB-P3-001 — Skill registry and marketplace skeleton
 
 **Source:** Docker/Productization Backlog  
-**Status:** Open
+**Status:** Completed (2026-05-11)
 
 Create:
 
@@ -1164,7 +1164,7 @@ Acceptance criteria:
 ## MB-P3-002 — Self-improvement/evolution engine
 
 **Source:** Docker/Productization Backlog  
-**Status:** Open
+**Status:** Completed (2026-05-11)
 
 Create:
 
@@ -1188,7 +1188,7 @@ Acceptance criteria:
 ## MB-P3-003 — Commercial/open-source boundary
 
 **Source:** Docker/Productization Backlog  
-**Status:** Open
+**Status:** Completed (2026-05-11)
 
 Create:
 
@@ -1208,7 +1208,7 @@ Acceptance criteria:
 ## MB-P3-004 — VS Code/developer experience
 
 **Source:** Docker/Productization Backlog  
-**Status:** Open
+**Status:** Completed (2026-05-11)
 
 Create or improve:
 

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apotheon.dev/schemas/workflow-graph.schema.json",
+  "type": "object",
+  "required": ["entrypoint", "nodes", "edges"],
+  "properties": {
+    "entrypoint": {"type": "string"},
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind"],
+        "properties": {
+          "id": {"type": "string"},
+          "kind": {"type": "string"},
+          "skill": {"type": "string"},
+          "retry": {
+            "type": "object",
+            "properties": {"max_attempts": {"type": "integer", "minimum": 1}}
+          },
+          "approval": {
+            "type": "object",
+            "properties": {"required": {"type": "boolean"}}
+          },
+          "memory": {
+            "type": "object",
+            "properties": {
+              "requires": {"type": "array", "items": {"type": "string"}}
+            }
+          }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from", "to"],
+        "properties": {
+          "from": {"type": "string"},
+          "to": {"type": "string"},
+          "when": {"type": "string", "enum": ["success", "failure"]}
+        }
+      }
+    }
+  }
+}
