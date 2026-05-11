@@ -31,7 +31,10 @@
       "schemas/events/approval_requested.schema.json",
       "schemas/events/approval_decided.schema.json",
       "schemas/events/workflow_completed.schema.json",
-      "schemas/events/business_policy_violation.schema.json"
+      "schemas/events/business_policy_violation.schema.json",
+      "schemas/entities/opportunity.schema.json",
+      "schemas/entities/campaign.schema.json",
+      "schemas/entities/ticket.schema.json"
     ]
   },
   "output_contract": {
@@ -48,7 +51,10 @@
       "schemas/events/approval_requested.schema.json",
       "schemas/events/approval_decided.schema.json",
       "schemas/events/workflow_completed.schema.json",
-      "schemas/events/business_policy_violation.schema.json"
+      "schemas/events/business_policy_violation.schema.json",
+      "schemas/entities/opportunity.schema.json",
+      "schemas/entities/campaign.schema.json",
+      "schemas/entities/ticket.schema.json"
     ],
     "approval_gate": "required-for-high-risk-actions"
   },
@@ -106,7 +112,10 @@
     "schemas/events/approval_requested.schema.json",
     "schemas/events/approval_decided.schema.json",
     "schemas/events/workflow_completed.schema.json",
-    "schemas/events/business_policy_violation.schema.json"
+    "schemas/events/business_policy_violation.schema.json",
+    "schemas/entities/opportunity.schema.json",
+    "schemas/entities/campaign.schema.json",
+    "schemas/entities/ticket.schema.json"
   ],
   "failure_modes": [
     "missing_required_context",
@@ -127,7 +136,9 @@
       "update",
       "delete",
       "send"
-    ]
+    ],
+    "policy_permitted_bypass": "allowed only when policy profile explicitly grants outbound communication automation for lifecycle messaging",
+    "enforce_consent_suppression_preferences": true
   },
   "name": "sales-marketing-customer-phase-pack",
   "subdomain": "go-to-market",
@@ -144,7 +155,10 @@
       "schemas/entities/service.schema.json",
       "schemas/entities/workflow.schema.json",
       "schemas/entities/decision.schema.json",
-      "schemas/entities/task.schema.json"
+      "schemas/entities/task.schema.json",
+      "schemas/entities/opportunity.schema.json",
+      "schemas/entities/campaign.schema.json",
+      "schemas/entities/ticket.schema.json"
     ],
     "events": [
       "schemas/events/approval_requested.schema.json",
@@ -152,5 +166,19 @@
       "schemas/events/workflow_completed.schema.json",
       "schemas/events/business_policy_violation.schema.json"
     ]
-  }
+  },
+  "lifecycle_taxonomy": [
+    "anonymous",
+    "known_lead",
+    "mql",
+    "sql",
+    "opportunity_open",
+    "opportunity_closed_won",
+    "opportunity_closed_lost",
+    "onboarding",
+    "active",
+    "at_risk",
+    "renewed",
+    "churned"
+  ]
 }

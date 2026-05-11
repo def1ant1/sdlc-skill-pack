@@ -1,3 +1,9 @@
+## 2026-05-11 — Customer lifecycle pack MB-P2-002 completion
+
+- Completed MB-P2-002 customer-domain phase-pack governance by adding canonical customer/lead/opportunity/campaign/ticket entity coverage and explicit lifecycle taxonomy in `skills/sales-marketing-customer-phase-pack/`.
+- Enforced consent, suppression, communication-preference checks, and approval requirements for outbound communication unless an explicit policy-permitted automation path exists.
+- Added lifecycle workflow fixtures/diagnostics under `workflows/fixtures/oldfarmtrucks/` and updated customer lifecycle documentation baseline in `docs/examples/customer-lifecycle-crm-cdp-marketing-workflows.md`.
+
 
 ## 2026-05-11 — Finance pack MB-P2-001 completion
 
