@@ -1,5 +1,11 @@
 ## 2026-05-11
 
+## [8.0.17] — 2026-05-11 — Governance Runtime Enforcement (MB-P0-012)
+
+- Added runtime governance enforcement scripts: `scripts/governance/enforce_runtime_policy.py` and `scripts/governance/generate_evidence_pack.py` with fail-closed decisions for high-risk actions.
+- Added governance kernel and policy/approval/sandbox hardening references under `core/governance-kernel/`, `core/policy-engine/references/`, `core/business-approval-gateway/references/`, and `core/sandbox-execution/references/`.
+- Added `schemas/skill-permission.schema.json` for runtime permission requests and documented governance enforcement flow in `docs/governance/runtime-enforcement.md`.
+
 ## [8.0.16] — 2026-05-11 — Domain Planner Completion + Validation
 
 - Added/updated domain planners for business, customer, finance, inventory, legal, and data-security with required `--dry-run --json --output` flags and inventory/graph skill checks.

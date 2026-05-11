@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apotheon.ai/schemas/skill-permission.schema.json",
+  "title": "Skill Permission Request",
+  "description": "Runtime governance permission contract for high-risk skill actions.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "workflow_id",
+    "skill_path",
+    "requested_actions",
+    "approval_granted",
+    "autonomous_mode"
+  ],
+  "properties": {
+    "workflow_id": {"type": "string", "minLength": 1},
+    "skill_path": {"type": "string", "pattern": "^skills/[a-z0-9-]+$"},
+    "requested_actions": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "approval_granted": {"type": "boolean"},
+    "approval_id": {"type": "string"},
+    "autonomous_mode": {"type": "boolean"},
+    "workflow_tags": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    }
+  }
+}
