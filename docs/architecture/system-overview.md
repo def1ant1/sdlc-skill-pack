@@ -64,7 +64,9 @@ The platform covers:
 ```
 
 Every cycle writes decisions, artifacts, and observations to the persistent
-memory layer (Qdrant), which feeds context into subsequent cycles.
+memory layer (Qdrant), which feeds context into subsequent cycles. Episodic
+records are now promotable to semantic memory when marked stable with
+sufficient confidence, and contradiction checks can block unsafe retrieval use.
 
 ---
 
@@ -140,13 +142,18 @@ Two execution modes:
 - **Temporal** (`temporal_worker.py`) — durable, retryable, supports HITL signals
 
 ### Memory Layer
-All workflow state persists in Qdrant (vector database):
+All workflow state persists in Qdrant (vector database) with multi-layer memory behavior:
 - `apotheon-observations` — step outputs, context snapshots, workflow events
 - `apotheon-knowledge` — institutional knowledge, lessons learned, runbooks
 - `apotheon-decisions` — decision records with full context
 
 `context_manager.py` hydrates the context packet from prior observations on
 workflow resumption, enabling continuity across HITL pauses and restarts.
+
+Additional memory controls:
+- `record_execution_memory.py` persists episodic execution memory and promotes stable facts into semantic memory.
+- `detect_contradictions.py` validates candidate retrieval context against semantic facts.
+- `retrieve_context.py` blocks retrieval output when contradictions are detected.
 
 ### HITL Governance
 Every action is classified by risk level (Low / L1 / L2 / L3). Level 3 gates block

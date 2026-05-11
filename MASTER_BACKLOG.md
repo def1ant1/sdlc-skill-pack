@@ -638,7 +638,7 @@ Acceptance criteria:
 ## MB-P1-001 — Add multi-layer memory and knowledge graph
 
 **Source:** Docker/Productization Backlog  
-**Status:** Open / Qdrant/context foundation exists
+**Status:** Completed — 2026-05-11 (multi-layer memory + contradiction guardrails delivered)
 
 Create:
 
