@@ -18,7 +18,7 @@ _RUNTIME_PATH = str(REPO_ROOT / "scripts" / "runtime")
 if _RUNTIME_PATH not in sys.path:
     sys.path.insert(0, _RUNTIME_PATH)
 
-from execute_workflow import execute_local, execute_temporal  # noqa: E402
+from execute_workflow import RuntimeOptions, execute_local, execute_temporal  # noqa: E402
 
 
 # ---------------------------------------------------------------------------
@@ -368,3 +368,32 @@ class TestExecutionArtifactStructure:
         assert isinstance(payload["steps"], list) and payload["steps"]
         assert {"step", "skill", "status", "duration_ms", "side_effect_classification"}.issubset(payload["steps"][0].keys())
 
+
+class TestRuntimeOptionsAndValidation:
+    def test_failed_middle_step_marks_failed_and_stops_with_fail_fast(self):
+        plan = _make_plan(skills=["a", "b", "c"])
+        results = [_mock_skill_result(), _mock_skill_result(success=False), _mock_skill_result()]
+        with mock.patch("execute_workflow.run_skill_activity", side_effect=results), \
+             mock.patch("execute_workflow._make_context_manager", return_value=None):
+            log = execute_local(plan, options=RuntimeOptions(fail_fast=True))
+        assert log["status"] == "failed"
+        assert log["failed_at_step"] == 2
+        assert len(log["steps"]) == 2
+
+    def test_step_timeout_marks_timeout(self):
+        plan = _make_plan(skills=["a"])
+        with mock.patch("execute_workflow.run_skill_activity", return_value=_mock_skill_result()), \
+             mock.patch("execute_workflow._make_context_manager", return_value=None), \
+             mock.patch("execute_workflow.time.perf_counter", side_effect=[1.0, 3.5]):
+            log = execute_local(plan, options=RuntimeOptions(max_step_runtime=1))
+        assert log["steps"][0]["status"] == "timeout"
+
+    def test_invalid_plan_schema_raises_value_error(self):
+        bad_plan = {"objective": "x", "skill_chain": [{"step": 1}]}
+        with pytest.raises(ValueError):
+            execute_local(bad_plan)
+
+    def test_skill_input_schema_validation_failure(self):
+        from skill_activity import SkillActivityInput
+        with pytest.raises(ValueError):
+            SkillActivityInput.from_dict({"objective": "oops"})

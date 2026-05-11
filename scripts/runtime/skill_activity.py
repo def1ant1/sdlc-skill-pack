@@ -310,6 +310,7 @@ class SkillActivityInput:
 
     @classmethod
     def from_dict(cls, d: dict) -> "SkillActivityInput":
+        _validate_skill_activity_input(d)
         return cls(
             skill_name=d["skill_name"],
             objective=d["objective"],
@@ -446,3 +447,8 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+def _validate_skill_activity_input(payload: dict[str, Any]) -> None:
+    required = {"skill_name", "objective"}
+    missing = sorted(required - set(payload.keys()))
+    if missing:
+        raise ValueError(f"Invalid skill activity input; missing keys: {', '.join(missing)}")

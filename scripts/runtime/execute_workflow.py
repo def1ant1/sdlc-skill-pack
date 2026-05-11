@@ -40,6 +40,7 @@ import os
 import sys
 import time
 import uuid
+from dataclasses import dataclass
 from pathlib import Path
 
 logging.basicConfig(
@@ -98,6 +99,37 @@ TEMPORAL_TIMEOUT_HOURS = int(os.environ.get("TEMPORAL_TIMEOUT_HOURS", "4"))
 # ---------------------------------------------------------------------------
 
 WORKFLOW_HISTORY_DIR = Path(__file__).resolve().parents[2] / "runtime" / "workflow_history"
+WORKFLOW_PLAN_SCHEMA = Path(__file__).resolve().parents[2] / "schemas" / "workflow-plan.schema.json"
+
+
+@dataclass
+class RuntimeOptions:
+    continue_on_warning: bool = False
+    fail_fast: bool = True
+    max_step_runtime: int | None = None
+    error_report: Path | None = None
+
+
+def _validate_with_schema(payload: dict, schema_path: Path) -> tuple[bool, str | None]:
+    # minimal structural guard even when schema/jsonschema unavailable
+    if not isinstance(payload, dict) or not isinstance(payload.get("skill_chain"), list) or not payload.get("objective"):
+        return False, "plan must include objective and skill_chain[]"
+    for i, st in enumerate(payload.get("skill_chain", []), start=1):
+        if not isinstance(st, dict) or not st.get("skill") or "step" not in st:
+            return False, f"invalid step at index {i-1}"
+
+    if not schema_path.exists():
+        return True, None
+    try:
+        import jsonschema
+    except ImportError:
+        return True, None
+    schema = json.loads(schema_path.read_text(encoding="utf-8"))
+    try:
+        jsonschema.validate(instance=payload, schema=schema)
+        return True, None
+    except Exception as exc:
+        return False, str(exc)
 
 
 def _persist_execution_artifact(execution_log: dict, history_dir: Path = WORKFLOW_HISTORY_DIR) -> None:
@@ -192,14 +224,19 @@ def _emit_telemetry(
 # Local execution engine
 # ---------------------------------------------------------------------------
 
-def execute_local(plan: dict, dry_run: bool = False) -> dict:
+def execute_local(plan: dict, dry_run: bool = False, *, options: RuntimeOptions | None = None, resume_run: dict | None = None) -> dict:
     """Execute a workflow plan locally, step by step."""
-    run_id = _deterministic_run_id(plan, dry_run)
+    options = options or RuntimeOptions()
+    ok, err = _validate_with_schema(plan, WORKFLOW_PLAN_SCHEMA)
+    if not ok:
+        raise ValueError(f"Workflow plan schema validation failed: {err}")
+
+    run_id = resume_run["run_id"] if resume_run else _deterministic_run_id(plan, dry_run)
     objective = plan.get("objective", "")
     steps = plan.get("skill_chain", [])
 
     logger.info("Starting local workflow execution: %s (%d steps)", run_id, len(steps))
-    execution_log = {
+    execution_log = resume_run or {
         "run_id": run_id,
         "mode": "local",
         "objective": objective,
@@ -210,6 +247,7 @@ def execute_local(plan: dict, dry_run: bool = False) -> dict:
         "started_at": _stable_timestamp(dry_run),
         "completed_at": None,
     }
+    completed_steps = {s.get("step") for s in execution_log.get("steps", []) if s.get("status") == "completed"}
 
     cm = _make_context_manager(run_id, objective) if not dry_run else None
     context_packet = cm.load() if cm else {"objective": objective, "phase": "", "decisions": [], "constraints": [], "artifacts": [], "risks": [], "next_action": ""}
@@ -223,6 +261,8 @@ def execute_local(plan: dict, dry_run: bool = False) -> dict:
         for step in steps:
             skill_name = step.get("skill", "")
             step_num = step.get("step", 0)
+            if step_num in completed_steps:
+                continue
             gate = step.get("gate_before_next")
             step_record = {"step": step_num, "skill": skill_name, "status": "skipped" if dry_run else "running", "output": None, "error": None, "duration_ms": 0, "hitl_required": False, "side_effect_classification": classify_side_effect(step, dry_run)}
 
@@ -254,9 +294,19 @@ def execute_local(plan: dict, dry_run: bool = False) -> dict:
                 execution_log["steps"].append(step_record)
                 if cm:
                     cm.finalize("failed")
-                break
+                if options.error_report:
+                    options.error_report.write_text(json.dumps(envelope, indent=2), encoding="utf-8")
+                if options.fail_fast:
+                    break
+                continue
 
             duration_ms = int((time.perf_counter() - t0) * 1000)
+            if options.max_step_runtime and duration_ms > options.max_step_runtime * 1000:
+                step_record.update({"status": "timeout", "error": f"step exceeded max runtime {options.max_step_runtime}s", "duration_ms": duration_ms})
+                execution_log.update({"status": "failed", "failed_at_step": step_num})
+                execution_log["steps"].append(step_record)
+                break
+
             step_record.update({"status": "completed" if result.success else "failed", "output": result.output[:500] if result.output else None, "error": result.error or None, "duration_ms": duration_ms, "hitl_required": result.requires_hitl})
             if result.requires_hitl:
                 step_record["status"] = "pending_hitl"
@@ -271,7 +321,9 @@ def execute_local(plan: dict, dry_run: bool = False) -> dict:
                 execution_log["steps"].append(step_record)
                 if cm:
                     cm.finalize("failed")
-                break
+                if options.fail_fast:
+                    break
+                continue
 
             prior_outputs.append(result.output)
             context_packet["artifacts"].append(f"{skill_name}_output")
@@ -281,6 +333,7 @@ def execute_local(plan: dict, dry_run: bool = False) -> dict:
             if gate:
                 step_record["gate_reached"] = gate
             execution_log["steps"].append(step_record)
+            _persist_execution_artifact(execution_log)
         else:
             if not dry_run:
                 execution_log["status"] = "completed"
@@ -368,6 +421,11 @@ def main() -> int:
     parser.add_argument("--plan", help="Path to workflow plan JSON file")
     parser.add_argument("--dry-run", action="store_true", help="Print steps without executing")
     parser.add_argument("--mode", choices=["local", "temporal"], default=EXECUTION_MODE)
+    parser.add_argument("--resume", help="Resume from a prior run_id artifact")
+    parser.add_argument("--continue-on-warning", action="store_true")
+    parser.add_argument("--fail-fast", action="store_true")
+    parser.add_argument("--max-step-runtime", type=int)
+    parser.add_argument("--error-report", help="Path to write error envelope JSON")
     args = parser.parse_args()
 
     if args.plan:
@@ -383,11 +441,29 @@ def main() -> int:
         logger.error("Workflow plan has no skill_chain — nothing to execute")
         return 1
 
+    resume_log = None
+    if args.resume:
+        resume_path = WORKFLOW_HISTORY_DIR / f"{args.resume}.json"
+        if not resume_path.exists():
+            logger.error("Resume artifact not found for run_id=%s", args.resume)
+            return 1
+        resume_log = json.loads(resume_path.read_text(encoding="utf-8"))
+
     try:
         if args.mode == "temporal":
             result = execute_temporal(plan)
         else:
-            result = execute_local(plan, dry_run=args.dry_run)
+            result = execute_local(
+                plan,
+                dry_run=args.dry_run,
+                options=RuntimeOptions(
+                    continue_on_warning=args.continue_on_warning,
+                    fail_fast=args.fail_fast,
+                    max_step_runtime=args.max_step_runtime,
+                    error_report=Path(args.error_report) if args.error_report else None,
+                ),
+                resume_run=resume_log,
+            )
 
         if isinstance(result.get("steps"), list):
             result["steps"] = sorted(result["steps"], key=lambda r: r.get("step", 0))
