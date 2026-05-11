@@ -29,3 +29,10 @@ Execute accounting operations workflows while producing only canonical entity/ev
 
 ## Workflow Artifact
 See `examples/workflow.yaml`.
+
+## Domain Cognition + Self-Check Integration
+- Apply the domain module for **finance/accounting** from `docs/cognition/modules/mvp-domain-cognition-modules.md` before finalizing recommendations.
+- Run the self-check rubric in `docs/cognition/references/self-check-rubric.md`.
+- If rubric score is below threshold or any blocking dimension is `0`, pause, state gaps, and request/trigger human review.
+- Persist memory hooks defined by the module in the output memory packet.
+

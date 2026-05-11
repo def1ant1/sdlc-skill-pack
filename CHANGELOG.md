@@ -3,6 +3,12 @@
 All notable changes to the Apotheon AI Company OS are documented here.
 
 
+## [8.0.29] — 2026-05-11 — MVP Domain Cognition Modules + Skill Rubrics (MB-P1-007)
+
+- Added `docs/cognition/modules/mvp-domain-cognition-modules.md` with cognition content for sales, finance/accounting, legal/tax, security, HR, knowledge/research, GTM, SDLC, and operations, including principles, heuristics, frameworks, evaluators, anti-pattern detectors, examples, policy boundaries, and memory hooks.
+- Added rubric and domain-reference documentation in `docs/cognition/references/self-check-rubric.md` and `docs/reference/domain-cognition-modules.md` to standardize self-check and memory capture behavior.
+- Integrated domain cognition self-check sections into relevant domain skills: sales, finance/accounting, legal/tax, security, knowledge/research, GTM, SDLC, and operations skill definitions under `skills/*/SKILL.md`.
+
 ## [8.0.28] — 2026-05-11 — Local + Docker Backup/Restore Hardening (MB-P1-006)
 
 - Added local backup/restore tooling in `scripts/backup/backup_local_state.py` and `scripts/backup/restore_local_state.py` with manifest + checksum outputs, dry-run restore preview, and post-restore checksum validation.

@@ -121,3 +121,10 @@ packet `artifacts`. Failures log to compliance-automation evidence store.
 
 - `references/security-scan-pipeline.md` — Tool configuration, rule sets, CI integration, suppression policy
 - `references/vulnerability-triage.md` — Severity definitions, triage workflow, accept-risk template, SLA table
+
+## Domain Cognition + Self-Check Integration
+- Apply the domain module for **security** from `docs/cognition/modules/mvp-domain-cognition-modules.md` before finalizing recommendations.
+- Run the self-check rubric in `docs/cognition/references/self-check-rubric.md`.
+- If rubric score is below threshold or any blocking dimension is `0`, pause, state gaps, and request/trigger human review.
+- Persist memory hooks defined by the module in the output memory packet.
+

@@ -32,3 +32,10 @@ Recommend KPI-linked process improvements with mandatory review markers for high
 - Enforce bias/human-sensitive review for HR and legal contexts.
 - Require explanation traces for threshold-based approvals and obligation updates.
 - If confidence is low or policy context is missing, stop and escalate.
+
+## Domain Cognition + Self-Check Integration
+- Apply the domain module for **operations** from `docs/cognition/modules/mvp-domain-cognition-modules.md` before finalizing recommendations.
+- Run the self-check rubric in `docs/cognition/references/self-check-rubric.md`.
+- If rubric score is below threshold or any blocking dimension is `0`, pause, state gaps, and request/trigger human review.
+- Persist memory hooks defined by the module in the output memory packet.
+
