@@ -526,7 +526,7 @@ Acceptance criteria:
 ## MB-P0-017 — Add dashboard/control-plane MVP
 
 **Source:** Docker/Productization Backlog  
-**Status:** Open
+**Status:** Done (2026-05-11)
 
 Create:
 
