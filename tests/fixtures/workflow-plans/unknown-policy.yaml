@@ -1,0 +1,23 @@
+id: sample-sdlc-plan
+objectives: [one]
+steps:
+  - id: s1
+    title: Known skill
+    skill: workflow-engine
+    depends_on: []
+governance_gates:
+  - id: gate
+    policy_ref: references/not-real-policy.md
+    enforcement: blocking
+dry_run_safety:
+  enabled: true
+  no_external_writes: true
+  require_human_approval_for_mutations: true
+deterministic_artifacts:
+  - name: out
+    path: artifacts/out.json
+    format: json
+planner_metadata:
+  planner: x
+  version: v1
+  created_at: '2026-05-11T00:00:00Z'

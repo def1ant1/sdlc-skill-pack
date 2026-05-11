@@ -42,6 +42,9 @@ jobs:
       - name: Validate frontmatter
         run: python scripts/validation/validate_frontmatter.py .
 
+      - name: Validate workflow plans
+        run: python scripts/validation/validate_workflow_plan.py tests/fixtures/workflow-plans/valid-plan.yaml
+
       - name: Detect skill gaps
         run: |
           python scripts/orchestration/detect_skill_gaps.py . | \
