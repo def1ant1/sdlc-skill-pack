@@ -26,9 +26,10 @@ def run_planner(script: Path, objective: str) -> dict:
 @pytest.mark.parametrize("domain", ["business", "finance", "customer", "inventory"])
 def test_output_schema_and_hitl(domain: str):
     out = run_planner(PLANNERS[domain], "Improve customer retention and compliance reporting")
-    for key in ["plan_id", "planner", "planning_contract", "skill_chain", "governance_checks", "hitl_checkpoints", "next_action"]:
+    for key in ["plan_id", "created", "planner", "planning_contract", "skill_chain", "governance_checks", "hitl_checkpoints", "next_action"]:
         assert key in out
     assert out["planner"] == f"{domain}-workflow-planner"
+    assert out["planning_contract"]["schema"] == "workflow-plan@1.0"
     assert len(out["hitl_checkpoints"]) >= 2
     assert any(c["required"] for c in out["hitl_checkpoints"])
 
@@ -46,3 +47,41 @@ def test_route_objectives(domain: str, objective: str, expected: set[str]):
     out = run_planner(PLANNERS[domain], objective)
     routed = {s["skill"] for s in out["skill_chain"]}
     assert expected.issubset(routed)
+
+
+@pytest.mark.parametrize("domain", ["business", "finance", "customer", "inventory"])
+def test_output_structure_is_deterministic(domain: str):
+    objective = "Improve compliance posture and vendor governance"
+    first = run_planner(PLANNERS[domain], objective)
+    second = run_planner(PLANNERS[domain], objective)
+
+    assert list(first.keys()) == list(second.keys())
+    assert first["planner"] == second["planner"]
+    assert first["objective"] == second["objective"]
+    assert first["planning_contract"] == second["planning_contract"]
+    assert first["governance_checks"] == second["governance_checks"]
+    assert first["hitl_checkpoints"] == second["hitl_checkpoints"]
+    assert first["next_action"] == second["next_action"]
+
+    first_chain_shape = [{k: step[k] for k in ("step", "skill", "phase", "depends_on", "governance")} for step in first["skill_chain"]]
+    second_chain_shape = [{k: step[k] for k in ("step", "skill", "phase", "depends_on", "governance")} for step in second["skill_chain"]]
+    assert first_chain_shape == second_chain_shape
+
+
+@pytest.mark.parametrize("domain", ["business", "finance", "customer", "inventory"])
+def test_governance_annotations_present(domain: str):
+    out = run_planner(PLANNERS[domain], "Review contracts, budget controls, and workforce policy")
+
+    approval_steps = []
+    for step in out["skill_chain"]:
+        gov = step["governance"]
+        assert set(gov.keys()) == {"approval_required", "approver_role", "policy_tags", "reason"}
+        assert isinstance(gov["approval_required"], bool)
+        assert isinstance(gov["policy_tags"], list)
+        if gov["approval_required"]:
+            assert isinstance(gov["approver_role"], str)
+            assert gov["approver_role"]
+            assert len(gov["policy_tags"]) > 0
+            approval_steps.append(step["skill"])
+
+    assert approval_steps, "Expected at least one approval-requiring step in governance-heavy objectives"
