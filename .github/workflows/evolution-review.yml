@@ -1,0 +1,79 @@
+name: Evolution Review Gate
+
+on:
+  pull_request:
+    branches: ["main", "develop"]
+    paths:
+      - "scripts/evolution/**"
+      - "core/evolution-engine/**"
+      - "core/skill-gap-engine/**"
+      - "docs/workflows/improvement-workflow.md"
+      - ".github/workflows/evolution-review.yml"
+  pull_request_review:
+    types: [submitted, dismissed]
+
+jobs:
+  review-gate:
+    name: Require independent human approval for evolution changes
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+
+    steps:
+      - name: Verify independent reviewer approval exists
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const pull_number = context.payload.pull_request.number;
+            const prAuthor = context.payload.pull_request.user.login;
+
+            const files = await github.paginate(
+              github.rest.pulls.listFiles,
+              { owner, repo, pull_number, per_page: 100 }
+            );
+            const evolutionPrefixes = [
+              'scripts/evolution/',
+              'core/evolution-engine/',
+              'core/skill-gap-engine/',
+            ];
+            const evolutionFiles = new Set([
+              'docs/workflows/improvement-workflow.md',
+              '.github/workflows/evolution-review.yml',
+            ]);
+            const touchesEvolution = files.some((f) =>
+              evolutionPrefixes.some((prefix) => f.filename.startsWith(prefix)) ||
+              evolutionFiles.has(f.filename)
+            );
+
+            if (!touchesEvolution) {
+              core.info('PR does not touch evolution-scoped files; skipping approval gate.');
+              return;
+            }
+
+            const reviews = await github.paginate(
+              github.rest.pulls.listReviews,
+              { owner, repo, pull_number, per_page: 100 }
+            );
+
+            const latestStateByReviewer = new Map();
+            for (const review of reviews) {
+              latestStateByReviewer.set(review.user.login, review);
+            }
+
+            const validApprovals = [...latestStateByReviewer.values()].filter((review) => {
+              const isApproved = review.state === 'APPROVED';
+              const isNotAuthor = review.user.login !== prAuthor;
+              const isHumanUser = review.user.type === 'User';
+              return isApproved && isNotAuthor && isHumanUser;
+            });
+
+            if (validApprovals.length === 0) {
+              core.setFailed(
+                'Missing independent human approval. At least one non-author GitHub reviewer with state APPROVED is required.'
+              );
+              return;
+            }
+
+            core.info(`Found ${validApprovals.length} independent human approval(s).`);
