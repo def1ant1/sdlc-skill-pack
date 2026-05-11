@@ -94,6 +94,24 @@ def validate(value: Any, schema: dict[str, Any], path: str = "$", strict: bool =
     if "enum" in schema and value not in schema["enum"]:
         errs.append(f"{path}: expected one of {schema['enum']}, got {value!r}")
 
+    if "const" in schema and value != schema["const"]:
+        errs.append(f"{path}: expected constant value {schema['const']!r}, got {value!r}")
+
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        minimum = schema.get("minimum")
+        maximum = schema.get("maximum")
+        exclusive_minimum = schema.get("exclusiveMinimum")
+        exclusive_maximum = schema.get("exclusiveMaximum")
+
+        if minimum is not None and value < minimum:
+            errs.append(f"{path}: expected >= {minimum}, got {value}")
+        if maximum is not None and value > maximum:
+            errs.append(f"{path}: expected <= {maximum}, got {value}")
+        if exclusive_minimum is not None and value <= exclusive_minimum:
+            errs.append(f"{path}: expected > {exclusive_minimum}, got {value}")
+        if exclusive_maximum is not None and value >= exclusive_maximum:
+            errs.append(f"{path}: expected < {exclusive_maximum}, got {value}")
+
     return errs
 
 
