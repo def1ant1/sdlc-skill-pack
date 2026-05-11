@@ -588,7 +588,7 @@ Validation evidence (2026-05-11):
 ## MB-P0-019 — Add OldFarmTrucks company template
 
 **Source:** Docker/Productization + Local Workflow Backlogs  
-**Status:** Open / docs exist but importable template not proven
+**Status:** Completed (2026-05-11)
 
 Create:
 
