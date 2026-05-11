@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: local-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: local-worker }
+  template:
+    metadata:
+      labels: { app: local-worker }
+    spec:
+      initContainers:
+        - name: wait-for-db
+          image: busybox:1.36
+          command: ['sh', '-c', 'until nc -z local-db 5432; do sleep 2; done']
+      containers:
+        - name: worker
+          image: python:3.12-slim
+          command: ["bash", "-lc", "while true; do sleep 30; done"]

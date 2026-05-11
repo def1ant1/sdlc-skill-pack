@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: local-queue
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: local-queue }
+  template:
+    metadata:
+      labels: { app: local-queue }
+    spec:
+      containers:
+        - name: redis
+          image: redis:7
+          ports:
+            - containerPort: 6379
