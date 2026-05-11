@@ -475,7 +475,7 @@ Acceptance criteria:
 ## MB-P0-015 — Add runtime economics / cost dashboard MVP
 
 **Source:** Docker/Productization Backlog  
-**Status:** Open
+**Status:** Done
 
 Create:
 

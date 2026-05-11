@@ -27,3 +27,9 @@ Evidence-pack generation is enforced for workflows tagged with:
 ## Dashboard and Audit Integration
 
 Policy decisions include a `dashboard_event` envelope with decision status and violation count, suitable for operator-console ingestion and auditable log pipelines.
+
+## Cost enforcement hooks
+
+- Before dispatch, call `/v1/cost/estimate` and compute projected budget consumption.
+- If policy action is `block`, scheduler rejects execution and records a governance event.
+- If policy action is `warn`, scheduler proceeds with operator-visible warning.
