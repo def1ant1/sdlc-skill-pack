@@ -65,8 +65,6 @@ def main() -> int:
     output_path = Path(args.output)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
-=======
-    Path(args.output).write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
 
     print(json.dumps(payload, indent=2))
     return 0
