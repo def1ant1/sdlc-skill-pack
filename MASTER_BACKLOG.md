@@ -425,7 +425,7 @@ Acceptance criteria:
 ## MB-P0-013 — Add AI telemetry, evaluation, and replay MVP
 
 **Source:** Docker/Productization Backlog  
-**Status:** Open
+**Status:** Done (2026-05-11)
 
 Create:
 
