@@ -1210,7 +1210,7 @@ Acceptance criteria:
 ## MB-P3-003 — Commercial/open-source boundary
 
 **Source:** Docker/Productization Backlog  
-**Status:** Completed (2026-05-11)
+**Status:** Completed (2026-05-11, verified: boundary docs + README/onboarding links)
 
 Create:
 
