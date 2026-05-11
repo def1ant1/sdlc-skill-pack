@@ -42,15 +42,24 @@ def _matches_type(value: Any, expected: str) -> bool:
     return True
 
 
-def _resolve_ref(schema: dict[str, Any], schema_file: Path, cache: dict[Path, dict[str, Any]]) -> dict[str, Any]:
+def _resolve_ref(
+    schema: dict[str, Any],
+    *,
+    root_schema: dict[str, Any],
+    schema_file: Path | None = None,
+    cache: dict[Path, dict[str, Any]] | None = None,
+) -> dict[str, Any]:
     ref = schema.get("$ref")
     if not ref:
         return schema
     if ref.startswith("#/"):
-        node: Any = schema
+        node: Any = root_schema
         for part in ref[2:].split("/"):
             node = node[part]
         return node
+    if schema_file is None:
+        raise ValueError(f"Cannot resolve external $ref without schema file: {ref}")
+    cache = cache or {}
     ref_file, _, pointer = ref.partition("#")
     target = (schema_file.parent / ref_file).resolve()
     if target not in cache:
@@ -62,7 +71,24 @@ def _resolve_ref(schema: dict[str, Any], schema_file: Path, cache: dict[Path, di
     return node
 
 
-def validate(value: Any, schema: dict[str, Any], path: str = "$", strict: bool = True) -> list[str]:
+def validate(
+    value: Any,
+    schema: dict[str, Any],
+    path: str = "$",
+    strict: bool = True,
+    *,
+    root_schema: dict[str, Any] | None = None,
+    schema_file: Path | None = None,
+    cache: dict[Path, dict[str, Any]] | None = None,
+) -> list[str]:
+    root_schema = root_schema or schema
+    cache = cache or {}
+    schema = _resolve_ref(
+        schema,
+        root_schema=root_schema,
+        schema_file=schema_file,
+        cache=cache,
+    )
     errs: list[str] = []
     allowed_types = schema.get("type")
     if isinstance(allowed_types, str):
@@ -83,13 +109,33 @@ def validate(value: Any, schema: dict[str, Any], path: str = "$", strict: bool =
                 errs.append(f"{path}.{key}: unknown field")
         for key, child in value.items():
             if key in props:
-                errs.extend(validate(child, props[key], f"{path}.{key}", strict=strict))
+                errs.extend(
+                    validate(
+                        child,
+                        props[key],
+                        f"{path}.{key}",
+                        strict=strict,
+                        root_schema=root_schema,
+                        schema_file=schema_file,
+                        cache=cache,
+                    )
+                )
 
     if isinstance(value, list):
         item_schema = schema.get("items")
         if isinstance(item_schema, dict):
             for idx, item in enumerate(value):
-                errs.extend(validate(item, item_schema, f"{path}[{idx}]", strict=strict))
+                errs.extend(
+                    validate(
+                        item,
+                        item_schema,
+                        f"{path}[{idx}]",
+                        strict=strict,
+                        root_schema=root_schema,
+                        schema_file=schema_file,
+                        cache=cache,
+                    )
+                )
 
     if "enum" in schema and value not in schema["enum"]:
         errs.append(f"{path}: expected one of {schema['enum']}, got {value!r}")
@@ -136,7 +182,7 @@ def main() -> int:
     for f in args.files:
         fpath = Path(f)
         doc = load_doc(fpath)
-        errs = validate(doc, schema, strict=args.strict)
+        errs = validate(doc, schema, strict=args.strict, root_schema=schema, schema_file=schema_path)
         if errs:
             failed = True
             for e in errs:
