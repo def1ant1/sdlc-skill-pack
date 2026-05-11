@@ -128,7 +128,7 @@ Acceptance criteria:
 ## MB-P0-002 — Add local-solo MVP profile
 
 **Source:** Docker Deployment Backlog  
-**Status:** Completed (2026-05-11)
+**Status:** Completed and finalized (2026-05-11)
 
 Create:
 
@@ -154,7 +154,7 @@ Acceptance criteria:
 ## MB-P0-003 — Formalize `skill.yaml` specification
 
 **Source:** Docker/Productization + V9 Backlog  
-**Status:** Completed (2026-05-11)
+**Status:** Completed and finalized (2026-05-11)
 
 Create or harden:
 
@@ -188,7 +188,7 @@ Validation evidence (2026-05-11):
 ## MB-P0-004 — Build skill graph engine MVP
 
 **Source:** Docker/Productization + V9 Backlog  
-**Status:** Completed (2026-05-11)
+**Status:** Completed and finalized (2026-05-11)
 
 Create:
 
@@ -212,7 +212,7 @@ Acceptance criteria:
 ## MB-P0-005 — Build workflow plan schema and validator
 
 **Source:** Local Workflow Scheduling Backlog  
-**Status:** Completed (2026-05-11)
+**Status:** Completed and finalized (2026-05-11)
 
 Create:
 
@@ -233,7 +233,7 @@ Acceptance criteria:
 ## MB-P0-006 — Build local workflow registry and executable fixtures
 
 **Source:** Local Workflow Scheduling + Docker/Productization Backlogs  
-**Status:** Completed (2026-05-11)
+**Status:** Completed and finalized (2026-05-11)
 
 Create:
 
@@ -261,7 +261,7 @@ Acceptance criteria:
 ## MB-P0-007 — Harden workflow runtime for dry-run/live execution
 
 **Source:** Hardening + Docker/Productization Backlogs  
-**Status:** Completed (2026-05-11)
+**Status:** Completed and finalized (2026-05-11)
 
 Update/create:
 
@@ -288,7 +288,7 @@ Acceptance criteria:
 ## MB-P0-008 — Add structured error envelope and runtime hardening
 
 **Source:** Hardening Backlog  
-**Status:** Completed (2026-05-11)
+**Status:** Completed and finalized (2026-05-11)
 
 Create:
 
@@ -340,7 +340,7 @@ Acceptance criteria:
 ## MB-P0-010 — Build schedule schema, preview, and due-runner
 
 **Source:** Local Workflow Scheduling + Hardening Backlogs  
-**Status:** Completed (2026-05-11)
+**Status:** Completed and finalized (2026-05-11)
 
 Create:
 
@@ -371,7 +371,7 @@ Acceptance criteria:
 ## MB-P0-011 — Implement core domain planners
 
 **Source:** Local Workflow Scheduling + Domain Backlogs  
-**Status:** Completed (2026-05-11)
+**Status:** Completed and finalized (2026-05-11)
 
 Required planners:
 
@@ -551,7 +551,7 @@ Acceptance criteria:
 ## MB-P0-018 — Add skill pipeline compiler MVP
 
 **Source:** Docker/Productization Backlog  
-**Status:** Completed (2026-05-11)
+**Status:** Completed and finalized (2026-05-11)
 
 Create:
 
@@ -588,7 +588,7 @@ Validation evidence (2026-05-11):
 ## MB-P0-019 — Add OldFarmTrucks company template
 
 **Source:** Docker/Productization + Local Workflow Backlogs  
-**Status:** Completed (2026-05-11)
+**Status:** Completed and finalized (2026-05-11)
 
 Create:
 
@@ -609,7 +609,7 @@ Acceptance criteria:
 ## MB-P0-020 — Add release readiness aggregator and deterministic package flow
 
 **Source:** RC1 Release Finalization Backlog  
-**Status:** Completed (2026-05-11)
+**Status:** Completed and finalized (2026-05-11)
 
 Create:
 

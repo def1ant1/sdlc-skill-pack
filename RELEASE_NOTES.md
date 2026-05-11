@@ -1,16 +1,13 @@
 # Release Notes
 
-## v8.0.5 — 2026-05-10
+## v8.0.22 — 2026-05-11
 
-This release strengthens release governance and CI validation.
+This release finalizes MB-P0-020 with a single release readiness gate and deterministic packaging outputs.
 
 ### Added
-- Canonical `VERSION` file (`8.0.5`) as release source of truth.
-- CI gate enforcing `README.md` declared version matches `VERSION`.
-- CI gate ensuring `CHANGELOG.md` includes a `8.0.5` entry.
-- CI gate ensuring `RELEASE_NOTES.md` includes a `v8.0.5` section.
-- CI gate verifying generated reports embed the current commit SHA traceability metadata.
+- Single release readiness gate (`scripts/validate_release_readiness.py`) aggregating release reports, artifacts/version checks, governance gates, and smoke tests.
+- Package manifest output for ZIP artifacts (`dist/*.manifest.json`) alongside SHA-256 checksums.
 
 ### Changed
-- Updated release process documentation with explicit artifact validation and mismatch troubleshooting.
-- Added exact file/line mismatch hints in release artifact validation failures.
+- `scripts/package_release.py` now enforces inclusion of `VERSION` and `RELEASE_NOTES.md` in release packages.
+- Release process documentation now calls out one canonical command flow for readiness and packaging.

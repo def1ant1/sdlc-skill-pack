@@ -1,16 +1,12 @@
-<!-- traceability: commit_sha=a96ac1f9902f77cc1d4b42447a30e21380b30a5a generated_at_utc=2026-05-10T21:58:01-04:00 generator=scripts/generate_release_reports.py -->
 # Release Readiness
 
-All numeric claims here are generated from repository state and test collection output.
+- Ready for release: **YES**
 
-- Commit SHA: **a96ac1f9902f77cc1d4b42447a30e21380b30a5a**
-- Generated at (UTC): **2026-05-10T21:58:01-04:00**
+## Criteria
+- ✅ `all_release_checks_pass`
 
-- Total skills indexed: **284**
-- Core skills: **70**
-- Domain skills: **214**
-- Agent packs: **0**
-- Skills with HITL markers: **0**
-- Tests collected (`pytest --collect-only -q`): **0**
-
-Sources: `reports/skill_inventory.json`, `reports/release_readiness.json`.
+## Checks
+- ✅ **Release report generation** (`python scripts/generate_release_reports.py`)
+- ✅ **Version/changelog/release-notes consistency** (`python scripts/validate_release_artifacts.py`)
+- ✅ **Section 15 governance gates** (`python scripts/validate_section15_release_gates.py`)
+- ✅ **Offline smoke test** (`python scripts/smoke_test_release.py --dry-run --offline`)

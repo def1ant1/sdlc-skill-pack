@@ -92,3 +92,14 @@ Use:
 - `python scripts/validate_release_artifacts.py`
 
 The validator emits mismatch messages with exact file and line references to accelerate correction.
+
+
+## Canonical MB-P0-020 release flow
+
+```bash
+python scripts/validate_release_readiness.py
+python scripts/package_release.py --version "$(cat VERSION)"
+python scripts/validate_release_package.py --zip-path "dist/apotheon-skill-pack-v$(cat VERSION).zip"
+```
+
+This flow yields a deterministic release ZIP plus `.sha256` and `.manifest.json` artifacts tied to the exact package contents.

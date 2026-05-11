@@ -1,26 +1,38 @@
 {
-  "generated_from": {
-    "skill_inventory": "reports/skill_inventory.json",
-    "repo_truth": "reports/repo_truth_report.json",
-    "pytest_collect": "C:\\Users\\emers\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe -m pytest --collect-only -q"
+  "generated_at_utc": "2026-05-11T20:32:15.470142+00:00",
+  "checks": [
+    {
+      "key": "release_reports",
+      "label": "Release report generation",
+      "command": "python scripts/generate_release_reports.py",
+      "returncode": 0,
+      "passed": true
+    },
+    {
+      "key": "release_artifacts",
+      "label": "Version/changelog/release-notes consistency",
+      "command": "python scripts/validate_release_artifacts.py",
+      "returncode": 0,
+      "passed": true
+    },
+    {
+      "key": "governance",
+      "label": "Section 15 governance gates",
+      "command": "python scripts/validate_section15_release_gates.py",
+      "returncode": 0,
+      "passed": true
+    },
+    {
+      "key": "smoke",
+      "label": "Offline smoke test",
+      "command": "python scripts/smoke_test_release.py --dry-run --offline",
+      "returncode": 0,
+      "passed": true
+    }
+  ],
+  "criteria": {
+    "all_release_checks_pass": true
   },
-  "traceability": {
-    "commit_sha": "a96ac1f9902f77cc1d4b42447a30e21380b30a5a",
-    "generated_at_utc": "2026-05-10T21:58:01-04:00",
-    "generator": "scripts/generate_release_reports.py"
-  },
-  "totals": {
-    "skills_total": 284,
-    "core_total": 70,
-    "skills_pack_total": 214,
-    "agents_total": 0,
-    "skills_with_hitl_markers": 0,
-    "business_skill_total": 31,
-    "tests_collected": 0
-  },
-  "_traceability": {
-    "commit_sha": "a96ac1f9902f77cc1d4b42447a30e21380b30a5a",
-    "generated_at_utc": "2026-05-10T21:58:01-04:00",
-    "generator": "scripts/generate_release_reports.py"
-  }
+  "ready_for_release": true,
+  "failure_reasons": []
 }

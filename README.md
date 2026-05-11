@@ -1,6 +1,6 @@
 # Apotheon AI Company OS
 
-**Current Version:** `8.0.5`
+**Current Version:** `8.0.22`
 
 An AI-native Autonomous Company Operating System built as a Claude Code skill-pack.
 Apotheon orchestrates the complete company lifecycle — from strategic planning and
