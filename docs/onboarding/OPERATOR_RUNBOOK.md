@@ -83,3 +83,23 @@ streamlit run apps/chat-ui/streamlit_app.py
 - Rate limits: `reports/rate_limit_report.json`
 - Schedules: `schedules/registry.yaml`
 - OldFarmTrucks templates: `workflows/examples/oldfarmtrucks-*.json`
+
+## Control-plane dashboard MVP
+
+Generate fresh dashboard state data before launching the UI:
+
+```bash
+python scripts/reports/generate_dashboard_data.py
+```
+
+Launch the dashboard:
+
+```bash
+streamlit run apps/dashboard/streamlit_dashboard.py
+```
+
+The dashboard surfaces workflow progress, schedules, approvals, budgets, rate limits, connector/local-app health, memory, telemetry, skill maturity, and OldFarmTrucks template status from `reports/dashboard_state.json`.
+
+### HITL approve/reject actions
+
+Use the **Approve** / **Reject** buttons in the `HITL Approval Queue` section. Decisions are written back to `reports/dashboard_state.json` with `decided_at` timestamps for auditability.

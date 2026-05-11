@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Dashboard State",
+  "type": "object",
+  "required": ["last_updated", "workflow_progress", "schedules", "approvals_summary", "approvals", "budgets", "rate_limits", "connectors", "local_apps", "memory", "telemetry", "skill_maturity", "template_status"],
+  "properties": {
+    "last_updated": {"type": "string", "format": "date-time"},
+    "workflow_progress": {"type": "object"},
+    "schedules": {"type": "object"},
+    "approvals_summary": {"type": "object"},
+    "approvals": {"type": "array", "items": {"type": "object", "required": ["id", "workflow", "status", "requested_at"]}},
+    "budgets": {"type": "object"},
+    "rate_limits": {"type": "object"},
+    "connectors": {"type": "object"},
+    "local_apps": {"type": "object"},
+    "memory": {"type": "object"},
+    "telemetry": {"type": "object"},
+    "skill_maturity": {"type": "object"},
+    "template_status": {"type": "object"}
+  },
+  "additionalProperties": false
+}

@@ -1,5 +1,13 @@
 ## 2026-05-11
 
+## [8.0.19] — 2026-05-11 — Dashboard / Control-Plane MVP (MB-P0-017)
+
+- Added Streamlit dashboard MVP at `apps/dashboard/streamlit_dashboard.py` with workflow/schedule progress, approvals, budgets, rate limits, connector and local-app health, memory, telemetry, skill maturity, and OldFarmTrucks template status views.
+- Added dashboard data pipeline and artifacts: `scripts/reports/generate_dashboard_data.py`, `schemas/dashboard-state.schema.json`, and `reports/dashboard_state.json`.
+- Added HITL approve/reject actions directly in dashboard to update pending approval queue state in `reports/dashboard_state.json`.
+- Added rollout scaffolding directories for control plane services: `apps/control-plane-api/` and `apps/control-plane-ui/`.
+- Updated operator documentation with launch and HITL operations for the control-plane dashboard MVP.
+
 ## [8.0.18] — 2026-05-11 — Chat UI MVP (MB-P0-016)
 
 - Added Chat UI MVP under `apps/chat-ui/` with objective submission, domain planner selection, plan/result rendering, approval-gated safety mode, schedule visibility, health/cost/rate-limit status views, and OldFarmTrucks template import.
