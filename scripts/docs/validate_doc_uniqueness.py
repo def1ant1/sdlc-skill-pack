@@ -9,6 +9,17 @@ ROOT = Path(__file__).resolve().parents[2]
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
 MIN_SECTION_CHARS = 400
 
+STATUS_LINE_RE = re.compile(r"^\*\*status:\*\*\s*(.+)$", re.IGNORECASE)
+
+
+def collect_status_blocks(path: Path) -> list[tuple[int, str]]:
+    rows: list[tuple[int, str]] = []
+    for i, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        m = STATUS_LINE_RE.match(line.strip())
+        if m:
+            rows.append((i, normalize(m.group(1))))
+    return rows
+
 
 def normalize(text: str) -> str:
     return re.sub(r"\s+", " ", text.strip().lower())
@@ -68,6 +79,14 @@ def main() -> int:
             key = fingerprint(body)
             buckets.setdefault(key, []).append(f"{rel}:{line} ({title})")
 
+    status_buckets: dict[str, list[str]] = {}
+    for file_path in files:
+        rel = file_path.relative_to(ROOT)
+        for line, status_value in collect_status_blocks(file_path):
+            status_buckets.setdefault(status_value, []).append(f"{rel}:{line}")
+
+    status_duplicates = {k: v for k, v in status_buckets.items() if len(v) > 1}
+
     duplicates = {k: v for k, v in buckets.items() if len(v) > 1}
     if duplicates:
         print("Duplicate large documentation sections detected:")
@@ -76,6 +95,14 @@ def main() -> int:
                 print(f" - {ref}")
             print()
         print(f"Found {len(duplicates)} duplicated section fingerprint(s).")
+        return 1
+
+    if status_duplicates:
+        print("Duplicate status blocks detected across top-level backlog/docs/readme files:")
+        for status_value, refs in sorted(status_duplicates.items(), key=lambda kv: kv[0]):
+            print(f" - status='{status_value}'")
+            for ref in refs:
+                print(f"   * {ref}")
         return 1
 
     print("No duplicate large sections across top-level backlog/docs/readme files.")

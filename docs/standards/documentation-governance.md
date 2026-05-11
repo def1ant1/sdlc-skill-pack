@@ -24,3 +24,8 @@ owner: documentation-governance
 - `scripts/docs/validate_doc_uniqueness.py` detects duplicated large sections across top-level backlog/docs/readme files.
 - `scripts/docs/check_backlog_changelog_sync.py` verifies completed backlog status is reflected in changelog release tracking.
 - `scripts/docs/enforce_doc_freshness.py` requires `last_updated` metadata on key top-level documents.
+
+## Canonical Local Orchestration Planning Source
+
+Use `APOTHEON_LOCAL_WORKFLOW_SCHEDULING_BACKLOG.md` as the single source of truth for local orchestration/scheduling scope and status. Other docs should link to this file instead of duplicating status blocks.
+
