@@ -261,7 +261,7 @@ Acceptance criteria:
 ## MB-P0-007 — Harden workflow runtime for dry-run/live execution
 
 **Source:** Hardening + Docker/Productization Backlogs  
-**Status:** Open / partially implemented runtime exists
+**Status:** Completed (2026-05-11)
 
 Update/create:
 
