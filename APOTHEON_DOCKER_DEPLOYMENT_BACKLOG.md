@@ -20,8 +20,9 @@ Key critique incorporated:
 - Add rate limits, budget tracking, connector limits, and API/database quotas.
 - Add deployable Docker profiles for local solo, team, and enterprise use.
 - Close competitor gaps against Paperclip-style control planes, OpenClaw-style skill ecosystems, OpenCognit-style execution hierarchies, and Greentic-style governance/determinism. fileciteturn50file0
+- Incorporate ecosystem lessons from agent skill standards, LangGraph/CrewAI/AutoGen orchestration, Mem0/Letta/Graphiti memory, Langfuse/Phoenix/AgentOps telemetry, OPA/Guardrails governance, n8n/Temporal/Airflow automation, and domain-cognition skill patterns. fileciteturn52file0
 
-Source planning inputs: user-provided implementation critique and competitor comparison feedback. fileciteturn46file0 fileciteturn50file0
+Source planning inputs: user-provided implementation critique, competitor comparison feedback, and AI OS ecosystem architecture feedback. fileciteturn46file0 fileciteturn50file0 fileciteturn52file0
 
 ---
 
@@ -55,6 +56,37 @@ rather than competing only as a generic chat assistant or personal productivity 
 6. Docker-first local solo deployment that works on consumer hardware.
 7. Public skill contribution and registry workflow.
 ```
+
+---
+
+## 0.2 AI-Native Operating System Architecture Direction
+
+The ecosystem feedback reframes Apotheon’s opportunity as evolving from a skills repository into a full AI-native operational platform with a skill marketplace, orchestration runtime, memory system, governance layer, self-improving agent ecosystem, and enterprise operating system. fileciteturn52file0
+
+### Long-term platform equation
+
+```text
+AI Runtime Layer
++ Skill Graph
++ Governance Kernel
++ Enterprise Memory
++ Workflow Orchestration
++ Telemetry
++ Knowledge Graph
++ Autonomous Agents
++ Marketplace
+= AI-native enterprise operating system
+```
+
+### Design principle
+
+Do not optimize only for prompts, workflows, or agents. Optimize for:
+
+```text
+organizational intelligence accumulation
+```
+
+Apotheon should become the persistent operational brain of a company: a reusable enterprise cognition layer that remembers decisions, learns from executions, improves skill routing, and composes business capabilities over time. fileciteturn52file0
 
 ---
 
@@ -98,8 +130,11 @@ To avoid over-building, define a release-oriented MVP skill set.
 core orchestration
 workflow runtime
 skill activity runtime
+skill metadata schema
+skill graph engine
 memory/context manager
 governance/HITL
+telemetry/events
 SDLC feature workflow
 GTM launch workflow
 basic finance/accounting workflow
@@ -163,6 +198,7 @@ host machine
     ├── grafana optional
     ├── prometheus optional
     ├── loki optional
+    ├── otel-collector optional
     └── local business app profiles optional
 ```
 
@@ -387,7 +423,131 @@ Rules:
 
 ---
 
-## 9. Executable Runtime Depth
+## 9. Formal Skill Specification and Progressive Loading
+
+Create or harden:
+
+```text
+schemas/skill.yaml.schema.json
+schemas/skill-metadata.schema.json
+references/skill-specification-standard.md
+scripts/validation/validate_skill_yaml.py
+```
+
+Every skill should include:
+
+```yaml
+id:
+name:
+description:
+capabilities:
+required_tools:
+dependencies:
+risk_level:
+token_budget:
+evaluation_metrics:
+memory_requirements:
+governance_policies:
+```
+
+Progressive context loading must support:
+
+```text
+metadata preload
+lazy-loaded references
+dependency-aware retrieval
+deep context only when required
+```
+
+Acceptance criteria:
+
+- Every MVP skill has `skill.yaml` or equivalent manifest.
+- Skill metadata can be loaded without loading full references.
+- Skill dependency graph can be generated from metadata.
+- Token budgets are enforceable at runtime.
+
+---
+
+## 10. Skill Graph Engine
+
+Create:
+
+```text
+core/skill-graph-engine/
+scripts/skills/build_skill_graph.py
+scripts/skills/resolve_skill_dependencies.py
+reports/skill_graph.md
+reports/skill_graph.json
+reports/skill_graph.mmd
+```
+
+Capabilities:
+
+```text
+dependency graph construction
+capability composition
+skill routing support
+cycle detection
+version lock resolution
+primitive-to-composite workflow planning
+```
+
+Acceptance criteria:
+
+- Graph includes skills, tools, policies, memory requirements, and connectors.
+- Graph detects missing dependencies and routing collisions.
+- Planner can query graph for candidate skills.
+
+---
+
+## 11. Enterprise Orchestration Engine
+
+Architecture must separate:
+
+| Role | Responsibility |
+|---|---|
+| Planner | Decompose goals |
+| Skill Router | Select skills |
+| Executor | Execute steps |
+| Evaluator | Score outputs |
+| Governor | Enforce policy |
+
+Create or harden:
+
+```text
+core/planner/
+core/skill-router/
+core/executor/
+core/evaluator/
+core/governor/
+schemas/workflow-graph.schema.json
+scripts/orchestration/execute_graph.py
+```
+
+Requirements:
+
+```text
+graph-based execution
+branching
+retries
+state
+approvals
+memory hydration
+evaluators
+policy enforcement
+checkpoint/resume
+```
+
+Acceptance criteria:
+
+- Workflows can run as graphs, not only linear step lists.
+- Each role emits telemetry.
+- Governor can block unsafe branches.
+- Evaluator can request revision or fallback.
+
+---
+
+## 12. Executable Runtime Depth
 
 Create or harden:
 
@@ -423,7 +583,212 @@ Acceptance criteria:
 
 ---
 
-## 10. Skill Pipeline Compiler
+## 13. Multi-Layer Memory and Knowledge Graph
+
+Create or harden:
+
+```text
+core/memory-system/
+core/knowledge-graph/
+core/organizational-memory/
+core/procedural-memory/
+schemas/memory-event.schema.json
+scripts/memory/record_execution_memory.py
+scripts/memory/retrieve_context.py
+scripts/memory/detect_contradictions.py
+```
+
+Memory layers:
+
+| Layer | Purpose |
+|---|---|
+| Working Memory | Active context |
+| Episodic Memory | Past executions |
+| Semantic Memory | Learned facts |
+| Procedural Memory | Skill improvements |
+| Organizational Memory | Enterprise knowledge |
+
+Required execution feedback:
+
+```json
+{
+  "success_rate": 0.92,
+  "token_cost": 1844,
+  "hallucination_risk": 0.03,
+  "human_revision_cycles": 1
+}
+```
+
+Acceptance criteria:
+
+- Workflow executions update episodic memory.
+- Stable facts can be promoted to semantic memory.
+- Skill improvements are recorded in procedural memory.
+- Contradictions are flagged before use.
+- Knowledge graph links customers, invoices, products, vendors, decisions, risks, and workflows.
+
+---
+
+## 14. AI Telemetry and Evaluation Platform
+
+Create or harden:
+
+```text
+core/ai-telemetry/
+core/evaluation-engine/
+core/replay-debugger/
+schemas/ai-telemetry-event.schema.json
+scripts/reports/generate_ai_telemetry_report.py
+scripts/evals/run_skill_benchmarks.py
+```
+
+Track:
+
+```text
+latency
+token cost
+failure rate
+retries
+hallucination risk
+human interventions
+model drift
+skill utilization
+workflow degradation
+model comparison
+```
+
+Replay and debugging should trace:
+
+```text
+User Request -> Planner -> Router -> Memory -> Tool -> Evaluator -> Governor -> Output
+```
+
+Acceptance criteria:
+
+- Every workflow has traceable AI telemetry.
+- Replay report can explain why a workflow failed.
+- Benchmarks run for MVP skills.
+- Regression tests flag degraded skill performance.
+
+---
+
+## 15. Policy Governance Kernel and Sandboxing
+
+Create or harden:
+
+```text
+core/policy-engine/
+core/governance-kernel/
+core/sandbox-execution/
+core/business-approval-gateway/
+schemas/skill-permission.schema.json
+scripts/governance/enforce_runtime_policy.py
+scripts/governance/generate_evidence_pack.py
+```
+
+Every skill should declare:
+
+```yaml
+allowed_data:
+restricted_actions:
+compliance_requirements:
+human_approval_required:
+```
+
+Constitutional skill governance principles:
+
+```yaml
+principles:
+  - never expose PII
+  - require approval for financial actions
+  - log all external communications
+  - never mutate production systems without approval
+```
+
+Acceptance criteria:
+
+- Skill permissions are enforced at runtime.
+- Sandboxed execution is available for high-risk skills.
+- External actions require explicit approval.
+- Evidence packs are generated for regulated workflows.
+
+---
+
+## 16. Event-Driven Automation Backbone
+
+Create:
+
+```text
+core/event-bus/
+core/trigger-engine/
+schemas/automation-trigger.schema.json
+scripts/automation/register_trigger.py
+scripts/automation/run_event_trigger.py
+```
+
+Supported triggers:
+
+```yaml
+trigger:
+  - new_email
+  - crm_update
+  - inventory_change
+  - schedule_due
+  - connector_event
+  - file_added
+  - support_ticket_created
+  - budget_threshold_hit
+  - policy_violation
+```
+
+Acceptance criteria:
+
+- Triggers can launch workflows in dry-run.
+- Event-triggered workflows pass through governor.
+- Trigger history is visible in dashboard.
+
+---
+
+## 17. Domain Cognition Modules
+
+Upgrade important skills from simple prompt files to encapsulated domain cognition modules.
+
+Each domain cognition skill should include:
+
+```text
+principles
+heuristics
+frameworks
+evaluators
+anti-pattern detection
+examples
+policy boundaries
+memory hooks
+```
+
+Priority domains:
+
+```text
+sales
+finance/accounting
+legal/tax
+security
+HR
+knowledge/research
+GTM
+SDLC
+operations
+```
+
+Acceptance criteria:
+
+- Priority MVP skills include evaluators and anti-pattern detectors.
+- Domain frameworks are referenced in outputs where appropriate.
+- Skills can self-check against domain-specific quality rubrics.
+
+---
+
+## 18. Skill Pipeline Compiler
 
 Highest-leverage productization feature.
 
@@ -442,6 +807,7 @@ Inputs:
 
 ```text
 SKILL.md
+skill.yaml
 manifest.yaml
 contracts/*.yaml
 workflows/*.yaml
@@ -464,6 +830,7 @@ telemetry event definitions
 rate-limit policy stub
 cost policy stub
 documentation page
+marketplace package metadata
 ```
 
 Acceptance criteria:
@@ -476,7 +843,7 @@ Acceptance criteria:
 
 ---
 
-## 11. Reference Workflow Implementations
+## 19. Reference Workflow Implementations
 
 Create executable demos under:
 
@@ -522,7 +889,7 @@ Acceptance criteria:
 
 ---
 
-## 12. Company Templates
+## 20. Company Templates
 
 Create importable company templates similar to competitor company-template/control-plane strengths. fileciteturn50file0
 
@@ -562,7 +929,7 @@ Acceptance criteria:
 
 ---
 
-## 13. Skill Maturity and Certification
+## 21. Skill Maturity and Certification
 
 Create or extend:
 
@@ -595,7 +962,7 @@ critical/high-risk MVP skills at level 5
 
 ---
 
-## 14. Hybrid Skill Execution
+## 22. Hybrid Skill Execution
 
 Migrate core skills to hybrid mode:
 
@@ -627,7 +994,7 @@ Acceptance criteria:
 
 ---
 
-## 15. Chat UI Backlog
+## 23. Chat UI Backlog
 
 A single user needs a lightweight browser interface.
 
@@ -670,7 +1037,7 @@ Acceptance criteria:
 
 ---
 
-## 16. Dashboard / Control Plane Backlog
+## 24. Dashboard / Control Plane Backlog
 
 Single-user business operation needs a visible control plane, not only CLI output.
 
@@ -697,6 +1064,8 @@ customer lifecycle
 inventory and market scans
 security findings
 errors/retries/circuit breakers
+memory and knowledge graph status
+self-improvement proposals
 ```
 
 MVP dashboard options:
@@ -733,10 +1102,11 @@ Acceptance criteria:
 - User can approve/reject HITL items.
 - User can see budgets and rate limits.
 - User can see company template goals and status.
+- User can inspect memory and knowledge graph status.
 
 ---
 
-## 17. Reliability, Error Handling, and Observability
+## 25. Reliability, Error Handling, and Observability
 
 Implement or integrate the hardening backlog:
 
@@ -771,7 +1141,7 @@ Acceptance criteria:
 
 ---
 
-## 18. Token, Context, Cache, and Retrieval Optimization
+## 26. Token, Context, Cache, and Retrieval Optimization
 
 Create or harden:
 
@@ -801,7 +1171,7 @@ Acceptance criteria:
 
 ---
 
-## 19. Governance Enforcement and Determinism
+## 27. Governance Enforcement and Determinism
 
 Implement enforceable runtime guards, not just docs.
 
@@ -836,7 +1206,7 @@ Acceptance criteria:
 
 ---
 
-## 20. Rate Limit and Quota Management
+## 28. Rate Limit and Quota Management
 
 Create:
 
@@ -900,7 +1270,7 @@ Acceptance criteria:
 
 ---
 
-## 21. Budget and Cost Tracking
+## 29. Budget and Cost Tracking
 
 Create:
 
@@ -940,7 +1310,7 @@ Acceptance criteria:
 
 ---
 
-## 22. Modular Packaging Profiles and Feature Flags
+## 30. Modular Packaging Profiles and Feature Flags
 
 Create profiles:
 
@@ -985,7 +1355,7 @@ Acceptance criteria:
 
 ---
 
-## 23. Accessibility and Consumer Hardware Support
+## 31. Accessibility and Consumer Hardware Support
 
 Requirements:
 
@@ -1014,7 +1384,7 @@ Acceptance criteria:
 
 ---
 
-## 24. VS Code / Developer Experience
+## 32. VS Code / Developer Experience
 
 Create or improve:
 
@@ -1037,7 +1407,7 @@ company template import command
 
 ---
 
-## 25. Local Open-Source App Profiles
+## 33. Local Open-Source App Profiles
 
 Add local Docker-deployable business app profiles:
 
@@ -1067,7 +1437,7 @@ reports/local_app_health_report.md
 
 ---
 
-## 26. Connector Ecosystem Hardening
+## 34. Connector Ecosystem Hardening
 
 Prioritize robust production-grade connectors with health checks, auth, retry, rate limits, and schema mapping.
 
@@ -1097,7 +1467,7 @@ Acceptance criteria:
 
 ---
 
-## 27. Self-Improvement and Evolution Loop
+## 35. Self-Improvement and Evolution Loop
 
 Create or harden:
 
@@ -1121,10 +1491,11 @@ Acceptance criteria:
 - System can identify skill gaps from failed workflows.
 - System can generate a PR-ready patch.
 - System cannot auto-merge or auto-apply high-risk changes.
+- Procedural memory is updated after approved improvements.
 
 ---
 
-## 28. Community and Skill Registry
+## 36. Skill Marketplace and Registry
 
 Create:
 
@@ -1139,18 +1510,23 @@ CODE_OF_CONDUCT.md
 scripts/registry/validate_registry_entry.py
 scripts/registry/package_skill.py
 scripts/registry/publish_skill.py
+schemas/skill-package.schema.json
+schemas/skill-lockfile.schema.json
 ```
 
-Skill registry features:
+Skill marketplace features:
 
 ```text
 local registry first
 public registry optional
-skill metadata
-certification badge
+versioned skills
+signed skills
+reputation score
+test score
 maturity level
 governance level
-dependencies
+dependency locking
+enterprise approval workflow
 examples
 tests/evals
 ```
@@ -1159,11 +1535,12 @@ Acceptance criteria:
 
 - Contributors can add a skill with one documented workflow.
 - Registry validation runs in CI.
+- Skill packages can be versioned and locked.
 - Public publishing is optional and disabled by default.
 
 ---
 
-## 29. Commercial and Open-Source Boundary
+## 37. Commercial and Open-Source Boundary
 
 Create:
 
@@ -1194,7 +1571,7 @@ Acceptance criteria:
 
 ---
 
-## 30. Backup and Restore for Docker Deployment
+## 38. Backup and Restore for Docker Deployment
 
 Create:
 
@@ -1225,7 +1602,7 @@ Acceptance criteria:
 
 ---
 
-## 31. Security Hardening for Docker Deployment
+## 39. Security Hardening for Docker Deployment
 
 Create:
 
@@ -1252,7 +1629,7 @@ image vulnerability scanning
 
 ---
 
-## 32. Documentation, API Docs, and Demo Assets
+## 40. Documentation, API Docs, and Demo Assets
 
 Create or improve:
 
@@ -1281,11 +1658,14 @@ issue templates
 contribution workflow
 success stories/case studies
 competitor-positioning page for maintainers
+AI OS architecture page
+memory/knowledge graph explanation
+skill marketplace guide
 ```
 
 ---
 
-## 33. Container Smoke Tests
+## 41. Container Smoke Tests
 
 Create:
 
@@ -1309,7 +1689,7 @@ docker compose run --rm apotheon-cli pytest --tb=short -q
 
 ---
 
-## 34. Phase 1 MVP Execution Plan
+## 42. Phase 1 MVP Execution Plan
 
 Target timeline:
 
@@ -1328,16 +1708,20 @@ Phase 1 tasks:
 ```text
 [ ] Dockerfile + compose core services
 [ ] .env.example
+[ ] formal skill.yaml schema for MVP skills
+[ ] skill graph engine MVP
 [ ] skill activity runtime hardening
 [ ] execute_workflow live/dry-run reliability
 [ ] skill_pipeline.py compiler MVP
 [ ] OldFarmTrucks company template
 [ ] 5 executable reference workflows
+[ ] multi-layer memory MVP
+[ ] AI telemetry event schema MVP
+[ ] policy runtime enforcement for writes
 [ ] chat UI MVP
 [ ] dashboard/control-plane MVP
 [ ] rate-limit policy skeleton
 [ ] budget/cost report skeleton
-[ ] governance runtime enforcement for writes
 [ ] connector health check MVP
 [ ] container smoke tests
 [ ] local-solo profile
@@ -1356,38 +1740,45 @@ passing end-to-end tests
 user feedback from beta testers
 reduced manual intervention in workflow loops
 no dry-run side effects
+workflow traces visible
+memory updates visible
 ```
 
 ---
 
-## 35. Recommended Implementation Order
+## 43. Recommended Implementation Order
 
 1. Dockerfile and `.dockerignore`.
 2. `.env.example`.
 3. Core `docker-compose.yml` with Qdrant, Temporal, Postgres, Redis, apotheon-cli.
-4. Runtime execution hardening.
-5. `skill_pipeline.py` compiler MVP.
-6. OldFarmTrucks company template.
-7. Reference workflow fixtures.
-8. Container smoke tests.
-9. Worker and scheduler services.
-10. Docker deployment docs.
-11. Chat UI MVP.
-12. Dashboard/control-plane MVP.
-13. Rate-limit manager.
-14. Budget/cost dashboard.
-15. Modular profiles and feature flags.
-16. Connector health check MVP.
-17. Local app compose profiles.
-18. Registry/contribution skeleton.
-19. Backup/restore scripts.
-20. Docker security baseline.
-21. Server deployment compose file.
-22. VS Code/devcontainer enhancements.
+4. Formal `skill.yaml` schema and progressive loading.
+5. Skill graph engine MVP.
+6. Runtime execution hardening.
+7. `skill_pipeline.py` compiler MVP.
+8. Multi-layer memory MVP.
+9. AI telemetry event schema and report MVP.
+10. Policy/governance runtime enforcement.
+11. OldFarmTrucks company template.
+12. Reference workflow fixtures.
+13. Container smoke tests.
+14. Worker and scheduler services.
+15. Docker deployment docs.
+16. Chat UI MVP.
+17. Dashboard/control-plane MVP.
+18. Rate-limit manager.
+19. Budget/cost dashboard.
+20. Modular profiles and feature flags.
+21. Connector health check MVP.
+22. Local app compose profiles.
+23. Registry/contribution skeleton.
+24. Backup/restore scripts.
+25. Docker security baseline.
+26. Server deployment compose file.
+27. VS Code/devcontainer enhancements.
 
 ---
 
-## 36. Release Acceptance Criteria
+## 44. Release Acceptance Criteria
 
 Docker/productization is complete when:
 
@@ -1396,8 +1787,13 @@ Docker/productization is complete when:
 [ ] Core compose stack starts locally
 [ ] Qdrant, Temporal, Postgres, and Redis are healthy
 [ ] Validation commands run inside container
+[ ] skill.yaml schema validates MVP skills
+[ ] Skill graph report generated
 [ ] Workflow dry-run works inside container
 [ ] Skill pipeline compiler generates runnable scaffolds
+[ ] Multi-layer memory records workflow execution data
+[ ] AI telemetry report generated
+[ ] Policy kernel blocks high-risk writes by default
 [ ] At least 5 reference workflows execute end-to-end in dry-run
 [ ] At least 3 reference workflows execute live in controlled mode
 [ ] OldFarmTrucks company template imports successfully
@@ -1405,7 +1801,7 @@ Docker/productization is complete when:
 [ ] Scheduler service starts in dry-run mode
 [ ] Health report is generated
 [ ] Chat UI MVP can submit an objective and display workflow plan
-[ ] Dashboard MVP displays runs, schedules, costs, rate limits, and health
+[ ] Dashboard MVP displays runs, schedules, costs, rate limits, memory, telemetry, and health
 [ ] Rate-limit policies exist for connectors and APIs
 [ ] Budget/cost reports exist
 [ ] Governance runtime blocks high-risk writes by default
