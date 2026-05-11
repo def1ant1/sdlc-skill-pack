@@ -133,6 +133,7 @@ last_updated: 2026-05-11
 
 # Changelog
 
+- Added rate-limit/quota management foundation: `core/rate-limit-manager/`, policy schema and validator/report scripts, connector policy loading, and scheduler quota-pressure degrade modes (cached/read-only).
 All notable changes to the Apotheon AI Company OS are documented here.
 
 ---

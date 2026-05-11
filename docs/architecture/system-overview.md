@@ -221,3 +221,6 @@ Check health: `apotheon validate && apotheon connector health`
 | HITL gate audit | `docs/governance/hitl-gate-audit.md` |
 | Memory engine | `docs/architecture/memory-engine.md` |
 | Orchestration engine | `docs/architecture/orchestration-engine.md` |
+
+## Quota-aware connector scheduling
+Connectors now load per-connector rate-limit policy documents and expose quota pressure (`normal`/`elevated`/`critical`). Schedulers can switch execution to cached data under elevated pressure and force read-only degradation at critical pressure.

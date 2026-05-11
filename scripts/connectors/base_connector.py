@@ -9,6 +9,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+from pathlib import Path
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Any
@@ -57,6 +58,7 @@ class SecretRedactionFilter(logging.Filter):
 
 
 class RateLimiter:
+    """Legacy token-bucket limiter; retained for compatibility."""
     def __init__(self, requests_per_minute: int):
         self._rpm = requests_per_minute
         self._tokens = float(requests_per_minute)
@@ -79,6 +81,26 @@ class RateLimiter:
         time.sleep(retry_after_seconds)
 
 
+
+
+class ConnectorQuotaPolicy(dict):
+    pass
+
+
+def _load_connector_policy(connector_name: str, rpm_default: int) -> dict[str, Any]:
+    policy_dir = os.environ.get("APOTHEON_RATE_LIMIT_POLICY_DIR", "runtime/rate_limit_policies")
+    path = Path(policy_dir) / f"{connector_name}.json"
+    if path.exists():
+        try:
+            data = json.loads(path.read_text())
+            data.setdefault("connector_id", connector_name)
+            data.setdefault("requests_per_minute", rpm_default)
+            return data
+        except Exception:
+            pass
+    return {"connector_id": connector_name, "requests_per_minute": rpm_default, "daily_quota": None, "degrade_to_cached_at": 0.15, "degrade_to_read_only_at": 0.05}
+
+
 class BaseConnector(ABC):
     RATE_LIMIT_RPM: int = 60
     MAX_RETRIES: int = 3
@@ -91,7 +113,9 @@ class BaseConnector(ABC):
 
     def __init__(self):
         self._auth_headers: dict[str, str] = {}
-        self._rate_limiter = RateLimiter(self.RATE_LIMIT_RPM)
+        self._policy = _load_connector_policy(self.__class__.__name__.lower(), self.RATE_LIMIT_RPM)
+        self._rate_limiter = RateLimiter(int(self._policy.get("requests_per_minute", self.RATE_LIMIT_RPM)))
+        self._quota_used = 0
         self._authenticated = False
         self.logger = logging.getLogger(f"connector.{self.__class__.__name__.lower()}")
         self.logger.addFilter(SecretRedactionFilter())
@@ -138,12 +162,15 @@ class BaseConnector(ABC):
     def _request(self, method: str, url: str, payload: dict | None = None, extra_headers: dict[str, str] | None = None, timeout: int = 30, *, idempotency_key: str | None = None, hitl_approved: bool = False) -> dict[str, Any]:
         if _dry_run_enabled():
             raise DryRunSideEffectBlocked(f"Outbound connector call blocked during dry-run: {method} {url}")
+        if self._quota_pressure() == "critical" and method.upper() in self.WRITE_METHODS:
+            raise PermissionError("Quota pressure critical; write requests degraded to read-only mode.")
         self._assert_write_allowed(method, idempotency_key=idempotency_key, hitl_approved=hitl_approved)
         if not self._circuit.allow_request():
             raise CircuitOpenBlocked(f"Circuit open for {self.__class__.__name__}; refusing outbound request")
 
         self._ensure_authenticated()
         self._rate_limiter.acquire()
+        self._quota_used += 1
         headers = {"Content-Type": "application/json", **self._auth_headers}
         if extra_headers:
             headers.update(extra_headers)
@@ -207,3 +234,22 @@ class BaseConnector(ABC):
                 break
             state.page += 1
         return items
+
+    def _quota_pressure(self) -> str:
+        daily_quota = self._policy.get("daily_quota")
+        if not daily_quota:
+            return "normal"
+        remaining = max(int(daily_quota) - self._quota_used, 0)
+        ratio = remaining / max(int(daily_quota), 1)
+        if ratio <= float(self._policy.get("degrade_to_read_only_at", 0.05)):
+            return "critical"
+        if ratio <= float(self._policy.get("degrade_to_cached_at", 0.15)):
+            return "elevated"
+        return "normal"
+
+    def quota_budget(self) -> dict[str, Any]:
+        daily_quota = self._policy.get("daily_quota")
+        if not daily_quota:
+            return {"limit": None, "used": self._quota_used, "remaining": None, "pressure": "normal"}
+        daily_quota = int(daily_quota)
+        return {"limit": daily_quota, "used": self._quota_used, "remaining": max(daily_quota - self._quota_used, 0), "pressure": self._quota_pressure()}
