@@ -396,7 +396,7 @@ Acceptance criteria:
 ## MB-P0-012 — Add policy governance runtime enforcement
 
 **Source:** Docker/Productization + Hardening + Domain Backlogs  
-**Status:** Open / docs exist but runtime enforcement not proven
+**Status:** Done (2026-05-11) / runtime enforcement, fail-closed policy decisions, and evidence pack generation implemented
 
 Create or harden:
 
