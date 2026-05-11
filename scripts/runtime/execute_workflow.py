@@ -51,6 +51,7 @@ logger = logging.getLogger("execute_workflow")
 _HERE = Path(__file__).parent
 sys.path.insert(0, str(_HERE))
 from skill_activity import SkillActivityInput, run_skill_activity  # noqa: E402
+from error_envelope import build_error_envelope
 
 
 
@@ -247,7 +248,8 @@ def execute_local(plan: dict, dry_run: bool = False) -> dict:
                 result = run_skill_activity(inp)
             except Exception as exc:
                 duration_ms = int((time.perf_counter() - t0) * 1000)
-                step_record.update({"status": "error", "error": str(exc), "duration_ms": duration_ms})
+                envelope = build_error_envelope(correlation_id=run_id, workflow_run_id=run_id, skill=skill_name or "runtime", step=step_num, category="runtime", retryable=False, user_action_required=True, message="Workflow step failed.", technical_detail=str(exc), root_cause_hint="Skill execution exception", remediation="Inspect step error details and rerun with --resume once corrected.", source_exception=repr(exc))
+                step_record.update({"status": "error", "error": json.dumps(envelope, sort_keys=True), "duration_ms": duration_ms})
                 execution_log.update({"status": "failed", "failed_at_step": step_num})
                 execution_log["steps"].append(step_record)
                 if cm:
