@@ -1,0 +1,10 @@
+{
+  "fixture_id": "finance-pack-controls-integration",
+  "skills": ["financial-control-monitoring", "expense-policy-compliance", "bookkeeping-automation"],
+  "required_entities": ["policy-context", "approval", "task", "decision"],
+  "approval_required_actions": ["payment.execute", "tax.filing.submit", "ledger.adjust"],
+  "assertions": {
+    "governance_compliance_rate": 1.0,
+    "approval_gate_enforcement_rate": 1.0
+  }
+}

@@ -1,3 +1,12 @@
+
+## 2026-05-11 — Finance pack MB-P2-001 completion
+
+- Completed all MB-P2-001 finance/accounting skills with standardized finance output sections: observed data, calculations, assumptions, and recommendations.
+- Enforced explicit approval gates for payment, accounting-book mutation, and tax-facing actions across the full finance skill set.
+- Standardized governance-aware eval coverage for calculation correctness and approval/policy compliance on all MB-P2-001 skills.
+- Added integration fixtures for forecasting, close, reconciliation, and controls in `tests/fixtures/finance-pack/`.
+- Added regression tests to assert documentation, eval, and fixture completeness for the MB-P2-001 finance pack.
+
 # Changelog
 
 All notable changes to the Apotheon AI Company OS are documented here.

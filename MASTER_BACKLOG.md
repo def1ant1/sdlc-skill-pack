@@ -872,7 +872,7 @@ Acceptance criteria:
 ## MB-P2-001 — Finance and accounting skill pack
 
 **Source:** V9 + Domain Backlogs  
-**Status:** Open / not fully proven complete
+**Status:** Completed — 2026-05-11
 
 Implement/complete skills for:
 

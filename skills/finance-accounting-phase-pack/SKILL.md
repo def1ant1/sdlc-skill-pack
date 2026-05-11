@@ -40,3 +40,17 @@ See `examples/workflow.yaml`.
 ## Governance References
 - `docs/governance/professional-advice-boundaries.md`
 - `docs/governance/financial-controls.md`
+
+## MB-P2-001 Standardization
+- Canonical entities for finance pack execution: `account`, `invoice`, `payment`, `approval`, `lineage`, `policy-context`, `task`, and `decision`.
+- All child finance skills must structure outputs in four sections: **Observed data**, **Calculations**, **Assumptions**, **Recommendations**.
+- Approval gate is mandatory for any payment action, accounting-book mutation, or tax-facing operation.
+- Eval suites must assert both calculation correctness and governance/approval enforcement.
+
+## Integration Fixtures
+Use fixtures in `tests/fixtures/finance-pack/` to exercise cross-skill flows:
+- `forecasting.integration.json`
+- `close.integration.json`
+- `reconciliation.integration.json`
+- `controls.integration.json`
+

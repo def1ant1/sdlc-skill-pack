@@ -1,0 +1,10 @@
+{
+  "fixture_id": "finance-pack-close-integration",
+  "skills": ["month-end-close-support", "journal-entry-review", "accounting-operations"],
+  "required_entities": ["account", "lineage", "approval", "decision"],
+  "approval_required_actions": ["close.signoff", "ledger.post"],
+  "assertions": {
+    "formula_trace_completeness": 1.0,
+    "governance_compliance_rate": 1.0
+  }
+}
