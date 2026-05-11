@@ -767,3 +767,15 @@ OldFarmTrucks.com is a good release validation example because it exercises near
 | Learning | pricing model improvement, lessons learned |
 
 This makes it a strong canonical example for release testing and onboarding.
+
+
+## Executable fixture set
+
+Use the executable fixtures in `workflows/fixtures/oldfarmtrucks/` for dry-run regression checks of canonical planner outputs and governance policy references:
+
+- `launch-readiness.yaml`
+- `market-scans.yaml`
+- `weekly-ops-reviews.json`
+- `customer-lifecycle.yaml`
+- `customer-360.json`
+

@@ -606,3 +606,15 @@ python scripts/orchestration/plan_business_workflow.py \
 | Advocacy | Builds social proof and organic growth |
 | Attribution | Shows which marketing investments produce revenue |
 | Governance | Prevents unsafe customer communication and privacy mistakes |
+
+
+## Executable fixture set
+
+Use the executable fixtures in `workflows/fixtures/oldfarmtrucks/` for dry-run regression checks of canonical planner outputs and governance policy references:
+
+- `launch-readiness.yaml`
+- `market-scans.yaml`
+- `weekly-ops-reviews.json`
+- `customer-lifecycle.yaml`
+- `customer-360.json`
+

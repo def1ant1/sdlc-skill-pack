@@ -1,0 +1,27 @@
+fixture_id: oldfarmtrucks-market-scans
+objective: Run recurring market scans for pricing, inventory, and competitor positioning
+planner_output_ref: docs/examples/oldfarmtrucks-business-workflows.md#short-term-workflow-b--market-scan-and-pricing-intelligence-workflow
+canonical_governance_policies:
+  - references/business-policy-standard.md
+  - docs/governance/data-scraping-policy.md
+expected_artifacts:
+  - run_id
+  - status
+  - steps
+plan:
+  plan_id: oldfarmtrucks-market-scans-001
+  planner: business-workflow-planner
+  planning_contract: workflow-plan-v1
+  skill_chain:
+    - step: 1
+      phase: requirements
+      skill: requirements-engineering
+    - step: 2
+      phase: backend
+      skill: backend-engineering
+    - step: 3
+      phase: observability
+      skill: observability
+    - step: 4
+      phase: compliance
+      skill: compliance-governance
