@@ -25,8 +25,53 @@ CI uses the **canonical single entrypoint** model for phase-gated checks:
 
 - `python scripts/run_premerge_checks.py --phase contracts`
 - `python scripts/run_premerge_checks.py --phase release`
+- `python scripts/validate_section15_release_gates.py`
 
 This avoids drift between CI command lists and local pre-merge command lists.
+
+## Section 15 machine-verifiable release gates
+
+Section 15 of `APOTHEON_HARDENING_AND_ERROR_HANDLING_BACKLOG.md` is enforced by:
+
+- `scripts/validate_section15_release_gates.py`
+
+The gate runner validates:
+
+- module/file presence checks
+- schema adoption checks
+- workflow resume support checks
+- planner diagnostics checks
+- schedule safety checks
+- connector fail-closed checks
+- governance gate checks
+- diagnostics output checks
+- backup/restore dry-run checks
+- hardening test checks
+
+Each gate emits PASS/FAIL output and, for missing artifacts, prints direct file pointers so remediation is immediate.
+
+### Local usage
+
+Run before opening a release PR or cutting a local tag:
+
+```bash
+python scripts/validate_section15_release_gates.py
+```
+
+Optional strict mode (ensures non-command gates are treated as mandatory presences only):
+
+```bash
+python scripts/validate_section15_release_gates.py --strict
+```
+
+### CI usage and release promotion blocking
+
+`/.github/workflows/validate.yml` runs Section 15 gates in:
+
+- the main `validate` job (push/PR safety)
+- the `release-reports` job (release `published` and `prereleased` events)
+
+Any failure exits non-zero, so release tagging/promotion is blocked until all Section 15 gates pass.
 
 ## Failure output behavior
 
