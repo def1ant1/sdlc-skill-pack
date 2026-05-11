@@ -81,6 +81,8 @@ Acceptance criteria:
 
 ## MB-ECOM-P0-002 — Marketplace ingestion and scraping governance layer
 
+**Status:** Completed (2026-05-11)
+
 Create:
 
 ```text
@@ -448,3 +450,10 @@ Acceptance criteria:
 8. Ecommerce profitability dashboard.
 9. Regional scarcity and arbitrage intelligence.
 10. Ecommerce finance/tax reconciliation.
+
+Update (2026-05-11):
+- Implemented `core/marketplace-ingestion/` with source adapter contracts and sample adapters for marketplace normalization.
+- Implemented `core/scraping-governor/` governance interceptors to fail closed on legal/robots/TOS and throttle violations.
+- Added `schemas/marketplace-source.schema.json` for required legal, robots/TOS, throttling, network, and lineage metadata.
+- Added `references/marketplace-data-policy.md` and `scripts/marketplaces/validate_source_policy.py` for policy documentation and enforcement.
+- Marked MB-ECOM-P0-002 as Completed (2026-05-11).
