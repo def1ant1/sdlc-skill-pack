@@ -45,6 +45,15 @@ jobs:
       - name: Validate workflow plans
         run: python scripts/validation/validate_workflow_plan.py tests/fixtures/workflow-plans/valid-plan.yaml
 
+      - name: Validate canonical entities
+        run: python scripts/validation/validate_canonical_entities.py
+
+      - name: Validate event payload schemas
+        run: python scripts/validation/validate_event_schemas.py
+
+      - name: Validate connector mappings and workflow outputs
+        run: python scripts/validation/validate_connector_mappings.py
+
       - name: Detect skill gaps
         run: |
           python scripts/orchestration/detect_skill_gaps.py . | \
