@@ -47,6 +47,22 @@ The example is intentionally designed to exercise CRM integration, CDP profile u
 
 ---
 
+## Canonical Entity + Lifecycle Taxonomy Baseline (MB-P2-002)
+
+All CRM/CDP/marketing/customer-lifecycle workflows in this pack must normalize to: `customer`, `lead`, `opportunity`, `campaign`, and `ticket`.
+
+Required lifecycle taxonomy:
+
+`anonymous -> known_lead -> mql -> sql -> opportunity_open -> opportunity_closed_won|opportunity_closed_lost -> onboarding -> active -> at_risk -> renewed|churned`
+
+Outbound communication enforcement baseline:
+- Verify consent before each outbound communication attempt.
+- Enforce suppression/unsubscribe status.
+- Enforce communication preferences (channel/frequency/quiet-hours).
+- Require explicit approval for outbound communication unless active policy explicitly permits lifecycle automation for that segment/channel.
+
+---
+
 ## 3. Canonical Customer Data Model
 
 Required canonical entities:

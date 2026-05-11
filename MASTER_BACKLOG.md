@@ -914,7 +914,7 @@ Acceptance criteria:
 ## MB-P2-002 — CRM/CDP/marketing/customer lifecycle skill pack
 
 **Source:** V9 + Domain + Customer Lifecycle Docs  
-**Status:** Open / docs exist, implementation not fully proven
+**Status:** Completed (2026-05-11)
 
 Implement/complete skills for:
 

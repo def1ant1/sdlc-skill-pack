@@ -1,5 +1,5 @@
 fixture_id: oldfarmtrucks-customer-lifecycle
-objective: Build lifecycle marketing automation for OldFarmTrucks.com
+objective: Build lifecycle marketing automation for OldFarmTrucks.com with consent/suppression-safe outreach
 planner_output_ref: docs/examples/customer-lifecycle-crm-cdp-marketing-workflows.md#workflow-8--lifecycle-marketing-automation
 canonical_governance_policies:
   - references/business-policy-standard.md
@@ -11,6 +11,7 @@ expected_artifacts:
 plan:
   plan_id: oldfarmtrucks-customer-lifecycle-001
   planner: business-workflow-planner
+  objective: Build lifecycle marketing automation for OldFarmTrucks.com
   planning_contract: workflow-plan-v1
   skill_chain:
     - step: 1
@@ -25,3 +26,22 @@ plan:
     - step: 4
       phase: compliance
       skill: compliance-governance
+
+lifecycle_taxonomy:
+  - anonymous
+  - known_lead
+  - mql
+  - sql
+  - opportunity_open
+  - opportunity_closed_won
+  - opportunity_closed_lost
+  - onboarding
+  - active
+  - at_risk
+  - renewed
+  - churned
+communication_controls:
+  consent_required: true
+  suppression_enforced: true
+  preference_enforced: true
+  approval_required_for_outbound_unless_policy_permitted: true

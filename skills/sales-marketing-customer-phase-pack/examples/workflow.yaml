@@ -1,11 +1,15 @@
 workflow_id: wf-example-001
-objective: Governed phase-pack execution with canonical outputs
+objective: Governed phase-pack execution with canonical lifecycle outputs
 steps:
   - step: 1
     action: validate-context-and-policy
   - step: 2
-    action: generate-canonical-entities-and-events
+    action: normalize-canonical-entities-customer-lead-opportunity-campaign-ticket
   - step: 3
-    action: request-human-approval-for-external-or-customer-facing-actions
+    action: evaluate-lifecycle-stage-and-transition-taxonomy
   - step: 4
+    action: enforce-consent-suppression-and-communication-preferences
+  - step: 5
+    action: request-human-approval-for-outbound-or-external-actions-unless-policy-permitted
+  - step: 6
     action: emit-workflow_completed-event

@@ -1,0 +1,35 @@
+fixture_id: oldfarmtrucks-customer-lifecycle-diagnostics
+objective: Run lifecycle diagnostics for taxonomy coverage and outbound policy controls
+planner_output_ref: docs/examples/customer-lifecycle-crm-cdp-marketing-workflows.md#workflow-8--lifecycle-marketing-automation
+canonical_governance_policies:
+  - references/business-policy-standard.md
+  - docs/governance/customer-communication-policy.md
+expected_artifacts:
+  - run_id
+  - status
+  - steps
+  - diagnostics
+plan:
+  plan_id: oldfarmtrucks-customer-lifecycle-diagnostics-001
+  planner: business-workflow-planner
+  objective: Run lifecycle diagnostics for taxonomy coverage and outbound policy controls
+  planning_contract: workflow-plan-v1
+  diagnostics:
+    - taxonomy_coverage
+    - consent_enforcement
+    - suppression_enforcement
+    - communication_preference_enforcement
+    - outbound_approval_enforcement
+  skill_chain:
+    - step: 1
+      phase: diagnostics
+      skill: crm-integration
+    - step: 2
+      phase: diagnostics
+      skill: customer-segmentation
+    - step: 3
+      phase: diagnostics
+      skill: campaign-optimization
+    - step: 4
+      phase: diagnostics
+      skill: support-ticket-intelligence
