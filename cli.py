@@ -37,6 +37,7 @@ import os
 import subprocess
 import sys
 from pathlib import Path
+from typing import Any
 
 REPO_ROOT = Path(__file__).parent
 SCRIPTS = REPO_ROOT / "scripts"
@@ -76,6 +77,136 @@ def _print_json(data: dict | list) -> None:
 def _err(msg: str) -> int:
     print(f"error: {msg}", file=sys.stderr)
     return 1
+
+
+def _parse_output_mode(args: list[str]) -> tuple[str, list[str]]:
+    mode = "human"
+    rest: list[str] = []
+    i = 0
+    while i < len(args):
+        token = args[i]
+        if token == "--json":
+            mode = "json"
+            i += 1
+            continue
+        if token == "--output":
+            if i + 1 >= len(args):
+                raise ValueError("--output requires a value: human|json")
+            value = args[i + 1].lower()
+            if value not in {"human", "json"}:
+                raise ValueError("--output must be one of: human, json")
+            mode = value
+            i += 2
+            continue
+        rest.append(token)
+        i += 1
+    return mode, rest
+
+
+def _print_mode(data: dict[str, Any], mode: str) -> None:
+    if mode == "json":
+        _print_json(data)
+        return
+    for line in data.get("lines", []):
+        print(line)
+
+
+def _list_run_files(history_dir: Path) -> list[Path]:
+    if not history_dir.exists():
+        return []
+    return sorted(history_dir.glob("*.json"), key=lambda p: p.stat().st_mtime, reverse=True)
+
+
+def cmd_workflows(args: list[str]) -> int:
+    if not args:
+        return _err("usage: apotheon workflows <list|run>")
+    subcommand = args[0]
+    rest = args[1:]
+    if subcommand == "run":
+        dry_run = "--execute" not in rest
+        run_args = [a for a in rest if a != "--execute"]
+        if dry_run:
+            return cmd_dry_run(run_args)
+        return cmd_run(run_args)
+    if subcommand == "list":
+        try:
+            mode, flags = _parse_output_mode(rest)
+        except ValueError as exc:
+            return _err(str(exc))
+        limit = 20
+        if "--limit" in flags:
+            idx = flags.index("--limit")
+            if idx + 1 >= len(flags):
+                return _err("--limit requires an integer value")
+            limit = int(flags[idx + 1])
+        history_dir = Path("runtime/workflow_history")
+        rows: list[dict[str, Any]] = []
+        lines: list[str] = []
+        for artifact in _list_run_files(history_dir)[:limit]:
+            try:
+                data = json.loads(artifact.read_text())
+            except json.JSONDecodeError:
+                continue
+            row = {
+                "run_id": data.get("run_id"),
+                "status": data.get("status"),
+                "objective": data.get("objective"),
+                "started_at": data.get("started_at"),
+                "completed_at": data.get("completed_at"),
+            }
+            rows.append(row)
+            lines.append(f"{row['run_id']}  {row['status']}  {row['started_at']}  {row['objective']}")
+        _print_mode({"runs": rows, "lines": lines}, mode)
+        return 0
+    return _err("usage: apotheon workflows <list|run>")
+
+
+def cmd_schedules(args: list[str]) -> int:
+    if not args:
+        return _err("usage: apotheon schedules <preview|run-due>")
+    subcommand = args[0]
+    rest = args[1:]
+    if subcommand == "preview":
+        return _run([_python(), _script("scripts/scheduling/preview_schedule.py"), *rest])
+    if subcommand == "run-due":
+        return _run([_python(), _script("scripts/scheduling/run_due_schedules.py"), *rest])
+    return _err("usage: apotheon schedules <preview|run-due>")
+
+
+def cmd_runs(args: list[str]) -> int:
+    if not args or args[0] != "list":
+        return _err("usage: apotheon runs list [--output human|json|--json]")
+    try:
+        mode, flags = _parse_output_mode(args[1:])
+    except ValueError as exc:
+        return _err(str(exc))
+    limit = 20
+    if "--limit" in flags:
+        idx = flags.index("--limit")
+        if idx + 1 >= len(flags):
+            return _err("--limit requires an integer value")
+        limit = int(flags[idx + 1])
+    history_dir = Path("runtime/schedule_history")
+    rows: list[dict[str, Any]] = []
+    lines: list[str] = []
+    if history_dir.exists():
+        artifacts = sorted(history_dir.rglob("*.json"), key=lambda p: p.stat().st_mtime, reverse=True)
+        for artifact in artifacts[:limit]:
+            try:
+                data = json.loads(artifact.read_text())
+            except json.JSONDecodeError:
+                continue
+            row = {
+                "run_id": data.get("run_id"),
+                "schedule_id": data.get("schedule_id"),
+                "status": data.get("status"),
+                "run_at": data.get("run_at"),
+                "executed_at": data.get("executed_at"),
+            }
+            rows.append(row)
+            lines.append(f"{row['run_id']}  {row['schedule_id']}  {row['status']}  {row['run_at']}")
+    _print_mode({"runs": rows, "lines": lines}, mode)
+    return 0
 
 
 # ---------------------------------------------------------------------------
@@ -445,6 +576,9 @@ _COMMANDS: dict[str, tuple] = {
     "bootstrap":     (cmd_bootstrap,        "Full OS bootstrap health check"),
     "init":          (cmd_init,             "First-time setup: DB, Qdrant, env check"),
     "doctor":        (cmd_doctor,           "Diagnose environment health"),
+    "workflows":     (cmd_workflows,        "Workflows: list | run [--execute]"),
+    "schedules":     (cmd_schedules,        "Schedules: preview | run-due"),
+    "runs":          (cmd_runs,             "Run history: list"),
 }
 
 
