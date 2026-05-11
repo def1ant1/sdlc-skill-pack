@@ -70,3 +70,13 @@ Use the registry flow for repeatable skill versioning and CI checks:
 3. Validate registry entries: `python scripts/registry/validate_registry_entry.py --index skill_registry/skills.index.json`.
 4. Package and lock a version: `python scripts/registry/package_skill.py --skill-dir skills/<skill-name> --version <semver>`.
 5. Public publishing is optional and disabled by default. To opt in explicitly: `python scripts/registry/publish_skill.py --artifact <artifact> --enable-public-publish`.
+
+
+## Documentation quality checks
+Run these before opening a PR:
+
+```bash
+python scripts/docs/validate_docs_integrity.py
+python scripts/docs/validate_readme_claims.py
+python scripts/docs/validate_doc_uniqueness.py
+```

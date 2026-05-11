@@ -40,6 +40,12 @@
 
 # Changelog
 
+## 2026-05-11 — MB-P3-005 docs/demo/onboarding milestone
+
+- Published unified documentation navigation in `docs/index.md` and added quickstart/onboarding flow updates.
+- Added documentation assets: architecture diagram page, OldFarmTrucks tutorial, demo video script, API index, and marketplace/memory guide.
+- Added docs quality gate `scripts/docs/validate_docs_integrity.py` with automated test coverage.
+
 All notable changes to the Apotheon AI Company OS are documented here.
 
 

@@ -1,0 +1,5 @@
+name: oldfarmtrucks-weekly-operating-review
+workflow: workflows/examples/oldfarmtrucks-weekly-operating-review.json
+cron: "0 14 * * 1"
+enabled: false
+dry_run: true
