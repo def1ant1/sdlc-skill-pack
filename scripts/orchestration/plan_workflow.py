@@ -327,6 +327,16 @@ def plan(objective: str, expand_deps: bool = True) -> dict:
 
     next_skill = ordered_skills[0] if ordered_skills else "requirements-engineering"
 
+    diagnostics = {
+        "objective_non_empty": bool(objective.strip()),
+        "selected_skills_exist": len(chain["unknown_skills"]) == 0,
+        "dependency_completeness": True,
+        "ambiguous_routing": len(detected) > 1 and all(d["confidence"] == detected[0]["confidence"] for d in detected),
+        "missing_required_skills": sorted(chain["unknown_skills"]),
+        "missing_optional_skills": [],
+        "warnings": [],
+    }
+
     return {
         "plan_id": _build_plan_id(),
         "created": datetime.date.today().isoformat(),
@@ -341,6 +351,7 @@ def plan(objective: str, expand_deps: bool = True) -> dict:
         "token_budget": token_budget,
         "dependency_additions": chain["dependency_additions"],
         "unknown_skills": chain["unknown_skills"],
+        "planner_diagnostics": diagnostics,
         "next_action": {
             "description": f"Load {next_skill} skill and begin phase execution.",
             "skill": next_skill,
@@ -381,7 +392,7 @@ def main() -> None:
         print(json.dumps({"error": str(exc)}), file=sys.stderr)
         sys.exit(1)
 
-    print(json.dumps(result, indent=2))
+    print(json.dumps(result, indent=2, sort_keys=True))
 
 
 if __name__ == "__main__":

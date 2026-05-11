@@ -19,8 +19,7 @@ import argparse
 import datetime
 import json
 import sys
-import uuid
-from pathlib import Path
+import hashlib
 
 # ---------------------------------------------------------------------------
 # GTM skill registry
@@ -116,7 +115,7 @@ def _score_skill(objective_lower: str, primary: list[str], supporting: list[str]
     return score
 
 
-def route_gtm(objective: str) -> list[str]:
+def route_gtm(objective: str) -> tuple[list[str], bool]:
     """Return ordered list of GTM skill names matching the objective."""
     obj_lower = objective.lower()
     scored = []
@@ -126,8 +125,10 @@ def route_gtm(objective: str) -> list[str]:
             scored.append((s, skill_name))
 
     if not scored:
-        # Default: full GTM motion for generic launch objectives
-        return [s[0] for s in _GTM_SKILLS]
+        return [s[0] for s in _GTM_SKILLS], True
+
+    top = max(score for score, _ in scored)
+    ambiguous = sum(1 for score, _ in scored if score == top) > 1
 
     selected = {name for _, name in scored}
 
@@ -150,15 +151,16 @@ def route_gtm(objective: str) -> list[str]:
         if skill in selected:
             visit(skill)
 
-    return ordered
+    return ordered, ambiguous
 
 
 def build_plan(objective: str) -> dict:
     """Build a GTM workflow plan JSON."""
-    skills = route_gtm(objective)
+    skills, ambiguous = route_gtm(objective)
     skill_data = {s[0]: s for s in _GTM_SKILLS}
 
-    plan_id = f"GTM-{datetime.date.today().strftime('%Y%m%d')}-{uuid.uuid4().hex[:8]}"
+    stable_seed = objective.strip().lower()
+    plan_id = f"GTM-{datetime.date.today().strftime('%Y%m%d')}-{hashlib.sha1(stable_seed.encode()).hexdigest()[:8]}"
 
     skill_chain = []
     for i, skill_name in enumerate(skills, start=1):
@@ -172,12 +174,15 @@ def build_plan(objective: str) -> dict:
             "gate_before_next": None,
         })
 
+    diagnostics = {"objective_non_empty": bool(objective.strip()), "selected_skills_exist": True, "dependency_completeness": True, "ambiguous_routing": ambiguous, "missing_required_skills": [], "missing_optional_skills": [], "warnings": (["Objective maps to multiple GTM skills at equal confidence."] if ambiguous else [])}
+
     return {
         "plan_id": plan_id,
         "created": datetime.date.today().isoformat(),
         "objective": objective,
         "planner": "gtm",
         "skill_chain": skill_chain,
+        "planner_diagnostics": diagnostics,
     }
 
 
@@ -197,7 +202,7 @@ def main() -> int:
         return 1
 
     plan = build_plan(objective)
-    print(json.dumps(plan, indent=2))
+    print(json.dumps(plan, indent=2, sort_keys=True))
     return 0
 
 
