@@ -1,7 +1,7 @@
 # APOTHEON — DOMAIN SKILL ENHANCEMENT BACKLOG
 
 **Status:** DOMAIN EXPANSION PLAN  
-**Purpose:** Improve and extend skills for financial management, trading research, arbitrage analysis, tax strategy support, business entity management, HR management, sales assistance, and knowledge/research management.
+**Purpose:** Improve and extend skills for financial management, trading research, arbitrage analysis, tax strategy support, business entity management, legal/regulatory intelligence, HR management, sales assistance, and knowledge/research management.
 
 ---
 
@@ -17,6 +17,8 @@ They must not autonomously:
 - Create/dissolve entities.
 - Submit payroll or HR decisions.
 - Send customer-facing communications without policy approval.
+- Submit legal filings.
+- Interpret law as final legal advice.
 - Provide legal, tax, investment, or employment advice as final professional advice.
 
 Required language in high-risk domains:
@@ -34,6 +36,8 @@ Required governance:
 - Confidence scoring.
 - Compliance boundary checks.
 - Audit trail events.
+- Jurisdiction and effective-date tracking for legal/tax/regulatory outputs.
+- Citation to authoritative sources where legal, tax, or regulatory information is used.
 
 ---
 
@@ -354,7 +358,139 @@ legal-review question list
 
 ---
 
-# 6. HR Management Skill Pack
+# 6. Legal Operations and Regulatory Intelligence Skill Pack
+
+## Goal
+
+Support legal operations, legal research, regulatory monitoring, jurisdiction tracking, tax-rate monitoring, contract support, compliance calendars, and professional-review-ready legal/tax/regulatory briefs.
+
+This skill pack is decision support only. It must not replace an attorney, CPA, enrolled agent, compliance officer, or other licensed professional.
+
+## New skills
+
+```text
+skills/legal-operations/
+skills/legal-research-support/
+skills/regulatory-monitoring/
+skills/jurisdiction-law-monitoring/
+skills/local-law-research/
+skills/county-law-research/
+skills/state-law-research/
+skills/federal-law-research/
+skills/tax-rate-monitoring/
+skills/sales-tax-rate-monitoring/
+skills/property-tax-research/
+skills/business-license-research/
+skills/permit-requirements-research/
+skills/employment-law-monitoring/
+skills/consumer-protection-law-monitoring/
+skills/vehicle-dealer-law-research/
+skills/data-privacy-law-monitoring/
+skills/contract-review-support/
+skills/clause-risk-analysis/
+skills/legal-obligation-tracking/
+skills/legal-deadline-monitoring/
+skills/legal-change-impact-analysis/
+skills/legal-citation-validation/
+skills/legal-advisor-briefing-pack/
+```
+
+## Capabilities
+
+- Research local, county, state, and federal laws from authoritative sources.
+- Monitor law/regulation changes by jurisdiction and topic.
+- Search for current tax rates and effective dates.
+- Track sales tax, property tax, payroll tax, franchise tax, excise tax, and business license fee references.
+- Identify business licensing and permit requirements.
+- Track vehicle dealer, title, disclosure, lemon-law, advertising, consumer-protection, and consignment requirements where relevant.
+- Track employment law changes for HR workflows.
+- Track data privacy and marketing consent rules.
+- Extract obligations from contracts, leases, vendor agreements, customer terms, and policies.
+- Build legal advisor briefing packs with sources, questions, risk flags, and deadlines.
+
+## Source priority
+
+Legal/regulatory/tax skills must prioritize authoritative sources:
+
+```text
+federal agency websites
+state department of revenue websites
+state secretary of state websites
+state department of labor websites
+county tax assessor/collector websites
+city/county clerk websites
+municipal code portals
+court/government code repositories
+official legislative websites
+official administrative code websites
+```
+
+Secondary sources may be used only for discovery or context and must be labeled as non-authoritative.
+
+## Required metadata for every legal/tax/regulatory finding
+
+```yaml
+finding:
+  jurisdiction:
+    country:
+    state:
+    county:
+    city:
+  authority_level: federal | state | county | municipal | agency | court | secondary
+  topic:
+  source_title:
+  source_url:
+  source_publisher:
+  publication_date:
+  effective_date:
+  last_verified_at:
+  retrieved_at:
+  citation:
+  excerpt:
+  confidence:
+  professional_review_required: true
+  change_detected:
+  supersedes:
+  related_obligations:
+```
+
+## Required outputs
+
+```text
+legal research memo
+jurisdiction requirements matrix
+tax-rate table
+business license checklist
+permit requirement checklist
+regulatory change alert
+legal obligation register
+contract risk summary
+advisor briefing pack
+professional-review question list
+```
+
+## Hard boundaries
+
+- No final legal advice.
+- No final tax advice.
+- No instructions for evading taxes, licenses, permits, reporting obligations, or legal duties.
+- No autonomous legal filings.
+- No autonomous government submissions.
+- No autonomous contract signature or acceptance.
+- No definitive claim that a business is compliant without professional review.
+
+## Acceptance criteria
+
+- Every legal/regulatory/tax output includes jurisdiction, source URL, effective date if available, last-verified timestamp, and professional-review notice.
+- Skills distinguish authoritative vs non-authoritative sources.
+- Skills flag stale, missing, conflicting, or ambiguous law/tax-rate data.
+- Skills produce a legal advisor or CPA briefing pack when uncertainty or action is required.
+- Skills integrate with schedule system for periodic monitoring.
+- Skills integrate with entity management, tax strategy, HR, sales/customer, and OldFarmTrucks vehicle-dealer workflows.
+
+---
+
+# 7. HR Management Skill Pack
 
 ## Goal
 
@@ -413,7 +549,7 @@ These require human review and bias checks.
 
 ---
 
-# 7. Sales Assistant and Revenue Enablement Skill Pack
+# 8. Sales Assistant and Revenue Enablement Skill Pack
 
 ## Goal
 
@@ -462,7 +598,7 @@ skills/customer-research-briefing/
 
 ---
 
-# 8. Knowledge Management and Research Skill Pack
+# 9. Knowledge Management and Research Skill Pack
 
 ## Goal
 
@@ -519,7 +655,7 @@ research gap report
 
 ---
 
-# 9. Canonical Entity Expansion
+# 10. Canonical Entity Expansion
 
 Add or verify schemas for:
 
@@ -541,6 +677,19 @@ RegisteredAgent
 Filing
 License
 ComplianceDeadline
+LegalMatter
+LegalSource
+LegalFinding
+Jurisdiction
+LawMonitor
+RegulatoryChange
+TaxRate
+PermitRequirement
+BusinessLicense
+Contract
+Clause
+LegalObligation
+LegalDeadline
 Employee
 Candidate
 JobRole
@@ -558,7 +707,7 @@ KnowledgeArtifact
 
 ---
 
-# 10. Event Model Expansion
+# 11. Event Model Expansion
 
 Add or verify events:
 
@@ -572,8 +721,18 @@ trade.journal_entry_added
 arbitrage.opportunity_detected
 tax.strategy_review_requested
 tax.document_missing
+tax.rate_changed
+tax.rate_verified
 entity.compliance_deadline_due
 entity.filing_completed
+legal.source_verified
+legal.finding_created
+legal.regulatory_change_detected
+legal.obligation_created
+legal.deadline_due
+legal.professional_review_requested
+permit.requirement_detected
+license.renewal_due
 hr.candidate_scored
 hr.onboarding_started
 hr.policy_acknowledgement_missing
@@ -586,7 +745,7 @@ knowledge.decision_recorded
 
 ---
 
-# 11. Required Governance Documents
+# 12. Required Governance Documents
 
 Create or update:
 
@@ -595,6 +754,10 @@ docs/governance/investment-research-boundaries.md
 docs/governance/trading-risk-policy.md
 docs/governance/tax-strategy-boundaries.md
 docs/governance/entity-management-legal-boundaries.md
+docs/governance/legal-research-boundaries.md
+docs/governance/regulatory-monitoring-policy.md
+docs/governance/tax-rate-source-policy.md
+docs/governance/government-source-verification-policy.md
 docs/governance/hr-high-impact-decision-policy.md
 docs/governance/customer-communication-policy.md
 docs/governance/research-citation-integrity-policy.md
@@ -602,7 +765,7 @@ docs/governance/research-citation-integrity-policy.md
 
 ---
 
-# 12. Planner and Schedule Integration
+# 13. Planner and Schedule Integration
 
 ## Planner updates
 
@@ -613,6 +776,8 @@ scripts/orchestration/plan_finance_workflow.py
 scripts/orchestration/plan_trading_research_workflow.py
 scripts/orchestration/plan_tax_workflow.py
 scripts/orchestration/plan_entity_management_workflow.py
+scripts/orchestration/plan_legal_workflow.py
+scripts/orchestration/plan_regulatory_monitoring_workflow.py
 scripts/orchestration/plan_hr_workflow.py
 scripts/orchestration/plan_sales_workflow.py
 scripts/orchestration/plan_research_workflow.py
@@ -628,7 +793,12 @@ schedules/examples/monthly-budget-variance-review.yaml
 schedules/examples/daily-market-watchlist-review.yaml
 schedules/examples/weekly-trade-journal-review.yaml
 schedules/examples/monthly-tax-document-check.yaml
+schedules/examples/monthly-tax-rate-verification.yaml
 schedules/examples/monthly-entity-compliance-review.yaml
+schedules/examples/monthly-business-license-review.yaml
+schedules/examples/weekly-regulatory-change-monitor.yaml
+schedules/examples/monthly-local-law-monitor.yaml
+schedules/examples/quarterly-federal-law-review.yaml
 schedules/examples/weekly-hr-onboarding-review.yaml
 schedules/examples/daily-sales-follow-up-review.yaml
 schedules/examples/weekly-knowledge-curation-review.yaml
@@ -636,7 +806,7 @@ schedules/examples/weekly-knowledge-curation-review.yaml
 
 ---
 
-# 13. Example Workflows
+# 14. Example Workflows
 
 Add docs/examples for:
 
@@ -646,6 +816,9 @@ docs/examples/trading-research-workflows.md
 docs/examples/arbitrage-analysis-workflows.md
 docs/examples/tax-strategy-support-workflows.md
 docs/examples/business-entity-management-workflows.md
+docs/examples/legal-regulatory-intelligence-workflows.md
+docs/examples/local-state-federal-law-monitoring-workflows.md
+docs/examples/tax-rate-monitoring-workflows.md
 docs/examples/hr-management-workflows.md
 docs/examples/sales-assistant-workflows.md
 docs/examples/knowledge-research-management-workflows.md
@@ -653,7 +826,7 @@ docs/examples/knowledge-research-management-workflows.md
 
 ---
 
-# 14. Test and Evaluation Requirements
+# 15. Test and Evaluation Requirements
 
 Create tests:
 
@@ -663,11 +836,14 @@ tests/domain/test_trading_research_skills.py
 tests/domain/test_arbitrage_analysis_skills.py
 tests/domain/test_tax_strategy_skills.py
 tests/domain/test_entity_management_skills.py
+tests/domain/test_legal_regulatory_skills.py
+tests/domain/test_tax_rate_monitoring_skills.py
 tests/domain/test_hr_management_skills.py
 tests/domain/test_sales_assistant_skills.py
 tests/domain/test_knowledge_research_skills.py
 tests/orchestration/test_domain_planner_expansion.py
 tests/governance/test_high_risk_domain_boundaries.py
+tests/governance/test_legal_tax_professional_boundaries.py
 ```
 
 Required eval dimensions:
@@ -680,36 +856,44 @@ Required eval dimensions:
 - approval routing
 - dry-run safety
 - schema validity
+- jurisdiction correctness
+- effective-date handling
+- authoritative-source preference
+- stale-source detection
+- conflicting-source detection
 
 ---
 
-# 15. Recommended Implementation Order
+# 16. Recommended Implementation Order
 
-1. Governance boundary docs for trading, tax, HR, entity management, research.
+1. Governance boundary docs for trading, tax, legal/regulatory, HR, entity management, research.
 2. Canonical entity and event schemas.
-3. Financial management skills.
-4. Knowledge/research skills.
-5. Sales assistant skills.
-6. Entity management skills.
-7. HR management skills.
-8. Tax strategy support skills.
-9. Trading research skills.
-10. Arbitrage analysis skills.
-11. Planner integrations.
-12. Schedule examples.
-13. Domain examples.
-14. Tests and evals.
+3. Legal/regulatory/tax-rate monitoring skills.
+4. Financial management skills.
+5. Knowledge/research skills.
+6. Sales assistant skills.
+7. Entity management skills.
+8. HR management skills.
+9. Tax strategy support skills.
+10. Trading research skills.
+11. Arbitrage analysis skills.
+12. Planner integrations.
+13. Schedule examples.
+14. Domain examples.
+15. Tests and evals.
 
 ---
 
-# 16. Release Acceptance Criteria
+# 17. Release Acceptance Criteria
 
 This enhancement is complete when:
 
 - All new skills pass V9 skill contract validation.
 - All high-risk domains reference governance boundary docs.
 - Trading/tax/legal/HR skills are decision-support only.
-- No autonomous trades, filings, payments, entity actions, HR decisions, or customer messages occur.
+- Legal and tax-rate outputs include jurisdiction, source, effective date where available, and last-verified timestamp.
+- Authoritative government sources are preferred and secondary sources are labeled.
+- No autonomous trades, filings, payments, entity actions, HR decisions, legal submissions, government filings, or customer messages occur.
 - Domain planners can route representative workflows.
 - Example schedules validate.
 - Dry-run tests prove no external side effects.
