@@ -3,6 +3,13 @@
 All notable changes to the Apotheon AI Company OS are documented here.
 
 
+## [8.0.25] — 2026-05-11 — Graph Workflow Executor (MB-P1-003)
+
+- Added graph execution foundations across `core/planner/`, `core/skill-router/`, `core/executor/`, `core/evaluator/`, and `core/governor/` with branching, retry semantics, approval gates, memory hydration checks, evaluator hooks, and governance enforcement primitives.
+- Added `schemas/workflow-graph.schema.json` and `scripts/orchestration/execute_graph.py` to define and run checkpointable workflow graphs with resume-ready state output.
+- Added orchestration tests for branch correctness and approval/checkpoint state transitions in `tests/orchestration/test_execute_graph.py`.
+
+
 ## [8.0.24] — 2026-05-11 — Event Bus + Trigger Engine (MB-P1-002)
 
 - Added event bus and trigger-engine scaffolding in `core/event-bus/` and `core/trigger-engine/` for local event publishing, trigger registration, matching, and history persistence.
