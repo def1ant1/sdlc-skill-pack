@@ -21,3 +21,9 @@ See also:
 - `core/organizational-memory/README.md`
 - `core/procedural-memory/README.md`
 - `docs/architecture/memory-engine.md`
+
+## Sourcing and acquisition decision standards
+- Use sourcing skills (`product-sourcing-intelligence`, `supplier-discovery`, `local-liquidation-analysis`, `auction-opportunity-analysis`, `wholesale-price-comparison`, `product-condition-estimation`, `product-authenticity-risk-analysis`, `acquisition-priority-scoring`) for buy-side recommendations.
+- Every recommendation must include explicit **rationale**, **assumptions**, and **risk_profile** sections.
+- Every recommendation must expose component scoring for margin, velocity, fraud/counterfeit risk, and confidence.
+- Any purchase pathway (bids, deposits, purchase orders, or payments) is blocked unless a HITL approval gate is satisfied.

@@ -121,3 +121,24 @@ erDiagram
   "risk_flags": ["missing_serial_photo"]
 }
 ```
+
+## Sourcing Scorecard (MB-ECOM-P0-004)
+
+For supplier and opportunity ranking, emit the following normalized scoring fields:
+
+- `margin_score` (0-100): profitability after fees, shipping, tax, refurbishment, and holding costs.
+- `velocity_score` (0-100): expected sell-through speed and time-to-cash.
+- `fraud_counterfeit_risk_score` (0-100): identity/authenticity and transaction-risk severity (higher = worse).
+- `confidence_score` (0-100): evidence sufficiency and source-quality confidence.
+
+Recommended priority formula:
+
+```text
+acquisition_priority_score =
+ 0.40 * margin_score
++0.25 * velocity_score
++0.20 * (100 - fraud_counterfeit_risk_score)
++0.15 * confidence_score
+```
+
+Recommendation payloads should always include `rationale`, `assumptions`, and `risk_profile`, and must route any purchase action through an approval gate.
