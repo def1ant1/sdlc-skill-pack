@@ -1,0 +1,59 @@
+{
+  "fixture_id": "oldfarmtrucks-launch-readiness",
+  "objective": "Launch OldFarmTrucks.com as a classic truck dealership in 30 days",
+  "canonical_governance_policies": [
+    "references/business-policy-standard.md",
+    "docs/standards/documentation-governance.md"
+  ],
+  "expected_artifacts": [
+    "run_id",
+    "status",
+    "steps"
+  ],
+  "failure_fixtures": [
+    {
+      "name": "missing-objective",
+      "reason": "plan objective omitted"
+    },
+    {
+      "name": "empty-skill-chain",
+      "reason": "workflow has no executable steps"
+    }
+  ],
+  "plan": {
+    "plan_id": "oldfarmtrucks-launch-readiness-001",
+    "objective": "Launch OldFarmTrucks.com as a classic truck dealership in 30 days",
+    "skill_chain": [
+      {
+        "step": 1,
+        "phase": "phase-1",
+        "skill": "requirements-engineering",
+        "depends_on": []
+      },
+      {
+        "step": 2,
+        "phase": "phase-2",
+        "skill": "system-architecture",
+        "depends_on": [
+          1
+        ]
+      },
+      {
+        "step": 3,
+        "phase": "phase-3",
+        "skill": "qa-automation",
+        "depends_on": [
+          2
+        ]
+      },
+      {
+        "step": 4,
+        "phase": "phase-4",
+        "skill": "compliance-governance",
+        "depends_on": [
+          3
+        ]
+      }
+    ]
+  }
+}

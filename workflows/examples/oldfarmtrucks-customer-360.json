@@ -1,0 +1,59 @@
+{
+  "fixture_id": "oldfarmtrucks-customer-360",
+  "objective": "Build a unified customer 360 view for OldFarmTrucks.com",
+  "canonical_governance_policies": [
+    "references/business-policy-standard.md",
+    "docs/standards/documentation-governance.md"
+  ],
+  "expected_artifacts": [
+    "run_id",
+    "status",
+    "steps"
+  ],
+  "failure_fixtures": [
+    {
+      "name": "missing-objective",
+      "reason": "plan objective omitted"
+    },
+    {
+      "name": "empty-skill-chain",
+      "reason": "workflow has no executable steps"
+    }
+  ],
+  "plan": {
+    "plan_id": "oldfarmtrucks-customer-360-001",
+    "objective": "Build a unified customer 360 view for OldFarmTrucks.com",
+    "skill_chain": [
+      {
+        "step": 1,
+        "phase": "phase-1",
+        "skill": "crm-integration",
+        "depends_on": []
+      },
+      {
+        "step": 2,
+        "phase": "phase-2",
+        "skill": "cdp-profile-unification",
+        "depends_on": [
+          1
+        ]
+      },
+      {
+        "step": 3,
+        "phase": "phase-3",
+        "skill": "data-quality-monitoring",
+        "depends_on": [
+          2
+        ]
+      },
+      {
+        "step": 4,
+        "phase": "phase-4",
+        "skill": "executive-reporting",
+        "depends_on": [
+          3
+        ]
+      }
+    ]
+  }
+}

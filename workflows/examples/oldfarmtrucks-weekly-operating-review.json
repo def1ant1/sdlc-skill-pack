@@ -1,0 +1,59 @@
+{
+  "fixture_id": "oldfarmtrucks-weekly-operating-review",
+  "objective": "Run a weekly operating review for OldFarmTrucks.com sales, inventory, and cash flow",
+  "canonical_governance_policies": [
+    "references/business-policy-standard.md",
+    "docs/standards/documentation-governance.md"
+  ],
+  "expected_artifacts": [
+    "run_id",
+    "status",
+    "steps"
+  ],
+  "failure_fixtures": [
+    {
+      "name": "missing-objective",
+      "reason": "plan objective omitted"
+    },
+    {
+      "name": "empty-skill-chain",
+      "reason": "workflow has no executable steps"
+    }
+  ],
+  "plan": {
+    "plan_id": "oldfarmtrucks-weekly-operating-review-001",
+    "objective": "Run a weekly operating review for OldFarmTrucks.com sales, inventory, and cash flow",
+    "skill_chain": [
+      {
+        "step": 1,
+        "phase": "phase-1",
+        "skill": "analytics-reporting",
+        "depends_on": []
+      },
+      {
+        "step": 2,
+        "phase": "phase-2",
+        "skill": "forecasting-demand",
+        "depends_on": [
+          1
+        ]
+      },
+      {
+        "step": 3,
+        "phase": "phase-3",
+        "skill": "finance-ops",
+        "depends_on": [
+          2
+        ]
+      },
+      {
+        "step": 4,
+        "phase": "phase-4",
+        "skill": "executive-reporting",
+        "depends_on": [
+          3
+        ]
+      }
+    ]
+  }
+}
