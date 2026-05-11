@@ -84,3 +84,16 @@ To avoid confusion between current local open-source capabilities and potential 
 - `docs/commercial/open-core-boundary.md`
 
 Use these documents as the source of truth for licensing and feature-boundary interpretation during onboarding and deployment planning.
+
+
+## VS Code extension developer flow
+
+Use the extension commands for developer operations inside the repo:
+
+- `Apotheon: Validate Skill Manifests`
+- `Apotheon: Dry-Run Workflow Launch`
+- `Apotheon: Generate Runtime Diagnostics`
+- `Apotheon: Skill Maturity Report`
+- `Apotheon: Import OldFarmTrucks Template`
+
+See `docs/onboarding/VSCODE_EXTENSION_DEVELOPER.md` and `extensions/vscode/README.md` for command details and compile instructions.

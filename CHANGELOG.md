@@ -43,6 +43,13 @@
 All notable changes to the Apotheon AI Company OS are documented here.
 
 
+## [8.0.33] — 2026-05-11 — VS Code DX Workflow Hardening (MB-P3-004)
+
+- Improved `extensions/vscode/` with command-palette developer flows for manifest validation, workflow dry-run launch, runtime diagnostics generation, skill maturity reporting, and company template import.
+- Added local compiler/runtime config for extension automation, including configurable Python command execution for repository scripts.
+- Added `.devcontainer/devcontainer.json` for reproducible extension development with Python + Node setup and post-create install bootstrap.
+- Added extension-facing and onboarding documentation in `extensions/vscode/README.md` and `docs/onboarding/VSCODE_EXTENSION_DEVELOPER.md`, and linked developer flow guidance from `docs/onboarding/getting-started.md`.
+
 
 ## [8.0.32] — 2026-05-11 — Commercial/Open-Core Boundary Docs Publication (MB-P3-003)
 

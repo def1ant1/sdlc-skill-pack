@@ -1,6 +1,9 @@
 import * as vscode from 'vscode';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import * as path from 'node:path';
 
-// ── API client ────────────────────────────────────────────────────────────────
+const execFileAsync = promisify(execFile);
 
 function getConfig() {
     const cfg = vscode.workspace.getConfiguration('apotheon');
@@ -8,222 +11,102 @@ function getConfig() {
         apiUrl: cfg.get<string>('apiUrl', 'http://localhost:8000'),
         apiToken: cfg.get<string>('apiToken', ''),
         defaultModel: cfg.get<string>('defaultModel', 'claude-sonnet-4-6'),
+        pythonCommand: cfg.get<string>('pythonCommand', 'python3'),
     };
 }
 
-async function apiFetch(path: string, options: RequestInit = {}): Promise<unknown> {
-    const { apiUrl, apiToken } = getConfig();
-    const url = `${apiUrl}${path}`;
-    const headers: Record<string, string> = {
-        'Content-Type': 'application/json',
-        ...(options.headers as Record<string, string> || {}),
-    };
-    if (apiToken) {
-        headers['Authorization'] = `Bearer ${apiToken}`;
-    }
-    const res = await fetch(url, { ...options, headers });
-    if (!res.ok) {
-        const body = await res.text();
-        throw new Error(`API ${res.status}: ${body}`);
-    }
-    return res.json();
-}
-
-// ── Commands ──────────────────────────────────────────────────────────────────
-
-async function cmdRunSkill(): Promise<void> {
-    const skills = [
-        'requirements', 'architecture', 'ai-engineering', 'backend',
-        'frontend', 'code-review', 'qa', 'devsecops', 'release-management',
-        'observability', 'sre', 'compliance-automation', 'executive-reporting',
-    ];
-
-    const skill = await vscode.window.showQuickPick(skills, {
-        placeHolder: 'Select a skill to run',
-        title: 'Apotheon: Run Skill',
-    });
-    if (!skill) { return; }
-
-    const objective = await vscode.window.showInputBox({
-        prompt: 'Enter objective for this skill',
-        placeHolder: 'e.g. Review the auth module for security issues',
-    });
-    if (!objective) { return; }
-
-    await vscode.window.withProgress(
-        { location: vscode.ProgressLocation.Notification, title: `Running ${skill}...`, cancellable: false },
-        async () => {
-            try {
-                const result = await apiFetch('/v1/workflows', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        objective,
-                        plan: { skill_chain: [{ skill }] },
-                        mode: 'local',
-                    }),
-                }) as { run_id: string };
-                vscode.window.showInformationMessage(
-                    `Workflow started: ${result.run_id}`,
-                    'View Status'
-                ).then(action => {
-                    if (action === 'View Status') {
-                        vscode.commands.executeCommand('apotheon.openDashboard');
-                    }
-                });
-            } catch (err) {
-                vscode.window.showErrorMessage(`Failed to start workflow: ${err}`);
-            }
-        }
+async function runRepoCommand(args: string[], title: string): Promise<{ stdout: string; stderr: string; }> {
+    const folder = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+    if (!folder) { throw new Error('Open this repository in VS Code first.'); }
+    const { pythonCommand } = getConfig();
+    return vscode.window.withProgress(
+        { location: vscode.ProgressLocation.Notification, title, cancellable: false },
+        async () => execFileAsync(pythonCommand, args, { cwd: folder, maxBuffer: 1024 * 1024 * 10 }),
     );
 }
 
-async function cmdPlanWorkflow(): Promise<void> {
-    const objective = await vscode.window.showInputBox({
-        prompt: 'Describe your SDLC objective',
-        placeHolder: 'e.g. Build a REST API with auth and deploy to AWS',
-    });
-    if (!objective) { return; }
-
-    await vscode.window.withProgress(
-        { location: vscode.ProgressLocation.Notification, title: 'Planning workflow...', cancellable: false },
-        async () => {
-            try {
-                const estimate = await apiFetch('/v1/cost/estimate', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        plan: {
-                            skill_chain: [
-                                { skill: 'requirements' },
-                                { skill: 'architecture' },
-                                { skill: 'backend' },
-                                { skill: 'code-review' },
-                                { skill: 'qa' },
-                            ],
-                        },
-                    }),
-                }) as { total_cost_usd: number; total_input_tokens: number; total_output_tokens: number };
-
-                const proceed = await vscode.window.showInformationMessage(
-                    `Estimated cost: $${estimate.total_cost_usd.toFixed(4)} ` +
-                    `(${estimate.total_input_tokens + estimate.total_output_tokens} tokens)`,
-                    'Run Workflow', 'Cancel'
-                );
-
-                if (proceed === 'Run Workflow') {
-                    await cmdRunSkill();
-                }
-            } catch (err) {
-                vscode.window.showErrorMessage(`Planning failed: ${err}`);
-            }
-        }
-    );
+function repoPath(...parts: string[]): string {
+    const folder = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+    return path.join(folder || '', ...parts);
 }
 
-async function cmdApproveHITL(item?: HITLTreeItem): Promise<void> {
-    const id = item?.approvalId || await vscode.window.showInputBox({ prompt: 'Approval ID' });
-    if (!id) { return; }
-
+async function cmdValidateManifests(): Promise<void> {
     try {
-        await apiFetch(`/v1/approvals/${id}/decide`, {
-            method: 'POST',
-            body: JSON.stringify({ decision: 'approved', comment: 'Approved via VS Code' }),
-        });
-        vscode.window.showInformationMessage('HITL gate approved.');
-        vscode.commands.executeCommand('apotheon.refreshRuns');
-    } catch (err) {
-        vscode.window.showErrorMessage(`Approval failed: ${err}`);
-    }
+        const out = await runRepoCommand(['scripts/validation/validate_skill_yaml.py', '--mvp'], 'Validating skill manifests...');
+        vscode.window.showInformationMessage('Manifest validation completed. See output channel for details.');
+        const chan = vscode.window.createOutputChannel('Apotheon Validation');
+        chan.appendLine(out.stdout || '(no stdout)');
+        if (out.stderr) { chan.appendLine(out.stderr); }
+        chan.show(true);
+    } catch (err) { vscode.window.showErrorMessage(`Manifest validation failed: ${err}`); }
 }
 
-async function cmdRejectHITL(item?: HITLTreeItem): Promise<void> {
-    const id = item?.approvalId || await vscode.window.showInputBox({ prompt: 'Approval ID' });
-    if (!id) { return; }
-
-    const reason = await vscode.window.showInputBox({ prompt: 'Rejection reason (optional)' });
-
+async function cmdDryRunLaunch(): Promise<void> {
     try {
-        await apiFetch(`/v1/approvals/${id}/decide`, {
-            method: 'POST',
-            body: JSON.stringify({ decision: 'rejected', comment: reason || 'Rejected via VS Code' }),
-        });
-        vscode.window.showInformationMessage('HITL gate rejected.');
-        vscode.commands.executeCommand('apotheon.refreshRuns');
-    } catch (err) {
-        vscode.window.showErrorMessage(`Rejection failed: ${err}`);
-    }
+        const planFile = repoPath('workflows/examples/business/company-operating-system-dry-run.workflow.json');
+        const out = await runRepoCommand(['scripts/orchestration/execute_graph.py', '--plan', planFile, '--dry-run'], 'Running workflow dry-run...');
+        const chan = vscode.window.createOutputChannel('Apotheon Dry Run');
+        chan.appendLine(out.stdout || '(no stdout)');
+        if (out.stderr) { chan.appendLine(out.stderr); }
+        chan.show(true);
+        vscode.window.showInformationMessage('Dry-run launch completed.');
+    } catch (err) { vscode.window.showErrorMessage(`Dry-run failed: ${err}`); }
 }
 
-// ── Tree Views ────────────────────────────────────────────────────────────────
+async function cmdOpenDiagnostics(): Promise<void> {
+    try {
+        await runRepoCommand(['scripts/reports/generate_runtime_diagnostics.py'], 'Generating diagnostics...');
+        const diagUri = vscode.Uri.file(repoPath('runtime/diagnostics/runtime_diagnostics.json'));
+        await vscode.commands.executeCommand('vscode.open', diagUri);
+    } catch (err) { vscode.window.showErrorMessage(`Diagnostics failed: ${err}`); }
+}
+
+async function cmdOpenMaturityPanel(): Promise<void> {
+    try {
+        const out = await runRepoCommand(['scripts/grade_skill_maturity.py', '--profile', 'mvp'], 'Grading skill maturity...');
+        const chan = vscode.window.createOutputChannel('Apotheon Maturity');
+        chan.appendLine(out.stdout || '(no stdout)');
+        if (out.stderr) { chan.appendLine(out.stderr); }
+        chan.show(true);
+    } catch (err) { vscode.window.showErrorMessage(`Maturity panel command failed: ${err}`); }
+}
+
+async function cmdImportTemplate(): Promise<void> {
+    try {
+        const out = await runRepoCommand(['scripts/company_templates/import_template.py', '--template', 'oldfarmtrucks'], 'Importing company template...');
+        const chan = vscode.window.createOutputChannel('Apotheon Template Import');
+        chan.appendLine(out.stdout || '(no stdout)');
+        if (out.stderr) { chan.appendLine(out.stderr); }
+        chan.show(true);
+        vscode.window.showInformationMessage('Template import command completed.');
+    } catch (err) { vscode.window.showErrorMessage(`Template import failed: ${err}`); }
+}
 
 class HITLTreeItem extends vscode.TreeItem {
-    constructor(
-        public readonly approvalId: string,
-        label: string,
-        description: string,
-    ) {
+    constructor(public readonly approvalId: string, label: string, description: string) {
         super(label, vscode.TreeItemCollapsibleState.None);
         this.description = description;
         this.contextValue = 'hitlPending';
-        this.iconPath = new vscode.ThemeIcon('warning', new vscode.ThemeColor('charts.yellow'));
     }
 }
-
 class HITLQueueProvider implements vscode.TreeDataProvider<HITLTreeItem> {
     private _onDidChangeTreeData = new vscode.EventEmitter<HITLTreeItem | undefined>();
     readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
-
-    refresh(): void {
-        this._onDidChangeTreeData.fire(undefined);
-    }
-
-    getTreeItem(element: HITLTreeItem): vscode.TreeItem {
-        return element;
-    }
-
-    async getChildren(): Promise<HITLTreeItem[]> {
-        try {
-            const result = await apiFetch('/v1/approvals') as Array<{
-                id: string; skill_name: string; risk_level: string;
-            }>;
-            return result.map(a => new HITLTreeItem(
-                a.id,
-                a.skill_name,
-                `Risk: ${a.risk_level}`,
-            ));
-        } catch {
-            return [];
-        }
-    }
+    refresh(): void { this._onDidChangeTreeData.fire(undefined); }
+    getTreeItem(element: HITLTreeItem): vscode.TreeItem { return element; }
+    async getChildren(): Promise<HITLTreeItem[]> { return []; }
 }
-
-// ── Extension entry ───────────────────────────────────────────────────────────
 
 export function activate(context: vscode.ExtensionContext): void {
     const hitlProvider = new HITLQueueProvider();
-
     vscode.window.registerTreeDataProvider('apotheon.hitlQueue', hitlProvider);
-
     context.subscriptions.push(
-        vscode.commands.registerCommand('apotheon.runSkill', cmdRunSkill),
-        vscode.commands.registerCommand('apotheon.planWorkflow', cmdPlanWorkflow),
-        vscode.commands.registerCommand('apotheon.openDashboard', () => {
-            const { apiUrl } = getConfig();
-            vscode.env.openExternal(vscode.Uri.parse(`${apiUrl}/docs`));
-        }),
-        vscode.commands.registerCommand('apotheon.approveHITL', cmdApproveHITL),
-        vscode.commands.registerCommand('apotheon.rejectHITL', cmdRejectHITL),
-        vscode.commands.registerCommand('apotheon.refreshRuns', () => hitlProvider.refresh()),
+        vscode.commands.registerCommand('apotheon.validateManifests', cmdValidateManifests),
+        vscode.commands.registerCommand('apotheon.dryRunLaunch', cmdDryRunLaunch),
+        vscode.commands.registerCommand('apotheon.openDiagnostics', cmdOpenDiagnostics),
+        vscode.commands.registerCommand('apotheon.openMaturityPanel', cmdOpenMaturityPanel),
+        vscode.commands.registerCommand('apotheon.importTemplate', cmdImportTemplate),
     );
-
-    // Auto-refresh
-    const cfg = vscode.workspace.getConfiguration('apotheon');
-    const interval = cfg.get<number>('autoRefreshInterval', 5);
-    if (interval > 0) {
-        const timer = setInterval(() => hitlProvider.refresh(), interval * 1000);
-        context.subscriptions.push({ dispose: () => clearInterval(timer) });
-    }
-
-    vscode.window.showInformationMessage('Apotheon SDLC Skills extension activated.');
 }
 
 export function deactivate(): void {}
