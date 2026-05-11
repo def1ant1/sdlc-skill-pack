@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apotheon.local/schemas/schedule.schema.json",
+  "title": "Schedule",
+  "type": "object",
+  "required": ["schedule_id", "mode", "enabled", "owner", "planner_target", "risk_tier"],
+  "properties": {
+    "schedule_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]{2,63}$"
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["cron", "interval", "event"]
+    },
+    "enabled": { "type": "boolean" },
+    "owner": { "type": "string", "minLength": 1 },
+    "planner_target": { "type": "string", "minLength": 1 },
+    "risk_tier": { "type": "string", "enum": ["low", "medium", "high", "critical"] },
+    "cron": {
+      "type": "string",
+      "description": "5-field cron expression: minute hour day month weekday"
+    },
+    "interval_minutes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "event": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "match": {
+          "type": "object",
+          "additionalProperties": {
+            "type": ["string", "number", "boolean"]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "mode": { "const": "cron" } } },
+      "then": {
+        "required": ["cron"],
+        "not": { "required": ["interval_minutes", "event"] }
+      }
+    },
+    {
+      "if": { "properties": { "mode": { "const": "interval" } } },
+      "then": {
+        "required": ["interval_minutes"],
+        "not": { "required": ["cron", "event"] }
+      }
+    },
+    {
+      "if": { "properties": { "mode": { "const": "event" } } },
+      "then": {
+        "required": ["event"],
+        "not": { "required": ["cron", "interval_minutes"] }
+      }
+    }
+  ],
+  "additionalProperties": false
+}
