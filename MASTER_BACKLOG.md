@@ -551,7 +551,7 @@ Acceptance criteria:
 ## MB-P0-018 — Add skill pipeline compiler MVP
 
 **Source:** Docker/Productization Backlog  
-**Status:** Open
+**Status:** Completed (2026-05-11)
 
 Create:
 
@@ -565,6 +565,19 @@ reports/skill_pipeline_report.json
 ```
 
 Acceptance criteria:
+Validation evidence (2026-05-11):
+
+- Added deterministic pipeline compiler scaffolds and standard/schema:
+  - `scripts/skill_pipeline.py`
+  - `core/skill-compiler/`
+  - `schemas/compiled-skill.schema.json`
+  - `references/skill-pipeline-standard.md`
+- Generated reports:
+  - `reports/skill_pipeline_report.md`
+  - `reports/skill_pipeline_report.json`
+- Verified deterministic and testable behavior with:
+  - `python scripts/skill_pipeline.py --version 0.1.0`
+  - `python -m unittest core/skill-compiler/tests/test_compiler.py`
 
 - Compiler converts skill contract into runnable scaffold.
 - Generates Temporal activity stub, Python activity scaffold, JSON schema bindings, pytest/eval scaffolds, governance wrapper, telemetry definitions, rate-limit/cost stubs, docs, and package metadata.

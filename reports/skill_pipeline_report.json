@@ -1,0 +1,32 @@
+{
+  "artifacts": [
+    {
+      "kind": "docs",
+      "path": "core/skill-compiler/README.md"
+    },
+    {
+      "kind": "runtime",
+      "path": "core/skill-compiler/compiler.py"
+    },
+    {
+      "kind": "bindings",
+      "path": "core/skill-compiler/schema_bindings.py"
+    },
+    {
+      "kind": "telemetry",
+      "path": "core/skill-compiler/telemetry.py"
+    },
+    {
+      "kind": "governance",
+      "path": "core/skill-compiler/governance.py"
+    },
+    {
+      "kind": "test",
+      "path": "core/skill-compiler/tests/test_compiler.py"
+    }
+  ],
+  "deterministic_seed": "skill-pipeline-v1",
+  "generated_at": "2026-05-11T20:17:12+00:00",
+  "schema": "schemas/compiled-skill.schema.json",
+  "version": "0.1.0"
+}
