@@ -3,6 +3,12 @@ name: Evolution Review Gate
 on:
   pull_request:
     branches: ["main", "develop"]
+    paths:
+      - "scripts/evolution/**"
+      - "core/evolution-engine/**"
+      - "core/skill-gap-engine/**"
+      - "docs/workflows/improvement-workflow.md"
+      - ".github/workflows/evolution-review.yml"
 
 jobs:
   review-gate:
