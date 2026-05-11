@@ -1,5 +1,13 @@
 ## 2026-05-11
 
+## [8.0.15] — 2026-05-11 — Local Schedule Schema + Deterministic Due Runner
+
+- Added schedule schemas: `schemas/workflow-schedule.schema.json` and `schemas/schedule-run-record.schema.json`.
+- Added scheduling standard reference: `references/workflow-scheduling-standard.md`.
+- Added schedule tooling under `scripts/schedules/`: validate/list/preview/due-runner/mark-run/state store, with trigger support for cron/interval/manual/event.
+- Added deterministic preview + due-run behavior with concurrency policies and misfire handling plus `--dry-run`.
+- Added schedule run recording under `runtime/schedule_runs/` and scaffolding in `schedules/examples/` and `schedules/local/.gitkeep`.
+
 ## [8.0.14] — 2026-05-11 — Local Workflow Run Storage + Inspection
 
 - Added local runtime state directories `runtime/workflow_runs/`, `runtime/artifacts/`, and `runtime/reports/` with `.gitkeep` sentinels.

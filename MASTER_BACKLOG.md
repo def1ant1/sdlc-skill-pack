@@ -340,7 +340,7 @@ Acceptance criteria:
 ## MB-P0-010 — Build schedule schema, preview, and due-runner
 
 **Source:** Local Workflow Scheduling + Hardening Backlogs  
-**Status:** Open
+**Status:** Completed (2026-05-11)
 
 Create:
 

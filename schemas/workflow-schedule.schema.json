@@ -1,18 +1,1 @@
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Workflow Schedule",
-  "type": "object",
-  "required": ["schedule_id", "mode", "planner_target", "enabled"],
-  "properties": {
-    "schedule_id": {"type": "string", "minLength": 1},
-    "enabled": {"type": "boolean"},
-    "planner_target": {"type": "string", "minLength": 1},
-    "mode": {"enum": ["cron", "interval", "event"]},
-    "cron": {"type": "string"},
-    "interval_minutes": {"type": "integer", "minimum": 1},
-    "event_trigger": {"type": "string"},
-    "timezone": {"type": "string"},
-    "concurrency": {"enum": ["forbid", "replace", "allow"], "default": "forbid"},
-    "misfire_policy": {"enum": ["skip", "run_once", "catch_up"], "default": "skip"}
-  }
-}
+{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","required":["schedules"],"properties":{"schedules":{"type":"array","items":{"type":"object","required":["schedule_id","mode","enabled","planner_target"],"properties":{"schedule_id":{"type":"string"},"mode":{"enum":["cron","interval","manual","event"]},"enabled":{"type":"boolean"},"cron":{"type":"string"},"interval_minutes":{"type":"integer","minimum":1},"event_trigger":{"type":"string"},"manual_reason":{"type":"string"},"planner_target":{"type":"string"},"timezone":{"type":"string"},"concurrency":{"enum":["forbid","replace","allow"]},"misfire_policy":{"enum":["skip","run_once","catch_up"]}}}}}}

@@ -1,0 +1,29 @@
+schedules:
+  - schedule_id: daily-market-scan
+    mode: cron
+    cron: "0 8 * * 1-5"
+    timezone: UTC
+    enabled: true
+    planner_target: scripts/orchestration/plan_business_workflow.py
+    concurrency: forbid
+    misfire_policy: run_once
+  - schedule_id: hourly-lifecycle
+    mode: interval
+    interval_minutes: 60
+    timezone: UTC
+    enabled: true
+    planner_target: scripts/orchestration/plan_workflow.py
+    concurrency: allow
+    misfire_policy: catch_up
+  - schedule_id: manual-backfill
+    mode: manual
+    manual_reason: operator_backfill
+    timezone: UTC
+    enabled: true
+    planner_target: scripts/orchestration/plan_workflow.py
+  - schedule_id: lead-created-event
+    mode: event
+    event_trigger: lead.created
+    timezone: UTC
+    enabled: true
+    planner_target: scripts/orchestration/plan_customer_workflow.py
