@@ -1,0 +1,14 @@
+.git
+.gitignore
+.venv
+__pycache__
+.pytest_cache
+.mypy_cache
+reports/
+dist/
+node_modules/
+extensions/vscode/node_modules/
+*.pyc
+*.pyo
+*.pyd
+.DS_Store
