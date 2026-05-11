@@ -28,6 +28,7 @@ jobs:
             const repo = context.repo.repo;
             const pull_number = context.payload.pull_request.number;
             const prAuthor = context.payload.pull_request.user.login;
+            const headSha = context.payload.pull_request.head.sha;
 
             const files = await github.paginate(
               github.rest.pulls.listFiles,
@@ -66,12 +67,13 @@ jobs:
               const isApproved = review.state === 'APPROVED';
               const isNotAuthor = review.user.login !== prAuthor;
               const isHumanUser = review.user.type === 'User';
-              return isApproved && isNotAuthor && isHumanUser;
+              const isCurrentHeadApproval = review.commit_id === headSha;
+              return isApproved && isNotAuthor && isHumanUser && isCurrentHeadApproval;
             });
 
             if (validApprovals.length === 0) {
               core.setFailed(
-                'Missing independent human approval. At least one non-author GitHub reviewer with state APPROVED is required.'
+                'Missing independent human approval on current head commit. Require at least one non-author GitHub reviewer APPROVED review whose commit_id matches pull_request.head.sha.'
               );
               return;
             }
