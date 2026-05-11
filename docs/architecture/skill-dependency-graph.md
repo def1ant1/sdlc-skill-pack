@@ -102,3 +102,20 @@ When adding a new skill to the pack:
 - `core/orchestration/references/skill-chain-map.md` — example chains by request type
 - `shared/frameworks/quality-gates/` — gate definitions per phase transition
 - `docs/schemas/memory-packet-schema.md` — how dependency state is tracked across phases
+
+---
+
+## Skill Graph Engine MVP (MB-P0-004)
+
+The runtime now includes `core/skill-graph-engine/engine.py`, which produces a planner-consumable graph containing:
+
+- Skill/agent/core nodes.
+- Dependency edges.
+- Optional metadata edges for tools, policies, connectors, and memory requirements.
+- Diagnostics for missing dependencies, dependency cycles, and routing collisions.
+
+Planner integration surface:
+
+- `scripts/skills/build_skill_graph.py` writes `reports/skill_graph.json|md|mmd`.
+- `scripts/skills/resolve_skill_dependencies.py <intent> [--required ...]` returns candidate skills sorted by missing dependency risk.
+- `SkillGraphEngine.query_candidates(intent, required=None)` is the programmatic interface for orchestration planners.

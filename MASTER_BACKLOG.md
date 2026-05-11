@@ -188,7 +188,7 @@ Validation evidence (2026-05-11):
 ## MB-P0-004 — Build skill graph engine MVP
 
 **Source:** Docker/Productization + V9 Backlog  
-**Status:** Open / partially covered by dependency graph reports
+**Status:** Completed (2026-05-11)
 
 Create:
 
