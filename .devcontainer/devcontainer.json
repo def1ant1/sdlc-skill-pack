@@ -1,0 +1,23 @@
+{
+  "name": "sdlc-skill-pack-dev",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    }
+  },
+  "postCreateCommand": "python -m pip install --upgrade pip && npm --prefix extensions/vscode install",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "ms-python.python",
+        "ms-vscode.vscode-typescript-next"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "typescript.tsdk": "extensions/vscode/node_modules/typescript/lib"
+      }
+    }
+  }
+}

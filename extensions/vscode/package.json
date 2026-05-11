@@ -1,7 +1,7 @@
 {
   "name": "apotheon-sdlc",
   "displayName": "Apotheon SDLC Skills",
-  "description": "AI-powered SDLC orchestration directly from VS Code — run skills, monitor workflows, and approve HITL gates without leaving your editor.",
+  "description": "AI-powered SDLC orchestration directly from VS Code \u2014 run skills, monitor workflows, and approve HITL gates without leaving your editor.",
   "version": "1.0.0",
   "publisher": "apotheon",
   "license": "MIT",
@@ -61,6 +61,31 @@
         "command": "apotheon.refreshRuns",
         "title": "Apotheon: Refresh Runs",
         "icon": "$(refresh)"
+      },
+      {
+        "command": "apotheon.validateManifests",
+        "title": "Apotheon: Validate Skill Manifests",
+        "icon": "$(check-all)"
+      },
+      {
+        "command": "apotheon.dryRunLaunch",
+        "title": "Apotheon: Dry-Run Workflow Launch",
+        "icon": "$(debug-start)"
+      },
+      {
+        "command": "apotheon.openDiagnostics",
+        "title": "Apotheon: Generate Runtime Diagnostics",
+        "icon": "$(pulse)"
+      },
+      {
+        "command": "apotheon.openMaturityPanel",
+        "title": "Apotheon: Skill Maturity Report",
+        "icon": "$(graph)"
+      },
+      {
+        "command": "apotheon.importTemplate",
+        "title": "Apotheon: Import OldFarmTrucks Template",
+        "icon": "$(cloud-download)"
       }
     ],
     "viewsContainers": {
@@ -121,6 +146,11 @@
           "type": "boolean",
           "default": true,
           "description": "Show cost estimates before executing workflows"
+        },
+        "apotheon.pythonCommand": {
+          "type": "string",
+          "default": "python3",
+          "description": "Python command used for local repository automation scripts."
         }
       }
     },
@@ -148,6 +178,28 @@
         {
           "command": "apotheon.runSkill",
           "group": "apotheon"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "apotheon.validateManifests",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "apotheon.dryRunLaunch",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "apotheon.openDiagnostics",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "apotheon.openMaturityPanel",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "apotheon.importTemplate",
+          "when": "workspaceFolderCount > 0"
         }
       ]
     },
