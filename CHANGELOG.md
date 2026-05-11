@@ -3,6 +3,12 @@
 All notable changes to the Apotheon AI Company OS are documented here.
 
 
+## [8.0.27] — 2026-05-11 — Local App Connector Layer + Readiness Reports (MB-P1-005)
+
+- Expanded `local_apps/` with profile-based compose startup, local env template, readiness docs, and canonical priority app mappings for MVP categories.
+- Added local app inventory and connector health tooling via `scripts/local_apps/list_apps.py` and `scripts/local_apps/check_connector_health.py`.
+- Generated local app health artifacts in `reports/local_apps/` with JSON/Markdown readiness outputs for operational review.
+
 ## [8.0.26] — 2026-05-11 — Connector Hardening + Health Reporting (MB-P1-004)
 
 - Hardened connector safety in `scripts/connectors/base_connector.py` + `scripts/connectors/health_check.py` with explicit failure-type classification (`auth`, `network`, `schema`, `rate-limit`, `app-down`), read-only defaults, HITL-gated writes, and redacted error surfaces.

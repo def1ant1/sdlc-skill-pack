@@ -1,46 +1,33 @@
 # Local Apps Health Toolkit
 
-This folder contains a local Docker Compose stack, Kubernetes-style reference manifests,
-and health tooling for verifying that local apps are not only **running**, but also **usable**.
+This folder contains local app compose/env/docs/manifests/mappings plus scripts to verify readiness.
 
-## What this checks
+## Included assets
 
-- Container/service process health (`running`, `healthy`, `starting`, etc.)
-- API usability checks (HTTP endpoint responds with expected status)
-- App dependency startup order (e.g., DB/queue before app/worker)
-- Port conflicts across services
-- Required volume mappings and host-path existence
-- Backup readiness (declared backup strategy and mount paths)
-- Upgrade/migration risk warnings
-- `.env` variable requirements with explicit remediation guidance
+- `docker-compose.local-apps.yml` with profile-based startup (`core`, `mvp`, `automation`, `analytics`)
+- `.env.local-apps.example` for local runtime configuration
+- `manifests/*.yaml` Kubernetes-style reference manifests
+- `mappings/local_app_categories.yaml` canonical app category mapping + coverage
+- `docs/local-app-readiness.md` profile and readiness guidance
 
-## Files
+## Scripts
 
-- `docker-compose.local-apps.yml` - local stack definition with health checks and dependency order
-- `manifests/*.yaml` - Kubernetes reference manifests for app, db, worker, queue, and API gateway
-- `../scripts/local_apps/check_app_health.py` - evaluates runtime/container/API/config health
-- `../scripts/local_apps/generate_local_app_report.py` - writes JSON/Markdown report from health check results
+- `scripts/local_apps/list_apps.py`
+- `scripts/local_apps/check_app_health.py`
+- `scripts/local_apps/check_connector_health.py`
+- `scripts/local_apps/generate_local_app_report.py`
 
-## Usage
+## Generate reports
 
 ```bash
 python scripts/local_apps/check_app_health.py \
   --compose-file local_apps/docker-compose.local-apps.yml \
-  --env-file .env \
-  --output-json local_apps/health-report.json
+  --env-file local_apps/.env.local-apps.example \
+  --output-json reports/local_apps/health-report.json
 
 python scripts/local_apps/generate_local_app_report.py \
-  --input local_apps/health-report.json \
-  --output-md local_apps/health-report.md
+  --input reports/local_apps/health-report.json \
+  --output-md reports/local_apps/health-report.md
+
+python scripts/local_apps/check_connector_health.py
 ```
-
-## Interpretation: running vs usable
-
-A service can be container-`running` but API-`unusable` if:
-
-- health endpoint is failing
-- DB migrations are pending
-- dependent services are unavailable
-- required env/config is missing
-
-Always use `api_usable` (not just `container_running`) before considering a service production-like for local validation.

@@ -3,6 +3,7 @@ version: "3.9"
 services:
   local-db:
     image: postgres:16
+    profiles: ["core", "mvp", "analytics"]
     environment:
       POSTGRES_DB: ${LOCAL_DB_NAME}
       POSTGRES_USER: ${LOCAL_DB_USER}
@@ -20,6 +21,7 @@ services:
 
   local-queue:
     image: redis:7
+    profiles: ["core", "mvp", "automation"]
     ports:
       - "6379:6379"
     volumes:
@@ -32,6 +34,7 @@ services:
 
   local-app:
     image: python:3.12-slim
+    profiles: ["core", "mvp"]
     command: ["bash", "-lc", "python -m http.server 8080"]
     depends_on:
       local-db:
@@ -55,6 +58,7 @@ services:
 
   local-worker:
     image: python:3.12-slim
+    profiles: ["mvp", "automation"]
     command: ["bash", "-lc", "while true; do sleep 30; done"]
     depends_on:
       local-db:
@@ -67,6 +71,7 @@ services:
 
   local-api:
     image: nginx:1.27
+    profiles: ["mvp"]
     depends_on:
       local-app:
         condition: service_healthy
