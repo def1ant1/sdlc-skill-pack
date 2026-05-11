@@ -23,6 +23,14 @@ def _artifact_path(schedule_id: str, run_id: str, history_dir: Path) -> Path:
     return history_dir / schedule_id / f"{run_id}.json"
 
 
+def _validate_schedule_artifact(payload: dict[str, Any]) -> None:
+    required = ("run_id", "schedule_id", "run_at", "executed_at", "status")
+    for field in required:
+        if not payload.get(field):
+            raise ValueError(f"schedule artifact missing {field}")
+
+
+
 def execute_due(as_of: dt.datetime, registry_path: Path, history_dir: Path, lookback_minutes: int = 60) -> dict[str, Any]:
     history_dir.mkdir(parents=True, exist_ok=True)
     results: list[dict[str, Any]] = []
@@ -46,6 +54,7 @@ def execute_due(as_of: dt.datetime, registry_path: Path, history_dir: Path, look
                     "executed_at": as_of.isoformat(),
                     "status": "completed"
                 }
+                _validate_schedule_artifact(payload)
                 artifact.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
                 status = "executed"
             results.append({"schedule_id": schedule["schedule_id"], "run_id": run_id, "run_at": run_at.isoformat(), "status": status})

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apotheon.local/schemas/telemetry/run-history-artifact-schema.json",
+  "title": "Run History Artifact",
+  "description": "Schema for workflow and schedule execution artifacts used by local ops dashboards.",
+  "type": "object",
+  "oneOf": [
+    {
+      "title": "WorkflowRunArtifact",
+      "required": ["run_id", "mode", "status", "started_at", "steps"],
+      "properties": {
+        "run_id": {"type": "string", "minLength": 1},
+        "mode": {"type": "string"},
+        "status": {"type": "string"},
+        "started_at": {"type": "string", "format": "date-time"},
+        "completed_at": {"type": ["string", "null"], "format": "date-time"},
+        "steps": {"type": "array", "items": {"type": "object"}}
+      },
+      "additionalProperties": true
+    },
+    {
+      "title": "ScheduleRunArtifact",
+      "required": ["run_id", "schedule_id", "run_at", "executed_at", "status"],
+      "properties": {
+        "run_id": {"type": "string", "minLength": 1},
+        "schedule_id": {"type": "string", "minLength": 1},
+        "run_at": {"type": "string", "format": "date-time"},
+        "executed_at": {"type": "string", "format": "date-time"},
+        "status": {"type": "string"}
+      },
+      "additionalProperties": true
+    }
+  ]
+}
