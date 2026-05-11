@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apotheon.local/schemas/ai-telemetry-event.schema.json",
+  "title": "AI Telemetry Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "timestamp",
+    "run_id",
+    "workflow",
+    "trace_stage",
+    "event_type",
+    "status"
+  ],
+  "properties": {
+    "event_id": {"type": "string", "minLength": 6},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "run_id": {"type": "string", "minLength": 4},
+    "workflow": {"type": "string", "minLength": 1},
+    "trace_stage": {
+      "type": "string",
+      "enum": ["planner", "router", "memory", "tool", "evaluator", "governor"]
+    },
+    "event_type": {
+      "type": "string",
+      "enum": ["stage_start", "stage_complete", "stage_error", "decision", "artifact"]
+    },
+    "status": {"type": "string", "enum": ["ok", "warn", "error"]},
+    "latency_ms": {"type": "number", "minimum": 0},
+    "token_usage": {"type": "integer", "minimum": 0},
+    "skill_id": {"type": "string"},
+    "message": {"type": "string"},
+    "metadata": {"type": "object"}
+  }
+}
