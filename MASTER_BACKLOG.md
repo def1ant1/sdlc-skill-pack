@@ -713,7 +713,7 @@ Acceptance criteria:
 ## MB-P1-004 — Add connector hardening and health reporting
 
 **Source:** Hardening + Docker/Productization Backlogs  
-**Status:** Open
+**Status:** Done
 
 Create/update:
 

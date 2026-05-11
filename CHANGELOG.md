@@ -3,6 +3,12 @@
 All notable changes to the Apotheon AI Company OS are documented here.
 
 
+## [8.0.26] — 2026-05-11 — Connector Hardening + Health Reporting (MB-P1-004)
+
+- Hardened connector safety in `scripts/connectors/base_connector.py` + `scripts/connectors/health_check.py` with explicit failure-type classification (`auth`, `network`, `schema`, `rate-limit`, `app-down`), read-only defaults, HITL-gated writes, and redacted error surfaces.
+- Added `scripts/reports/generate_connector_health_report.py` to publish connector health exports and generated `reports/connector_health_report.md` + `reports/connector_health_report.json` for dashboard ingestion.
+- Updated `scripts/reports/generate_dashboard_data.py` and onboarding runbooks to surface connector-failure breakdowns and operator workflows.
+
 ## [8.0.25] — 2026-05-11 — Graph Workflow Executor (MB-P1-003)
 
 - Added graph execution foundations across `core/planner/`, `core/skill-router/`, `core/executor/`, `core/evaluator/`, and `core/governor/` with branching, retry semantics, approval gates, memory hydration checks, evaluator hooks, and governance enforcement primitives.

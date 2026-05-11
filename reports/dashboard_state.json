@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-11T20:52:03.690412+00:00",
+  "last_updated": "2026-05-11T21:02:15.081036+00:00",
   "workflow_progress": {
     "active": 6,
     "completed_today": 14,
@@ -40,9 +40,12 @@
     "highest_utilization_pct": 93
   },
   "connectors": {
-    "healthy": 9,
-    "degraded": 1,
-    "down": 0
+    "healthy": 0,
+    "degraded": 0,
+    "down": 11,
+    "failure_breakdown": {
+      "unknown": 11
+    }
   },
   "local_apps": {
     "healthy": 4,

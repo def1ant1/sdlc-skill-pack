@@ -20,6 +20,7 @@ import importlib
 import json
 import logging
 import os
+import re
 import sys
 import time
 from pathlib import Path
@@ -31,6 +32,30 @@ logging.basicConfig(
 logger = logging.getLogger("health_check")
 
 _HERE = Path(__file__).parent
+
+
+def classify_failure(exc: Exception) -> str:
+    message = str(exc).lower()
+    if any(token in message for token in ["401", "403", "unauthorized", "forbidden", "credential", "auth"]):
+        return "auth"
+    if any(token in message for token in ["schema drift", "invalid json", "decode", "json"]):
+        return "schema"
+    if any(token in message for token in ["429", "rate", "throttl", "quota"]):
+        return "rate-limit"
+    if any(token in message for token in ["connection refused", "timed out", "name or service", "unreachable", "dns", "network"]):
+        return "network"
+    if any(token in message for token in ["app-down", "service unavailable", "connection reset"]):
+        return "app-down"
+    return "unknown"
+
+
+def _redact_error(value: str | None) -> str | None:
+    if value is None:
+        return None
+    value = re.sub(r"(?i)(bearer\s+)[A-Za-z0-9._\-]+", r"\1***", value)
+    value = re.sub(r"(?i)(api[_-]?key[=:]\s*)[^\s,;]+", r"\1***", value)
+    value = re.sub(r"(?i)(token|password|secret)[=:]\s*[^\s,;]+", r"\1=***", value)
+    return value
 
 # Map connector name → module.ClassName
 CONNECTOR_REGISTRY: dict[str, tuple[str, str]] = {
@@ -57,6 +82,7 @@ def check_connector(name: str, module_name: str, class_name: str) -> dict:
         "error": None,
         "circuit_state": None,
         "read_only_default": None,
+        "failure_type": None,
     }
     try:
         sys.path.insert(0, str(_HERE))
@@ -74,7 +100,8 @@ def check_connector(name: str, module_name: str, class_name: str) -> dict:
         result["read_only_default"] = bool(getattr(connector, "_read_only_mode", False))
     except Exception as exc:
         result["status"] = "UNREACHABLE"
-        result["error"] = str(exc)
+        result["error"] = _redact_error(str(exc))
+        result["failure_type"] = classify_failure(exc)
         logger.debug("Connector %s failed: %s", name, exc, exc_info=True)
 
     return result
