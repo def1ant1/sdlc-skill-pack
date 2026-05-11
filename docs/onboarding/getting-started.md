@@ -45,3 +45,20 @@ COMPOSE_PROFILES=local-solo,core docker compose up -d
 ```
 
 See `docs/reference/profile-selection.md` for profile boundaries, high-risk defaults, and constraints.
+
+## Chat UI MVP quickstart
+
+Use the Streamlit Chat UI for browser-based planning with safe defaults.
+
+```bash
+streamlit run apps/chat-ui/streamlit_app.py
+```
+
+In the UI:
+
+1. Select a domain planner and submit an objective.
+2. Review dry-run plan output and artifacts.
+3. Import an OldFarmTrucks template for seeded examples.
+4. Review schedules, app health, cost status, and rate-limit warnings.
+
+By default, live writes are blocked unless explicit approval flow is satisfied.
