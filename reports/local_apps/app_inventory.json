@@ -1,0 +1,50 @@
+{
+  "services": [
+    "local-api",
+    "local-app",
+    "local-db",
+    "local-queue",
+    "local-worker"
+  ],
+  "canonical_categories": {
+    "productivity": {
+      "apps": [
+        "local-app",
+        "local-api"
+      ]
+    },
+    "automation": {
+      "apps": [
+        "local-worker",
+        "local-queue"
+      ]
+    },
+    "data": {
+      "apps": [
+        "local-db"
+      ]
+    }
+  },
+  "priority_apps": [
+    {
+      "app": "local-app",
+      "category": "productivity",
+      "canonical_connector": "filesystem_connector"
+    },
+    {
+      "app": "local-db",
+      "category": "data",
+      "canonical_connector": "sqlite_connector"
+    },
+    {
+      "app": "local-queue",
+      "category": "automation",
+      "canonical_connector": "runtime_queue"
+    }
+  ],
+  "mapping_coverage": {
+    "total_priority_apps": 3,
+    "mapped_priority_apps": 3,
+    "percent": 100
+  }
+}

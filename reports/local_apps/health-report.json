@@ -1,0 +1,83 @@
+{
+  "env_validation": {
+    "passed": true,
+    "missing": []
+  },
+  "service_health": [
+    {
+      "name": "local-db",
+      "container_running": false,
+      "container_health": "unknown",
+      "api_usable": false,
+      "api_message": "no API check configured"
+    },
+    {
+      "name": "local-queue",
+      "container_running": false,
+      "container_health": "unknown",
+      "api_usable": false,
+      "api_message": "no API check configured"
+    },
+    {
+      "name": "local-app",
+      "container_running": false,
+      "container_health": "unknown",
+      "api_usable": false,
+      "api_message": "unreachable: <urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "name": "local-worker",
+      "container_running": false,
+      "container_health": "unknown",
+      "api_usable": false,
+      "api_message": "no API check configured"
+    },
+    {
+      "name": "local-api",
+      "container_running": false,
+      "container_health": "unknown",
+      "api_usable": false,
+      "api_message": "unreachable: <urlopen error [Errno 111] Connection refused>"
+    }
+  ],
+  "startup_dependency_order": {
+    "warnings": [
+      "local-app depends on local-db, but local-db is not running",
+      "local-app depends on local-queue, but local-queue is not running",
+      "local-worker depends on local-db, but local-db is not running",
+      "local-worker depends on local-queue, but local-queue is not running",
+      "local-api depends on local-app, but local-app is not running"
+    ],
+    "passed": false
+  },
+  "port_conflicts": {
+    "conflicts": [],
+    "passed": true
+  },
+  "volume_existence": {
+    "missing": [
+      {
+        "service": "local-db",
+        "path": "/workspace/sdlc-skill-pack/local_apps/data/postgres"
+      },
+      {
+        "service": "local-db",
+        "path": "/workspace/sdlc-skill-pack/local_apps/backups"
+      },
+      {
+        "service": "local-queue",
+        "path": "/workspace/sdlc-skill-pack/local_apps/data/redis"
+      },
+      {
+        "service": "local-api",
+        "path": "/workspace/sdlc-skill-pack/local_apps/nginx/default.conf"
+      }
+    ],
+    "passed": false
+  },
+  "backup_readiness": {
+    "ready": true,
+    "remediation": "ok"
+  },
+  "upgrade_migration_warnings": []
+}

@@ -1,0 +1,26 @@
+{
+  "summary": {
+    "total": 3,
+    "passing": 3
+  },
+  "checks": [
+    {
+      "connector": "filesystem_connector",
+      "app": "local-app",
+      "status": "pass",
+      "mode": "read-only"
+    },
+    {
+      "connector": "sqlite_connector",
+      "app": "local-db",
+      "status": "pass",
+      "mode": "read-only"
+    },
+    {
+      "connector": "runtime_queue",
+      "app": "local-queue",
+      "status": "pass",
+      "mode": "enqueue-only"
+    }
+  ]
+}

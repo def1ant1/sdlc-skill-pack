@@ -48,7 +48,10 @@ def _load_env(path: Path) -> dict[str, str]:
 
 def _docker_inspect(service: str, compose_file: Path) -> dict[str, Any]:
     cmd = ["docker", "compose", "-f", str(compose_file), "ps", "--format", "json", service]
-    result = subprocess.run(cmd, capture_output=True, text=True)
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True)
+    except FileNotFoundError:
+        return {}
     if result.returncode != 0 or not result.stdout.strip():
         return {}
     try:

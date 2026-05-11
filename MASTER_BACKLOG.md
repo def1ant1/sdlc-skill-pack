@@ -115,6 +115,23 @@ docs/onboarding/DOCKER_DEPLOYMENT.md
 docs/onboarding/DOCKER_TROUBLESHOOTING.md
 ```
 
+
+Validation evidence (2026-05-11):
+
+- Added profile-aware local stack and env template:
+  - `local_apps/docker-compose.local-apps.yml`
+  - `local_apps/.env.local-apps.example`
+- Added canonical category mapping and coverage for priority local apps:
+  - `local_apps/mappings/local_app_categories.yaml`
+  - `scripts/local_apps/list_apps.py`
+- Added health/readiness + connector checks and generated health reports:
+  - `scripts/local_apps/check_app_health.py`
+  - `scripts/local_apps/check_connector_health.py`
+  - `scripts/local_apps/generate_local_app_report.py`
+  - `reports/local_apps/health-report.json`
+  - `reports/local_apps/health-report.md`
+  - `reports/local_apps/connector_health_report.json`
+
 Acceptance criteria:
 
 - Docker image builds reproducibly.
@@ -737,7 +754,7 @@ Acceptance criteria:
 ## MB-P1-005 — Add local open-source app connector layer
 
 **Source:** Domain + Docker/Productization Backlogs  
-**Status:** Open
+**Status:** Completed and finalized (2026-05-11)
 
 Create:
 
