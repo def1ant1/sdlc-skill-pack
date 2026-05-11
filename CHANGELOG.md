@@ -1,5 +1,12 @@
 ## 2026-05-11
 
+## [8.0.14] — 2026-05-11 — Local Workflow Run Storage + Inspection
+
+- Added local runtime state directories `runtime/workflow_runs/`, `runtime/artifacts/`, and `runtime/reports/` with `.gitkeep` sentinels.
+- Added `schemas/workflow-run-record.schema.json` and `references/local-output-policy.md` defining deterministic run-output layout and retention conventions.
+- Extended `scripts/runtime/execute_workflow.py` to persist per-run record, deterministic artifacts index, and operator report outputs keyed by `run_id`.
+- Added operator inspection commands `scripts/workflows/list_runs.py` and `scripts/workflows/show_run.py`.
+
 ## [8.0.13] — 2026-05-11 — Structured Error Contract Adoption
 
 - Added canonical error envelope schema `schemas/error-envelope.schema.json` and strengthened boundary validation in `scripts/validation/validate_error_contracts.py`.

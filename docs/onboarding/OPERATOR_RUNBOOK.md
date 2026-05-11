@@ -52,4 +52,11 @@ apotheon backup restore --dry-run dist/<backup-archive>.tar.gz
 ## Runtime Hardening Notes
 - Use `--dry-run` to validate plans without any external model or connector side effects.
 - For live runs, set `APOTHEON_PROVIDER` to `anthropic` or `local`; other providers are rejected by policy.
-- If a run fails with structured output errors, inspect step payloads in `runtime/workflow_history/<run_id>.json` and verify model responses are JSON objects with `status` and `summary`.
+- If a run fails with structured output errors, inspect step payloads with:
+  - `python scripts/workflows/list_runs.py --limit 20`
+  - `python scripts/workflows/show_run.py <run_id>`
+  - `python scripts/workflows/show_run.py <run_id> --summary`
+- Canonical local run outputs:
+  - `runtime/workflow_runs/<run_id>/run_record.json`
+  - `runtime/artifacts/<run_id>.artifacts.json`
+  - `runtime/reports/<run_id>.report.md`
