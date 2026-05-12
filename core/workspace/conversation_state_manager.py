@@ -17,6 +17,11 @@ _REQUIRED_DEFAULTS: dict[str, Any] = {
     "execution_status": "idle",
     "clarification_resolved": False,
     "memory_summary": "",
+    "turn_count": 0,
+    "rolling_memory_turn_interval": 3,
+    "rolling_memory_history": [],
+    "plan_preview": {"current_objective": "", "planned_steps": [], "next_action": ""},
+    "plan_deltas": [],
 }
 
 

@@ -12,7 +12,11 @@
     "pending_steps",
     "execution_status",
     "clarification_resolved",
-    "memory_summary"
+    "memory_summary",
+    "turn_count",
+    "rolling_memory_history",
+    "plan_preview",
+    "plan_deltas"
   ],
   "properties": {
     "schema_version": {"type": "string"},
@@ -29,6 +33,53 @@
     "execution_status": {"type": "string"},
     "clarification_resolved": {"type": "boolean"},
     "memory_summary": {"type": "string"},
+    "turn_count": {"type": "integer", "minimum": 0},
+    "rolling_memory_turn_interval": {"type": "integer", "minimum": 1},
+    "rolling_memory_history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["turn", "summary"],
+        "properties": {
+          "turn": {"type": "integer", "minimum": 1},
+          "summary": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "plan_preview": {
+      "type": "object",
+      "required": ["current_objective", "planned_steps", "next_action"],
+      "properties": {
+        "current_objective": {"type": "string"},
+        "planned_steps": {"type": "array", "items": {"type": "string"}},
+        "next_action": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "plan_confirmation": {
+      "type": "object",
+      "properties": {
+        "status": {"type": "string"},
+        "prompt": {"type": "string"},
+        "chips": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    },
+    "plan_deltas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["turn", "chip", "delta_type"],
+        "properties": {
+          "turn": {"type": "integer", "minimum": 1},
+          "chip": {"type": "string"},
+          "instruction": {"type": "string"},
+          "delta_type": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    },
     "facts": {"type": "object", "additionalProperties": true},
     "assumptions_catalog": {"type": "object", "additionalProperties": true},
     "clarifying_questions_asked": {"type": "integer", "minimum": 0},
