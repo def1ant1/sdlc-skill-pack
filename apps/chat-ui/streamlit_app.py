@@ -1168,6 +1168,86 @@ def derive_working_state(intent_raw: str, answers: dict[str, Any], analysis: dic
 # Panel renderers
 # ─────────────────────────────────────────────────────────────────────────────
 
+
+
+def _normalize_step_state(status: str) -> str:
+    s = (status or "").lower()
+    if s in {"completed", "done", "approved"}:
+        return "completed"
+    if s in {"running", "in_progress", "queued", "pending_hitl", "paused_for_hitl"}:
+        return "in_progress"
+    return "pending"
+
+
+def _build_execution_tracker_state(session_state: Any) -> list[dict[str, Any]]:
+    workflow = session_state.get("workflow_data") or {}
+    run_id = (workflow or {}).get("run_id") or (session_state.get("run_result") or {}).get("run_id")
+    steps = workflow.get("steps") if isinstance(workflow, dict) else None
+    if steps:
+        tracker = []
+        for idx, step in enumerate(steps, start=1):
+            tracker.append({
+                "label": step.get("skill_name") or step.get("name") or f"Step {idx}",
+                "status": _normalize_step_state(step.get("status", "pending")),
+                "raw_status": step.get("status", "pending"),
+                "artifact": step.get("artifact_id") or step.get("source_artifact_id") or step.get("step_id") or f"{run_id or 'local'}:step-{idx}",
+                "run_id": run_id,
+            })
+        return tracker
+
+    plan = session_state.get("plan") or {}
+    chain = plan.get("skill_chain", []) if isinstance(plan, dict) else []
+    if not chain:
+        return []
+
+    phase = session_state.get("phase", "idle")
+    done_index = len(chain) if phase == "done" else 0
+    current_index = 0 if phase in {"executing", "hitl_pending"} else -1
+    tracker = []
+    for idx, skill in enumerate(chain):
+        if idx < done_index:
+            normalized = "completed"
+        elif idx == current_index:
+            normalized = "in_progress"
+        else:
+            normalized = "pending"
+        tracker.append({
+            "label": skill,
+            "status": normalized,
+            "raw_status": normalized,
+            "artifact": f"plan:{plan.get('workflow_title','workflow')}:step-{idx+1}",
+            "run_id": run_id,
+        })
+    return tracker
+
+
+def render_current_task_banner(session_state: Any, api_url: str) -> None:
+    goal = session_state.get("active_goal") or (session_state.get("intent_raw") or "No active goal")
+    mode = session_state.get("selected_mode") or "Chat"
+    stage = session_state.get("workflow_stage") or session_state.get("phase") or "idle"
+    run_id = ((session_state.get("workflow_data") or {}).get("run_id")
+              or (session_state.get("run_result") or {}).get("run_id")
+              or "—")
+    st.markdown("""
+    <div style="position:sticky; top:0; z-index:999; background:#111827; border:1px solid #374151; border-radius:10px; padding:0.75rem; margin-bottom:0.75rem;">
+      <div style="font-weight:700; margin-bottom:0.35rem;">📌 Current Task</div>
+      <div style="font-size:0.9rem;"><strong>Mode:</strong> %s &nbsp;|&nbsp; <strong>Stage:</strong> %s &nbsp;|&nbsp; <strong>Run:</strong> %s</div>
+      <div style="font-size:0.92rem; margin-top:0.3rem;"><strong>Goal:</strong> %s</div>
+    </div>
+    """ % (mode, stage, run_id, goal), unsafe_allow_html=True)
+
+    tracker = _build_execution_tracker_state(session_state)
+    if tracker:
+        st.markdown("**Execution Steps**")
+        for idx, step in enumerate(tracker, start=1):
+            icon = {"completed": "✅", "in_progress": "🟡", "pending": "⚪"}.get(step["status"], "⚪")
+            trace_url = f"{api_url.rstrip('/')}/v1/workflows/{step['run_id']}" if step.get("run_id") else None
+            trace_label = f"artifact `{step['artifact']}`"
+            if trace_url:
+                st.markdown(f"{icon} **{idx}. {step['label']}** · `{step['raw_status']}`  \n↳ [{trace_label}]({trace_url})")
+            else:
+                st.markdown(f"{icon} **{idx}. {step['label']}** · `{step['raw_status']}`  \n↳ {trace_label}")
+
 def render_plan_panel(plan: dict) -> None:
     st.markdown(f"### {plan.get('workflow_title', 'Workflow Plan')}")
 
@@ -1652,6 +1732,8 @@ if col_panel is not None:
 # ─────────────────────────────────────────────────────────────────────────────
 
 with col_chat:
+
+    render_current_task_banner(s, api_url)
 
     # Message history
     for msg in s.messages:
