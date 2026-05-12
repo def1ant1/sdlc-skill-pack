@@ -1,0 +1,11 @@
+version: 1
+skill: pick-pack-optimization
+routes:
+  - when_intent_in:
+      - ecommerce_fulfillment
+      - shipping
+      - logistics
+    then: pick-pack-optimization
+  - when_contains_any:
+      - pick pack optimization
+    then: pick-pack-optimization

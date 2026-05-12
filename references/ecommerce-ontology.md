@@ -142,3 +142,19 @@ acquisition_priority_score =
 ```
 
 Recommendation payloads should always include `rationale`, `assumptions`, and `risk_profile`, and must route any purchase action through an approval gate.
+
+## Fulfillment + Shipping Recommendation Contract (MB-ECOM-P0-005)
+
+Shipping and fulfillment recommendation payloads must include a three-dimensional tradeoff matrix:
+
+- `cost`: estimated shipping + handling + packaging + accessorial costs, with currency and confidence band.
+- `delivery_time`: estimated transit/handling time (promised vs expected windows).
+- `sla_risk`: probability/severity of missing SLA commitments, including top risk drivers.
+
+Required entity links for fulfillment decisions:
+
+- `FulfillmentOrder.id` for the order execution target.
+- `InventoryLot.id` for inventory allocation and warehouse source constraints.
+- `MarketplaceListing.id` and/or order reference for customer promise context.
+
+All shipping purchases or other external side effects (label purchases, freight bookings, carrier-account charges, returns authorizations) must pass an explicit approval gate before execution. If approval is missing, planners must emit `approval_requested` and remain analysis-only.

@@ -29,3 +29,6 @@ Use this page as the primary onboarding/navigation hub.
 ## Marketplace and Memory
 - [Marketplace + Memory Guide](reference/marketplace-and-memory.md)
 - [Memory Engine](architecture/memory-engine.md)
+
+## Ecommerce Fulfillment
+- [Fulfillment + Logistics Workflow](workflows/ecommerce-fulfillment-logistics.md)

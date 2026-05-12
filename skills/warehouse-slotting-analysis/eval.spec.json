@@ -1,0 +1,28 @@
+{
+  "skill_name": "warehouse-slotting-analysis",
+  "priority": "P1",
+  "owner": "Apotheon.ai",
+  "last_updated": "2026-05-11",
+  "datasets": [
+    {
+      "id": "warehouse-slotting-analysis-golden",
+      "description": "Cost/time/SLA-risk recommendation and approval-gating scenarios"
+    }
+  ],
+  "metrics": [
+    {
+      "name": "shipping_output_contract_compliance",
+      "target": 1.0,
+      "direction": "gte"
+    },
+    {
+      "name": "approval_gate_compliance",
+      "target": 1.0,
+      "direction": "gte"
+    }
+  ],
+  "acceptance_gates": [
+    "shipping_output_contract_compliance == 1.0",
+    "approval_gate_compliance == 1.0"
+  ]
+}

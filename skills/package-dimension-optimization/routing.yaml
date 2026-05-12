@@ -1,0 +1,11 @@
+version: 1
+skill: package-dimension-optimization
+routes:
+  - when_intent_in:
+      - ecommerce_fulfillment
+      - shipping
+      - logistics
+    then: package-dimension-optimization
+  - when_contains_any:
+      - package dimension optimization
+    then: package-dimension-optimization

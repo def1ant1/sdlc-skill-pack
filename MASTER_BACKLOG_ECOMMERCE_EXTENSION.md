@@ -211,6 +211,8 @@ Acceptance criteria:
 
 ## MB-ECOM-P0-005 — Ecommerce logistics and fulfillment orchestration
 
+**Status:** Completed (2026-05-11)
+
 Create:
 
 ```text
@@ -241,6 +243,27 @@ Acceptance criteria:
 - Shipping recommendations include cost/time/risk tradeoffs.
 - Shipping purchases require approval.
 - Integrates with inventory and order entities.
+
+
+Implemented skill pack:
+
+```text
+skills/ecommerce-fulfillment/
+skills/shipping-carrier-selection/
+skills/package-dimension-optimization/
+skills/freight-and-pallet-analysis/
+skills/warehouse-slotting-analysis/
+skills/pick-pack-optimization/
+skills/returns-routing-analysis/
+skills/shipping-sla-risk-analysis/
+```
+
+Implementation notes:
+
+- Standardized shipping recommendation outputs to require explicit `cost`, `delivery_time`, and `sla_risk` dimensions.
+- Integrated fulfillment decision context with `FulfillmentOrder` and `InventoryLot` ontology entities for inventory-aware routing decisions.
+- Enforced approval gates for shipping purchases and other external side effects before execution; missing approvals force analysis-only mode with `approval_requested`.
+
 
 ---
 
