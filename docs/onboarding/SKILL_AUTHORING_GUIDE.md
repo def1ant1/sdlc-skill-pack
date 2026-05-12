@@ -204,3 +204,17 @@ with the changes documented in `CHANGELOG.md`.
 - [ ] HITL gates declared for any irreversible actions
 - [ ] All validation scripts pass
 - [ ] `detect_skill_gaps.py` reports no new missing dependencies
+
+## Conversational "Make this a reusable skill" flow
+
+Use the draft-first flow to generate a reusable skill contract before any file writes:
+
+```bash
+python scripts/skills/conversation_to_skill_draft.py   --name customer-intake-automation   --conversation "<conversation text>"   --plan reports/plan-1778552863.json   --workflow workflows/examples/oldfarmtrucks-launch-readiness.json
+```
+
+What it does:
+- Drafts purpose, inputs/outputs, boundaries, dependencies, HITL gates, and examples.
+- Runs frontmatter/structure validators before any write/promotion action.
+- Prints artifact + provenance JSON for human review/edit.
+- Requires explicit `--approve-write` to persist `SKILL.md` and `draft.provenance.json`.

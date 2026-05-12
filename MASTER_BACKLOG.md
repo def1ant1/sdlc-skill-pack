@@ -1462,3 +1462,16 @@ Delivered:
 - Approval decisions are integrated with runtime pause/resume/cancel audit trail events.
 - Scheduled and direct execution previews route through one shared approval/evidence pathway.
 - Documentation updated in `docs/architecture/assistant-workspace-ux.md` and `docs/governance/runtime-enforcement.md`.
+
+
+## MB-P1-010 — Conversational reusable-skill drafting + validator-gated promotion
+
+**Source:** Skill authoring workflow hardening  
+**Status:** Completed (2026-05-12)
+
+Completed scope:
+- Added conversational draft flow that generates reusable skill purpose, I/O, boundaries, dependencies, HITL gates, and examples.
+- Integrated existing scaffolder template and pre-write validation gates before persistence/promotion.
+- Added review-first UX (artifact preview + provenance) and explicit write approval gate.
+- Captured provenance links to source conversation, plan artifacts, and workflow artifacts.
+- Updated changelog + skill authoring documentation.
