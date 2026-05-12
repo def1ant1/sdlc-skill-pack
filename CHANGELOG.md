@@ -129,6 +129,15 @@
 
 # Changelog
 
+
+## 2026-05-12 — Workspace-primary phased execution plan, gates, and migration notes
+
+- Added phased execution plan to workspace architecture docs: P0 (orchestrator/intake/artifacts), P1 (plan+knowledge+tasks), P2 (chips+preview+approvals), and P3 (conversational skill creation).
+- Defined release gates per phase spanning schema validation, routing quality checks, interruption handling, approval safety, and UX acceptance criteria.
+- Added migration notes for legacy chat/workflow entrypoints to the workspace-primary operating model.
+- Added telemetry checkpoints for adoption, completion rates, clarification-rate reduction, approval latency/safety, and interruption recovery quality.
+- Updated onboarding to recommend Assistant Workspace as the default operator entrypoint.
+
 ## 2026-05-11 — MB-ECOM-P0-003 pricing intelligence engine completion
 
 - Added `core/pricing-intelligence/` package with reusable normalization logic for marketplace price/fee/shipping/tax standardization and profitability calculations.

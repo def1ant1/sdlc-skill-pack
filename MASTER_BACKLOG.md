@@ -1475,3 +1475,16 @@ Completed scope:
 - Added review-first UX (artifact preview + provenance) and explicit write approval gate.
 - Captured provenance links to source conversation, plan artifacts, and workflow artifacts.
 - Updated changelog + skill authoring documentation.
+
+
+## 2026-05-12 — MB-P3-009 workspace-primary phased rollout and migration gates
+
+**Status:** Completed — 2026-05-12
+
+Delivered:
+
+- Added workspace-primary phased execution plan with explicit P0/P1/P2/P3 scope in `docs/architecture/assistant-workspace-ux.md`.
+- Defined phase release gates covering schema validation, routing quality checks, interruption handling, approval safety, and UX acceptance criteria.
+- Added migration notes for existing chat/workflow entrypoints to workspace-primary operations.
+- Added telemetry checkpoints for adoption, completion rate, and clarification-rate reduction.
+- Updated onboarding guidance to direct new sessions to Assistant Workspace first.

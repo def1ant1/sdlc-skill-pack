@@ -46,6 +46,17 @@ COMPOSE_PROFILES=local-solo,core docker compose up -d
 
 See `docs/reference/profile-selection.md` for profile boundaries, high-risk defaults, and constraints.
 
+
+## Workspace-primary migration quick note
+
+`apps/assistant-workspace/streamlit_app.py` is now the recommended primary entrypoint for operator workflows, replacing cross-app chat/workflow hopping for day-to-day use.
+
+```bash
+streamlit run apps/assistant-workspace/streamlit_app.py
+```
+
+Use legacy chat/workflow entrypoints primarily for regression validation and transitional runbooks.
+
 ## Chat UI MVP quickstart
 
 Use the Streamlit Chat UI for browser-based planning with safe defaults.
