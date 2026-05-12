@@ -1,0 +1,35 @@
+{
+  "prior_state": {
+    "active_goal": "Implement conversation state flow",
+    "intent": "task_execution",
+    "intent_confidence": 0.78,
+    "workflow_stage": "clarification",
+    "completed_steps": [
+      "capture_requirements"
+    ],
+    "pending_steps": [
+      "confirm_schema",
+      "implement_next_step"
+    ],
+    "execution_status": "ask_clarifying_question",
+    "clarification_resolved": false,
+    "memory_summary": "Need schema confirmation before implementation",
+    "facts": {},
+    "clarifying_questions_asked": 1
+  },
+  "turn_input": {
+    "user_message": "Execute the next step using the standard schema",
+    "goal": "Implement conversation state flow",
+    "completed_steps": [
+      "confirm_schema"
+    ],
+    "pending_steps": [
+      "implement_next_step"
+    ],
+    "facts": {
+      "goal": "Implement conversation state flow"
+    },
+    "clarifying_questions_asked": 1,
+    "memory_summary": "Schema clarified; proceed with execution"
+  }
+}

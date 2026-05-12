@@ -2,67 +2,39 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 from typing import Any
 import re
 
+from core.workspace import ConversationStateManager
 
-@dataclass(frozen=True)
-class IntentRule:
-    intent: str
-    patterns: tuple[str, ...]
-    risk_level: str
-    default_action: str
-    required_fields: tuple[str, ...] = ()
-
-
-INTENT_RULES: tuple[IntentRule, ...] = (
-    IntentRule(
-        "high_risk_advice",
-        (r"medical|legal advice|investment|lawsuit|diagnosis|prescription",),
-        "high",
-        "request_handoff",
-        ("jurisdiction", "facts"),
-    ),
-    IntentRule(
-        "account_or_billing",
-        (r"billing|invoice|subscription|payment|refund",),
-        "medium",
-        "request_confirmation",
-        ("account_id",),
-    ),
-    IntentRule(
-        "task_execution",
-        (r"run|execute|create|implement|write|deploy|fix",),
-        "medium",
-        "propose_plan",
-        ("goal",),
-    ),
-    IntentRule("general_question", (r"\?|explain|what|how|why",), "low", "answer_directly"),
-)
 
 SAFE_DEFAULT_INTENT = "general_question"
 
 
 def classify_intent(user_message: str) -> dict[str, Any]:
     text = (user_message or "").strip().lower()
-    for rule in INTENT_RULES:
-        if any(re.search(pattern, text, re.IGNORECASE) for pattern in rule.patterns):
+    rules: tuple[tuple[str, tuple[str, ...], str, str, tuple[str, ...]], ...] = (
+        ("high_risk_advice", (r"medical|legal advice|investment|lawsuit|diagnosis|prescription",), "high", "request_handoff", ("jurisdiction", "facts")),
+        ("account_or_billing", (r"billing|invoice|subscription|payment|refund",), "medium", "request_confirmation", ("account_id",)),
+        ("task_execution", (r"run|execute|create|implement|write|deploy|fix",), "medium", "propose_plan", ("goal",)),
+        ("general_question", (r"\?|explain|what|how|why",), "low", "answer_directly", ()),
+    )
+    for intent, patterns, risk_level, default_action, required_fields in rules:
+        if any(re.search(pattern, text, re.IGNORECASE) for pattern in patterns):
             return {
-                "intent": rule.intent,
+                "intent": intent,
                 "confidence": 0.78,
-                "risk_level": rule.risk_level,
-                "default_action": rule.default_action,
-                "required_fields": list(rule.required_fields),
+                "risk_level": risk_level,
+                "default_action": default_action,
+                "required_fields": list(required_fields),
             }
 
-    fallback = next(rule for rule in INTENT_RULES if rule.intent == SAFE_DEFAULT_INTENT)
     return {
-        "intent": fallback.intent,
+        "intent": SAFE_DEFAULT_INTENT,
         "confidence": 0.45,
-        "risk_level": fallback.risk_level,
-        "default_action": fallback.default_action,
-        "required_fields": list(fallback.required_fields),
+        "risk_level": "low",
+        "default_action": "answer_directly",
+        "required_fields": [],
     }
 
 
@@ -70,72 +42,75 @@ def _compute_missing(required_fields: list[str], facts: dict[str, Any]) -> list[
     return [field for field in required_fields if not facts.get(field)]
 
 
-def _use_best_assumptions(missing: list[str], assumptions: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, str]]]:
-    updates: dict[str, Any] = {}
-    open_questions: list[dict[str, str]] = []
-    for field in missing:
-        assumed = assumptions.get(field)
-        if assumed is not None:
-            updates[field] = assumed
-        else:
-            open_questions.append(
-                {
-                    "field": field,
-                    "reason": "Required for safe execution and not provided.",
-                }
-            )
-    return updates, open_questions
+def _reconcile_turn_state(prior_state: dict[str, Any], turn_patch: dict[str, Any]) -> dict[str, Any]:
+    completed_prior = set(prior_state.get("completed_steps", []))
+    completed_turn = set(turn_patch.get("completed_steps", []))
+    merged_completed = sorted(completed_prior | completed_turn)
+
+    pending_prior = [s for s in prior_state.get("pending_steps", []) if s not in merged_completed]
+    pending_turn = [s for s in turn_patch.get("pending_steps", []) if s not in merged_completed]
+
+    merged_pending: list[str] = []
+    for step in [*pending_prior, *pending_turn]:
+        if step not in merged_pending:
+            merged_pending.append(step)
+
+    return {
+        **turn_patch,
+        "completed_steps": merged_completed,
+        "pending_steps": merged_pending,
+        "clarification_resolved": bool(turn_patch.get("clarification_resolved") or prior_state.get("clarification_resolved", False)),
+    }
 
 
 def route_next_safe_action(state: dict[str, Any]) -> dict[str, Any]:
-    intent = state["intent"]
     facts = dict(state.get("facts", {}))
     missing = _compute_missing(state.get("required_fields", []), facts)
-
-    use_best_assumptions = state.get("use_best_assumptions", False)
-    assumption_updates, unresolved = ({}, [])
-    if use_best_assumptions:
-        assumption_updates, unresolved = _use_best_assumptions(
-            missing,
-            assumptions=state.get("assumptions_catalog", {}),
-        )
-        facts.update(assumption_updates)
-    else:
-        unresolved = [
-            {"field": field, "reason": "Missing and no assumption mode enabled."}
-            for field in missing
-        ]
-    missing_after_assumptions = _compute_missing(state.get("required_fields", []), facts)
-
-    policy_high_risk = bool(state.get("policy", {}).get("high_risk", False))
-    is_high_risk = state.get("risk_level") == "high" or policy_high_risk
+    unresolved = [{"field": f, "reason": "Missing and no assumption mode enabled."} for f in missing]
+    is_high_risk = state.get("risk_level") == "high" or bool(state.get("policy", {}).get("high_risk", False))
     allow_clarifying = is_high_risk or state.get("clarifying_questions_asked", 0) < 1
 
-    if missing_after_assumptions and allow_clarifying:
+    if missing and allow_clarifying:
         next_action = "ask_clarifying_question"
-        questions_to_ask = missing_after_assumptions if is_high_risk else missing_after_assumptions[:1]
-    elif missing_after_assumptions:
+        questions = missing if is_high_risk else missing[:1]
+    elif missing:
         next_action = "defer_execution"
-        questions_to_ask = []
+        questions = []
     else:
         next_action = state.get("default_action", "answer_directly")
-        questions_to_ask = []
+        questions = []
 
     return {
-        "intent": intent,
+        "intent": state["intent"],
+        "intent_confidence": state.get("confidence", 0.0),
         "risk_level": state.get("risk_level", "low"),
         "next_safe_action": next_action,
         "facts": facts,
-        "assumptions_used": assumption_updates,
         "open_questions": unresolved,
-        "clarifying_questions_to_ask": questions_to_ask,
+        "clarifying_questions_to_ask": questions,
     }
 
 
-def orchestrate_conversation(session_state: dict[str, Any]) -> dict[str, Any]:
-    classification = classify_intent(session_state.get("user_message", ""))
-    merged_state = {
-        **session_state,
-        **classification,
+def orchestrate_conversation(conversation_state: dict[str, Any], session_state: dict[str, Any] | None = None) -> dict[str, Any]:
+    manager = ConversationStateManager()
+    prior = manager.read(conversation_state)
+    incoming = session_state or {}
+    classification = classify_intent(incoming.get("user_message", ""))
+    routing_input = {**prior, **incoming, **classification}
+    routing = route_next_safe_action(routing_input)
+
+    turn_patch = {
+        "active_goal": incoming.get("goal", prior.get("active_goal", "")),
+        "intent": routing["intent"],
+        "intent_confidence": routing["intent_confidence"],
+        "workflow_stage": "execution" if routing["next_safe_action"] != "ask_clarifying_question" else "clarification",
+        "completed_steps": incoming.get("completed_steps", []),
+        "pending_steps": incoming.get("pending_steps", prior.get("pending_steps", [])),
+        "execution_status": routing["next_safe_action"],
+        "clarification_resolved": routing["next_safe_action"] != "ask_clarifying_question",
+        "memory_summary": incoming.get("memory_summary", prior.get("memory_summary", "")),
+        "user_message": incoming.get("user_message", ""),
     }
-    return route_next_safe_action(merged_state)
+    reconciled_patch = _reconcile_turn_state(prior, turn_patch)
+    next_state = manager.write(prior, reconciled_patch)
+    return {**routing, "conversation_state": next_state}
