@@ -9,7 +9,8 @@ The right panel renders artifacts: plan details, live progress, HITL approval
 forms, reports, and past conversation/workflow history.
 
 Flow:
-  idle → questioning → reviewing → executing → [hitl_pending →] done
+  idle → conversational_response → draft_artifact (optional) → reviewing (optional)
+  → executing (optional) → hitl_pending (optional) → done
 """
 from __future__ import annotations
 
@@ -687,7 +688,8 @@ def gen_unknown_response(ollama_url: str, request: str) -> str:
 def _init() -> None:
     defaults: dict[str, Any] = {
         # Conversation state
-        "phase":             "idle",   # idle|questioning|reviewing|executing|hitl_pending|done
+        "phase":             "idle",   # idle|conversational_response|draft_artifact|questioning|reviewing|executing|hitl_pending|done
+        "mode":              "conversational",  # conversational|workflow_builder
         "messages":          [],
         "llm_messages":      [],
         "intent_raw":        "",
@@ -737,6 +739,123 @@ def open_panel(tab: str, artifact: Any = None) -> None:
     st.session_state.panel_tab = tab
     if artifact is not None:
         st.session_state.panel_artifact = artifact
+
+
+def _normalize_legacy_session_state() -> None:
+    """Migration-safe session guards for older phase values."""
+    phase = st.session_state.get("phase", "idle")
+    mode = st.session_state.get("mode", "conversational")
+    if mode not in ("conversational", "workflow_builder"):
+        st.session_state.mode = "conversational"
+        mode = "conversational"
+
+    if phase == "questioning" and mode != "workflow_builder":
+        if st.session_state.get("dynamic_questions"):
+            st.session_state.mode = "workflow_builder"
+        else:
+            st.session_state.phase = "conversational_response"
+    elif phase not in ("idle", "conversational_response", "draft_artifact", "questioning",
+                       "reviewing", "executing", "hitl_pending", "done"):
+        st.session_state.phase = "idle"
+
+
+def _run_conversational_mode(user_input: str, ollama_url: str, use_ollama: bool) -> None:
+    """Default route for new messages."""
+    s = st.session_state
+    s.phase = "conversational_response"
+    s.mode = "conversational"
+    s.intent_raw = user_input
+    s.q_index = 0
+    s.answers = {}
+    s.plan = None
+    s.run_result = None
+    s.poll_run_id = None
+    s.workflow_data = None
+    s.assistant_working_state = None
+    s.llm_messages = [{"role": "user", "content": user_input}]
+
+    with st.chat_message("assistant"):
+        with st.spinner("Analysing across all domains…"):
+            analysis = analyze_request(ollama_url, user_input) if use_ollama else None
+            if not analysis:
+                analysis = _fallback_analysis(user_input)
+
+        s.analysis = analysis
+        s.dynamic_questions = analysis.get("questions", [])
+        s.assistant_working_state = derive_working_state(s.intent_raw, s.answers, analysis)
+
+        if s.dynamic_questions:
+            s.mode = "workflow_builder"
+            s.phase = "questioning"
+            with st.spinner("Thinking…"):
+                reply = (
+                    gen_analysis_greeting(ollama_url, user_input, analysis)
+                    if use_ollama else (
+                        f"This is a **{analysis.get('workflow_title','')}** workflow touching "
+                        + ", ".join(DOMAIN_LABELS.get(d, d) for d in analysis.get("domains", []))
+                        + f".\n\n{s.dynamic_questions[0]}"
+                    )
+                )
+        else:
+            s.phase = "done"
+            with st.spinner("Thinking…"):
+                reply = (
+                    gen_unknown_response(ollama_url, user_input)
+                    if use_ollama else "Could you describe the primary goal in more detail?"
+                )
+        st.markdown(reply)
+
+    add_msg("assistant", reply)
+    add_llm("assistant", reply)
+
+
+def _run_workflow_builder_mode(user_input: str, ollama_url: str, use_ollama: bool) -> None:
+    """Structured interview intake and synthesis workflow."""
+    s = st.session_state
+    questions = s.dynamic_questions
+    s.answers[str(s.q_index + 1)] = user_input
+    s.q_index += 1
+    s.assistant_working_state = derive_working_state(s.intent_raw, s.answers, s.analysis)
+
+    if s.q_index < len(questions):
+        next_q = questions[s.q_index]
+        with st.chat_message("assistant"):
+            with st.spinner("Thinking…"):
+                reply = (
+                    gen_next_question(ollama_url, s.analysis or {}, next_q, s.answers, s.llm_messages)
+                    if use_ollama else f"Got it. {next_q}"
+                )
+            st.markdown(reply)
+        add_msg("assistant", reply)
+        add_llm("assistant", reply)
+        return
+
+    with st.chat_message("assistant"):
+        with st.spinner(
+            f"Building multi-domain plan across {len(s.analysis.get('domains', []))} domains…"
+        ):
+            synthesis = synthesize_plan(ollama_url, s.intent_raw, s.analysis, s.answers) if use_ollama else None
+            if not synthesis:
+                synthesis = _fallback_plan(s.intent_raw, s.analysis or {}, s.answers)
+
+            plan = build_plan(s.intent_raw, synthesis, s.answers)
+            plan["assistant_working_state"] = s.assistant_working_state
+            s.plan = plan
+            s.phase = "draft_artifact"
+            open_panel("plan")
+
+        with st.spinner("Drafting summary…"):
+            reply = (
+                gen_synthesis_intro(ollama_url, plan, s.llm_messages)
+                if use_ollama else (
+                    f"I've built a {plan.get('workflow_title','')} plan with "
+                    f"{len(plan['skill_chain'])} skills. Review in the Plan panel."
+                )
+            )
+        st.markdown(reply)
+    add_msg("assistant", reply)
+    add_llm("assistant", reply)
+    s.phase = "reviewing"
 
 
 def derive_working_state(intent_raw: str, answers: dict[str, Any], analysis: dict | None = None) -> dict[str, Any]:
@@ -966,6 +1085,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 _init()
+_normalize_legacy_session_state()
 s = st.session_state
 if s.workspace_state is None:
     s.workspace_state = load_workspace_state(WORKSPACE_STATE_FILE)
@@ -1295,6 +1415,7 @@ with col_chat:
                 s.q_index = 0
                 s.answers = {}
                 s.plan = None
+                s.mode = "workflow_builder"
                 s.phase = "questioning"
                 first_q = s.dynamic_questions[0] if s.dynamic_questions else "What is the primary goal?"
                 reply = gen_next_question(ollama_url, s.analysis or {}, first_q, {}, s.llm_messages)
@@ -1392,7 +1513,7 @@ with col_chat:
             st.markdown("Workflow complete. Type a new request to start another.")
 
     # Question progress indicator
-    if s.phase == "questioning" and s.dynamic_questions:
+    if s.phase == "questioning" and s.mode == "workflow_builder" and s.dynamic_questions:
         total = len(s.dynamic_questions)
         st.progress(s.q_index / total if total else 0,
                     text=f"Question {s.q_index}/{total}")
@@ -1400,6 +1521,8 @@ with col_chat:
     # ── Chat input ─────────────────────────────────────────────────────────────
     placeholders = {
         "idle":        "Describe what your organisation needs to accomplish…",
+        "conversational_response": "Thinking…",
+        "draft_artifact": "Drafting artifact…",
         "questioning": "Type your answer…",
         "reviewing":   "Type 'approve' or 'cancel', or use the buttons above…",
         "executing":   "Workflow running…",
@@ -1416,101 +1539,12 @@ with col_chat:
 
         # ── idle / done → analyze ─────────────────────────────────────────────
         if s.phase in ("idle", "done"):
-            s.intent_raw = user_input
-            s.q_index    = 0
-            s.answers    = {}
-            s.plan       = None
-            s.run_result = None
-            s.poll_run_id = None
-            s.workflow_data = None
-            s.assistant_working_state = None
-            s.llm_messages = [{"role": "user", "content": user_input}]
-
-            with st.chat_message("assistant"):
-                with st.spinner("Analysing across all domains…"):
-                    analysis = analyze_request(ollama_url, user_input) if use_ollama else None
-                    if not analysis:
-                        analysis = _fallback_analysis(user_input)
-
-                s.analysis          = analysis
-                s.dynamic_questions = analysis.get("questions", [])
-                s.assistant_working_state = derive_working_state(s.intent_raw, s.answers, analysis)
-
-                if s.dynamic_questions:
-                    s.phase = "questioning"
-                    with st.spinner("Thinking…"):
-                        reply = (
-                            gen_analysis_greeting(ollama_url, user_input, analysis)
-                            if use_ollama else (
-                                f"This is a **{analysis.get('workflow_title','')}** workflow touching "
-                                + ", ".join(DOMAIN_LABELS.get(d, d) for d in analysis.get("domains", []))
-                                + f".\n\n{s.dynamic_questions[0]}"
-                            )
-                        )
-                else:
-                    with st.spinner("Thinking…"):
-                        reply = (
-                            gen_unknown_response(ollama_url, user_input)
-                            if use_ollama else "Could you describe the primary goal in more detail?"
-                        )
-
-                st.markdown(reply)
-
-            add_msg("assistant", reply)
-            add_llm("assistant", reply)
+            _run_conversational_mode(user_input, ollama_url, use_ollama)
             st.rerun()
 
         # ── questioning → collect answer, advance ─────────────────────────────
-        elif s.phase == "questioning":
-            questions = s.dynamic_questions
-            s.answers[str(s.q_index + 1)] = user_input
-            s.q_index += 1
-            s.assistant_working_state = derive_working_state(s.intent_raw, s.answers, s.analysis)
-
-            if s.q_index < len(questions):
-                next_q = questions[s.q_index]
-                with st.chat_message("assistant"):
-                    with st.spinner("Thinking…"):
-                        reply = (
-                            gen_next_question(ollama_url, s.analysis or {}, next_q,
-                                              s.answers, s.llm_messages)
-                            if use_ollama else f"Got it. {next_q}"
-                        )
-                    st.markdown(reply)
-                add_msg("assistant", reply)
-                add_llm("assistant", reply)
-            else:
-                # All answered → synthesize
-                with st.chat_message("assistant"):
-                    with st.spinner(
-                        f"Building multi-domain plan across "
-                        f"{len(s.analysis.get('domains', []))} domains…"
-                    ):
-                        synthesis = (
-                            synthesize_plan(ollama_url, s.intent_raw, s.analysis, s.answers)
-                            if use_ollama else None
-                        )
-                        if not synthesis:
-                            synthesis = _fallback_plan(s.intent_raw, s.analysis or {}, s.answers)
-
-                        plan   = build_plan(s.intent_raw, synthesis, s.answers)
-                        plan["assistant_working_state"] = s.assistant_working_state
-                        s.plan = plan
-                        s.phase = "reviewing"
-                        open_panel("plan")   # auto-open plan panel
-
-                    with st.spinner("Drafting summary…"):
-                        reply = (
-                            gen_synthesis_intro(ollama_url, plan, s.llm_messages)
-                            if use_ollama else (
-                                f"I've built a {plan.get('workflow_title','')} plan with "
-                                f"{len(plan['skill_chain'])} skills. Review in the Plan panel."
-                            )
-                        )
-                    st.markdown(reply)
-                add_msg("assistant", reply)
-                add_llm("assistant", reply)
-
+        elif s.phase == "questioning" and s.mode == "workflow_builder":
+            _run_workflow_builder_mode(user_input, ollama_url, use_ollama)
             st.rerun()
 
         # ── reviewing → text approval ─────────────────────────────────────────
