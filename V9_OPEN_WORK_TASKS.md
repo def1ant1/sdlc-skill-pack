@@ -28,3 +28,5 @@ All missing deliverables and phase completion details are derived from:
 3. `reports/repo_truth_report.md` (detailed missing-path list)
 
 Do not hand-edit counts in this file.
+
+- 2026-05-12: Task-scheduler core + governed task/schedule lifecycle implementation completed (chat schedule create/pause/archive, recurring-run task generation, operational docs).

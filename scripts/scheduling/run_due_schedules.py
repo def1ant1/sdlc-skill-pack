@@ -12,6 +12,7 @@ from typing import Any
 from scripts.runtime.error_envelope import build_error_envelope
 
 from scripts.scheduling.preview_schedule import REGISTRY_PATH, _parse_iso, compute_due_runs, load_registry
+from scripts.scheduling.task_scheduler_runtime import create_task_from_schedule_run
 
 HISTORY_DIR = Path(__file__).resolve().parents[2] / "runtime" / "schedule_history"
 
@@ -34,7 +35,7 @@ def _validate_schedule_artifact(payload: dict[str, Any]) -> None:
 
 
 
-def execute_due(as_of: dt.datetime, registry_path: Path, history_dir: Path, lookback_minutes: int = 60) -> dict[str, Any]:
+def execute_due(as_of: dt.datetime, registry_path: Path, history_dir: Path, lookback_minutes: int = 60, task_dir: Path | None = None) -> dict[str, Any]:
     history_dir.mkdir(parents=True, exist_ok=True)
     results: list[dict[str, Any]] = []
     for schedule in load_registry(registry_path):
@@ -60,7 +61,12 @@ def execute_due(as_of: dt.datetime, registry_path: Path, history_dir: Path, look
                 _validate_schedule_artifact(payload)
                 artifact.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
                 status = "executed"
-            results.append({"schedule_id": schedule["schedule_id"], "run_id": run_id, "run_at": run_at.isoformat(), "status": status})
+            result={"schedule_id": schedule["schedule_id"], "run_id": run_id, "run_at": run_at.isoformat(), "status": status}
+            if status=="executed" and task_dir is not None:
+                task_path=create_task_from_schedule_run({"schedule_id":schedule["schedule_id"],"run_id":run_id}, schedule, task_dir)
+                if task_path is not None:
+                    result["generated_task"]=str(task_path)
+            results.append(result)
     return {"as_of": as_of.isoformat(), "runs": results}
 
 
@@ -70,10 +76,11 @@ def main() -> int:
     parser.add_argument("--history-dir", type=Path, default=HISTORY_DIR)
     parser.add_argument("--as-of", default=dt.datetime.now(dt.timezone.utc).isoformat())
     parser.add_argument("--lookback-minutes", type=int, default=60)
+    parser.add_argument("--task-dir", type=Path, default=Path("runtime/tasks"))
     args = parser.parse_args()
 
     as_of = _parse_iso(args.as_of)
-    report = execute_due(as_of, args.registry, args.history_dir, args.lookback_minutes)
+    report = execute_due(as_of, args.registry, args.history_dir, args.lookback_minutes, args.task_dir)
     print(json.dumps(report, indent=2, sort_keys=True))
     return 0
 

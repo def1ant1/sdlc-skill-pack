@@ -46,6 +46,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from scripts.scheduling.task_scheduler_runtime import set_schedule_state
+
 REPO_ROOT = Path(__file__).parent
 SCRIPTS = REPO_ROOT / "scripts"
 
@@ -174,13 +176,38 @@ def cmd_workflows(args: list[str]) -> int:
 
 def cmd_schedules(args: list[str]) -> int:
     if not args:
-        return _err("usage: apotheon schedules <preview|run-due|repair>")
+        return _err("usage: apotheon schedules <preview|run-due|repair|create|pause|archive>")
     subcommand = args[0]
     rest = args[1:]
     if subcommand == "preview":
         return _run([_python(), _script("scripts/scheduling/preview_schedule.py"), *rest])
     if subcommand == "run-due":
         return _run([_python(), _script("scripts/scheduling/run_due_schedules.py"), *rest])
+
+    if subcommand == "pause":
+        if not rest:
+            return _err("usage: apotheon schedules pause <schedule_id>")
+        return 0 if set_schedule_state(Path("schedules/registry.yaml"), rest[0], enabled=False) else 1
+    if subcommand == "archive":
+        if not rest:
+            return _err("usage: apotheon schedules archive <schedule_id>")
+        return 0 if set_schedule_state(Path("schedules/registry.yaml"), rest[0], enabled=False, archived=True) else 1
+    if subcommand == "create":
+        if len(rest) < 3:
+            return _err("usage: apotheon schedules create <schedule_id> <mode:cron|interval|event> <target>")
+        import yaml
+        reg=Path("schedules/registry.yaml")
+        payload=yaml.safe_load(reg.read_text()) or {"schedules": []}
+        sid,mode,target=rest[0],rest[1],rest[2]
+        sch={"schedule_id":sid,"mode":mode,"enabled":True,"owner":"chat","planner_target":target,"risk_tier":"medium","action":{"type":"workflow","target":target},"approval":{"required":True,"policy_ref":"shared/policies/ai-safety-policy.md"},"generate_task":True}
+        if mode=="interval": sch["interval_minutes"]=60
+        elif mode=="cron": sch["cron"]="0 * * * *"
+        else: sch["event"]={"name":"manual"}
+        payload.setdefault("schedules",[]).append(sch)
+        reg.write_text(yaml.safe_dump(payload, sort_keys=False))
+        print(f"created schedule {sid}")
+        return 0
+
     if subcommand == "repair":
         print("Repairing schedule state...")
         locks_dir = Path("runtime/schedule_history/locks")
@@ -191,7 +218,7 @@ def cmd_schedules(args: list[str]) -> int:
                 removed += 1
         print(f"Removed {removed} stale lock file(s).")
         return _run([_python(), _script("scripts/scheduling/run_due_schedules.py"), "--dry-run"])
-    return _err("usage: apotheon schedules <preview|run-due|repair>")
+    return _err("usage: apotheon schedules <preview|run-due|repair|create|pause|archive>")
 
 
 def cmd_connectors(args: list[str]) -> int:
