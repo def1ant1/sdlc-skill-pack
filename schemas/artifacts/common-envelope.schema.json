@@ -3,46 +3,42 @@
   "$id": "https://apotheon.local/schemas/artifacts/common-envelope.schema.json",
   "title": "Artifact Common Envelope",
   "type": "object",
-  "required": [
-    "id",
-    "type",
-    "title",
-    "status",
-    "source",
-    "owner",
-    "version",
-    "content",
-    "links"
-  ],
+  "required": ["id", "type", "title", "status", "owner", "source_refs", "version", "content", "relationships"],
   "properties": {
     "id": {"type": "string", "minLength": 1},
     "type": {"type": "string", "minLength": 1},
     "title": {"type": "string", "minLength": 1},
-    "status": {"type": "string", "enum": ["draft", "active", "approved", "rejected", "archived", "completed"]},
-    "source": {
-      "type": "object",
-      "required": ["conversation_id", "message_ids"],
-      "properties": {
-        "conversation_id": {"type": "string", "minLength": 1},
-        "message_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
-      },
-      "additionalProperties": false
-    },
+    "status": {"type": "string", "enum": ["draft", "active", "approved", "rejected", "archived", "completed", "running"]},
     "owner": {"type": "string", "minLength": 1},
+    "source_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["conversation_id", "message_ids"],
+        "properties": {
+          "conversation_id": {"type": "string", "minLength": 1},
+          "message_ids": {"type": "array", "items": {"type": "string", "minLength": 1}}
+        },
+        "additionalProperties": false
+      }
+    },
     "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
     "content": {"type": "object"},
-    "links": {
+    "relationships": {
       "type": "array",
       "items": {
         "type": "object",
         "required": ["rel", "target"],
         "properties": {
           "rel": {"type": "string"},
-          "target": {"type": "string"}
+          "target": {"type": "string"},
+          "description": {"type": "string"}
         },
         "additionalProperties": false
       }
-    }
+    },
+    "audit_events": {"type": "array", "items": {"type": "object"}}
   },
   "additionalProperties": false
 }
