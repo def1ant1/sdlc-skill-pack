@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sdlc-skill-pack/core/conversation-extraction/schemas/entity.schema.json",
+  "title": "Entity Extraction",
+  "type": "object",
+  "required": ["suggestion_id", "name", "type", "source_message_ids"],
+  "properties": {
+    "suggestion_id": {"type": "string"},
+    "name": {"type": "string"},
+    "type": {"type": "string", "enum": ["person", "team", "system", "artifact", "vendor", "metric", "other"]},
+    "attributes": {"type": "object", "additionalProperties": {"type": ["string", "number", "boolean"]}},
+    "source_message_ids": {"type": "array", "items": {"type": "string"}, "minItems": 1}
+  },
+  "additionalProperties": false
+}
