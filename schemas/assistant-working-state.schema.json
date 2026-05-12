@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apotheon.dev/schemas/assistant-working-state.schema.json",
+  "title": "AssistantWorkingState",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["goal", "assumptions", "constraints", "risks", "open_questions", "next_actions"],
+  "properties": {
+    "goal": {"type": "string"},
+    "assumptions": {"type": "array", "items": {"$ref": "./components/assumption.schema.json"}},
+    "constraints": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {"type": "string", "minLength": 1},
+          {"$ref": "./components/constraint.schema.json"}
+        ]
+      }
+    },
+    "risks": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {"type": "string", "minLength": 1},
+          {"$ref": "./components/risk.schema.json"}
+        ]
+      }
+    },
+    "open_questions": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {"type": "string", "minLength": 1},
+          {"$ref": "./components/open-question.schema.json"}
+        ]
+      }
+    },
+    "next_actions": {"type": "array", "items": {"type": "string", "minLength": 1}}
+  }
+}

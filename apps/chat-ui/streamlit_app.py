@@ -32,6 +32,7 @@ from workspace_state import (
     save_workspace_state,
 )
 from workspace_views import render_workspace_actions
+from visible_cognition_panel import render_visible_cognition_panel
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Configuration
@@ -552,6 +553,7 @@ def build_plan(request: str, synthesis: dict, answers: dict) -> dict:
         "risks":          synthesis.get("risks", []),
         "rationale":      synthesis.get("rationale", ""),
         "context":        answers,
+        "assistant_working_state": st.session_state.get("assistant_working_state"),
         "steps":          steps,
         "governance_gates": [
             {"id": "gate-policy", "policy_ref": "references/business-policy-standard.md", "enforcement": "blocking"},
@@ -706,6 +708,7 @@ def _init() -> None:
         "panel_artifact":    None,    # generic artifact data for the panel
         "workspace_state":   None,
         "active_workspace_conversation": None,
+        "assistant_working_state": None,
     }
     for k, v in defaults.items():
         if k not in st.session_state:
@@ -734,6 +737,27 @@ def open_panel(tab: str, artifact: Any = None) -> None:
     st.session_state.panel_tab = tab
     if artifact is not None:
         st.session_state.panel_artifact = artifact
+
+
+def derive_working_state(intent_raw: str, answers: dict[str, Any], analysis: dict | None = None) -> dict[str, Any]:
+    assumptions = []
+    for key, value in answers.items():
+        assumptions.append(
+            {
+                "text": f"Answer to question {key}: {value}",
+                "source": "user_chat",
+                "confidence": "high",
+                "status": "user_provided",
+            }
+        )
+    return {
+        "goal": intent_raw,
+        "assumptions": assumptions,
+        "constraints": [],
+        "risks": (analysis or {}).get("risks", []),
+        "open_questions": [],
+        "next_actions": ["Review plan", "Approve or refine before execution"],
+    }
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Panel renderers
@@ -1067,7 +1091,7 @@ else:
 if col_panel is not None:
     with col_panel:
         # Tab selector
-        tab_options = {"plan": "Plan", "progress": "Progress", "hitl": "Approvals", "history": "History"}
+        tab_options = {"plan": "Plan", "cognition": "Cognition", "progress": "Progress", "hitl": "Approvals", "history": "History"}
         tab_cols = st.columns(len(tab_options))
         for i, (tab_key, tab_label) in enumerate(tab_options.items()):
             active = s.panel_tab == tab_key
@@ -1099,6 +1123,19 @@ if col_panel is not None:
                         st.rerun()
             else:
                 st.info("No plan yet. Start a conversation to build one.")
+
+        # ── Cognition tab ─────────────────────────────────────────────────────
+        elif s.panel_tab == "cognition":
+            updated_state, changed = render_visible_cognition_panel(s.assistant_working_state)
+            if changed:
+                s.assistant_working_state = updated_state
+                s.answers["goal"] = updated_state.get("goal", "")
+                s.answers["constraints"] = updated_state.get("constraints", [])
+                s.answers["open_questions"] = updated_state.get("open_questions", [])
+                if s.plan:
+                    s.plan["assistant_working_state"] = updated_state
+                    s.plan["risks"] = updated_state.get("risks", s.plan.get("risks", []))
+                st.success("Cognition state updated.")
 
         # ── Progress tab ──────────────────────────────────────────────────────
         elif s.panel_tab == "progress":
@@ -1386,6 +1423,7 @@ with col_chat:
             s.run_result = None
             s.poll_run_id = None
             s.workflow_data = None
+            s.assistant_working_state = None
             s.llm_messages = [{"role": "user", "content": user_input}]
 
             with st.chat_message("assistant"):
@@ -1396,6 +1434,7 @@ with col_chat:
 
                 s.analysis          = analysis
                 s.dynamic_questions = analysis.get("questions", [])
+                s.assistant_working_state = derive_working_state(s.intent_raw, s.answers, analysis)
 
                 if s.dynamic_questions:
                     s.phase = "questioning"
@@ -1426,6 +1465,7 @@ with col_chat:
             questions = s.dynamic_questions
             s.answers[str(s.q_index + 1)] = user_input
             s.q_index += 1
+            s.assistant_working_state = derive_working_state(s.intent_raw, s.answers, s.analysis)
 
             if s.q_index < len(questions):
                 next_q = questions[s.q_index]
@@ -1454,6 +1494,7 @@ with col_chat:
                             synthesis = _fallback_plan(s.intent_raw, s.analysis or {}, s.answers)
 
                         plan   = build_plan(s.intent_raw, synthesis, s.answers)
+                        plan["assistant_working_state"] = s.assistant_working_state
                         s.plan = plan
                         s.phase = "reviewing"
                         open_panel("plan")   # auto-open plan panel

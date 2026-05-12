@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apotheon.dev/schemas/components/open-question.schema.json",
+  "title": "OpenQuestion",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["question", "status"],
+  "properties": {
+    "question": {"type": "string", "minLength": 1},
+    "status": {"type": "string", "enum": ["open", "resolved"]},
+    "owner": {"type": "string"}
+  }
+}
