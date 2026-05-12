@@ -9,6 +9,7 @@ from core.workspace import ConversationStateManager
 
 
 SAFE_DEFAULT_INTENT = "general_question"
+PLAN_ADJUSTMENT_CHIPS = ("seo_audit", "technical", "content", "performance")
 
 
 def classify_intent(user_message: str) -> dict[str, Any]:
@@ -63,6 +64,35 @@ def _reconcile_turn_state(prior_state: dict[str, Any], turn_patch: dict[str, Any
     }
 
 
+def _build_plan_preview(goal: str, pending_steps: list[str], next_action: str) -> dict[str, Any]:
+    return {
+        "current_objective": goal,
+        "planned_steps": pending_steps[:6],
+        "next_action": next_action,
+    }
+
+
+def _build_memory_summary(state: dict[str, Any]) -> str:
+    completed = ", ".join(state.get("completed_steps", [])[-3:]) or "none"
+    pending = ", ".join(state.get("pending_steps", [])[:3]) or "none"
+    return f"Goal: {state.get('active_goal', '')}. Completed: {completed}. Pending: {pending}."
+
+
+def _extract_plan_delta(incoming: dict[str, Any], turn_number: int) -> dict[str, Any] | None:
+    adjustment = incoming.get("plan_adjustment")
+    if not isinstance(adjustment, dict):
+        return None
+    chip = adjustment.get("chip")
+    if chip not in PLAN_ADJUSTMENT_CHIPS:
+        return None
+    return {
+        "turn": turn_number,
+        "chip": chip,
+        "instruction": adjustment.get("instruction", ""),
+        "delta_type": "user_adjustment",
+    }
+
+
 def route_next_safe_action(state: dict[str, Any]) -> dict[str, Any]:
     facts = dict(state.get("facts", {}))
     missing = _compute_missing(state.get("required_fields", []), facts)
@@ -97,7 +127,9 @@ def orchestrate_conversation(conversation_state: dict[str, Any], session_state: 
     incoming = session_state or {}
     classification = classify_intent(incoming.get("user_message", ""))
     routing_input = {**prior, **incoming, **classification}
+    routing_input["memory_summary"] = prior.get("memory_summary", "")
     routing = route_next_safe_action(routing_input)
+    turn_count = int(prior.get("turn_count", 0)) + 1
 
     turn_patch = {
         "active_goal": incoming.get("goal", prior.get("active_goal", "")),
@@ -109,8 +141,29 @@ def orchestrate_conversation(conversation_state: dict[str, Any], session_state: 
         "execution_status": routing["next_safe_action"],
         "clarification_resolved": routing["next_safe_action"] != "ask_clarifying_question",
         "memory_summary": incoming.get("memory_summary", prior.get("memory_summary", "")),
+        "turn_count": turn_count,
         "user_message": incoming.get("user_message", ""),
     }
     reconciled_patch = _reconcile_turn_state(prior, turn_patch)
+    preview = _build_plan_preview(reconciled_patch["active_goal"], reconciled_patch["pending_steps"], routing["next_safe_action"])
+    reconciled_patch["plan_preview"] = preview
+    reconciled_patch["plan_confirmation"] = {
+        "status": incoming.get("plan_confirmation", "pending"),
+        "prompt": "Confirm or adjust plan focus.",
+        "chips": list(PLAN_ADJUSTMENT_CHIPS),
+    }
+    interval = int(prior.get("rolling_memory_turn_interval", 3))
+    if turn_count % max(interval, 1) == 0:
+        summary = _build_memory_summary(reconciled_patch)
+        history = list(prior.get("rolling_memory_history", []))
+        history.append({"turn": turn_count, "summary": summary})
+        reconciled_patch["memory_summary"] = summary
+        reconciled_patch["rolling_memory_history"] = history[-10:]
+
+    delta = _extract_plan_delta(incoming, turn_count)
+    if delta:
+        deltas = list(prior.get("plan_deltas", []))
+        deltas.append(delta)
+        reconciled_patch["plan_deltas"] = deltas
     next_state = manager.write(prior, reconciled_patch)
     return {**routing, "conversation_state": next_state}

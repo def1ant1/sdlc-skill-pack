@@ -21,6 +21,11 @@ CHIP_SET = [
     "show_dependencies",
     "show_risks",
     "generate_report",
+    "confirm_plan",
+    "adjust_plan_seo_audit",
+    "adjust_plan_technical",
+    "adjust_plan_content",
+    "adjust_plan_performance",
 ]
 
 
@@ -73,6 +78,11 @@ def generate_action_chips(response_context: dict[str, Any], active_artifacts: li
     add("show_dependencies", "Show dependencies", "Dependency visibility reduces execution ordering mistakes.")
     add("show_risks", "Show risks", "Risk visibility improves user control before execution.")
     add("generate_report", "Generate report", "Execution/readiness status can be summarized for sharing.")
+    add("confirm_plan", "Confirm plan", "Plan can be confirmed before execution begins.", {"status": "confirm"})
+    add("adjust_plan_seo_audit", "SEO audit", "Focuses plan on SEO analysis and prioritization.", {"chip": "seo_audit"})
+    add("adjust_plan_technical", "Technical", "Focuses plan on technical implementation details.", {"chip": "technical"})
+    add("adjust_plan_content", "Content", "Focuses plan on content strategy and production.", {"chip": "content"})
+    add("adjust_plan_performance", "Performance", "Focuses plan on performance optimization steps.", {"chip": "performance"})
 
     return [c for c in chips if c.key in CHIP_SET]
 
