@@ -486,7 +486,7 @@ Acceptance criteria:
 
 ## UX-P1-001 — Add command palette for assistant operations
 
-**Status:** Open  
+**Status:** Completed (2026-05-12)  
 **Priority:** P1  
 **Theme:** Power navigation
 
@@ -512,7 +512,7 @@ Acceptance criteria:
 
 ## UX-P1-002 — Add multi-agent visibility and collaboration UI
 
-**Status:** Open  
+**Status:** Completed (2026-05-12)  
 **Priority:** P1  
 **Theme:** Multi-agent transparency
 
@@ -540,7 +540,7 @@ Acceptance criteria:
 
 ## UX-P1-003 — Add AI memory inspector
 
-**Status:** Open  
+**Status:** Completed (2026-05-12)  
 **Priority:** P1  
 **Theme:** Memory transparency
 
@@ -569,7 +569,7 @@ Acceptance criteria:
 
 ## UX-P1-004 — Add knowledge graph visualization
 
-**Status:** Open  
+**Status:** Completed (2026-05-12)  
 **Priority:** P1  
 **Theme:** Visual knowledge
 
@@ -596,7 +596,7 @@ Acceptance criteria:
 
 ## UX-P1-005 — Add workspace health dashboard
 
-**Status:** Open  
+**Status:** Completed (2026-05-12)  
 **Priority:** P1  
 **Theme:** Operational intelligence
 
@@ -625,7 +625,7 @@ Acceptance criteria:
 
 ## UX-P1-006 — Add relationship-aware navigation
 
-**Status:** Open  
+**Status:** Completed (2026-05-12)  
 **Priority:** P1  
 **Theme:** Contextual navigation
 
@@ -652,7 +652,7 @@ Acceptance criteria:
 
 ## UX-P1-007 — Add operating modes
 
-**Status:** Open  
+**Status:** Completed (2026-05-12)  
 **Priority:** P1  
 **Theme:** Adaptive assistant behavior
 
@@ -690,7 +690,7 @@ Acceptance criteria:
 
 ## UX-P1-008 — Add explainability affordances everywhere
 
-**Status:** Open  
+**Status:** Completed (2026-05-12)  
 **Priority:** P1  
 **Theme:** Trust and reasoning transparency
 
@@ -716,7 +716,7 @@ Acceptance criteria:
 
 ## UX-P1-009 — Add reusable operational templates
 
-**Status:** Open  
+**Status:** Completed (2026-05-12)  
 **Priority:** P1  
 **Theme:** Reuse and scale
 
@@ -743,7 +743,7 @@ Acceptance criteria:
 
 ## UX-P1-010 — Add adaptive UI complexity
 
-**Status:** Open  
+**Status:** Completed (2026-05-12)  
 **Priority:** P1  
 **Theme:** Progressive disclosure
 
@@ -768,7 +768,7 @@ Acceptance criteria:
 
 ## UX-P1-011 — Add natural language artifact editing
 
-**Status:** Open  
+**Status:** Completed (2026-05-12)  
 **Priority:** P1  
 **Theme:** Conversational control
 
@@ -795,7 +795,7 @@ Acceptance criteria:
 
 ## UX-P1-012 — Add advanced search across workspace and knowledge
 
-**Status:** Open  
+**Status:** Completed (2026-05-12)  
 **Priority:** P1  
 **Theme:** Findability
 
@@ -823,7 +823,7 @@ Acceptance criteria:
 
 ## UX-P1-013 — Add inbox/triage experience
 
-**Status:** Open  
+**Status:** Completed (2026-05-12)  
 **Priority:** P1  
 **Theme:** Operational triage
 
@@ -851,7 +851,7 @@ Acceptance criteria:
 
 ## UX-P1-014 — Add workspace onboarding and guided setup
 
-**Status:** Open  
+**Status:** Completed (2026-05-12)  
 **Priority:** P1  
 **Theme:** Time-to-value
 
@@ -877,7 +877,7 @@ Acceptance criteria:
 
 ## UX-P1-015 — Add notification and attention management
 
-**Status:** Open  
+**Status:** Completed (2026-05-12)  
 **Priority:** P1  
 **Theme:** Focus and alerts
 
@@ -905,7 +905,7 @@ Acceptance criteria:
 
 ## UX-P1-016 — Add model/runtime selection UX
 
-**Status:** Open  
+**Status:** Completed (2026-05-12)  
 **Priority:** P1  
 **Theme:** Runtime control
 
@@ -931,7 +931,7 @@ Acceptance criteria:
 
 ## UX-P1-017 — Add cost, token, and quota UX controls
 
-**Status:** Open  
+**Status:** Completed (2026-05-12)  
 **Priority:** P1  
 **Theme:** Budget control
 
