@@ -229,3 +229,11 @@ All notable changes to the Apotheon AI Company OS are documented here.
 - Added catalog/inventory components covering normalization, multi-channel sync, deduplication, SKU relationship analysis, bundles, and reorder threshold analysis.
 - Added ecommerce analytics surface via `apps/ecommerce-dashboard/` and profitability/operations reports.
 - Standardized required metrics (gross/net margin, sell-through, aging, return rate, shipping/fee ratio, conversion, CAC) with marketplace and SKU segmentation in generated artifacts.
+
+## 2026-05-12 — MB-P3-007 conversation orchestrator state machine + adaptive intake
+
+- Added `core/conversation-orchestrator/` with explicit state model: `idle`, `exploring`, `drafting_plan`, `refining_plan`, `creating_workflow`, `executing_workflow`, `awaiting_approval`, `curating_knowledge`, `scheduling_task`, and `reviewing_results`.
+- Implemented transition logic driven by utterances, approvals, corrections, and interruption directives (`pause`, `switch`, `forget`, `resume`).
+- Added context tracking for active goal, active artifacts, and resolved questions to prevent repetitive intake.
+- Added `references/conversation-state-machine.md`, `references/adaptive-intake-policy.md`, and `templates/conversation-artifact-events.md`.
+- Updated orchestration engine documentation with conversation state-machine details.
