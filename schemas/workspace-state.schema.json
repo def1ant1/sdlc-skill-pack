@@ -1,0 +1,52 @@
+{
+  "$id": "https://apotheon.dev/schemas/workspace-state.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Workspace State",
+  "type": "object",
+  "required": ["schema_version", "workspace", "conversations", "artifacts", "approvals", "execution_runs"],
+  "properties": {
+    "schema_version": {"type": "string"},
+    "workspace": {"$ref": "workspace.schema.json"},
+    "conversations": {
+      "type": "array",
+      "items": {"$ref": "conversation-session.schema.json"}
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["artifact_id", "artifact_type"],
+        "properties": {
+          "artifact_id": {"type": "string"},
+          "artifact_type": {"type": "string"},
+          "uri": {"type": ["string", "null"]},
+          "workspace_id": {"type": "string"}
+        }
+      }
+    },
+    "approvals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["approval_id", "run_id"],
+        "properties": {
+          "approval_id": {"type": "string"},
+          "run_id": {"type": "string"},
+          "skill_name": {"type": ["string", "null"]},
+          "status": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "execution_runs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["run_id"],
+        "properties": {
+          "run_id": {"type": "string"},
+          "status": {"type": ["string", "null"]}
+        }
+      }
+    }
+  }
+}
