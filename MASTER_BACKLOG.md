@@ -1351,3 +1351,14 @@ Only mark complete when implementation exists, tests pass, reports regenerate cl
 **Status:** Complete (2026-05-11)
 
 Completed documentation updates across top-level docs, onboarding runbooks, API/examples pages, required architecture/tutorial/demo assets, docs consistency pass, and docs index navigation updates.
+
+
+## 2026-05-12 — MB-P0-021 assistant workspace surface completion
+
+**Status:** Completed — 2026-05-12
+
+- Added new top-level app surface at `apps/assistant-workspace/` as the primary unified assistant entrypoint.
+- Implemented persistent multi-panel layout: Conversation, Working Plan, Artifacts, and Knowledge / Memory with shared session context.
+- Added navigation model for Assistant Home, Plan Builder, Workflow Studio, Skill Library, Knowledge Base, and Task & Schedule Center.
+- Wired panel synchronization so chat actions update plan/artifact/knowledge panes immediately within session state.
+- Added UX architecture documentation in `docs/architecture/assistant-workspace-ux.md`.

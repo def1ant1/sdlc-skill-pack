@@ -544,3 +544,8 @@ Contract specification reference: `references/skill-contract-v9.md`.
 - API/CLI reference: `docs/api/README.md`
 - AI OS architecture: `docs/architecture/ai-os-architecture.md`
 - Marketplace + memory/knowledge graph guide: `docs/reference/marketplace-and-memory.md`
+
+
+## New primary app surface
+
+- `streamlit run apps/assistant-workspace/streamlit_app.py` — Assistant Workspace with synchronized Conversation/Plan/Artifacts/Knowledge panels.

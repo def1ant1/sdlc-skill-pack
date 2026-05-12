@@ -550,3 +550,8 @@ Update (2026-05-12):
 - Added skills: `pricing-strategy-simulation`, `marketplace-scenario-analysis`, and `fulfillment-simulation` with no-side-effects simulation safety constraints.
 - Added/update documentation references under `core/commerce-network-graph/references/` and `core/commerce-simulator/references/` for signal semantics, memory integration, and simulation safeguards.
 - Marked MB-ECOM-P3-001 and MB-ECOM-P3-002 as Completed (2026-05-12).
+
+Update (2026-05-12):
+- Synced ecommerce extension status with the new `apps/assistant-workspace/` primary app surface.
+- Commerce operator flows now map to the unified four-panel workspace model (Conversation, Working Plan, Artifacts, Knowledge / Memory) with shared session context.
+- Navigation alignment documented across Assistant Home, Plan Builder, Workflow Studio, Skill Library, Knowledge Base, and Task & Schedule Center in `docs/architecture/assistant-workspace-ux.md`.
