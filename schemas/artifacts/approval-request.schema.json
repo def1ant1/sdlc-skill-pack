@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apotheon.local/schemas/artifacts/approval-request.schema.json",
+  "title": "Approval Request Artifact",
+  "allOf": [
+    {
+      "$ref": "./common-envelope.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "approval_request"
+        },
+        "content": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "type",
+        "content"
+      ]
+    }
+  ]
+}

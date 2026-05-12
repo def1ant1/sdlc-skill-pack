@@ -85,6 +85,19 @@ Completed scope:
 - Added explicit assumption-driven execution mode (e.g., "use your best assumptions") with editable assumption object outputs.
 - Published `docs/reference/intake-behavior-and-prompting-policy.md` and linked in docs navigation.
 
+
+## MB-P3-007 — Conversation artifact schemas + conversion + validation
+
+**Source:** Artifact model hardening  
+**Status:** Completed (2026-05-12)
+
+Completed scope:
+- Added `schemas/artifacts/` with standardized schemas for plan, workflow, skill proposal, task, schedule, knowledge note, decision, approval request, and assistant action.
+- Added shared envelope constraints (`id`, `type`, `title`, `status`, source conversation/message IDs, owner, version, content, links).
+- Added conversion rules for plan→task, plan→workflow, conversation→knowledge, and workflow run→decision/lessons.
+- Added fixtures and `scripts/validation/validate_artifact_schemas.py` to validate assistant-produced artifact addressability/versionability.
+- Added artifact model documentation in `docs/schemas/artifact-model.md`.
+
 ## 2. Backlog Documents to Mark Complete / Archive
 
 ### Archive / supersede

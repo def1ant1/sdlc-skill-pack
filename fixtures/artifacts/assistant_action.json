@@ -1,0 +1,23 @@
+{
+  "id": "assistant_action-001",
+  "title": "Sample",
+  "status": "draft",
+  "source": {
+    "conversation_id": "conv-123",
+    "message_ids": [
+      "msg-1"
+    ]
+  },
+  "owner": "assistant",
+  "version": "1.0.0",
+  "content": {
+    "summary": "example"
+  },
+  "links": [
+    {
+      "rel": "related",
+      "target": "artf-000"
+    }
+  ],
+  "type": "assistant_action"
+}

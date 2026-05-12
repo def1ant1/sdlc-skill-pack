@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apotheon.local/schemas/artifacts/task.schema.json",
+  "title": "Task Artifact",
+  "allOf": [
+    {
+      "$ref": "./common-envelope.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "task"
+        },
+        "content": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "type",
+        "content"
+      ]
+    }
+  ]
+}
