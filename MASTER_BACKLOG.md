@@ -1375,3 +1375,15 @@ Completed documentation updates across top-level docs, onboarding runbooks, API/
 - Added navigation model for Assistant Home, Plan Builder, Workflow Studio, Skill Library, Knowledge Base, and Task & Schedule Center.
 - Wired panel synchronization so chat actions update plan/artifact/knowledge panes immediately within session state.
 - Added UX architecture documentation in `docs/architecture/assistant-workspace-ux.md`.
+
+## MB-P3-007 — Conversation orchestrator state machine and adaptive intake
+
+**Source:** Assistant workspace / orchestration UX hardening
+**Status:** Completed (2026-05-12)
+
+Completed scope:
+- Added `core/conversation-orchestrator/` with explicit conversational state model and transition engine.
+- Implemented transition drivers for utterances, approvals, corrections, and interruption directives (`pause`, `switch`, `forget`, `resume`).
+- Added conversation context tracking for goal, active artifacts, and resolved questions to avoid repetitive intake.
+- Added references and templates: `references/conversation-state-machine.md`, `references/adaptive-intake-policy.md`, and `templates/conversation-artifact-events.md`.
+- Updated orchestration documentation with conversation state-machine behavior.
