@@ -1424,3 +1424,5 @@ Completed scope:
 - Added living plan operations (collapse/expand, priority reorder, assumptions edits, individual approvals, version diff history).
 - Added approved-scope converters in `scripts/orchestration/plan_to_workflow.py` and `scripts/orchestration/plan_to_tasks.py`.
 - Added plan workspace docs for users and developers in `docs/plan-workspace/`.
+- Follow-up hardening completed: planner input contracts now include structured summary/constraints/assumptions/desired outputs/entities/preferences/prior decisions, memory-aware answered-question suppression, and explicit-vs-inferred confidence annotations.
+

@@ -1,3 +1,10 @@
+## 2026-05-12 — Planner contract + memory-aware intake hardening
+
+- Extended living planner input contract with `planner_inputs` sections for conversation summary, constraints, assumptions, desired outputs, entities, preferences, and prior decisions.
+- Added orchestrator-state ingestion (`--orchestrator-state`) and curated-memory answer hydration to prevent re-asking already resolved questions during plan drafting.
+- Added `confidence_annotations` to distinguish explicit user-provided details from inferred assumptions.
+- Preserved compatibility with current workflow conversion and execution paths by keeping existing plan fields stable while adding non-breaking metadata.
+
 ## 2026-05-12 — Artifact model schema pack + conversion rules + validation
 
 - Added `schemas/artifacts/` with a shared envelope schema and dedicated schemas for plan, workflow, skill proposal, task, schedule, knowledge note, decision, approval request, and assistant action artifacts.
