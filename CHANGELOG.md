@@ -273,3 +273,11 @@ All notable changes to the Apotheon AI Company OS are documented here.
 - Added living-plan operations for collapse/expand, priority reorder, assumption edits, individual step approvals, and version diff history.
 - Added `scripts/orchestration/plan_to_workflow.py` and `scripts/orchestration/plan_to_tasks.py` to convert approved plan scope into executable workflow/task forms.
 - Added plan workspace documentation for users and developers under `docs/plan-workspace/`.
+
+## 2026-05-12 — Task scheduler + governed schedule lifecycle
+
+- Added `core/task-scheduler/` model primitives for task and schedule records with origin/dependency/assignee and approval semantics.
+- Added new root `schemas/task.schema.json` and expanded `schemas/schedule.schema.json` to support governed action + approval contracts.
+- Integrated scheduling runtime to generate recurring follow-up tasks (`runtime/tasks/`) from due run execution when `generate_task: true`.
+- Extended chat CLI schedule lifecycle commands (`create`, `pause`, `archive`) on top of existing preview/run/repair flows.
+- Added operational documentation: `docs/reference/task-schedule-operations.md`.

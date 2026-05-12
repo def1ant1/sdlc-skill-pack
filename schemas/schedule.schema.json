@@ -3,69 +3,41 @@
   "$id": "https://apotheon.local/schemas/schedule.schema.json",
   "title": "Schedule",
   "type": "object",
-  "required": ["schedule_id", "mode", "enabled", "owner", "planner_target", "risk_tier"],
+  "required": ["schedule_id", "mode", "enabled", "owner", "action", "approval"],
   "properties": {
-    "schedule_id": {
-      "type": "string",
-      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]{2,63}$"
-    },
-    "mode": {
-      "type": "string",
-      "enum": ["cron", "interval", "event"]
-    },
-    "enabled": { "type": "boolean" },
-    "owner": { "type": "string", "minLength": 1 },
-    "planner_target": { "type": "string", "minLength": 1 },
-    "risk_tier": { "type": "string", "enum": ["low", "medium", "high", "critical"] },
-    "cron": {
-      "type": "string",
-      "description": "5-field cron expression: minute hour day month weekday"
-    },
-    "interval_minutes": {
-      "type": "integer",
-      "minimum": 1
-    },
-    "event": {
+    "schedule_id": {"type": "string", "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]{2,63}$"},
+    "mode": {"type": "string", "enum": ["cron", "interval", "event"]},
+    "enabled": {"type": "boolean"},
+    "owner": {"type": "string", "minLength": 1},
+    "action": {
       "type": "object",
-      "required": ["name"],
+      "required": ["type", "target"],
       "properties": {
-        "name": { "type": "string", "minLength": 1 },
-        "match": {
-          "type": "object",
-          "additionalProperties": {
-            "type": ["string", "number", "boolean"]
-          }
-        }
+        "type": {"type": "string", "enum": ["workflow", "report", "condition"]},
+        "target": {"type": "string", "minLength": 1},
+        "args": {"type": "object", "additionalProperties": true}
       },
       "additionalProperties": false
     },
-    "metadata": {
+    "approval": {
       "type": "object",
-      "additionalProperties": true
-    }
+      "required": ["required"],
+      "properties": {
+        "required": {"type": "boolean"},
+        "policy_ref": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "cron": {"type": "string"},
+    "interval_minutes": {"type": "integer", "minimum": 1},
+    "event": {"type": "object", "required": ["name"], "properties": {"name": {"type": "string"}}, "additionalProperties": true},
+    "generate_task": {"type": "boolean", "default": false}
   },
   "allOf": [
-    {
-      "if": { "properties": { "mode": { "const": "cron" } } },
-      "then": {
-        "required": ["cron"],
-        "not": { "required": ["interval_minutes", "event"] }
-      }
-    },
-    {
-      "if": { "properties": { "mode": { "const": "interval" } } },
-      "then": {
-        "required": ["interval_minutes"],
-        "not": { "required": ["cron", "event"] }
-      }
-    },
-    {
-      "if": { "properties": { "mode": { "const": "event" } } },
-      "then": {
-        "required": ["event"],
-        "not": { "required": ["cron", "interval_minutes"] }
-      }
-    }
+    {"if": {"properties": {"mode": {"const": "cron"}}}, "then": {"required": ["cron"]}},
+    {"if": {"properties": {"mode": {"const": "interval"}}}, "then": {"required": ["interval_minutes"]}},
+    {"if": {"properties": {"mode": {"const": "event"}}}, "then": {"required": ["event"]}},
+    {"if": {"properties": {"approval": {"properties": {"required": {"const": true}}}}}, "then": {"properties": {"approval": {"required": ["policy_ref"]}}}}
   ],
-  "additionalProperties": false
+  "additionalProperties": true
 }
