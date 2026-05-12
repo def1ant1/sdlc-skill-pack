@@ -500,3 +500,44 @@ Update (2026-05-11):
 - Implemented catalog/inventory components: `core/catalog-normalization/`, `skills/multi-channel-inventory-sync/`, `skills/catalog-deduplication/`, `skills/sku-relationship-analysis/`, `skills/bundle-product-analysis/`, and `skills/reorder-threshold-analysis/`.
 - Added analytics surface: `apps/ecommerce-dashboard/`, `reports/ecommerce_profitability_dashboard.json`, and `reports/ecommerce_operations_report.md`.
 - Enforced required metrics in skills/reports/dashboard contracts: gross_margin, net_margin, sell_through, aging_days, return_rate, shipping_fee_ratio, conversion_rate, and cac with marketplace + SKU segmentation.
+
+## MB-ECOM-P0-010 — Regional arbitrage, negotiation support, and finance-tax integration skills
+
+**Status:** Completed (2026-05-12)
+
+Create:
+
+```text
+skills/regional-demand-analysis/
+skills/geographic-price-gap-analysis/
+skills/regional-scarcity-scoring/
+skills/local-market-trend-analysis/
+skills/vendor-negotiation-support/
+skills/bulk-purchase-negotiation-analysis/
+skills/supplier-risk-negotiation-support/
+skills/offer-strategy-analysis/
+skills/marketplace-tax-analysis/
+skills/sales-tax-nexus-analysis/
+skills/marketplace-fee-reconciliation/
+skills/ecommerce-payout-reconciliation/
+skills/refund-loss-analysis/
+```
+
+Capabilities:
+
+```text
+regional demand and scarcity scoring
+geographic price-gap detection with logistics impact adjustments
+local market trend and velocity analysis
+negotiation brief/counteroffer strategy support with explicit no-autonomous-commitment controls
+marketplace tax and nexus analysis with professional-review flags
+fee/payout/refund reconciliation linked to accounting entities
+```
+
+Acceptance criteria:
+
+- All new skills operate in support-only draft mode and block autonomous external commitments.
+- All negotiation outputs include explicit no-autonomous-commitment controls and HITL approval requirements.
+- Tax/jurisdiction outputs include `professional_review_required: true` and explicit qualified-review messaging.
+- Finance reconciliation outputs include linkage fields to accounting entities (`account_id`, `invoice_id`, `payment_id`, `order_id`, `marketplace_payout_id`).
+- Opportunity scoring includes logistics-impact-aware components (landed-cost delta, lead-time risk, and fulfillment constraints).

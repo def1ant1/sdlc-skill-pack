@@ -1,3 +1,11 @@
+## 2026-05-12 — MB-ECOM-P0-010 regional arbitrage + negotiation + finance-tax integration completion
+
+- Added 13 ecommerce extension skills across regional-demand/arbitrage analysis, negotiation support, and finance-tax integration domains.
+- Standardized logistics-impact-aware opportunity scoring requirements across new regional arbitrage skills.
+- Added explicit no-autonomous-commitment controls and mandatory HITL approval boundaries across all negotiation-support skills.
+- Added tax/jurisdiction professional-review flags and accounting-entity linkage requirements (`account_id`, `invoice_id`, `payment_id`, `order_id`, `marketplace_payout_id`) for finance-tax outputs.
+- Added `docs/workflows/ecommerce-arbitrage-negotiation-finance-tax.md` to document governance and output contract requirements.
+
 ## 2026-05-11 — MB-ECOM-P0-005 ecommerce fulfillment/logistics completion
 
 - Added 8 fulfillment/logistics skills under `skills/`: `ecommerce-fulfillment`, `shipping-carrier-selection`, `package-dimension-optimization`, `freight-and-pallet-analysis`, `warehouse-slotting-analysis`, `pick-pack-optimization`, `returns-routing-analysis`, and `shipping-sla-risk-analysis`.
