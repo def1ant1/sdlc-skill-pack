@@ -430,21 +430,45 @@ def analyze_request(ollama_url: str, request: str) -> dict | None:
     return None
 
 
-def _fallback_analysis(request: str) -> dict:
+def _fallback_analysis(request: str, routed_intent: str | None = None) -> dict:
+    normalized_intent = (routed_intent or "").strip()
+    workflow_intents = {"create_workflow", "run_workflow", "draft_plan", "create_task", "create_schedule"}
+    asks_for_plan = normalized_intent in workflow_intents
+
+    concise_understanding = (
+        "User wants a structured business workflow response grounded in cross-functional execution."
+        if asks_for_plan
+        else "User likely needs a direct conversational answer rather than workflow intake."
+    )
+    initial_artifact = (
+        "Drafted an initial multi-domain execution outline with safe defaults and governance checkpoints."
+        if asks_for_plan
+        else "Drafted a direct answer path with no workflow planning steps."
+    )
+    assumptions = [
+        "The request can proceed with standard organizational controls unless the user states hard constraints."
+    ]
+    questions = (
+        ["Do you have one non-negotiable constraint (budget, compliance, or timeline) that should drive sequencing?"]
+        if asks_for_plan
+        else []
+    )
+    open_questions = questions.copy()
+
     return {
-        "workflow_title": "Workflow Plan",
-        "understanding": request,
-        "domains": ["business", "legal", "finance"],
-        "complexity": "moderate",
-        "skills_preview": ["business-orchestration", "governance", "compliance-runtime",
-                           "accounts-payable-automation", "audit-trail"],
-        "assumptions": [
-            "Proceed with a standard cross-functional rollout cadence unless a hard deadline is specified."
-        ],
-        "open_questions": [
-            "Are there any non-negotiable constraints (budget/regulatory/technical) that change execution order?"
-        ],
-        "questions": [],
+        "workflow_title": "Workflow Plan" if asks_for_plan else "Direct Response",
+        "understanding": concise_understanding,
+        "initial_artifact": initial_artifact,
+        "domains": ["business", "legal", "finance"] if asks_for_plan else ["business"],
+        "complexity": "moderate" if asks_for_plan else "simple",
+        "skills_preview": (
+            ["business-orchestration", "governance", "compliance-runtime", "accounts-payable-automation", "audit-trail"]
+            if asks_for_plan
+            else []
+        ),
+        "assumptions": assumptions,
+        "open_questions": open_questions,
+        "questions": questions,
     }
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -826,7 +850,7 @@ def _run_conversational_mode(user_input: str, ollama_url: str, use_ollama: bool)
         with st.spinner("Analysing across all domains…"):
             analysis = analyze_request(ollama_url, user_input) if use_ollama else None
             if not analysis:
-                analysis = _fallback_analysis(user_input)
+                analysis = _fallback_analysis(user_input, s.routed_intent)
 
         s.analysis = analysis
         s.dynamic_questions = analysis.get("questions", [])
@@ -917,7 +941,7 @@ def _run_workflow_builder_mode(user_input: str, ollama_url: str, use_ollama: boo
 
 
 def _dispatch_mode_for_intent(user_input: str, routed: dict[str, Any], ollama_url: str, use_ollama: bool) -> None:
-    workflow_intents = {"create_workflow", "run_workflow"}
+    workflow_intents = {"create_workflow", "run_workflow", "draft_plan", "create_task", "create_schedule"}
     if routed.get("intent") in workflow_intents:
         _run_conversational_mode(user_input, ollama_url, use_ollama)
         return
@@ -938,10 +962,12 @@ def _dispatch_mode_for_intent(user_input: str, routed: dict[str, Any], ollama_ur
     s.llm_messages = [{"role": "user", "content": user_input}]
     with st.chat_message("assistant"):
         with st.spinner("Thinking…"):
-            reply = (
-                gen_unknown_response(ollama_url, user_input)
-                if use_ollama else "Got it — I can help with that directly."
-            )
+            if use_ollama:
+                reply = gen_unknown_response(ollama_url, user_input)
+            elif routed.get("intent") == "answer_only":
+                reply = "Got it — here’s a direct response path without workflow intake."
+            else:
+                reply = "Got it — I can help with that directly."
         st.markdown(reply)
     add_msg("assistant", reply)
     add_llm("assistant", reply)
