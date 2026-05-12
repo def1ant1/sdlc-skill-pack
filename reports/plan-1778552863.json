@@ -1,0 +1,187 @@
+{
+  "id": "plan-1778552863",
+  "objective": "lets create a new AI service that manages responding to all online reviews",
+  "workflow_title": "Workflow Plan",
+  "domains": [
+    "business",
+    "legal",
+    "finance"
+  ],
+  "complexity": "moderate",
+  "skill_chain": [
+    "business-orchestration",
+    "governance",
+    "compliance-runtime",
+    "accounts-payable-automation",
+    "audit-trail"
+  ],
+  "phases": [
+    {
+      "name": "Execution",
+      "description": "Execute workflow",
+      "skills": [
+        "business-orchestration",
+        "governance",
+        "compliance-runtime",
+        "accounts-payable-automation",
+        "audit-trail"
+      ],
+      "depends_on_phases": []
+    }
+  ],
+  "hitl_gates": [
+    {
+      "after_phase": "Execution",
+      "reason": "Human approval required before finalising"
+    }
+  ],
+  "risks": [
+    "Scope may expand during execution",
+    "External dependencies may cause delays"
+  ],
+  "rationale": "Plan generated from your request: lets create a new AI service that manages responding to all online reviews",
+  "context": {
+    "1": "develop a saas product",
+    "2": "just development/gtm",
+    "3": "2 weeks",
+    "4": "none",
+    "5": "a fully functional pre-production demo"
+  },
+  "steps": [
+    {
+      "id": "step-1",
+      "order": 1,
+      "title": "Run business-orchestration",
+      "skill": "business-orchestration",
+      "domain": "business",
+      "description": "Coordinate cross-functional business workflows and decisions",
+      "depends_on": [],
+      "inputs": {
+        "1": "develop a saas product",
+        "2": "just development/gtm",
+        "3": "2 weeks",
+        "4": "none",
+        "5": "a fully functional pre-production demo"
+      },
+      "governance_policy_refs": [
+        "references/business-policy-standard.md"
+      ],
+      "outputs": [
+        "reports/business-orchestration-output.json"
+      ]
+    },
+    {
+      "id": "step-2",
+      "order": 2,
+      "title": "Run governance",
+      "skill": "governance",
+      "domain": "business",
+      "description": "Policy enforcement, approval routing, and decision governance",
+      "depends_on": [
+        "step-1"
+      ],
+      "inputs": {
+        "1": "develop a saas product",
+        "2": "just development/gtm",
+        "3": "2 weeks",
+        "4": "none",
+        "5": "a fully functional pre-production demo"
+      },
+      "governance_policy_refs": [
+        "references/business-policy-standard.md"
+      ],
+      "outputs": [
+        "reports/governance-output.json"
+      ]
+    },
+    {
+      "id": "step-3",
+      "order": 3,
+      "title": "Run compliance-runtime",
+      "skill": "compliance-runtime",
+      "domain": "legal",
+      "description": "Continuous compliance monitoring against regulatory frameworks",
+      "depends_on": [
+        "step-2"
+      ],
+      "inputs": {
+        "1": "develop a saas product",
+        "2": "just development/gtm",
+        "3": "2 weeks",
+        "4": "none",
+        "5": "a fully functional pre-production demo"
+      },
+      "governance_policy_refs": [
+        "references/business-policy-standard.md"
+      ],
+      "outputs": [
+        "reports/compliance-runtime-output.json"
+      ]
+    },
+    {
+      "id": "step-4",
+      "order": 4,
+      "title": "Run accounts-payable-automation",
+      "skill": "accounts-payable-automation",
+      "domain": "finance",
+      "description": "Process vendor invoices, 3-way matching, and payment runs",
+      "depends_on": [
+        "step-3"
+      ],
+      "inputs": {
+        "1": "develop a saas product",
+        "2": "just development/gtm",
+        "3": "2 weeks",
+        "4": "none",
+        "5": "a fully functional pre-production demo"
+      },
+      "governance_policy_refs": [
+        "references/business-policy-standard.md"
+      ],
+      "outputs": [
+        "reports/accounts-payable-automation-output.json"
+      ]
+    },
+    {
+      "id": "step-5",
+      "order": 5,
+      "title": "Run audit-trail",
+      "skill": "audit-trail",
+      "domain": "business",
+      "description": "Immutable record of all workflow events and human approvals",
+      "depends_on": [
+        "step-4"
+      ],
+      "inputs": {
+        "1": "develop a saas product",
+        "2": "just development/gtm",
+        "3": "2 weeks",
+        "4": "none",
+        "5": "a fully functional pre-production demo"
+      },
+      "governance_policy_refs": [
+        "references/business-policy-standard.md"
+      ],
+      "outputs": [
+        "reports/audit-trail-output.json"
+      ]
+    }
+  ],
+  "governance_gates": [
+    {
+      "id": "gate-policy",
+      "policy_ref": "references/business-policy-standard.md",
+      "enforcement": "blocking"
+    }
+  ],
+  "dry_run_safety": {
+    "enabled": true,
+    "no_external_writes": true,
+    "require_human_approval_for_mutations": true
+  },
+  "planner_metadata": {
+    "planner": "multi-domain-planner",
+    "version": "2.0.0",
+    "created_at": "2026-05-12T02:27:43.885264+00:00"
+  }
+}

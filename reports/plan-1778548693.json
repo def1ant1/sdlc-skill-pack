@@ -1,0 +1,100 @@
+{
+  "id": "plan-1778548693",
+  "objective": "Create a business plan for a new AI product - Business Operating System, an AI powered learning self-optimizing system that uses business data and operational information to self optimize workflows, profit, inventory management, etc.",
+  "domain": "business",
+  "context": {
+    "scope": "executive report on roadmap development progress",
+    "timeline": "today",
+    "stakeholders": "board",
+    "success_metrics": "profit",
+    "constraints": "none"
+  },
+  "skill_chain": [
+    "business-orchestration",
+    "governance",
+    "audit-trail"
+  ],
+  "steps": [
+    {
+      "id": "business-1",
+      "order": 1,
+      "title": "Run business-orchestration",
+      "skill": "business-orchestration",
+      "depends_on": [],
+      "inputs": {
+        "scope": "executive report on roadmap development progress",
+        "timeline": "today",
+        "stakeholders": "board",
+        "success_metrics": "profit",
+        "constraints": "none"
+      },
+      "governance_policy_refs": [
+        "references/business-policy-standard.md"
+      ],
+      "outputs": [
+        "reports/business-business-orchestration-output.json"
+      ]
+    },
+    {
+      "id": "business-2",
+      "order": 2,
+      "title": "Run governance",
+      "skill": "governance",
+      "depends_on": [
+        "business-1"
+      ],
+      "inputs": {
+        "scope": "executive report on roadmap development progress",
+        "timeline": "today",
+        "stakeholders": "board",
+        "success_metrics": "profit",
+        "constraints": "none"
+      },
+      "governance_policy_refs": [
+        "references/business-policy-standard.md"
+      ],
+      "outputs": [
+        "reports/business-governance-output.json"
+      ]
+    },
+    {
+      "id": "business-3",
+      "order": 3,
+      "title": "Run audit-trail",
+      "skill": "audit-trail",
+      "depends_on": [
+        "business-2"
+      ],
+      "inputs": {
+        "scope": "executive report on roadmap development progress",
+        "timeline": "today",
+        "stakeholders": "board",
+        "success_metrics": "profit",
+        "constraints": "none"
+      },
+      "governance_policy_refs": [
+        "references/business-policy-standard.md"
+      ],
+      "outputs": [
+        "reports/business-audit-trail-output.json"
+      ]
+    }
+  ],
+  "governance_gates": [
+    {
+      "id": "gate-policy",
+      "policy_ref": "references/business-policy-standard.md",
+      "enforcement": "blocking"
+    }
+  ],
+  "dry_run_safety": {
+    "enabled": true,
+    "no_external_writes": true,
+    "require_human_approval_for_mutations": true
+  },
+  "planner_metadata": {
+    "planner": "business-workflow-planner",
+    "version": "1.0.0",
+    "created_at": "2026-05-12T01:18:13.196127+00:00"
+  }
+}

@@ -51,7 +51,7 @@ services:
     volumes:
       - qdrant_data:/qdrant/storage
     healthcheck:
-      test: ["CMD", "curl", "-fsS", "http://localhost:6333/collections"]
+      test: ["CMD-SHELL", "bash -c 'echo > /dev/tcp/localhost/6333' 2>/dev/null || exit 1"]
       <<: *health_defaults
 
   temporal:
@@ -70,12 +70,14 @@ services:
       POSTGRES_SEEDS: postgres
       POSTGRES_USER: apotheon
       POSTGRES_PWD: apotheon
-      DYNAMIC_CONFIG_FILE_PATH: /etc/temporal/config/dynamicconfig/development-sql.yaml
+      BIND_ON_IP: "0.0.0.0"
+      TEMPORAL_BROADCAST_ADDRESS: "127.0.0.1"
+      TEMPORAL_NAMESPACES: apotheon-dev,oldfarmtrucks-demo
     healthcheck:
-      test: ["CMD", "tctl", "--address", "localhost:7233", "cluster", "health"]
-      interval: 15s
-      timeout: 10s
-      retries: 20
+      test: ["CMD-SHELL", "bash -c 'echo > /dev/tcp/localhost/7233' 2>/dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
       start_period: 30s
 
   temporal-ui:
@@ -122,7 +124,104 @@ services:
       test: ["CMD", "curl", "-fsS", "http://localhost:8000/health"]
       <<: *health_defaults
 
+  # -------------------------------------------------------------------------
+  # Ollama — local LLM inference (qwen3:4b auto-pulled on first start)
+  # http://localhost:11434
+  # -------------------------------------------------------------------------
+  ollama:
+    profiles: ["core", "local-solo", "mvp", "team", "enterprise", "full-domain-lab"]
+    image: ollama/ollama:latest
+    container_name: apotheon-ollama
+    restart: unless-stopped
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - "/bin/ollama serve & pid=$! ; sleep 5 ; /bin/ollama pull qwen3:4b ; wait $pid"
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    healthcheck:
+      test: ["CMD", "/bin/ollama", "list"]
+      interval: 15s
+      timeout: 10s
+      retries: 20
+      start_period: 30s
+
+  # -------------------------------------------------------------------------
+  # Streamlit Chat UI — primary operator console
+  # http://localhost:8501
+  # -------------------------------------------------------------------------
+  chat-ui:
+    profiles: ["core", "local-solo", "mvp", "team", "enterprise", "full-domain-lab"]
+    image: python:3.11-slim
+    container_name: apotheon-chat-ui
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - .:/app
+    command:
+      - bash
+      - -c
+      - "pip install streamlit -q && streamlit run apps/chat-ui/streamlit_app.py --server.port=8501 --server.address=0.0.0.0 --server.headless=true"
+    ports:
+      - "8501:8501"
+    environment:
+      APOTHEON_API_URL: ${APOTHEON_API_URL:-http://localhost:8000}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      OLLAMA_URL: ${OLLAMA_URL:-http://ollama:11434}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen3:4b}
+      PYTHONPATH: /app
+    depends_on:
+      postgres:
+        condition: service_healthy
+      ollama:
+        condition: service_healthy
+
+  # -------------------------------------------------------------------------
+  # Streamlit Control Plane Dashboard — workflow runs, HITL queue, metrics
+  # http://localhost:8502
+  # -------------------------------------------------------------------------
+  dashboard:
+    profiles: ["observability", "mvp", "team", "enterprise", "full-domain-lab"]
+    image: python:3.11-slim
+    container_name: apotheon-dashboard
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - .:/app
+    command:
+      - bash
+      - -c
+      - "pip install streamlit pyyaml -q && streamlit run apps/dashboard/streamlit_dashboard.py --server.port=8502 --server.address=0.0.0.0 --server.headless=true"
+    ports:
+      - "8502:8502"
+    environment:
+      APOTHEON_API_URL: ${APOTHEON_API_URL:-http://localhost:8000}
+      PYTHONPATH: /app
+
+  # -------------------------------------------------------------------------
+  # Streamlit Ecommerce Dashboard — OldFarmTrucks analytics surface
+  # http://localhost:8503
+  # -------------------------------------------------------------------------
+  ecommerce-dashboard:
+    profiles: ["full-domain-lab"]
+    image: python:3.11-slim
+    container_name: apotheon-ecommerce-dashboard
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - .:/app
+    command:
+      - bash
+      - -c
+      - "pip install streamlit pyyaml -q && streamlit run apps/ecommerce-dashboard/streamlit_app.py --server.port=8503 --server.address=0.0.0.0 --server.headless=true"
+    ports:
+      - "8503:8503"
+    environment:
+      PYTHONPATH: /app
+
 volumes:
   postgres_data:
   redis_data:
   qdrant_data:
+  ollama_data:
