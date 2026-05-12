@@ -98,6 +98,18 @@ Completed scope:
 - Added fixtures and `scripts/validation/validate_artifact_schemas.py` to validate assistant-produced artifact addressability/versionability.
 - Added artifact model documentation in `docs/schemas/artifact-model.md`.
 
+
+## MB-P3-008 — Assistant action chips + audit traceability
+
+**Source:** Assistant workspace UX orchestration hardening  
+**Status:** Completed (2026-05-12)
+
+Completed scope:
+- Added explicit assistant action chip schema for explainable/reversible actions.
+- Implemented chip generation logic based on response context and active artifacts.
+- Added auditable chip-triggered event model with required `conversation_id` and `message_id` traceability.
+- Updated workspace UX documentation for chip behavior and governance trace contract.
+
 ## 2. Backlog Documents to Mark Complete / Archive
 
 ### Archive / supersede

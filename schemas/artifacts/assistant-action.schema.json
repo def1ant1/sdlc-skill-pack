@@ -13,7 +13,71 @@
           "const": "assistant_action"
         },
         "content": {
-          "type": "object"
+          "type": "object",
+          "required": ["chips"],
+          "properties": {
+            "chips": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": ["key", "label", "explain_why", "reversible"],
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "enum": [
+                      "create_plan",
+                      "convert_to_workflow",
+                      "break_into_tasks",
+                      "save_as_skill",
+                      "schedule_recurrence",
+                      "add_to_knowledge",
+                      "run_dry_run",
+                      "request_approval",
+                      "show_dependencies",
+                      "show_risks",
+                      "generate_report"
+                    ]
+                  },
+                  "label": {"type": "string", "minLength": 1},
+                  "explain_why": {"type": "string", "minLength": 1},
+                  "reversible": {
+                    "type": "object",
+                    "required": ["supported", "operations"],
+                    "properties": {
+                      "supported": {"type": "boolean"},
+                      "operations": {
+                        "type": "array",
+                        "minItems": 1,
+                        "items": {"type": "string", "enum": ["undo", "cancel", "edit_before_execute"]}
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "payload": {"type": "object"}
+                },
+                "additionalProperties": false
+              }
+            },
+            "events": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["event_type", "conversation_id", "message_id", "chip_key", "action", "timestamp"],
+                "properties": {
+                  "event_type": {"const": "assistant_action_chip_triggered"},
+                  "conversation_id": {"type": "string", "minLength": 1},
+                  "message_id": {"type": "string", "minLength": 1},
+                  "chip_key": {"type": "string", "minLength": 1},
+                  "action": {"type": "string", "minLength": 1},
+                  "artifact_id": {"type": ["string", "null"]},
+                  "timestamp": {"type": "string", "format": "date-time"}
+                },
+                "additionalProperties": true
+              }
+            }
+          },
+          "additionalProperties": true
         }
       },
       "required": [
