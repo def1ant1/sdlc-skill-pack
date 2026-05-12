@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "rules"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "linked_roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

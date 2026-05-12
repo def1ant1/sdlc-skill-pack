@@ -960,7 +960,7 @@ Acceptance criteria:
 
 ## UX-P2-001 — Add multi-user collaboration and roles UX
 
-**Status:** Open  
+**Status:** Completed  
 **Priority:** P2  
 **Theme:** Team collaboration
 
@@ -988,7 +988,7 @@ Acceptance criteria:
 
 ## UX-P2-002 — Add client/project portfolio UX
 
-**Status:** Open  
+**Status:** Completed  
 **Priority:** P2  
 **Theme:** Consulting and multi-project operations
 
@@ -1016,7 +1016,7 @@ Acceptance criteria:
 
 ## UX-P2-003 — Add report builder UX
 
-**Status:** Open  
+**Status:** Completed  
 **Priority:** P2  
 **Theme:** Communication and executive reporting
 
@@ -1044,7 +1044,7 @@ Acceptance criteria:
 
 ## UX-P2-004 — Add policy authoring and governance UX
 
-**Status:** Open  
+**Status:** Completed  
 **Priority:** P2  
 **Theme:** Governance usability
 
@@ -1072,7 +1072,7 @@ Acceptance criteria:
 
 ## UX-P2-005 — Add connector setup wizard UX
 
-**Status:** Open  
+**Status:** Completed  
 **Priority:** P2  
 **Theme:** Integration usability
 
@@ -1098,7 +1098,7 @@ Acceptance criteria:
 
 ## UX-P2-006 — Add data import and document ingestion UX
 
-**Status:** Open  
+**Status:** Completed  
 **Priority:** P2  
 **Theme:** Knowledge onboarding
 
@@ -1126,7 +1126,7 @@ Acceptance criteria:
 
 ## UX-P2-007 — Add accessibility and keyboard-first UX pass
 
-**Status:** Open  
+**Status:** Completed  
 **Priority:** P2  
 **Theme:** Accessibility
 
@@ -1151,7 +1151,7 @@ Acceptance criteria:
 
 ## UX-P2-008 — Add mobile/tablet responsive UX
 
-**Status:** Open  
+**Status:** Completed  
 **Priority:** P2  
 **Theme:** Responsive use
 
@@ -1175,7 +1175,7 @@ Acceptance criteria:
 
 ## UX-P2-009 — Add audit and compliance evidence UX
 
-**Status:** Open  
+**Status:** Completed  
 **Priority:** P2  
 **Theme:** Compliance operations
 
@@ -1203,7 +1203,7 @@ Acceptance criteria:
 
 ## UX-P2-010 — Add marketplace/template discovery UX
 
-**Status:** Open  
+**Status:** Completed  
 **Priority:** P2  
 **Theme:** Reuse and distribution
 
@@ -1855,64 +1855,64 @@ The following implementation tasks were generated from all backlog items with `S
 - [ ] Update `UX-P1-017` status from `Open` to `Completed` when acceptance criteria are met.
 
 ### UX-P2-001 — Add multi-user collaboration and roles UX
-- [ ] Define implementation design and file-level change plan for UX-P2-001.
-- [ ] Implement/create the required files/components listed in UX-P2-001.
-- [ ] Validate acceptance criteria for UX-P2-001 with tests or documented checks.
-- [ ] Update `UX-P2-001` status from `Open` to `Completed` when acceptance criteria are met.
+- [x] Define implementation design and file-level change plan for UX-P2-001.
+- [x] Implement/create the required files/components listed in UX-P2-001.
+- [x] Validate acceptance criteria for UX-P2-001 with tests or documented checks.
+- [x] Update `UX-P2-001` status from `Open` to `Completed` when acceptance criteria are met.
 
 ### UX-P2-002 — Add client/project portfolio UX
-- [ ] Define implementation design and file-level change plan for UX-P2-002.
-- [ ] Implement/create the required files/components listed in UX-P2-002.
-- [ ] Validate acceptance criteria for UX-P2-002 with tests or documented checks.
-- [ ] Update `UX-P2-002` status from `Open` to `Completed` when acceptance criteria are met.
+- [x] Define implementation design and file-level change plan for UX-P2-002.
+- [x] Implement/create the required files/components listed in UX-P2-002.
+- [x] Validate acceptance criteria for UX-P2-002 with tests or documented checks.
+- [x] Update `UX-P2-002` status from `Open` to `Completed` when acceptance criteria are met.
 
 ### UX-P2-003 — Add report builder UX
-- [ ] Define implementation design and file-level change plan for UX-P2-003.
-- [ ] Implement/create the required files/components listed in UX-P2-003.
-- [ ] Validate acceptance criteria for UX-P2-003 with tests or documented checks.
-- [ ] Update `UX-P2-003` status from `Open` to `Completed` when acceptance criteria are met.
+- [x] Define implementation design and file-level change plan for UX-P2-003.
+- [x] Implement/create the required files/components listed in UX-P2-003.
+- [x] Validate acceptance criteria for UX-P2-003 with tests or documented checks.
+- [x] Update `UX-P2-003` status from `Open` to `Completed` when acceptance criteria are met.
 
 ### UX-P2-004 — Add policy authoring and governance UX
-- [ ] Define implementation design and file-level change plan for UX-P2-004.
-- [ ] Implement/create the required files/components listed in UX-P2-004.
-- [ ] Validate acceptance criteria for UX-P2-004 with tests or documented checks.
-- [ ] Update `UX-P2-004` status from `Open` to `Completed` when acceptance criteria are met.
+- [x] Define implementation design and file-level change plan for UX-P2-004.
+- [x] Implement/create the required files/components listed in UX-P2-004.
+- [x] Validate acceptance criteria for UX-P2-004 with tests or documented checks.
+- [x] Update `UX-P2-004` status from `Open` to `Completed` when acceptance criteria are met.
 
 ### UX-P2-005 — Add connector setup wizard UX
-- [ ] Define implementation design and file-level change plan for UX-P2-005.
-- [ ] Implement/create the required files/components listed in UX-P2-005.
-- [ ] Validate acceptance criteria for UX-P2-005 with tests or documented checks.
-- [ ] Update `UX-P2-005` status from `Open` to `Completed` when acceptance criteria are met.
+- [x] Define implementation design and file-level change plan for UX-P2-005.
+- [x] Implement/create the required files/components listed in UX-P2-005.
+- [x] Validate acceptance criteria for UX-P2-005 with tests or documented checks.
+- [x] Update `UX-P2-005` status from `Open` to `Completed` when acceptance criteria are met.
 
 ### UX-P2-006 — Add data import and document ingestion UX
-- [ ] Define implementation design and file-level change plan for UX-P2-006.
-- [ ] Implement/create the required files/components listed in UX-P2-006.
-- [ ] Validate acceptance criteria for UX-P2-006 with tests or documented checks.
-- [ ] Update `UX-P2-006` status from `Open` to `Completed` when acceptance criteria are met.
+- [x] Define implementation design and file-level change plan for UX-P2-006.
+- [x] Implement/create the required files/components listed in UX-P2-006.
+- [x] Validate acceptance criteria for UX-P2-006 with tests or documented checks.
+- [x] Update `UX-P2-006` status from `Open` to `Completed` when acceptance criteria are met.
 
 ### UX-P2-007 — Add accessibility and keyboard-first UX pass
-- [ ] Define implementation design and file-level change plan for UX-P2-007.
-- [ ] Implement/create the required files/components listed in UX-P2-007.
-- [ ] Validate acceptance criteria for UX-P2-007 with tests or documented checks.
-- [ ] Update `UX-P2-007` status from `Open` to `Completed` when acceptance criteria are met.
+- [x] Define implementation design and file-level change plan for UX-P2-007.
+- [x] Implement/create the required files/components listed in UX-P2-007.
+- [x] Validate acceptance criteria for UX-P2-007 with tests or documented checks.
+- [x] Update `UX-P2-007` status from `Open` to `Completed` when acceptance criteria are met.
 
 ### UX-P2-008 — Add mobile/tablet responsive UX
-- [ ] Define implementation design and file-level change plan for UX-P2-008.
-- [ ] Implement/create the required files/components listed in UX-P2-008.
-- [ ] Validate acceptance criteria for UX-P2-008 with tests or documented checks.
-- [ ] Update `UX-P2-008` status from `Open` to `Completed` when acceptance criteria are met.
+- [x] Define implementation design and file-level change plan for UX-P2-008.
+- [x] Implement/create the required files/components listed in UX-P2-008.
+- [x] Validate acceptance criteria for UX-P2-008 with tests or documented checks.
+- [x] Update `UX-P2-008` status from `Open` to `Completed` when acceptance criteria are met.
 
 ### UX-P2-009 — Add audit and compliance evidence UX
-- [ ] Define implementation design and file-level change plan for UX-P2-009.
-- [ ] Implement/create the required files/components listed in UX-P2-009.
-- [ ] Validate acceptance criteria for UX-P2-009 with tests or documented checks.
-- [ ] Update `UX-P2-009` status from `Open` to `Completed` when acceptance criteria are met.
+- [x] Define implementation design and file-level change plan for UX-P2-009.
+- [x] Implement/create the required files/components listed in UX-P2-009.
+- [x] Validate acceptance criteria for UX-P2-009 with tests or documented checks.
+- [x] Update `UX-P2-009` status from `Open` to `Completed` when acceptance criteria are met.
 
 ### UX-P2-010 — Add marketplace/template discovery UX
-- [ ] Define implementation design and file-level change plan for UX-P2-010.
-- [ ] Implement/create the required files/components listed in UX-P2-010.
-- [ ] Validate acceptance criteria for UX-P2-010 with tests or documented checks.
-- [ ] Update `UX-P2-010` status from `Open` to `Completed` when acceptance criteria are met.
+- [x] Define implementation design and file-level change plan for UX-P2-010.
+- [x] Implement/create the required files/components listed in UX-P2-010.
+- [x] Validate acceptance criteria for UX-P2-010 with tests or documented checks.
+- [x] Update `UX-P2-010` status from `Open` to `Completed` when acceptance criteria are met.
 
 ### UX-P3-001 — Add “what should I do next?” operating coach
 - [ ] Define implementation design and file-level change plan for UX-P3-001.

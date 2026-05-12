@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "required": [
+    "id",
+    "filters",
+    "items"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "filters": {
+      "type": "object"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "evidence-item.schema.json"
+      }
+    },
+    "export_formats": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "markdown",
+          "json",
+          "html"
+        ]
+      }
+    }
+  }
+}

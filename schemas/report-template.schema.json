@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "sections"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

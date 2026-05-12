@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "required": [
+    "id",
+    "status",
+    "source_type"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "source_type": {
+      "type": "string"
+    },
+    "classification": {
+      "type": "string"
+    }
+  }
+}

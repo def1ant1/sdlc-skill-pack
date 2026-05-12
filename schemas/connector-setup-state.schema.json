@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "required": [
+    "connector_id",
+    "step",
+    "status"
+  ],
+  "properties": {
+    "connector_id": {
+      "type": "string"
+    },
+    "step": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "health_checks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "required": [
+    "id",
+    "import_job_id",
+    "uri"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "import_job_id": {
+      "type": "string"
+    },
+    "uri": {
+      "type": "string"
+    },
+    "provenance": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

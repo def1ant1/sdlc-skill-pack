@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "required": [
+    "id",
+    "template_id",
+    "format",
+    "citations"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "template_id": {
+      "type": "string"
+    },
+    "format": {
+      "type": "string"
+    },
+    "citations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

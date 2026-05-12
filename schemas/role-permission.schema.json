@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Role Permission",
+  "type": "object",
+  "required": [
+    "role",
+    "permissions"
+  ],
+  "properties": {
+    "role": {
+      "type": "string"
+    },
+    "permissions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "approve",
+          "execute",
+          "edit_memory",
+          "schedule_automation",
+          "change_policy",
+          "assign"
+        ]
+      }
+    }
+  }
+}
