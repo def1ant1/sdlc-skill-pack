@@ -1,3 +1,11 @@
+## 2026-05-12 — Assistant Workspace app surface + synchronized UX panels
+
+- Added `apps/assistant-workspace/streamlit_app.py` as the new primary app surface over existing chat/workflow/memory experiences.
+- Implemented persistent panel layout: Conversation, Working Plan, Artifacts, and Knowledge / Memory using one shared session context object.
+- Added in-app navigation model for Assistant Home, Plan Builder, Workflow Studio, Skill Library, Knowledge Base, and Task & Schedule Center.
+- Implemented chat-driven synchronization hooks so plan/artifact/knowledge panes update immediately from conversation actions.
+- Added `docs/architecture/assistant-workspace-ux.md` and linked it in `docs/index.md`.
+
 ## 2026-05-12 — MB-ECOM-P3-001/002 network graph + commerce simulator completion
 
 - Added `core/commerce-network-graph/` with reliability history, pricing history, and fraud/risk correlation signal definitions tied to organizational memory primitives.
