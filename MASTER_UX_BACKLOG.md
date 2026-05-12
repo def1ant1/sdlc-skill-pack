@@ -1655,3 +1655,322 @@ Completing this backlog transforms Apotheon from a powerful but workflow-centric
 - continuous self-improvement
 
 The intended result is an assistant that feels less like a tool launcher and more like an operational partner.
+
+---
+
+## Open/Incomplete Work Task Tracker (Generated 2026-05-12)
+
+The following implementation tasks were generated from all backlog items with `Status: Open` or otherwise incomplete state. Mark checkboxes as work progresses and update each source item status when complete.
+
+### UX-P0-001 — Build persistent assistant workspace
+- [ ] Define implementation design and file-level change plan for UX-P0-001.
+- [ ] Implement/create the required files/components listed in UX-P0-001.
+- [ ] Validate acceptance criteria for UX-P0-001 with tests or documented checks.
+- [ ] Update `UX-P0-001` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P0-002 — Replace rigid intake with adaptive conversation orchestration
+- [ ] Define implementation design and file-level change plan for UX-P0-002.
+- [ ] Implement/create the required files/components listed in UX-P0-002.
+- [ ] Validate acceptance criteria for UX-P0-002 with tests or documented checks.
+- [ ] Update `UX-P0-002` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P0-003 — Add visible cognition panel
+- [ ] Define implementation design and file-level change plan for UX-P0-003.
+- [ ] Implement/create the required files/components listed in UX-P0-003.
+- [ ] Validate acceptance criteria for UX-P0-003 with tests or documented checks.
+- [ ] Update `UX-P0-003` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P0-004 — Add artifact-first workspace model
+- [ ] Define implementation design and file-level change plan for UX-P0-004.
+- [ ] Implement/create the required files/components listed in UX-P0-004.
+- [ ] Validate acceptance criteria for UX-P0-004 with tests or documented checks.
+- [ ] Update `UX-P0-004` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P0-005 — Add conversation-to-structure extraction
+- [ ] Define implementation design and file-level change plan for UX-P0-005.
+- [ ] Implement/create the required files/components listed in UX-P0-005.
+- [ ] Validate acceptance criteria for UX-P0-005 with tests or documented checks.
+- [ ] Update `UX-P0-005` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P0-006 — Build plan-first workflow experience
+- [ ] Define implementation design and file-level change plan for UX-P0-006.
+- [ ] Implement/create the required files/components listed in UX-P0-006.
+- [ ] Validate acceptance criteria for UX-P0-006 with tests or documented checks.
+- [ ] Update `UX-P0-006` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P0-007 — Add assistant action chips and quick actions
+- [ ] Define implementation design and file-level change plan for UX-P0-007.
+- [ ] Implement/create the required files/components listed in UX-P0-007.
+- [ ] Validate acceptance criteria for UX-P0-007 with tests or documented checks.
+- [ ] Update `UX-P0-007` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P0-008 — Add ambient assistant intelligence rail
+- [ ] Define implementation design and file-level change plan for UX-P0-008.
+- [ ] Implement/create the required files/components listed in UX-P0-008.
+- [ ] Validate acceptance criteria for UX-P0-008 with tests or documented checks.
+- [ ] Update `UX-P0-008` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P0-009 — Add interruptible workflow control UX
+- [ ] Define implementation design and file-level change plan for UX-P0-009.
+- [ ] Implement/create the required files/components listed in UX-P0-009.
+- [ ] Validate acceptance criteria for UX-P0-009 with tests or documented checks.
+- [ ] Update `UX-P0-009` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P0-010 — Add execution streaming narration
+- [ ] Define implementation design and file-level change plan for UX-P0-010.
+- [ ] Implement/create the required files/components listed in UX-P0-010.
+- [ ] Validate acceptance criteria for UX-P0-010 with tests or documented checks.
+- [ ] Update `UX-P0-010` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P0-011 — Add unified operational timeline
+- [ ] Define implementation design and file-level change plan for UX-P0-011.
+- [ ] Implement/create the required files/components listed in UX-P0-011.
+- [ ] Validate acceptance criteria for UX-P0-011 with tests or documented checks.
+- [ ] Update `UX-P0-011` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P0-012 — Add task and schedule center UX
+- [ ] Define implementation design and file-level change plan for UX-P0-012.
+- [ ] Implement/create the required files/components listed in UX-P0-012.
+- [ ] Validate acceptance criteria for UX-P0-012 with tests or documented checks.
+- [ ] Update `UX-P0-012` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P0-013 — Add approval center UX
+- [ ] Define implementation design and file-level change plan for UX-P0-013.
+- [ ] Implement/create the required files/components listed in UX-P0-013.
+- [ ] Validate acceptance criteria for UX-P0-013 with tests or documented checks.
+- [ ] Update `UX-P0-013` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P0-014 — Add workflow dry-run and simulation preview UX
+- [ ] Define implementation design and file-level change plan for UX-P0-014.
+- [ ] Implement/create the required files/components listed in UX-P0-014.
+- [ ] Validate acceptance criteria for UX-P0-014 with tests or documented checks.
+- [ ] Update `UX-P0-014` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P0-015 — Add memory curation review flow
+- [ ] Define implementation design and file-level change plan for UX-P0-015.
+- [ ] Implement/create the required files/components listed in UX-P0-015.
+- [ ] Validate acceptance criteria for UX-P0-015 with tests or documented checks.
+- [ ] Update `UX-P0-015` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P1-001 — Add command palette for assistant operations
+- [ ] Define implementation design and file-level change plan for UX-P1-001.
+- [ ] Implement/create the required files/components listed in UX-P1-001.
+- [ ] Validate acceptance criteria for UX-P1-001 with tests or documented checks.
+- [ ] Update `UX-P1-001` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P1-002 — Add multi-agent visibility and collaboration UI
+- [ ] Define implementation design and file-level change plan for UX-P1-002.
+- [ ] Implement/create the required files/components listed in UX-P1-002.
+- [ ] Validate acceptance criteria for UX-P1-002 with tests or documented checks.
+- [ ] Update `UX-P1-002` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P1-003 — Add AI memory inspector
+- [ ] Define implementation design and file-level change plan for UX-P1-003.
+- [ ] Implement/create the required files/components listed in UX-P1-003.
+- [ ] Validate acceptance criteria for UX-P1-003 with tests or documented checks.
+- [ ] Update `UX-P1-003` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P1-004 — Add knowledge graph visualization
+- [ ] Define implementation design and file-level change plan for UX-P1-004.
+- [ ] Implement/create the required files/components listed in UX-P1-004.
+- [ ] Validate acceptance criteria for UX-P1-004 with tests or documented checks.
+- [ ] Update `UX-P1-004` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P1-005 — Add workspace health dashboard
+- [ ] Define implementation design and file-level change plan for UX-P1-005.
+- [ ] Implement/create the required files/components listed in UX-P1-005.
+- [ ] Validate acceptance criteria for UX-P1-005 with tests or documented checks.
+- [ ] Update `UX-P1-005` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P1-006 — Add relationship-aware navigation
+- [ ] Define implementation design and file-level change plan for UX-P1-006.
+- [ ] Implement/create the required files/components listed in UX-P1-006.
+- [ ] Validate acceptance criteria for UX-P1-006 with tests or documented checks.
+- [ ] Update `UX-P1-006` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P1-007 — Add operating modes
+- [ ] Define implementation design and file-level change plan for UX-P1-007.
+- [ ] Implement/create the required files/components listed in UX-P1-007.
+- [ ] Validate acceptance criteria for UX-P1-007 with tests or documented checks.
+- [ ] Update `UX-P1-007` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P1-008 — Add explainability affordances everywhere
+- [ ] Define implementation design and file-level change plan for UX-P1-008.
+- [ ] Implement/create the required files/components listed in UX-P1-008.
+- [ ] Validate acceptance criteria for UX-P1-008 with tests or documented checks.
+- [ ] Update `UX-P1-008` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P1-009 — Add reusable operational templates
+- [ ] Define implementation design and file-level change plan for UX-P1-009.
+- [ ] Implement/create the required files/components listed in UX-P1-009.
+- [ ] Validate acceptance criteria for UX-P1-009 with tests or documented checks.
+- [ ] Update `UX-P1-009` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P1-010 — Add adaptive UI complexity
+- [ ] Define implementation design and file-level change plan for UX-P1-010.
+- [ ] Implement/create the required files/components listed in UX-P1-010.
+- [ ] Validate acceptance criteria for UX-P1-010 with tests or documented checks.
+- [ ] Update `UX-P1-010` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P1-011 — Add natural language artifact editing
+- [ ] Define implementation design and file-level change plan for UX-P1-011.
+- [ ] Implement/create the required files/components listed in UX-P1-011.
+- [ ] Validate acceptance criteria for UX-P1-011 with tests or documented checks.
+- [ ] Update `UX-P1-011` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P1-012 — Add advanced search across workspace and knowledge
+- [ ] Define implementation design and file-level change plan for UX-P1-012.
+- [ ] Implement/create the required files/components listed in UX-P1-012.
+- [ ] Validate acceptance criteria for UX-P1-012 with tests or documented checks.
+- [ ] Update `UX-P1-012` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P1-013 — Add inbox/triage experience
+- [ ] Define implementation design and file-level change plan for UX-P1-013.
+- [ ] Implement/create the required files/components listed in UX-P1-013.
+- [ ] Validate acceptance criteria for UX-P1-013 with tests or documented checks.
+- [ ] Update `UX-P1-013` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P1-014 — Add workspace onboarding and guided setup
+- [ ] Define implementation design and file-level change plan for UX-P1-014.
+- [ ] Implement/create the required files/components listed in UX-P1-014.
+- [ ] Validate acceptance criteria for UX-P1-014 with tests or documented checks.
+- [ ] Update `UX-P1-014` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P1-015 — Add notification and attention management
+- [ ] Define implementation design and file-level change plan for UX-P1-015.
+- [ ] Implement/create the required files/components listed in UX-P1-015.
+- [ ] Validate acceptance criteria for UX-P1-015 with tests or documented checks.
+- [ ] Update `UX-P1-015` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P1-016 — Add model/runtime selection UX
+- [ ] Define implementation design and file-level change plan for UX-P1-016.
+- [ ] Implement/create the required files/components listed in UX-P1-016.
+- [ ] Validate acceptance criteria for UX-P1-016 with tests or documented checks.
+- [ ] Update `UX-P1-016` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P1-017 — Add cost, token, and quota UX controls
+- [ ] Define implementation design and file-level change plan for UX-P1-017.
+- [ ] Implement/create the required files/components listed in UX-P1-017.
+- [ ] Validate acceptance criteria for UX-P1-017 with tests or documented checks.
+- [ ] Update `UX-P1-017` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P2-001 — Add multi-user collaboration and roles UX
+- [ ] Define implementation design and file-level change plan for UX-P2-001.
+- [ ] Implement/create the required files/components listed in UX-P2-001.
+- [ ] Validate acceptance criteria for UX-P2-001 with tests or documented checks.
+- [ ] Update `UX-P2-001` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P2-002 — Add client/project portfolio UX
+- [ ] Define implementation design and file-level change plan for UX-P2-002.
+- [ ] Implement/create the required files/components listed in UX-P2-002.
+- [ ] Validate acceptance criteria for UX-P2-002 with tests or documented checks.
+- [ ] Update `UX-P2-002` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P2-003 — Add report builder UX
+- [ ] Define implementation design and file-level change plan for UX-P2-003.
+- [ ] Implement/create the required files/components listed in UX-P2-003.
+- [ ] Validate acceptance criteria for UX-P2-003 with tests or documented checks.
+- [ ] Update `UX-P2-003` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P2-004 — Add policy authoring and governance UX
+- [ ] Define implementation design and file-level change plan for UX-P2-004.
+- [ ] Implement/create the required files/components listed in UX-P2-004.
+- [ ] Validate acceptance criteria for UX-P2-004 with tests or documented checks.
+- [ ] Update `UX-P2-004` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P2-005 — Add connector setup wizard UX
+- [ ] Define implementation design and file-level change plan for UX-P2-005.
+- [ ] Implement/create the required files/components listed in UX-P2-005.
+- [ ] Validate acceptance criteria for UX-P2-005 with tests or documented checks.
+- [ ] Update `UX-P2-005` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P2-006 — Add data import and document ingestion UX
+- [ ] Define implementation design and file-level change plan for UX-P2-006.
+- [ ] Implement/create the required files/components listed in UX-P2-006.
+- [ ] Validate acceptance criteria for UX-P2-006 with tests or documented checks.
+- [ ] Update `UX-P2-006` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P2-007 — Add accessibility and keyboard-first UX pass
+- [ ] Define implementation design and file-level change plan for UX-P2-007.
+- [ ] Implement/create the required files/components listed in UX-P2-007.
+- [ ] Validate acceptance criteria for UX-P2-007 with tests or documented checks.
+- [ ] Update `UX-P2-007` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P2-008 — Add mobile/tablet responsive UX
+- [ ] Define implementation design and file-level change plan for UX-P2-008.
+- [ ] Implement/create the required files/components listed in UX-P2-008.
+- [ ] Validate acceptance criteria for UX-P2-008 with tests or documented checks.
+- [ ] Update `UX-P2-008` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P2-009 — Add audit and compliance evidence UX
+- [ ] Define implementation design and file-level change plan for UX-P2-009.
+- [ ] Implement/create the required files/components listed in UX-P2-009.
+- [ ] Validate acceptance criteria for UX-P2-009 with tests or documented checks.
+- [ ] Update `UX-P2-009` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P2-010 — Add marketplace/template discovery UX
+- [ ] Define implementation design and file-level change plan for UX-P2-010.
+- [ ] Implement/create the required files/components listed in UX-P2-010.
+- [ ] Validate acceptance criteria for UX-P2-010 with tests or documented checks.
+- [ ] Update `UX-P2-010` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P3-001 — Add “what should I do next?” operating coach
+- [ ] Define implementation design and file-level change plan for UX-P3-001.
+- [ ] Implement/create the required files/components listed in UX-P3-001.
+- [ ] Validate acceptance criteria for UX-P3-001 with tests or documented checks.
+- [ ] Update `UX-P3-001` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P3-002 — Add strategic roadmap and initiative planning UX
+- [ ] Define implementation design and file-level change plan for UX-P3-002.
+- [ ] Implement/create the required files/components listed in UX-P3-002.
+- [ ] Validate acceptance criteria for UX-P3-002 with tests or documented checks.
+- [ ] Update `UX-P3-002` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P3-003 — Add workflow comparison and optimization UX
+- [ ] Define implementation design and file-level change plan for UX-P3-003.
+- [ ] Implement/create the required files/components listed in UX-P3-003.
+- [ ] Validate acceptance criteria for UX-P3-003 with tests or documented checks.
+- [ ] Update `UX-P3-003` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P3-004 — Add skill gap and skill improvement UX loop
+- [ ] Define implementation design and file-level change plan for UX-P3-004.
+- [ ] Implement/create the required files/components listed in UX-P3-004.
+- [ ] Validate acceptance criteria for UX-P3-004 with tests or documented checks.
+- [ ] Update `UX-P3-004` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P3-005 — Add learning loop and lessons-learned UX
+- [ ] Define implementation design and file-level change plan for UX-P3-005.
+- [ ] Implement/create the required files/components listed in UX-P3-005.
+- [ ] Validate acceptance criteria for UX-P3-005 with tests or documented checks.
+- [ ] Update `UX-P3-005` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P3-006 — Add scenario simulation and decision workspace
+- [ ] Define implementation design and file-level change plan for UX-P3-006.
+- [ ] Implement/create the required files/components listed in UX-P3-006.
+- [ ] Validate acceptance criteria for UX-P3-006 with tests or documented checks.
+- [ ] Update `UX-P3-006` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P3-007 — Add personal productivity command layer
+- [ ] Define implementation design and file-level change plan for UX-P3-007.
+- [ ] Implement/create the required files/components listed in UX-P3-007.
+- [ ] Validate acceptance criteria for UX-P3-007 with tests or documented checks.
+- [ ] Update `UX-P3-007` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P3-008 — Add meeting capture and action extraction UX
+- [ ] Define implementation design and file-level change plan for UX-P3-008.
+- [ ] Implement/create the required files/components listed in UX-P3-008.
+- [ ] Validate acceptance criteria for UX-P3-008 with tests or documented checks.
+- [ ] Update `UX-P3-008` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P3-009 — Add voice and multimodal interaction roadmap
+- [ ] Define implementation design and file-level change plan for UX-P3-009.
+- [ ] Implement/create the required files/components listed in UX-P3-009.
+- [ ] Validate acceptance criteria for UX-P3-009 with tests or documented checks.
+- [ ] Update `UX-P3-009` status from `Open` to `Completed` when acceptance criteria are met.
+
+### UX-P3-010 — Add UX telemetry and product analytics
+- [ ] Define implementation design and file-level change plan for UX-P3-010.
+- [ ] Implement/create the required files/components listed in UX-P3-010.
+- [ ] Validate acceptance criteria for UX-P3-010 with tests or documented checks.
+- [ ] Update `UX-P3-010` status from `Open` to `Completed` when acceptance criteria are met.
+
