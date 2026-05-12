@@ -3,17 +3,26 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Conversation Intent",
   "type": "object",
-  "required": ["intent", "confidence", "risk_level", "default_action", "required_fields"],
+  "required": ["intent", "confidence", "rationale"],
   "properties": {
-    "intent": {"type": "string"},
+    "intent": {
+      "type": "string",
+      "enum": [
+        "answer_only",
+        "brainstorm",
+        "draft_plan",
+        "create_task",
+        "create_schedule",
+        "curate_knowledge",
+        "create_skill",
+        "create_workflow",
+        "run_workflow",
+        "ask_clarifying_question"
+      ]
+    },
     "confidence": {"type": "number", "minimum": 0, "maximum": 1},
-    "risk_level": {"type": "string", "enum": ["low", "medium", "high"]},
-    "default_action": {"type": "string"},
-    "required_fields": {
-      "type": "array",
-      "items": {"type": "string"},
-      "uniqueItems": true
-    }
+    "rationale": {"type": "string", "minLength": 1},
+    "message_excerpt": {"type": "string"}
   },
   "additionalProperties": true
 }

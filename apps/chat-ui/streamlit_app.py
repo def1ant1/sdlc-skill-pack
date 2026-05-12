@@ -17,6 +17,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import subprocess
 import time
 import urllib.error
 import urllib.request
@@ -48,6 +49,8 @@ ROOT          = Path(__file__).resolve().parents[2]
 REPORTS_DIR   = ROOT / "reports"
 CONV_DIR      = REPORTS_DIR / "conversations"
 WORKSPACE_STATE_FILE = REPORTS_DIR / "workspace" / "workspace-state.json"
+CONVERSATION_INTENT_SCHEMA_PATH = ROOT / "schemas" / "conversation-intent.schema.json"
+INTENT_ROUTER_SCRIPT = ROOT / "scripts" / "orchestration" / "route_conversation_intent.py"
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Skill catalog
@@ -681,6 +684,36 @@ def gen_unknown_response(ollama_url: str, request: str) -> str:
     return reply or ("I want to make sure I build the right plan. "
                      "Could you tell me more about the primary outcome you're trying to achieve?")
 
+
+def route_conversation_intent(message: str) -> dict[str, Any]:
+    payload = {"message": message}
+    default = {"intent": "ask_clarifying_question", "confidence": 0.0, "rationale": "routing_failed"}
+    try:
+        out = subprocess.check_output(
+            ["python3", str(INTENT_ROUTER_SCRIPT), "--state", json.dumps(payload)],
+            text=True,
+            cwd=str(ROOT),
+        )
+        routed = json.loads(out)
+        validate_conversation_intent(routed)
+        return routed
+    except Exception:
+        return default
+
+
+def validate_conversation_intent(intent_data: dict[str, Any]) -> None:
+    schema = json.loads(CONVERSATION_INTENT_SCHEMA_PATH.read_text(encoding="utf-8"))
+    required = schema.get("required", [])
+    for field in required:
+        if field not in intent_data:
+            raise ValueError(f"Missing required conversation intent field: {field}")
+    intent_enum = schema["properties"]["intent"]["enum"]
+    if intent_data.get("intent") not in intent_enum:
+        raise ValueError("Conversation intent is not allowed by schema.")
+    confidence = intent_data.get("confidence")
+    if not isinstance(confidence, (int, float)) or not (0 <= confidence <= 1):
+        raise ValueError("Conversation intent confidence must be between 0 and 1.")
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Session state
 # ─────────────────────────────────────────────────────────────────────────────
@@ -711,6 +744,8 @@ def _init() -> None:
         "workspace_state":   None,
         "active_workspace_conversation": None,
         "assistant_working_state": None,
+        "routed_intent": None,
+        "routed_intent_confidence": None,
     }
     for k, v in defaults.items():
         if k not in st.session_state:
@@ -856,6 +891,38 @@ def _run_workflow_builder_mode(user_input: str, ollama_url: str, use_ollama: boo
     add_msg("assistant", reply)
     add_llm("assistant", reply)
     s.phase = "reviewing"
+
+
+def _dispatch_mode_for_intent(user_input: str, routed: dict[str, Any], ollama_url: str, use_ollama: bool) -> None:
+    workflow_intents = {"create_workflow", "run_workflow"}
+    if routed.get("intent") in workflow_intents:
+        _run_conversational_mode(user_input, ollama_url, use_ollama)
+        return
+
+    s = st.session_state
+    s.phase = "conversational_response"
+    s.mode = "conversational"
+    s.intent_raw = user_input
+    s.analysis = None
+    s.dynamic_questions = []
+    s.q_index = 0
+    s.answers = {}
+    s.plan = None
+    s.run_result = None
+    s.poll_run_id = None
+    s.workflow_data = None
+    s.assistant_working_state = derive_working_state(s.intent_raw, s.answers, None)
+    s.llm_messages = [{"role": "user", "content": user_input}]
+    with st.chat_message("assistant"):
+        with st.spinner("Thinking…"):
+            reply = (
+                gen_unknown_response(ollama_url, user_input)
+                if use_ollama else "Got it — I can help with that directly."
+            )
+        st.markdown(reply)
+    add_msg("assistant", reply)
+    add_llm("assistant", reply)
+    s.phase = "done"
 
 
 def derive_working_state(intent_raw: str, answers: dict[str, Any], analysis: dict | None = None) -> dict[str, Any]:
@@ -1537,9 +1604,12 @@ with col_chat:
         add_msg("user", user_input)
         add_llm("user", user_input)
 
-        # ── idle / done → analyze ─────────────────────────────────────────────
+        # ── idle / done → route intent then dispatch ─────────────────────────
         if s.phase in ("idle", "done"):
-            _run_conversational_mode(user_input, ollama_url, use_ollama)
+            routed = route_conversation_intent(user_input)
+            s.routed_intent = routed.get("intent")
+            s.routed_intent_confidence = routed.get("confidence")
+            _dispatch_mode_for_intent(user_input, routed, ollama_url, use_ollama)
             st.rerun()
 
         # ── questioning → collect answer, advance ─────────────────────────────
