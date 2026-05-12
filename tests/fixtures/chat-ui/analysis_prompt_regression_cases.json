@@ -1,0 +1,46 @@
+[
+  {
+    "intent": "q_and_a",
+    "request": "What are the VAT registration thresholds for UK and Germany for digital services?",
+    "full_intake_requested": false,
+    "expected": {
+      "questions_max": 1,
+      "allow_empty_questions": true,
+      "require_assumptions": true,
+      "require_open_questions": true
+    }
+  },
+  {
+    "intent": "brainstorm",
+    "request": "Brainstorm 10 campaign themes for a summer B2B webinar series and include quick pros/cons.",
+    "full_intake_requested": false,
+    "expected": {
+      "questions_max": 1,
+      "allow_empty_questions": true,
+      "require_assumptions": true,
+      "require_open_questions": true
+    }
+  },
+  {
+    "intent": "draft_plan",
+    "request": "Draft a 30-day launch plan for a new returns portal using current team capacity assumptions.",
+    "full_intake_requested": false,
+    "expected": {
+      "questions_max": 1,
+      "allow_empty_questions": true,
+      "require_assumptions": true,
+      "require_open_questions": true
+    }
+  },
+  {
+    "intent": "workflow",
+    "request": "Build a workflow for onboarding a new enterprise customer across legal, finance, and security with full intake.",
+    "full_intake_requested": true,
+    "expected": {
+      "questions_max": 6,
+      "allow_empty_questions": true,
+      "require_assumptions": true,
+      "require_open_questions": true
+    }
+  }
+]

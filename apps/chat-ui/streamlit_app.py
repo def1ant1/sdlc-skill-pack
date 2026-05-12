@@ -378,15 +378,19 @@ Analyze the request and return a JSON object with this exact structure:
   "domains": ["domain1", "domain2"],
   "complexity": "simple|moderate|complex|enterprise",
   "skills_preview": ["skill1", "skill2", "skill3"],
-  "questions": [
-    "Question 1 — must be specific to THIS request?",
-    "Question 2?",
-    "Question 3?"
-  ]
+  "assumptions": [
+    "Assumption 1 used to move forward safely"
+  ],
+  "open_questions": [
+    "Known uncertainty that may affect optimization"
+  ],
+  "questions": []
 }}
 
 Rules for questions:
-- Generate 3 to 6 questions that SPAN ALL identified domains.
+- Ask questions only when missing information would materially change the next safe action.
+- Prefer drafting with explicit assumptions when you can proceed safely.
+- Ask at most ONE clarifying question at a time unless the user explicitly requests full intake.
 - Questions must surface information needed to select the right skills and sequencing.
 - Each question should uncover a different dimension: scope, constraints, stakeholders, \
 timeline, data/systems, risk tolerance, approvals, etc.
@@ -412,7 +416,16 @@ def analyze_request(ollama_url: str, request: str) -> dict | None:
         as_json=True, max_tokens=1000, temperature=0.2,
     )
     result = _extract_json(raw)
-    if result and isinstance(result.get("questions"), list) and len(result["questions"]) > 0:
+    if result:
+        result.setdefault("assumptions", [])
+        result.setdefault("open_questions", [])
+        result.setdefault("questions", [])
+        if not isinstance(result.get("questions"), list):
+            result["questions"] = []
+        if not isinstance(result.get("assumptions"), list):
+            result["assumptions"] = []
+        if not isinstance(result.get("open_questions"), list):
+            result["open_questions"] = []
         return result
     return None
 
@@ -425,13 +438,13 @@ def _fallback_analysis(request: str) -> dict:
         "complexity": "moderate",
         "skills_preview": ["business-orchestration", "governance", "compliance-runtime",
                            "accounts-payable-automation", "audit-trail"],
-        "questions": [
-            "What is the primary goal of this initiative?",
-            "Which teams or stakeholders need to be involved?",
-            "What is the timeline and any hard deadlines?",
-            "Are there budget, regulatory, or technical constraints?",
-            "What does a successful outcome look like?",
+        "assumptions": [
+            "Proceed with a standard cross-functional rollout cadence unless a hard deadline is specified."
         ],
+        "open_questions": [
+            "Are there any non-negotiable constraints (budget/regulatory/technical) that change execution order?"
+        ],
+        "questions": [],
     }
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -832,11 +845,21 @@ def _run_conversational_mode(user_input: str, ollama_url: str, use_ollama: bool)
                     )
                 )
         else:
-            s.phase = "done"
+            synthesis = synthesize_plan(ollama_url, s.intent_raw, s.analysis or {}, s.answers) if use_ollama else None
+            if not synthesis:
+                synthesis = _fallback_plan(s.intent_raw, s.analysis or {}, s.answers)
+            plan = build_plan(s.intent_raw, synthesis, s.answers)
+            plan["assistant_working_state"] = s.assistant_working_state
+            s.plan = plan
+            s.phase = "draft_artifact"
+            open_panel("plan")
             with st.spinner("Thinking…"):
                 reply = (
-                    gen_unknown_response(ollama_url, user_input)
-                    if use_ollama else "Could you describe the primary goal in more detail?"
+                    gen_synthesis_intro(ollama_url, plan, s.llm_messages)
+                    if use_ollama else (
+                        f"I've drafted a **{plan.get('workflow_title', 'workflow')}** plan with explicit assumptions. "
+                        "Review it in the Plan panel."
+                    )
                 )
         st.markdown(reply)
 
