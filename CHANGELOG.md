@@ -1,3 +1,10 @@
+## 2026-05-11 — MB-ECOM-P0-005 ecommerce fulfillment/logistics completion
+
+- Added 8 fulfillment/logistics skills under `skills/`: `ecommerce-fulfillment`, `shipping-carrier-selection`, `package-dimension-optimization`, `freight-and-pallet-analysis`, `warehouse-slotting-analysis`, `pick-pack-optimization`, `returns-routing-analysis`, and `shipping-sla-risk-analysis`.
+- Standardized shipping recommendation contracts to require explicit `cost`, `delivery_time`, and `sla_risk` outputs with assumptions and confidence context.
+- Integrated fulfillment decisioning guidance with canonical ecommerce ontology entities (`FulfillmentOrder`, `InventoryLot`, and order/listing references).
+- Enforced mandatory approval gates for shipping purchases and all external side effects (labels, bookings, charges, and return-routing commitments).
+
 
 ## 2026-05-11 — MB-ECOM-P0-001 canonical ecommerce ontology + entities
 

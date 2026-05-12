@@ -1,0 +1,11 @@
+version: 1
+skill: shipping-carrier-selection
+routes:
+  - when_intent_in:
+      - ecommerce_fulfillment
+      - shipping
+      - logistics
+    then: shipping-carrier-selection
+  - when_contains_any:
+      - shipping carrier selection
+    then: shipping-carrier-selection

@@ -1,0 +1,11 @@
+version: 1
+skill: freight-and-pallet-analysis
+routes:
+  - when_intent_in:
+      - ecommerce_fulfillment
+      - shipping
+      - logistics
+    then: freight-and-pallet-analysis
+  - when_contains_any:
+      - freight and pallet analysis
+    then: freight-and-pallet-analysis
