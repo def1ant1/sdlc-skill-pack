@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "required": [
+    "id",
+    "policy_id",
+    "input",
+    "expected_outcome"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "policy_id": {
+      "type": "string"
+    },
+    "input": {
+      "type": "object"
+    },
+    "expected_outcome": {
+      "type": "string",
+      "enum": [
+        "allowed",
+        "blocked",
+        "approval_required",
+        "warning"
+      ]
+    }
+  }
+}
