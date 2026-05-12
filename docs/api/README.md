@@ -50,3 +50,17 @@ python scripts/docs/validate_docs_integrity.py
 - `docs/examples/RUNNABLE_CLI_EXAMPLES.md`
 - `docs/examples/OLDFARMTRUCKS_DEMO_TUTORIAL.md`
 - `docs/onboarding/OPERATOR_RUNBOOK.md`
+
+
+## Conversation intent routing API
+
+```bash
+python scripts/orchestration/route_conversation_intent.py --help
+
+cat <<'JSON' | python scripts/orchestration/route_conversation_intent.py
+{
+  "message": {"id": "m1", "text": "Please plan a secure backend workflow", "timestamp": "2026-05-12T00:00:00Z", "user_id": "u1"},
+  "context": {"conversation_id": "c1", "history": [], "governance": {"allow_execution": false, "require_approval": true}, "memory": {"enabled": true}}
+}
+JSON
+```
