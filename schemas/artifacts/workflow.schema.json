@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apotheon.local/schemas/artifacts/workflow.schema.json",
+  "title": "Workflow Artifact",
+  "allOf": [
+    {
+      "$ref": "./common-envelope.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "workflow"
+        },
+        "content": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "type",
+        "content"
+      ]
+    }
+  ]
+}

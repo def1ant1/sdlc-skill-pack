@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apotheon.local/schemas/artifacts/schedule.schema.json",
+  "title": "Schedule Artifact",
+  "allOf": [
+    {
+      "$ref": "./common-envelope.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "schedule"
+        },
+        "content": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "type",
+        "content"
+      ]
+    }
+  ]
+}

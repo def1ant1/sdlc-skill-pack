@@ -1,3 +1,11 @@
+## 2026-05-12 — Artifact model schema pack + conversion rules + validation
+
+- Added `schemas/artifacts/` with a shared envelope schema and dedicated schemas for plan, workflow, skill proposal, task, schedule, knowledge note, decision, approval request, and assistant action artifacts.
+- Standardized envelope fields across artifact classes (`id`, `type`, `title`, `status`, source conversation/message IDs, owner, version, content, links).
+- Added artifact conversion rules in `schemas/artifacts/conversion-rules.yaml` for plan→task, plan→workflow, conversation→knowledge, and workflow run→decision/lesson flows.
+- Added version-tracked fixtures in `fixtures/artifacts/` and validation script `scripts/validation/validate_artifact_schemas.py` to ensure assistant-created artifacts are consistently addressable.
+- Added artifact model documentation at `docs/schemas/artifact-model.md`.
+
 ## 2026-05-12 — Intake behavior modernization + prompting policy update
 
 - Deprecated mandatory fixed intake sequencing in favor of progressive clarification rules.

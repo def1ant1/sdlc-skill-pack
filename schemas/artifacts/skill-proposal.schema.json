@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apotheon.local/schemas/artifacts/skill-proposal.schema.json",
+  "title": "Skill Proposal Artifact",
+  "allOf": [
+    {
+      "$ref": "./common-envelope.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "skill_proposal"
+        },
+        "content": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "type",
+        "content"
+      ]
+    }
+  ]
+}

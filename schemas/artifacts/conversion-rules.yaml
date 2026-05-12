@@ -1,0 +1,51 @@
+version: 1
+rules:
+  - from: plan
+    to: task
+    description: Expand plan milestones into addressable task artifacts.
+    mapping:
+      source_fields: [id, source, owner, version, links]
+      content_map:
+        from: content.steps
+        to: content.task_items
+      link_rel: derived_from_plan
+
+  - from: plan
+    to: workflow
+    description: Convert approved plan sequence into executable workflow graph.
+    mapping:
+      source_fields: [id, title, source, owner, version]
+      content_map:
+        from: content.steps
+        to: content.workflow_nodes
+      link_rel: generated_from_plan
+
+  - from: conversation
+    to: knowledge_note
+    description: Capture durable learnings from message transcript excerpts.
+    mapping:
+      source_fields: [conversation_id, message_ids]
+      content_map:
+        from: transcript.highlights
+        to: content.notes
+      link_rel: extracted_from_conversation
+
+  - from: workflow_run
+    to: decision
+    description: Persist run-time decision points as explicit decision artifacts.
+    mapping:
+      source_fields: [run_id, owner]
+      content_map:
+        from: run.decisions
+        to: content.records
+      link_rel: emitted_by_workflow_run
+
+  - from: workflow_run
+    to: knowledge_note
+    description: Capture lessons learned from workflow outcomes for future retrieval.
+    mapping:
+      source_fields: [run_id, owner]
+      content_map:
+        from: run.lessons_learned
+        to: content.notes
+      link_rel: lessons_from_workflow_run
