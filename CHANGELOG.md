@@ -189,3 +189,11 @@ All notable changes to the Apotheon AI Company OS are documented here.
 - Added `schemas/marketplace-source.schema.json` requiring legal metadata, robots/TOS handling declarations, throttling constraints, proxy controls, and lineage fields.
 - Added `scripts/marketplaces/validate_source_policy.py` to fail non-compliant source definitions.
 - Added `references/marketplace-data-policy.md` and refreshed marketplace/governance docs with policy boundaries, rate limits, proxy rules, and violation behavior.
+
+
+## [8.0.27] — 2026-05-12 — Ecommerce Listing Ops + Inventory/Catalog + Dashboard
+
+- Added seven listing operations skills with draft-mode outputs and publish approval gates.
+- Added catalog/inventory components covering normalization, multi-channel sync, deduplication, SKU relationship analysis, bundles, and reorder threshold analysis.
+- Added ecommerce analytics surface via `apps/ecommerce-dashboard/` and profitability/operations reports.
+- Standardized required metrics (gross/net margin, sell-through, aging, return rate, shipping/fee ratio, conversion, CAC) with marketplace and SKU segmentation in generated artifacts.
