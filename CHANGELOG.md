@@ -1,3 +1,10 @@
+## 2026-05-12 — Assistant action chip model, generation, explainability, and audit events
+
+- Hardened `schemas/artifacts/assistant-action.schema.json` with an explicit action chip contract and required explainability/reversibility metadata.
+- Implemented `scripts/orchestration/assistant_action_chips.py` to generate chip sets from response context + active artifacts and to emit auditable chip-triggered events tied to conversation/message IDs.
+- Updated `fixtures/artifacts/assistant_action.json` to include chip + event examples for validation.
+- Updated assistant action UX documentation in `docs/architecture/assistant-workspace-ux.md` with chip contract and audit behavior.
+
 ## 2026-05-12 — Knowledge curation assistant lifecycle controls
 
 - Added `core/knowledge-curation-assistant/references/knowledge-note-taxonomy.md` and `core/knowledge-curation-assistant/templates/knowledge-note.md` to define note taxonomy, lifecycle, provenance, impact links, and staleness semantics.

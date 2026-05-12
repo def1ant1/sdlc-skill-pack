@@ -11,7 +11,29 @@
   "owner": "assistant",
   "version": "1.0.0",
   "content": {
-    "summary": "example"
+    "chips": [
+      {
+        "key": "create_plan",
+        "label": "Create plan",
+        "explain_why": "No active plan artifact exists yet.",
+        "reversible": {
+          "supported": true,
+          "operations": ["undo", "cancel", "edit_before_execute"]
+        },
+        "payload": {}
+      }
+    ],
+    "events": [
+      {
+        "event_type": "assistant_action_chip_triggered",
+        "conversation_id": "conv-123",
+        "message_id": "msg-1",
+        "chip_key": "create_plan",
+        "action": "preview",
+        "artifact_id": null,
+        "timestamp": "2026-05-12T00:00:00Z"
+      }
+    ]
   },
   "links": [
     {
