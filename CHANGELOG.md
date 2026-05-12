@@ -1,3 +1,9 @@
+## 2026-05-12 — Knowledge curation assistant lifecycle controls
+
+- Added `core/knowledge-curation-assistant/references/knowledge-note-taxonomy.md` and `core/knowledge-curation-assistant/templates/knowledge-note.md` to define note taxonomy, lifecycle, provenance, impact links, and staleness semantics.
+- Added `scripts/orchestration/conversation_to_knowledge_notes.py` with propose-only extraction, explicit lifecycle actions (`approve`, `edit`, `reject`, `archive`, `supersede`), conflict/staleness detection, command trigger detection (`remember this`, `don't use that anymore`), and targeted retrieval filters.
+- Added `docs/reference/knowledge-curation-policy.md` to document memory curation policy, command semantics, and retrieval safeguards.
+
 ## 2026-05-12 — Planner contract + memory-aware intake hardening
 
 - Extended living planner input contract with `planner_inputs` sections for conversation summary, constraints, assumptions, desired outputs, entities, preferences, and prior decisions.

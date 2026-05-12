@@ -1426,3 +1426,14 @@ Completed scope:
 - Added plan workspace docs for users and developers in `docs/plan-workspace/`.
 - Follow-up hardening completed: planner input contracts now include structured summary/constraints/assumptions/desired outputs/entities/preferences/prior decisions, memory-aware answered-question suppression, and explicit-vs-inferred confidence annotations.
 
+
+
+## MB-P1-009 — Knowledge curation assistant and lifecycle controls
+
+**Source:** Orchestration + memory governance hardening  
+**Status:** Completed (2026-05-12)
+
+Completed scope:
+- Added `core/knowledge-curation-assistant/` with taxonomy and note template artifacts.
+- Implemented `scripts/orchestration/conversation_to_knowledge_notes.py` with propose-only extraction (no auto-persist), lifecycle actions (`approve`, `edit`, `reject`, `archive`, `supersede`), provenance and impact links, conflict/staleness checks, command triggers, and targeted retrieval.
+- Added policy documentation at `docs/reference/knowledge-curation-policy.md`.
