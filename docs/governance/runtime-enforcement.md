@@ -40,3 +40,14 @@ Policy decisions include a `dashboard_event` envelope with decision status and v
 - **Logistics:** booking, payment, and shipping document issuance actions must pause pending human approval.
 - **Security:** IAM/policy/secret/DLP mutations must require explicit approval and must preserve evidence artifacts (pre-state, post-state, actor, timestamp, audit-log references).
 - **Materials:** outputs that can affect safety, compliance, or structural integrity must be marked `safety_critical=true` and routed to professional review before operational use.
+
+## Approval routing parity addendum (2026-05-12)
+
+To preserve deterministic governance behavior, direct/manual executions and scheduled executions must both:
+
+1. Generate a dry-run preview with step gates, side-effect classes, and missing-input checks.
+2. Route high-risk gates into the same Approval Center queueing pathway.
+3. Emit the same pause/resume/cancel runtime audit events tied to the same run identifier.
+4. Persist policy context and decision rationale as evidence artifacts regardless of trigger origin.
+
+This parity requirement ensures approval outcomes and evidence packs remain comparable across all runtime entry modes.
