@@ -177,6 +177,15 @@ STEP_ICONS = {
     "pending_hitl": "🔒", "hitl_required": "🔒",
 }
 
+MODE_OPTIONS = ["Chat", "Plan", "Workflow Builder", "Operator", "Research", "Governance"]
+MODE_TO_INTENT = {
+    "Plan": "draft_plan",
+    "Workflow Builder": "create_workflow",
+    "Operator": "run_workflow",
+    "Research": "ask_clarifying_question",
+    "Governance": "request_approval",
+}
+
 # ─────────────────────────────────────────────────────────────────────────────
 # HTTP helpers
 # ─────────────────────────────────────────────────────────────────────────────
@@ -783,6 +792,9 @@ def _init() -> None:
         "assistant_working_state": None,
         "routed_intent": None,
         "routed_intent_confidence": None,
+        "selected_mode": "Chat",
+        "explicit_mode_override": False,
+        "workflow_builder_paused": False,
     }
     for k, v in defaults.items():
         if k not in st.session_state:
@@ -829,6 +841,30 @@ def _normalize_legacy_session_state() -> None:
     elif phase not in ("idle", "conversational_response", "draft_artifact", "questioning",
                        "reviewing", "executing", "hitl_pending", "done"):
         st.session_state.phase = "idle"
+
+
+def _set_selected_mode(mode_label: str) -> None:
+    mode = mode_label if mode_label in MODE_OPTIONS else "Chat"
+    prev = st.session_state.get("selected_mode", "Chat")
+    st.session_state.selected_mode = mode
+    st.session_state.explicit_mode_override = mode != "Chat"
+    if prev == "Workflow Builder" and mode != "Workflow Builder":
+        if st.session_state.get("phase") == "questioning":
+            st.session_state.workflow_builder_paused = True
+            st.session_state.phase = "done"
+    if mode == "Workflow Builder" and st.session_state.get("workflow_builder_paused"):
+        st.session_state.workflow_builder_paused = False
+        if st.session_state.get("dynamic_questions") and st.session_state.get("q_index", 0) < len(st.session_state.get("dynamic_questions", [])):
+            st.session_state.phase = "questioning"
+
+
+def _resolve_effective_mode(routed_intent: str | None) -> str:
+    if st.session_state.get("explicit_mode_override") and st.session_state.get("selected_mode") in MODE_OPTIONS:
+        return st.session_state["selected_mode"]
+    workflow_intents = {"create_workflow", "run_workflow", "draft_plan", "create_task", "create_schedule"}
+    if routed_intent in workflow_intents:
+        return "Workflow Builder"
+    return "Chat"
 
 
 def _run_conversational_mode(user_input: str, ollama_url: str, use_ollama: bool) -> None:
@@ -941,8 +977,8 @@ def _run_workflow_builder_mode(user_input: str, ollama_url: str, use_ollama: boo
 
 
 def _dispatch_mode_for_intent(user_input: str, routed: dict[str, Any], ollama_url: str, use_ollama: bool) -> None:
-    workflow_intents = {"create_workflow", "run_workflow", "draft_plan", "create_task", "create_schedule"}
-    if routed.get("intent") in workflow_intents:
+    effective_mode = _resolve_effective_mode(routed.get("intent"))
+    if effective_mode in ("Plan", "Workflow Builder", "Operator"):
         _run_conversational_mode(user_input, ollama_url, use_ollama)
         return
 
@@ -1215,6 +1251,14 @@ with st.sidebar:
     st.markdown("## Apotheon")
     st.caption("AI Company Operating System")
     st.divider()
+    selected_mode = st.selectbox("Mode", MODE_OPTIONS, index=MODE_OPTIONS.index(s.selected_mode))
+    if selected_mode != s.selected_mode:
+        _set_selected_mode(selected_mode)
+        if s.workspace_state:
+            s.workspace_state["workspace"]["selected_mode"] = s.selected_mode
+        st.rerun()
+    st.caption(f"Active mode: **{s.selected_mode}**")
+    st.divider()
 
     # Config
     api_url    = st.text_input("Runtime URL", value=API_URL_ENV, key="cfg_api_url",
@@ -1308,6 +1352,8 @@ with st.sidebar:
 
 # Panel toggle in top-right
 header_cols = st.columns([8, 1])
+with header_cols[0]:
+    st.markdown(f"### Active Mode: `{s.selected_mode}`")
 with header_cols[1]:
     panel_label = "← Close" if s.panel_open else "Panel →"
     if st.button(panel_label, key="toggle_panel"):
@@ -1362,6 +1408,7 @@ if col_panel is not None:
 
         # ── Cognition tab ─────────────────────────────────────────────────────
         elif s.panel_tab == "cognition":
+            st.caption(f"Working mode: **{s.selected_mode}**")
             updated_state, changed = render_visible_cognition_panel(s.assistant_working_state)
             if changed:
                 s.assistant_working_state = updated_state
@@ -1626,7 +1673,10 @@ with col_chat:
     # Done state
     if s.phase == "done":
         with st.chat_message("assistant"):
-            st.markdown("Workflow complete. Type a new request to start another.")
+            if s.workflow_builder_paused:
+                st.markdown("Workflow Builder intake is paused safely. Switch back to **Workflow Builder** mode to resume question collection.")
+            else:
+                st.markdown("Workflow complete. Type a new request to start another.")
 
     # Question progress indicator
     if s.phase == "questioning" and s.mode == "workflow_builder" and s.dynamic_questions:
@@ -1656,6 +1706,11 @@ with col_chat:
         # ── idle / done → route intent then dispatch ─────────────────────────
         if s.phase in ("idle", "done"):
             routed = route_conversation_intent(user_input)
+            mode_prior_intent = MODE_TO_INTENT.get(s.selected_mode)
+            if s.explicit_mode_override and mode_prior_intent:
+                routed["intent"] = mode_prior_intent
+                routed["rationale"] = "explicit_mode_override"
+                routed["confidence"] = max(float(routed.get("confidence", 0.0)), 0.99)
             s.routed_intent = routed.get("intent")
             s.routed_intent_confidence = routed.get("confidence")
             _dispatch_mode_for_intent(user_input, routed, ollama_url, use_ollama)
