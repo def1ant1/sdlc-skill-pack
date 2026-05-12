@@ -492,3 +492,11 @@ Update (2026-05-11):
 - Added `core/pricing-intelligence/` with normalization and profitability modules for marketplace fee, shipping, and tax normalization.
 - Added five pricing-intelligence skills for normalization, fee analysis, profitability, dynamic margins, and competitor pricing intelligence.
 - Published `reports/marketplace_pricing_report.md` with channel-level and SKU-level examples including net margin and confidence scoring.
+
+
+### 2026-05-12 Update — Listing Ops + Catalog/Inventory + Analytics Surface (MB-ECOM-P0-006/007/008)
+
+- Implemented listing operations skills in draft-first mode with publish approval gates: `skills/marketplace-listing-generation/`, `skills/product-title-optimization/`, `skills/product-description-generation/`, `skills/listing-seo-optimization/`, `skills/listing-image-analysis/`, `skills/listing-quality-scoring/`, and `skills/listing-compliance-validation/`.
+- Implemented catalog/inventory components: `core/catalog-normalization/`, `skills/multi-channel-inventory-sync/`, `skills/catalog-deduplication/`, `skills/sku-relationship-analysis/`, `skills/bundle-product-analysis/`, and `skills/reorder-threshold-analysis/`.
+- Added analytics surface: `apps/ecommerce-dashboard/`, `reports/ecommerce_profitability_dashboard.json`, and `reports/ecommerce_operations_report.md`.
+- Enforced required metrics in skills/reports/dashboard contracts: gross_margin, net_margin, sell_through, aging_days, return_rate, shipping_fee_ratio, conversion_rate, and cac with marketplace + SKU segmentation.

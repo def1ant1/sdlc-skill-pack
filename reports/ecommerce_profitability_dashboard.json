@@ -1,0 +1,16 @@
+{
+  "name": "ecommerce_profitability_dashboard",
+  "version": "0.1.0",
+  "segmentation": ["marketplace", "sku"],
+  "metrics": [
+    "gross_margin",
+    "net_margin",
+    "sell_through",
+    "aging_days",
+    "return_rate",
+    "shipping_fee_ratio",
+    "conversion_rate",
+    "cac"
+  ],
+  "status": "draft"
+}
