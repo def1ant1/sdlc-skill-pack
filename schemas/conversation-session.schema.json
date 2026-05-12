@@ -1,0 +1,16 @@
+{
+  "$id": "https://apotheon.dev/schemas/conversation-session.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Conversation Session",
+  "type": "object",
+  "required": ["session_id"],
+  "properties": {
+    "session_id": {"type": "string"},
+    "workspace_id": {"type": "string"},
+    "title": {"type": "string"},
+    "plan_id": {"type": "string"},
+    "run_id": {"type": "string"},
+    "saved_at": {"type": "string", "format": "date-time"}
+  },
+  "additionalProperties": true
+}

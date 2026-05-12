@@ -25,6 +25,14 @@ from typing import Any
 
 import streamlit as st
 
+from workspace_state import (
+    load_workspace_state,
+    register_conversation,
+    resume_session_from_workspace,
+    save_workspace_state,
+)
+from workspace_views import render_workspace_actions
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Configuration
 # ─────────────────────────────────────────────────────────────────────────────
@@ -37,6 +45,7 @@ JWT_ENV       = os.environ.get("APOTHEON_JWT_TOKEN",  "")
 ROOT          = Path(__file__).resolve().parents[2]
 REPORTS_DIR   = ROOT / "reports"
 CONV_DIR      = REPORTS_DIR / "conversations"
+WORKSPACE_STATE_FILE = REPORTS_DIR / "workspace" / "workspace-state.json"
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Skill catalog
@@ -577,6 +586,14 @@ def save_conversation(messages: list, plan: dict | None, run_result: dict | None
         "plan":        plan,
     }
     (CONV_DIR / f"{name}.json").write_text(json.dumps(record, indent=2), encoding="utf-8")
+    register_conversation(
+        st.session_state.workspace_state,
+        session_id=name,
+        title=(plan or {}).get("workflow_title", name),
+        plan_id=(plan or {}).get("id"),
+        run_id=(run_result or {}).get("run_id") if isinstance(run_result, dict) else None,
+    )
+    save_workspace_state(WORKSPACE_STATE_FILE, st.session_state.workspace_state)
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Conversational response generators
@@ -687,6 +704,8 @@ def _init() -> None:
         "panel_open":        True,
         "panel_tab":         "plan",  # plan|progress|hitl|history
         "panel_artifact":    None,    # generic artifact data for the panel
+        "workspace_state":   None,
+        "active_workspace_conversation": None,
     }
     for k, v in defaults.items():
         if k not in st.session_state:
@@ -924,6 +943,9 @@ st.set_page_config(
 )
 _init()
 s = st.session_state
+if s.workspace_state is None:
+    s.workspace_state = load_workspace_state(WORKSPACE_STATE_FILE)
+    resume_session_from_workspace(s, s.workspace_state)
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Sidebar
@@ -958,6 +980,9 @@ with st.sidebar:
         st.warning("Provide JWT token for live mode.", icon="⚠️")
         dry_run = True
 
+    st.divider()
+
+    render_workspace_actions(s.workspace_state)
     st.divider()
 
     # New conversation
