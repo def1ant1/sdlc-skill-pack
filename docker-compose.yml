@@ -166,7 +166,8 @@ services:
     ports:
       - "8501:8501"
     environment:
-      APOTHEON_API_URL: ${APOTHEON_API_URL:-http://localhost:8000}
+      APOTHEON_API_URL: ${APOTHEON_API_URL:-http://runtime:8000}
+      APOTHEON_JWT_TOKEN: ${APOTHEON_JWT_TOKEN:-}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       OLLAMA_URL: ${OLLAMA_URL:-http://ollama:11434}
       OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen3:4b}
@@ -196,7 +197,8 @@ services:
     ports:
       - "8502:8502"
     environment:
-      APOTHEON_API_URL: ${APOTHEON_API_URL:-http://localhost:8000}
+      APOTHEON_API_URL: ${APOTHEON_API_URL:-http://runtime:8000}
+      APOTHEON_JWT_TOKEN: ${APOTHEON_JWT_TOKEN:-}
       PYTHONPATH: /app
 
   # -------------------------------------------------------------------------

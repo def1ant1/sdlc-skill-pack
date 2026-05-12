@@ -41,7 +41,7 @@ STATE_PATH     = REPORTS_DIR / "dashboard_state.json"
 
 DEFAULT_CONFIG: dict[str, Any] = {
     "api_url":       os.environ.get("APOTHEON_API_URL", "http://runtime:8000"),
-    "jwt_token":     "",
+    "jwt_token":     os.environ.get("APOTHEON_JWT_TOKEN", ""),
     "ollama_url":    os.environ.get("OLLAMA_URL",       "http://ollama:11434"),
     "ollama_model":  os.environ.get("OLLAMA_MODEL",     "qwen3:4b"),
     "postgres_host": "postgres",

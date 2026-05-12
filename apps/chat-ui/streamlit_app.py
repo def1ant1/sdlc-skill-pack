@@ -1,13 +1,15 @@
 """
-Apotheon Chat UI — multi-domain, multi-skill conversational workflow planner.
+Apotheon Chat UI — primary operator interface.
+
+Layout:
+  Sidebar  | Chat (center) | Artifact Panel (collapsible right)
+
+Chat drives all interaction: planning, HITL approvals, workflow monitoring.
+The right panel renders artifacts: plan details, live progress, HITL approval
+forms, reports, and past conversation/workflow history.
 
 Flow:
-    idle → [Ollama analysis: domains + dynamic questions] → questioning
-         → [Ollama synthesis: full multi-phase plan] → reviewing
-         → executing → done
-
-Ollama (qwen3:4b) drives intent analysis, question generation, and plan synthesis.
-All configuration lives in the sidebar — no code changes required.
+  idle → questioning → reviewing → executing → [hitl_pending →] done
 """
 from __future__ import annotations
 
@@ -27,17 +29,17 @@ import streamlit as st
 # Configuration
 # ─────────────────────────────────────────────────────────────────────────────
 
-OLLAMA_URL   = os.environ.get("OLLAMA_URL",         "http://ollama:11434")
-OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL",       "qwen3:4b")
-API_URL_ENV  = os.environ.get("APOTHEON_API_URL",   "http://localhost:8000")
+OLLAMA_URL    = os.environ.get("OLLAMA_URL",          "http://ollama:11434")
+OLLAMA_MODEL  = os.environ.get("OLLAMA_MODEL",        "qwen3:4b")
+API_URL_ENV   = os.environ.get("APOTHEON_API_URL",    "http://runtime:8000")
+JWT_ENV       = os.environ.get("APOTHEON_JWT_TOKEN",  "")
 
-ROOT        = Path(__file__).resolve().parents[2]
-REPORTS_DIR = ROOT / "reports"
+ROOT          = Path(__file__).resolve().parents[2]
+REPORTS_DIR   = ROOT / "reports"
+CONV_DIR      = REPORTS_DIR / "conversations"
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Skill catalog
-# All skills Apotheon can orchestrate, with domain + description.
-# Ollama selects from this catalog during plan synthesis.
 # ─────────────────────────────────────────────────────────────────────────────
 
 ALL_SKILLS: dict[str, dict] = {
@@ -57,7 +59,6 @@ ALL_SKILLS: dict[str, dict] = {
     "release-management":           {"domain": "business",       "description": "Coordinate software releases, change management, and rollback plans"},
     "hr-operations-phase-pack":     {"domain": "business",       "description": "Handle hiring, onboarding, offboarding, and HR policy workflows"},
     "hr-policy-guidance-support":   {"domain": "business",       "description": "Provide HR policy guidance and compliance for employment decisions"},
-
     # ── Finance ──────────────────────────────────────────────────────────────
     "billing-runtime":              {"domain": "finance",        "description": "Manage invoicing, payment processing, and billing cycles"},
     "business-policy-engine":       {"domain": "finance",        "description": "Enforce spending limits, approval thresholds, and financial policies"},
@@ -74,7 +75,6 @@ ALL_SKILLS: dict[str, dict] = {
     "financial-reporting":          {"domain": "finance",        "description": "Produce P&L statements, balance sheets, and management accounts"},
     "audit-log-review":             {"domain": "finance",        "description": "Review financial audit logs for anomalies and control gaps"},
     "audit-trail-analysis":         {"domain": "finance",        "description": "Analyse transaction audit trails for compliance and fraud signals"},
-
     # ── Legal & Compliance ────────────────────────────────────────────────────
     "compliance-runtime":           {"domain": "legal",          "description": "Continuous compliance monitoring against regulatory frameworks"},
     "compliance-automation":        {"domain": "legal",          "description": "Automate recurring compliance checks and evidence collection"},
@@ -90,7 +90,6 @@ ALL_SKILLS: dict[str, dict] = {
     "listing-compliance-validation":{"domain": "legal",          "description": "Validate product listings for regulatory and marketplace compliance"},
     "iam-policy-analysis":          {"domain": "legal",          "description": "Analyse identity and access management policies for compliance gaps"},
     "policy-engine":                {"domain": "legal",          "description": "Author, version, and enforce organisational policies"},
-
     # ── Customer ──────────────────────────────────────────────────────────────
     "meeting-intelligence":         {"domain": "customer",       "description": "Capture, summarise, and extract action items from meetings and calls"},
     "churn-risk-detection":         {"domain": "customer",       "description": "Identify at-risk customers and recommend retention interventions"},
@@ -99,14 +98,12 @@ ALL_SKILLS: dict[str, dict] = {
     "customer-journey-mapping":     {"domain": "customer",       "description": "Map customer journeys and identify friction and drop-off points"},
     "crm-integration":              {"domain": "customer",       "description": "Sync and enrich CRM data across platforms (Salesforce, HubSpot)"},
     "account-expansion-intelligence":{"domain": "customer",      "description": "Identify upsell and cross-sell opportunities within existing accounts"},
-
     # ── Go-to-Market ──────────────────────────────────────────────────────────
     "campaign-optimization":        {"domain": "gtm",            "description": "Optimise marketing campaign targeting, spend, and creative performance"},
     "content-marketing":            {"domain": "gtm",            "description": "Plan, produce, and distribute content across marketing channels"},
     "brand-sentiment-analysis":     {"domain": "gtm",            "description": "Monitor and analyse brand sentiment across channels and media"},
     "market-data-ingestion":        {"domain": "gtm",            "description": "Ingest and structure market data for competitive and pricing intelligence"},
     "gtm-orchestration":            {"domain": "gtm",            "description": "Orchestrate end-to-end go-to-market launch sequences"},
-
     # ── Inventory & Supply Chain ──────────────────────────────────────────────
     "master-data-management":       {"domain": "inventory",      "description": "Maintain canonical product, supplier, customer, and location records"},
     "inventory-forecasting":        {"domain": "inventory",      "description": "Predict demand and optimise inventory levels to reduce stockouts and overstock"},
@@ -117,7 +114,6 @@ ALL_SKILLS: dict[str, dict] = {
     "ecommerce-fulfillment":        {"domain": "inventory",      "description": "Orchestrate order fulfilment workflows across warehouses and channels"},
     "multi-channel-inventory-sync": {"domain": "inventory",      "description": "Synchronise inventory across sales channels and fulfilment nodes"},
     "bulk-purchase-negotiation":    {"domain": "inventory",      "description": "Prepare data and strategy for bulk purchase price negotiations"},
-
     # ── Data & Security ───────────────────────────────────────────────────────
     "data-security-management":     {"domain": "data-security",  "description": "Manage data security controls, policies, and incident response"},
     "access-control-review":        {"domain": "data-security",  "description": "Audit and enforce least-privilege access controls across systems"},
@@ -125,7 +121,6 @@ ALL_SKILLS: dict[str, dict] = {
     "sandbox-execution":            {"domain": "data-security",  "description": "Run sensitive or untrusted workloads in isolated sandbox environments"},
 }
 
-# Domain labels and rich descriptions for Ollama context
 DOMAIN_LABELS: dict[str, str] = {
     "business":      "Business & Strategy",
     "finance":       "Finance & Accounting",
@@ -147,15 +142,25 @@ DOMAIN_DESCRIPTIONS: dict[str, str] = {
 }
 
 STATUS_COLORS = {
-    "done": "green", "queued": "blue", "running": "orange",
-    "failed": "red",  "dry_run_saved": "gray", "cancelled": "gray",
+    "done": "green", "completed": "green",
+    "queued": "blue", "running": "orange",
+    "failed": "red", "dry_run_saved": "gray",
+    "cancelled": "gray", "paused_for_hitl": "orange",
+    "dry_run": "gray", "pending": "orange",
+    "approved": "green", "rejected": "red",
 }
 
 COMPLEXITY_LABELS = {
-    "simple":     "Simple (1–3 skills)",
-    "moderate":   "Moderate (4–7 skills)",
-    "complex":    "Complex (8–15 skills)",
+    "simple":     "Simple (1-3 skills)",
+    "moderate":   "Moderate (4-7 skills)",
+    "complex":    "Complex (8-15 skills)",
     "enterprise": "Enterprise (15+ skills, multi-phase)",
+}
+
+STEP_ICONS = {
+    "pending": "⏳", "running": "⚙️", "completed": "✅",
+    "failed": "❌", "error": "❌", "dry_run": "🔵",
+    "pending_hitl": "🔒", "hitl_required": "🔒",
 }
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -255,16 +260,77 @@ def submit_to_backend(plan: dict, dry_run: bool, api_url: str, token: str) -> di
     return resp if code in (200, 202) else {"error": f"HTTP {code}: {resp}"}
 
 
-def list_recent_runs(api_url: str, token: str, limit: int = 8) -> list[dict]:
-    code, resp = _http(f"{api_url}/v1/workflows?limit={limit}", token=token)
+def get_workflow(api_url: str, token: str, run_id: str) -> dict | None:
+    code, resp = _http(f"{api_url}/v1/workflows/{run_id}", token=token, timeout=5)
+    return resp if code == 200 else None
+
+
+def list_workflows(api_url: str, token: str, limit: int = 15) -> list[dict]:
+    code, resp = _http(f"{api_url}/v1/workflows?limit={limit}", token=token, timeout=5)
     return resp if (code == 200 and isinstance(resp, list)) else []
+
+
+def get_approvals(api_url: str, token: str) -> list[dict]:
+    code, resp = _http(f"{api_url}/v1/approvals", token=token, timeout=5)
+    return resp if (code == 200 and isinstance(resp, list)) else []
+
+
+def decide_approval(api_url: str, token: str, approval_id: str,
+                    decision: str, reason: str = "") -> dict:
+    code, resp = _http(
+        f"{api_url}/v1/approvals/{approval_id}/decide", method="POST",
+        data={"decision": decision, "reason": reason},
+        token=token, timeout=10,
+    )
+    return resp if code == 200 else {"error": f"HTTP {code}: {resp}"}
+
+
+def load_saved_conversations() -> list[dict]:
+    """Load conversation summaries from reports/conversations/."""
+    if not CONV_DIR.exists():
+        return []
+    items = []
+    for f in sorted(CONV_DIR.glob("*.json"), reverse=True)[:20]:
+        try:
+            data = json.loads(f.read_text(encoding="utf-8"))
+            items.append({
+                "file": f.name,
+                "saved_at": data.get("saved_at", ""),
+                "plan_id": data.get("plan_id", ""),
+                "title": (data.get("plan") or {}).get("workflow_title", f.stem),
+                "message_count": len(data.get("messages", [])),
+                "data": data,
+            })
+        except Exception:
+            pass
+    return items
+
+
+def load_plan_files() -> list[dict]:
+    """Load plan JSON files from reports/."""
+    if not REPORTS_DIR.exists():
+        return []
+    items = []
+    for f in sorted(REPORTS_DIR.glob("plan-*.json"), reverse=True)[:10]:
+        try:
+            plan = json.loads(f.read_text(encoding="utf-8"))
+            items.append({
+                "file": f.name,
+                "id": plan.get("id", f.stem),
+                "title": plan.get("workflow_title", f.stem),
+                "complexity": plan.get("complexity", ""),
+                "domains": plan.get("domains", []),
+                "plan": plan,
+            })
+        except Exception:
+            pass
+    return items
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Skill catalog helpers
 # ─────────────────────────────────────────────────────────────────────────────
 
 def _catalog_text() -> str:
-    """Compact skill catalog for Ollama prompts."""
     lines = []
     for name, info in ALL_SKILLS.items():
         lines.append(f"  {name} [{info['domain']}]: {info['description']}")
@@ -277,7 +343,7 @@ def _domain_context() -> str:
     )
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Stage 1 — Analyze request: identify domains, skills, generate questions
+# Stage 1 — Analyze request
 # ─────────────────────────────────────────────────────────────────────────────
 
 ANALYSIS_SYSTEM = """You are Apotheon's multi-domain workflow analyzer.
@@ -320,12 +386,8 @@ procurement/logistics setup, compliance checks, AND audit trail.
 - This list will be refined after the user answers the questions.
 """
 
+
 def analyze_request(ollama_url: str, request: str) -> dict | None:
-    """
-    Stage 1: Multi-domain analysis.
-    Returns {workflow_title, understanding, domains, complexity, skills_preview, questions}
-    or None on failure.
-    """
     system = ANALYSIS_SYSTEM.format(
         domains=_domain_context(),
         skills=_catalog_text(),
@@ -336,14 +398,12 @@ def analyze_request(ollama_url: str, request: str) -> dict | None:
         as_json=True, max_tokens=1000, temperature=0.2,
     )
     result = _extract_json(raw)
-    # Validate minimal structure
     if result and isinstance(result.get("questions"), list) and len(result["questions"]) > 0:
         return result
     return None
 
 
 def _fallback_analysis(request: str) -> dict:
-    """Python fallback when Ollama analysis fails."""
     return {
         "workflow_title": "Workflow Plan",
         "understanding": request,
@@ -361,7 +421,7 @@ def _fallback_analysis(request: str) -> dict:
     }
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Stage 2 — Synthesize plan from analysis + answers
+# Stage 2 — Synthesize plan
 # ─────────────────────────────────────────────────────────────────────────────
 
 SYNTHESIS_SYSTEM = """You are Apotheon's multi-domain workflow architect.
@@ -410,11 +470,8 @@ large spend, irreversible actions, compliance certification).
 - Be specific to the user's actual answers — reference their context.
 """
 
+
 def synthesize_plan(ollama_url: str, request: str, analysis: dict, answers: dict) -> dict | None:
-    """
-    Stage 2: Build the full multi-domain plan from analysis + collected answers.
-    Returns synthesized plan dict or None on failure.
-    """
     system = SYNTHESIS_SYSTEM.format(
         skills=_catalog_text(),
         analysis=json.dumps(analysis, indent=2),
@@ -431,7 +488,6 @@ def synthesize_plan(ollama_url: str, request: str, analysis: dict, answers: dict
     )
     result = _extract_json(raw)
     if result and isinstance(result.get("skill_chain"), list) and len(result["skill_chain"]) > 0:
-        # Validate skills against catalog, remove unknown ones
         valid = {s for s in result["skill_chain"] if s in ALL_SKILLS}
         if valid:
             result["skill_chain"] = [s for s in result["skill_chain"] if s in ALL_SKILLS]
@@ -440,7 +496,6 @@ def synthesize_plan(ollama_url: str, request: str, analysis: dict, answers: dict
 
 
 def _fallback_plan(request: str, analysis: dict, answers: dict) -> dict:
-    """Python fallback plan when Ollama synthesis fails."""
     skills = analysis.get("skills_preview", ["business-orchestration", "governance", "audit-trail"])
     skills = [s for s in skills if s in ALL_SKILLS] or ["business-orchestration", "governance", "audit-trail"]
     domains = analysis.get("domains", ["business"])
@@ -457,7 +512,7 @@ def _fallback_plan(request: str, analysis: dict, answers: dict) -> dict:
     }
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Build final plan dict (wraps synthesis output into API-compatible plan)
+# Build & save plan
 # ─────────────────────────────────────────────────────────────────────────────
 
 def build_plan(request: str, synthesis: dict, answers: dict) -> dict:
@@ -465,16 +520,16 @@ def build_plan(request: str, synthesis: dict, answers: dict) -> dict:
     for i, skill in enumerate(synthesis["skill_chain"], 1):
         info = ALL_SKILLS.get(skill, {"domain": "business", "description": ""})
         steps.append({
-            "id":       f"step-{i}",
-            "order":    i,
-            "title":    f"Run {skill}",
-            "skill":    skill,
-            "domain":   info["domain"],
+            "id":          f"step-{i}",
+            "order":       i,
+            "title":       f"Run {skill}",
+            "skill":       skill,
+            "domain":      info["domain"],
             "description": info["description"],
             "depends_on":  [steps[-1]["id"]] if steps else [],
-            "inputs":   answers,
+            "inputs":      answers,
             "governance_policy_refs": ["references/business-policy-standard.md"],
-            "outputs":  [f"reports/{skill}-output.json"],
+            "outputs":     [f"reports/{skill}-output.json"],
         })
     return {
         "id":             f"plan-{int(time.time())}",
@@ -498,8 +553,8 @@ def build_plan(request: str, synthesis: dict, answers: dict) -> dict:
             "require_human_approval_for_mutations": True,
         },
         "planner_metadata": {
-            "planner": "multi-domain-planner",
-            "version": "2.0.0",
+            "planner":    "multi-domain-planner",
+            "version":    "2.0.0",
             "created_at": datetime.now(timezone.utc).isoformat(),
         },
     }
@@ -509,6 +564,20 @@ def save_plan(plan: dict) -> None:
     REPORTS_DIR.mkdir(exist_ok=True)
     (REPORTS_DIR / f"{plan['id']}.json").write_text(json.dumps(plan, indent=2), encoding="utf-8")
 
+
+def save_conversation(messages: list, plan: dict | None, run_result: dict | None) -> None:
+    CONV_DIR.mkdir(parents=True, exist_ok=True)
+    ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
+    name = (plan or {}).get("id", f"conv-{ts}")
+    record = {
+        "saved_at":    datetime.now(timezone.utc).isoformat(),
+        "plan_id":     (plan or {}).get("id"),
+        "run_result":  run_result,
+        "messages":    messages,
+        "plan":        plan,
+    }
+    (CONV_DIR / f"{name}.json").write_text(json.dumps(record, indent=2), encoding="utf-8")
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Conversational response generators
 # ─────────────────────────────────────────────────────────────────────────────
@@ -517,87 +586,64 @@ CONVO_SYSTEM = """\
 You are Apotheon, an AI business workflow planning assistant. You orchestrate complex, \
 multi-domain business workflows. You are talking to a business operator.
 
-Rules:
-- Be concise, specific, and professional.
-- Responses must be under 4 sentences.
-- Ask only ONE question at a time.
-- Reference the user's specific context, not generic placeholders.
-- Do not use bullet points inside your questions.\
+Keep replies concise and professional. Use plain language. \
+Avoid bullet points unless listing items. 1-3 sentences maximum unless showing a plan.\
 """
 
 
 def gen_analysis_greeting(ollama_url: str, request: str, analysis: dict) -> str:
     domains_str = ", ".join(DOMAIN_LABELS.get(d, d) for d in analysis.get("domains", []))
-    n_skills = len(analysis.get("skills_preview", []))
-    complexity = COMPLEXITY_LABELS.get(analysis.get("complexity", "moderate"), "")
-    first_q = analysis["questions"][0]
-
+    n = len(analysis.get("skills_preview", []))
     system = (
         CONVO_SYSTEM + "\n\n"
-        f"You have analyzed the user's request and identified:\n"
-        f"  Workflow: {analysis.get('workflow_title', '')}\n"
-        f"  Domains involved: {domains_str}\n"
-        f"  Estimated complexity: {complexity} (~{n_skills} skills)\n"
-        f"  Your understanding: {analysis.get('understanding', '')}\n\n"
-        f"Write a response that:\n"
-        f"1. Confirms you understand the full scope (mention the multiple domains involved).\n"
-        f"2. Explains this will be a multi-domain plan.\n"
-        f"3. Asks this first question conversationally (do NOT copy verbatim — rephrase naturally):\n"
-        f"   {first_q}"
+        f"You've analysed a request and identified it as a '{analysis.get('workflow_title','')}' workflow "
+        f"touching these domains: {domains_str}. It requires about {n} skills. "
+        f"Understanding: {analysis.get('understanding', '')}\n\n"
+        f"Write 2 sentences: acknowledge what the request covers and why it spans multiple domains. "
+        f"Then immediately ask the first clarifying question: {analysis.get('questions', ['What is the primary goal?'])[0]}"
     )
     reply = _ollama_call(ollama_url, system, [{"role": "user", "content": request}],
-                         max_tokens=300, temperature=0.5)
+                         max_tokens=200, temperature=0.5)
     if not reply:
+        first_q = analysis.get("questions", ["What is the primary goal?"])[0]
         return (
-            f"This is a multi-domain workflow touching **{domains_str}**. "
-            f"I've identified approximately {n_skills} skills across {len(analysis.get('domains',[]))} domains. "
-            f"Let me ask a few targeted questions to build the right plan.\n\n{first_q}"
+            f"This is a **{analysis.get('workflow_title', 'multi-domain')}** workflow spanning "
+            f"**{domains_str}**. To build the right plan I need a few details.\n\n{first_q}"
         )
     return reply
 
 
-def gen_next_question(ollama_url: str, analysis: dict, question: str,
-                      answers: dict, llm_messages: list[dict]) -> str:
-    domains_str = ", ".join(DOMAIN_LABELS.get(d, d) for d in analysis.get("domains", []))
+def gen_next_question(ollama_url: str, analysis: dict, next_q: str,
+                      answers: dict, llm_messages: list) -> str:
     system = (
         CONVO_SYSTEM + "\n\n"
-        f"Workflow being planned: {analysis.get('workflow_title', '')}\n"
-        f"Domains: {domains_str}\n"
-        f"Context collected so far: {json.dumps(answers)}\n\n"
-        f"Briefly acknowledge the user's last answer (5–8 words, be specific), "
-        f"then ask this next question conversationally — rephrase naturally, do NOT copy:\n"
-        f"  {question}"
+        f"You're gathering context for a '{analysis.get('workflow_title', '')}' plan. "
+        f"The user has answered {len(answers)} question(s) so far. "
+        f"Briefly acknowledge their last answer (1 sentence), then ask the next question."
     )
-    reply = _ollama_call(ollama_url, system, llm_messages, max_tokens=200, temperature=0.5)
-    if not reply:
-        return f"Understood. {question}"
-    return reply
+    reply = _ollama_call(ollama_url, system, llm_messages + [{"role": "user", "content": next_q}],
+                         max_tokens=150, temperature=0.5)
+    return reply or next_q
 
 
-def gen_synthesis_intro(ollama_url: str, plan: dict, llm_messages: list[dict]) -> str:
+def gen_synthesis_intro(ollama_url: str, plan: dict, llm_messages: list) -> str:
     domains_str = ", ".join(DOMAIN_LABELS.get(d, d) for d in plan.get("domains", []))
     n = len(plan.get("skill_chain", []))
     phases = [p["name"] for p in plan.get("phases", [])]
     system = (
         CONVO_SYSTEM + "\n\n"
-        f"You have synthesized a complete multi-domain workflow plan.\n"
-        f"Title: {plan.get('workflow_title', '')}\n"
-        f"Domains: {domains_str}\n"
-        f"Total skills: {n}\n"
-        f"Phases: {' → '.join(phases)}\n"
-        f"Rationale: {plan.get('rationale', '')}\n"
-        f"HITL gates: {len(plan.get('hitl_gates', []))} approval checkpoint(s)\n\n"
-        f"Write 2–3 sentences:\n"
-        f"1. Summarise what the plan accomplishes end-to-end.\n"
-        f"2. Highlight why this spans multiple domains.\n"
-        f"3. Tell the user to review and approve below."
+        f"You've built a complete multi-domain plan titled '{plan.get('workflow_title', '')}'. "
+        f"Domains: {domains_str}. Total skills: {n}. Phases: {' → '.join(phases)}. "
+        f"HITL gates: {len(plan.get('hitl_gates', []))}. "
+        f"Write 2 sentences summarising what this plan accomplishes. "
+        f"Then tell the user the plan is open in the panel on the right for review."
     )
-    reply = _ollama_call(ollama_url, system, llm_messages, max_tokens=300, temperature=0.5)
+    reply = _ollama_call(ollama_url, system, llm_messages, max_tokens=200, temperature=0.5)
     if not reply:
         return (
             f"I've built a **{plan.get('workflow_title', 'multi-domain')}** plan spanning "
             f"**{domains_str}** with {n} skills across {len(phases)} phases. "
-            "Review the full plan below and approve when ready."
+            "Review the full plan in the panel on the right and approve when ready."
         )
     return reply
 
@@ -612,10 +658,8 @@ def gen_unknown_response(ollama_url: str, request: str) -> str:
     )
     reply = _ollama_call(ollama_url, system, [{"role": "user", "content": request}],
                          max_tokens=200, temperature=0.5)
-    if not reply:
-        return ("I want to make sure I build the right plan. Could you tell me more about "
-                "the primary outcome you're trying to achieve?")
-    return reply
+    return reply or ("I want to make sure I build the right plan. "
+                     "Could you tell me more about the primary outcome you're trying to achieve?")
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Session state
@@ -623,16 +667,26 @@ def gen_unknown_response(ollama_url: str, request: str) -> str:
 
 def _init() -> None:
     defaults: dict[str, Any] = {
-        "phase":            "idle",     # idle|questioning|reviewing|executing|done
-        "messages":         [],         # [{role, content, ts}] — display history
-        "llm_messages":     [],         # [{role, content}]     — Ollama context
-        "intent_raw":       "",
-        "analysis":         None,       # Stage 1 result
-        "dynamic_questions":[],         # list of question strings from analysis
-        "q_index":          0,
-        "answers":          {},
-        "plan":             None,       # final plan dict
-        "run_result":       None,
+        # Conversation state
+        "phase":             "idle",   # idle|questioning|reviewing|executing|hitl_pending|done
+        "messages":          [],
+        "llm_messages":      [],
+        "intent_raw":        "",
+        "analysis":          None,
+        "dynamic_questions": [],
+        "q_index":           0,
+        "answers":           {},
+        "plan":              None,
+        "run_result":        None,
+        # Execution tracking
+        "poll_run_id":       None,    # run_id being polled
+        "workflow_data":     None,    # latest fetched workflow from API
+        "hitl_approval":     None,    # pending approval dict
+        "last_poll_ts":      0.0,
+        # Artifact panel
+        "panel_open":        True,
+        "panel_tab":         "plan",  # plan|progress|hitl|history
+        "panel_artifact":    None,    # generic artifact data for the panel
     }
     for k, v in defaults.items():
         if k not in st.session_state:
@@ -651,135 +705,476 @@ def add_llm(role: str, content: str) -> None:
 
 def reset() -> None:
     for k in ["phase", "messages", "llm_messages", "intent_raw", "analysis",
-              "dynamic_questions", "q_index", "answers", "plan", "run_result"]:
+              "dynamic_questions", "q_index", "answers", "plan", "run_result",
+              "poll_run_id", "workflow_data", "hitl_approval", "last_poll_ts"]:
         st.session_state.pop(k, None)
 
+
+def open_panel(tab: str, artifact: Any = None) -> None:
+    st.session_state.panel_open = True
+    st.session_state.panel_tab = tab
+    if artifact is not None:
+        st.session_state.panel_artifact = artifact
+
 # ─────────────────────────────────────────────────────────────────────────────
-# Page
+# Panel renderers
 # ─────────────────────────────────────────────────────────────────────────────
 
-st.set_page_config(page_title="Apotheon", layout="wide", initial_sidebar_state="expanded")
+def render_plan_panel(plan: dict) -> None:
+    st.markdown(f"### {plan.get('workflow_title', 'Workflow Plan')}")
+
+    domains_str = " · ".join(DOMAIN_LABELS.get(d, d) for d in plan.get("domains", []))
+    col_a, col_b = st.columns(2)
+    col_a.metric("Domains", domains_str or "—")
+    col_b.metric("Complexity", COMPLEXITY_LABELS.get(plan.get("complexity", ""), plan.get("complexity", "")))
+
+    n_skills = len(plan.get("skill_chain", []))
+    n_gates = len(plan.get("hitl_gates", []))
+    col_c, col_d = st.columns(2)
+    col_c.metric("Total Skills", n_skills)
+    col_d.metric("HITL Gates", n_gates)
+
+    if plan.get("rationale"):
+        st.info(plan["rationale"])
+
+    st.markdown("#### Execution Phases")
+    for phase in plan.get("phases", []):
+        with st.container(border=True):
+            st.markdown(f"**{phase['name']}**")
+            st.caption(phase.get("description", ""))
+            for sk in phase.get("skills", []):
+                info = ALL_SKILLS.get(sk, {})
+                domain_tag = f"`{info.get('domain', '')}`" if info.get("domain") else ""
+                st.markdown(f"- `{sk}` {domain_tag}  \n  *{info.get('description', '')}*")
+
+    if plan.get("hitl_gates"):
+        st.markdown("#### Approval Checkpoints")
+        for gate in plan["hitl_gates"]:
+            st.warning(f"**After {gate['after_phase']}:** {gate['reason']}", icon="🔒")
+
+    if plan.get("risks"):
+        with st.expander("Execution Risks"):
+            for r in plan["risks"]:
+                st.markdown(f"- {r}")
+
+    if plan.get("context"):
+        with st.expander("Context Collected"):
+            for k, v in plan["context"].items():
+                st.markdown(f"**Q{k}:** {v}")
+
+    with st.expander("Raw Plan JSON"):
+        st.json(plan)
+
+
+def render_progress_panel(workflow: dict) -> None:
+    run_id = workflow.get("run_id", "—")
+    status = workflow.get("status", "unknown")
+    color = STATUS_COLORS.get(status, "gray")
+
+    st.markdown(f"### Workflow Progress")
+    st.markdown(f"**Run:** `{run_id}`")
+    st.markdown(f"**Status:** :{color}[{status.upper()}]")
+
+    total = workflow.get("total_steps", 0)
+    done = workflow.get("completed_steps", 0)
+    if total > 0:
+        st.progress(done / total, text=f"{done}/{total} steps")
+
+    steps = workflow.get("steps", [])
+    if steps:
+        st.markdown("#### Steps")
+        for step in steps:
+            icon = STEP_ICONS.get(step.get("status", ""), "⏳")
+            skill = step.get("skill_name", "")
+            step_status = step.get("status", "pending")
+            s_color = STATUS_COLORS.get(step_status, "gray")
+            with st.container(border=True):
+                c1, c2 = st.columns([4, 1])
+                c1.markdown(f"{icon} `{skill}`")
+                c2.markdown(f":{s_color}[{step_status}]")
+                if step.get("output_preview"):
+                    with st.expander("Output preview"):
+                        st.text(step["output_preview"])
+                if step.get("error"):
+                    st.error(step["error"])
+                if step.get("hitl_required"):
+                    st.warning("Human approval required", icon="🔒")
+    else:
+        st.caption("No step data yet — execution in progress…")
+
+    if workflow.get("completed_at"):
+        st.success(f"Completed at {workflow['completed_at']}")
+    elif status == "paused_for_hitl":
+        st.warning("Workflow paused — awaiting your approval below.", icon="🔒")
+    elif status in ("running", "queued"):
+        st.info("Workflow is running. Refresh to see latest progress.", icon="⚙️")
+
+
+def render_hitl_panel(approval: dict, api_url: str, token: str) -> None:
+    st.markdown("### HITL Approval Required")
+    approval_id = approval.get("approval_id", "")
+    run_id = approval.get("run_id", "")
+
+    with st.container(border=True):
+        st.markdown(f"**Skill:** `{approval.get('skill_name', '—')}`")
+        st.markdown(f"**Run:** `{run_id}`")
+        risk = approval.get("risk_level", "MEDIUM")
+        risk_score = approval.get("risk_score")
+        col_a, col_b = st.columns(2)
+        col_a.markdown(f"**Risk Level:** {risk}")
+        if risk_score is not None:
+            col_b.metric("Risk Score", f"{risk_score:.0f}/100")
+        if approval.get("hitl_reason"):
+            st.warning(approval["hitl_reason"], icon="⚠️")
+        if approval.get("sla_deadline"):
+            st.markdown(f"**SLA Deadline:** {approval['sla_deadline']}")
+
+    reason = st.text_area("Comment (optional)", key="hitl_reason_input", height=80)
+
+    col_approve, col_reject = st.columns(2)
+    if col_approve.button("Approve", type="primary", use_container_width=True, key="panel_approve"):
+        result = decide_approval(api_url, token, approval_id, "approved", reason)
+        if "error" not in result:
+            st.success("Approved! Workflow will resume.")
+            st.session_state.hitl_approval = None
+            st.session_state.phase = "executing"
+            add_msg("user", f"Approved step `{approval.get('skill_name', '')}`. Workflow resuming.")
+            st.rerun()
+        else:
+            st.error(f"Error: {result['error']}")
+
+    if col_reject.button("Reject", type="secondary", use_container_width=True, key="panel_reject"):
+        result = decide_approval(api_url, token, approval_id, "rejected", reason)
+        if "error" not in result:
+            st.error("Rejected. Workflow cancelled.")
+            st.session_state.hitl_approval = None
+            st.session_state.phase = "done"
+            add_msg("assistant", f"The approval for `{approval.get('skill_name', '')}` was rejected. Workflow cancelled.")
+            st.rerun()
+        else:
+            st.error(f"Error: {result['error']}")
+
+
+def render_history_panel(item: dict) -> None:
+    """Render a past conversation or workflow in the panel."""
+    data = item.get("data", item)  # supports both conv records and workflow dicts
+
+    # Past conversation
+    if "messages" in data:
+        plan = data.get("plan") or {}
+        st.markdown(f"### {plan.get('workflow_title', 'Past Conversation')}")
+        st.caption(f"Saved: {data.get('saved_at', '')}")
+        if data.get("run_result"):
+            rr = data["run_result"]
+            st.markdown(f"**Run:** `{rr.get('run_id', '—')}` — {rr.get('status', '—')}")
+        st.divider()
+        for msg in data.get("messages", []):
+            role = msg.get("role", "assistant")
+            with st.chat_message(role):
+                st.markdown(msg.get("content", ""))
+        if plan:
+            with st.expander("View Plan"):
+                render_plan_panel(plan)
+
+    # Workflow run from API
+    elif "run_id" in data:
+        render_progress_panel(data)
+
+
+def render_workflow_list_panel(runs: list[dict], approvals: list[dict],
+                               api_url: str, token: str) -> None:
+    """Active workflows + approvals overview panel."""
+    st.markdown("### Workflows")
+
+    if approvals:
+        st.markdown(f"#### HITL Queue ({len(approvals)} pending)")
+        for apv in approvals:
+            risk = apv.get("risk_level", "MEDIUM")
+            col_a, col_b = st.columns([3, 1])
+            col_a.markdown(f"🔒 `{apv.get('skill_name', '—')}`  \n`{apv.get('run_id', '')}`")
+            if col_b.button("Review", key=f"rev_{apv['approval_id']}"):
+                st.session_state.hitl_approval = apv
+                open_panel("hitl")
+                st.rerun()
+        st.divider()
+
+    if runs:
+        st.markdown("#### Recent Runs")
+        for run in runs:
+            status = run.get("status", "unknown")
+            color = STATUS_COLORS.get(status, "gray")
+            col_a, col_b = st.columns([4, 1])
+            col_a.markdown(f":{color}[●] `{run.get('run_id', '?')}`  \n_{run.get('objective', '')[:60]}_")
+            if col_b.button("View", key=f"wf_{run.get('run_id', '')}"):
+                detail = get_workflow(api_url, token, run["run_id"])
+                if detail:
+                    open_panel("progress", artifact=detail)
+                st.rerun()
+    else:
+        st.caption("No workflow runs yet.")
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Page setup
+# ─────────────────────────────────────────────────────────────────────────────
+
+st.set_page_config(
+    page_title="Apotheon",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
 _init()
 s = st.session_state
 
-# ─── Sidebar ──────────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────────────────
+# Sidebar
+# ─────────────────────────────────────────────────────────────────────────────
+
 with st.sidebar:
     st.markdown("## Apotheon")
     st.caption("AI Company Operating System")
     st.divider()
 
-    st.markdown("**Runtime API**")
-    api_url = st.text_input("URL", value=API_URL_ENV, label_visibility="collapsed", key="cfg_api_url")
-    _api_up = backend_up(api_url)
-    st.caption("Runtime: " + ("connected" if _api_up else "offline"))
-    st.divider()
+    # Config
+    api_url    = st.text_input("Runtime URL", value=API_URL_ENV, key="cfg_api_url",
+                               label_visibility="collapsed",
+                               placeholder="http://runtime:8000")
+    jwt_token  = st.text_input("JWT Token", value=JWT_ENV, key="cfg_jwt",
+                               type="password", label_visibility="collapsed",
+                               placeholder="JWT token")
+    _api_up    = backend_up(api_url)
+    api_status = "connected" if _api_up else "offline"
 
-    st.markdown("**Local LLM**")
-    ollama_url = st.text_input("Ollama URL", value=OLLAMA_URL, label_visibility="collapsed", key="cfg_ollama_url")
+    ollama_url = st.text_input("Ollama URL", value=OLLAMA_URL, key="cfg_ollama_url",
+                               label_visibility="collapsed")
     _ollama_up, _model_ready = ollama_status(ollama_url)
-    if _model_ready:
-        st.success(f"{OLLAMA_MODEL} ready", icon="✅")
-        use_ollama = True
-    elif _ollama_up:
-        st.warning(f"Pulling {OLLAMA_MODEL}…", icon="⏳")
-        use_ollama = False
-    else:
-        st.error("Ollama offline — local fallback active", icon="❌")
-        use_ollama = False
+    use_ollama = _model_ready
+
+    st.caption(f"Runtime: {api_status}  ·  LLM: {OLLAMA_MODEL if use_ollama else 'fallback'}")
     st.divider()
 
-    st.markdown("**Execution mode**")
-    dry_run = st.toggle("Dry-run only (safe default)", value=True, key="cfg_dry_run")
-    jwt_token = ""
-    if not dry_run:
-        st.warning("Live mode: real writes will occur.", icon="⚠️")
-        jwt_token    = st.text_input("JWT token", type="password", key="cfg_jwt")
-        approval_ref = st.text_input("Approval ticket", placeholder="CAB-2026-0511", key="cfg_approval")
-        if not (jwt_token.strip() and approval_ref.strip()):
-            st.error("Provide JWT + approval ticket.")
-            dry_run = True
+    # Execution mode
+    dry_run = st.toggle("Dry-run (safe default)", value=True, key="cfg_dry_run")
+    if not dry_run and not jwt_token.strip():
+        st.warning("Provide JWT token for live mode.", icon="⚠️")
+        dry_run = True
+
     st.divider()
 
-    if st.button("New conversation", use_container_width=True):
+    # New conversation
+    if st.button("New Conversation", use_container_width=True, type="primary"):
         reset()
         st.rerun()
 
-    with st.expander("Skill catalog"):
-        st.caption(f"{len(ALL_SKILLS)} skills across {len(DOMAIN_LABELS)} domains")
-        for domain_key, domain_label in DOMAIN_LABELS.items():
-            domain_skills = [n for n, i in ALL_SKILLS.items() if i["domain"] == domain_key]
-            st.markdown(f"**{domain_label}** ({len(domain_skills)})")
+    st.divider()
+
+    # Active workflows from API
+    if _api_up and jwt_token:
+        st.markdown("**Active Workflows**")
+        _runs = list_workflows(api_url, jwt_token, limit=8)
+        _approvals = get_approvals(api_url, jwt_token)
+        if _approvals:
+            st.markdown(f"🔒 **{len(_approvals)} approval(s) pending**")
+            for apv in _approvals[:3]:
+                if st.button(f"Review: {apv.get('skill_name','?')[:25]}", key=f"sb_apv_{apv['approval_id']}",
+                             use_container_width=True):
+                    s.hitl_approval = apv
+                    open_panel("hitl")
+                    st.rerun()
+        if _runs:
+            for run in _runs[:5]:
+                status = run.get("status", "?")
+                color  = STATUS_COLORS.get(status, "gray")
+                label  = f":{color}[{status[:3].upper()}] {run.get('objective','')[:28]}"
+                if st.button(label, key=f"sb_run_{run.get('run_id','')}", use_container_width=True):
+                    detail = get_workflow(api_url, jwt_token, run["run_id"])
+                    if detail:
+                        open_panel("progress", artifact=detail)
+                    st.rerun()
+        else:
+            st.caption("No runs yet.")
+        if st.button("All Workflows", key="sb_all_runs", use_container_width=True):
+            open_panel("progress", artifact={"_list": _runs, "_approvals": _approvals})
+            st.rerun()
+        st.divider()
+
+    # Past conversations
+    _convs = load_saved_conversations()
+    if _convs:
+        st.markdown("**Past Conversations**")
+        for conv in _convs[:6]:
+            ts = conv.get("saved_at", "")[:10]
+            label = f"{ts} — {conv.get('title','?')[:30]}"
+            if st.button(label, key=f"sb_conv_{conv['file']}", use_container_width=True):
+                open_panel("history", artifact=conv)
+                st.rerun()
+        st.divider()
+
+    # Skill catalog
+    with st.expander("Skill Catalog"):
+        st.caption(f"{len(ALL_SKILLS)} skills · {len(DOMAIN_LABELS)} domains")
+        for dk, dl in DOMAIN_LABELS.items():
+            domain_skills = [n for n, i in ALL_SKILLS.items() if i["domain"] == dk]
+            st.markdown(f"**{dl}** ({len(domain_skills)})")
             st.caption(", ".join(domain_skills))
 
-    if _api_up:
-        with st.expander("Recent runs"):
-            for r in list_recent_runs(api_url, jwt_token):
-                status = r.get("status", "unknown")
-                color  = STATUS_COLORS.get(status, "gray")
-                st.markdown(f":{color}[●] `{r.get('run_id','?')}`  \n_{r.get('objective','')[:50]}_")
+# ─────────────────────────────────────────────────────────────────────────────
+# Main layout — chat + artifact panel
+# ─────────────────────────────────────────────────────────────────────────────
 
-# ─── Layout ───────────────────────────────────────────────────────────────────
-col_chat, col_ctx = st.columns([3, 1], gap="large")
+# Panel toggle in top-right
+header_cols = st.columns([8, 1])
+with header_cols[1]:
+    panel_label = "← Close" if s.panel_open else "Panel →"
+    if st.button(panel_label, key="toggle_panel"):
+        s.panel_open = not s.panel_open
+        st.rerun()
 
-# ─── Context panel ────────────────────────────────────────────────────────────
-with col_ctx:
-    st.markdown("### Session")
-    phase_labels = {
-        "idle":        "Waiting",
-        "questioning": "Gathering context",
-        "reviewing":   "Awaiting approval",
-        "executing":   "Executing",
-        "done":        "Complete",
-    }
-    st.markdown(f"**Status:** {phase_labels.get(s.phase, s.phase)}")
-    st.markdown(f"**LLM:** {'Ollama / ' + OLLAMA_MODEL if use_ollama else 'Local fallback'}")
+if s.panel_open:
+    col_chat, col_panel = st.columns([5, 4], gap="large")
+else:
+    col_chat   = st.columns(1)[0]
+    col_panel  = None
 
-    if s.analysis:
-        st.markdown("---")
-        a = s.analysis
-        st.markdown(f"**Workflow:** {a.get('workflow_title','—')}")
-        st.markdown(f"**Complexity:** {COMPLEXITY_LABELS.get(a.get('complexity',''), a.get('complexity',''))}")
-        domains = a.get("domains", [])
-        if domains:
-            st.markdown("**Domains:**")
-            for d in domains:
-                st.markdown(f"- {DOMAIN_LABELS.get(d, d)}")
+# ─────────────────────────────────────────────────────────────────────────────
+# Artifact Panel
+# ─────────────────────────────────────────────────────────────────────────────
 
-    if s.phase == "questioning" and s.dynamic_questions:
-        total = len(s.dynamic_questions)
-        st.progress(s.q_index / total, text=f"Questions {s.q_index}/{total}")
+if col_panel is not None:
+    with col_panel:
+        # Tab selector
+        tab_options = {"plan": "Plan", "progress": "Progress", "hitl": "Approvals", "history": "History"}
+        tab_cols = st.columns(len(tab_options))
+        for i, (tab_key, tab_label) in enumerate(tab_options.items()):
+            active = s.panel_tab == tab_key
+            btn_type = "primary" if active else "secondary"
+            if tab_cols[i].button(tab_label, key=f"tab_{tab_key}", type=btn_type,
+                                  use_container_width=True):
+                s.panel_tab = tab_key
+                st.rerun()
 
-    if s.answers:
-        st.markdown("---")
-        st.markdown("**Context**")
-        for k, v in s.answers.items():
-            st.markdown(f"**Q{k}:** {v[:80]}{'…' if len(v) > 80 else ''}")
+        st.divider()
 
-    if s.plan:
-        st.markdown("---")
-        st.markdown("**Plan**")
-        st.caption(s.plan.get("id", ""))
-        for phase in s.plan.get("phases", []):
-            st.markdown(f"**{phase['name']}**")
-            for sk in phase.get("skills", []):
-                st.markdown(f"  `{sk}`")
+        # ── Plan tab ──────────────────────────────────────────────────────────
+        if s.panel_tab == "plan":
+            plan = s.panel_artifact if isinstance(s.panel_artifact, dict) and "skill_chain" in (s.panel_artifact or {}) else s.plan
+            if plan:
+                render_plan_panel(plan)
+                # Approve/cancel buttons when in reviewing phase
+                if s.phase == "reviewing":
+                    st.divider()
+                    c1, c2 = st.columns(2)
+                    if c1.button("Approve & Execute" if not dry_run else "Approve (dry-run)",
+                                 type="primary", use_container_width=True, key="panel_plan_approve"):
+                        add_msg("user", "Approved — proceed.")
+                        s.phase = "executing"
+                        s.panel_tab = "progress"
+                        st.rerun()
+                    if c2.button("Cancel", use_container_width=True, key="panel_plan_cancel"):
+                        reset()
+                        st.rerun()
+            else:
+                st.info("No plan yet. Start a conversation to build one.")
 
-    if s.run_result:
-        st.markdown("---")
-        run_id = s.run_result.get("run_id", "—")
-        status = s.run_result.get("status", s.run_result.get("error", "unknown"))
-        color  = STATUS_COLORS.get(status, "gray")
-        st.markdown(f"**Run:** `{run_id}`")
-        st.markdown(f":{color}[{status}]")
+        # ── Progress tab ──────────────────────────────────────────────────────
+        elif s.panel_tab == "progress":
+            art = s.panel_artifact
+            if isinstance(art, dict) and "_list" in art:
+                # Show workflow list + HITL queue
+                render_workflow_list_panel(art.get("_list", []), art.get("_approvals", []),
+                                           api_url, jwt_token)
+            elif isinstance(art, dict) and "run_id" in art:
+                render_progress_panel(art)
+                if st.button("Refresh", key="progress_refresh"):
+                    if art.get("run_id") and _api_up and jwt_token:
+                        updated = get_workflow(api_url, jwt_token, art["run_id"])
+                        if updated:
+                            s.panel_artifact = updated
+                    st.rerun()
+            elif s.workflow_data:
+                render_progress_panel(s.workflow_data)
+            elif s.run_result and s.run_result.get("run_id") and _api_up and jwt_token:
+                wf = get_workflow(api_url, jwt_token, s.run_result["run_id"])
+                if wf:
+                    s.workflow_data = wf
+                    render_progress_panel(wf)
+            else:
+                st.info("No active workflow. Approve a plan to start execution.")
 
-# ─── Chat panel ───────────────────────────────────────────────────────────────
+        # ── HITL tab ──────────────────────────────────────────────────────────
+        elif s.panel_tab == "hitl":
+            approval = s.hitl_approval or (s.panel_artifact if isinstance(s.panel_artifact, dict) and "approval_id" in (s.panel_artifact or {}) else None)
+            if approval:
+                render_hitl_panel(approval, api_url, jwt_token)
+            else:
+                # Show all pending approvals
+                if _api_up and jwt_token:
+                    pending = get_approvals(api_url, jwt_token)
+                    if pending:
+                        st.markdown(f"### {len(pending)} Pending Approval(s)")
+                        for apv in pending:
+                            with st.container(border=True):
+                                st.markdown(f"**`{apv.get('skill_name','—')}`** — {apv.get('risk_level','')}")
+                                st.caption(f"Run: {apv.get('run_id','')}")
+                                if apv.get("hitl_reason"):
+                                    st.markdown(apv["hitl_reason"])
+                                if st.button("Review", key=f"panel_rev_{apv['approval_id']}",
+                                            use_container_width=True):
+                                    s.hitl_approval = apv
+                                    st.rerun()
+                    else:
+                        st.success("No pending approvals.", icon="✅")
+                else:
+                    st.info("Connect to Runtime API to see live approvals.")
+
+        # ── History tab ───────────────────────────────────────────────────────
+        elif s.panel_tab == "history":
+            art = s.panel_artifact
+            if art and isinstance(art, dict) and ("messages" in art or "run_id" in art):
+                render_history_panel(art)
+                if st.button("Back to list", key="hist_back"):
+                    s.panel_artifact = None
+                    st.rerun()
+            else:
+                # List saved conversations + plan files
+                convs = load_saved_conversations()
+                plans = load_plan_files()
+                if convs:
+                    st.markdown("### Conversations")
+                    for conv in convs:
+                        with st.container(border=True):
+                            col_a, col_b = st.columns([4, 1])
+                            col_a.markdown(f"**{conv['title']}**")
+                            col_a.caption(f"{conv['saved_at'][:19]}  ·  {conv['message_count']} messages")
+                            if col_b.button("Open", key=f"h_conv_{conv['file']}", use_container_width=True):
+                                open_panel("history", artifact=conv)
+                                st.rerun()
+
+                if plans:
+                    st.markdown("### Saved Plans")
+                    for p in plans:
+                        with st.container(border=True):
+                            col_a, col_b = st.columns([4, 1])
+                            col_a.markdown(f"**{p['title']}**")
+                            col_a.caption(" · ".join(DOMAIN_LABELS.get(d, d) for d in p["domains"]))
+                            if col_b.button("View", key=f"h_plan_{p['file']}", use_container_width=True):
+                                open_panel("plan", artifact=p["plan"])
+                                st.rerun()
+
+                if not convs and not plans:
+                    st.info("No saved conversations yet. Complete a workflow to see history here.")
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Chat Column
+# ─────────────────────────────────────────────────────────────────────────────
+
 with col_chat:
 
+    # Message history
     for msg in s.messages:
         with st.chat_message(msg["role"]):
             st.markdown(msg["content"])
 
-    # Welcome
+    # Welcome message
     if s.phase == "idle" and not s.messages:
         with st.chat_message("assistant"):
             model_note = f"Powered by **{OLLAMA_MODEL}**." if use_ollama else "Running in local fallback mode."
@@ -787,7 +1182,7 @@ with col_chat:
                 f"**Welcome to Apotheon.** {model_note}\n\n"
                 "Describe what your organisation needs to accomplish. I'll analyse the full scope, "
                 "identify all relevant domains and skills, ask targeted questions, then build a "
-                "complete multi-domain workflow plan.\n\n"
+                "complete multi-domain workflow plan for your review.\n\n"
                 "Examples:\n"
                 "- *We need to contract a new overseas logistics vendor*\n"
                 "- *Launch our SaaS product in the European market*\n"
@@ -796,66 +1191,43 @@ with col_chat:
                 "- *Achieve SOC 2 Type II certification by Q4*"
             )
 
-    # Approval UI
+    # HITL notification card in chat
+    if s.phase == "hitl_pending" and s.hitl_approval:
+        apv = s.hitl_approval
+        with st.chat_message("assistant"):
+            st.warning(
+                f"**Approval required** — the workflow is paused at step `{apv.get('skill_name', '?')}`.\n\n"
+                f"Risk level: **{apv.get('risk_level', 'MEDIUM')}**\n\n"
+                f"{apv.get('hitl_reason', '')}\n\n"
+                "Use the **Approvals** tab in the panel to approve or reject.",
+                icon="🔒",
+            )
+            if st.button("Open Approval Panel", key="chat_open_hitl"):
+                open_panel("hitl")
+                st.rerun()
+
+    # Plan review notification (full plan is in the panel)
     if s.phase == "reviewing" and s.plan:
         with st.chat_message("assistant"):
-            st.markdown("**Multi-domain workflow plan ready for review:**")
-            plan = s.plan
-
-            # Rationale
-            if plan.get("rationale"):
-                st.info(plan["rationale"])
-
-            # Domains + complexity
-            col_a, col_b = st.columns(2)
-            with col_a:
-                st.markdown("**Domains involved:**")
-                for d in plan.get("domains", []):
-                    st.markdown(f"- {DOMAIN_LABELS.get(d, d)}")
-            with col_b:
-                st.markdown(f"**Complexity:** {COMPLEXITY_LABELS.get(plan.get('complexity',''), '')}")
-                st.markdown(f"**Total skills:** {len(plan.get('skill_chain', []))}")
-                st.markdown(f"**HITL gates:** {len(plan.get('hitl_gates', []))}")
-
-            # Phases
-            st.markdown("**Execution phases:**")
-            for phase in plan.get("phases", []):
-                with st.container(border=True):
-                    st.markdown(f"**{phase['name']}** — {phase.get('description','')}")
-                    skills_in_phase = phase.get("skills", [])
-                    for sk in skills_in_phase:
-                        info = ALL_SKILLS.get(sk, {})
-                        st.markdown(f"  `{sk}` — {info.get('description', '')}")
-
-            # HITL gates
-            if plan.get("hitl_gates"):
-                st.markdown("**Human approval checkpoints:**")
-                for gate in plan["hitl_gates"]:
-                    st.warning(f"After **{gate['after_phase']}**: {gate['reason']}", icon="🔒")
-
-            # Risks
-            if plan.get("risks"):
-                with st.expander("Execution risks"):
-                    for r in plan["risks"]:
-                        st.markdown(f"- {r}")
-
-            with st.expander("Full plan JSON"):
-                st.json(plan)
-
-            st.markdown("**Context collected:**")
-            for k, v in plan.get("context", {}).items():
-                st.markdown(f"- **Q{k}:** {v}")
-
-            c1, c2, c3 = st.columns([2, 2, 1])
+            n = len(s.plan.get("skill_chain", []))
+            phases = [p["name"] for p in s.plan.get("phases", [])]
+            domains = " · ".join(DOMAIN_LABELS.get(d, d) for d in s.plan.get("domains", []))
+            st.markdown(
+                f"**Plan ready:** [{s.plan.get('workflow_title', 'Workflow')}]\n\n"
+                f"**{domains}** · {n} skills · {len(phases)} phases · "
+                f"{len(s.plan.get('hitl_gates', []))} approval gate(s)\n\n"
+                "Review the full plan in the **Plan** tab on the right."
+            )
+            c1, c2, c3 = st.columns([3, 2, 1])
             if c1.button(
-                "Approve and execute" if not dry_run else "Approve (dry-run)",
-                type="primary", use_container_width=True, key="btn_approve",
+                "Approve & Execute" if not dry_run else "Approve (dry-run)",
+                type="primary", use_container_width=True, key="chat_approve",
             ):
                 add_msg("user", "Approved — proceed.")
                 s.phase = "executing"
+                s.panel_tab = "progress"
                 st.rerun()
-
-            if c2.button("Edit answers", use_container_width=True, key="btn_edit"):
+            if c2.button("Edit Answers", use_container_width=True, key="chat_edit"):
                 add_msg("user", "I want to revise my answers.")
                 add_llm("user", "I want to revise my answers.")
                 s.q_index = 0
@@ -867,92 +1239,155 @@ with col_chat:
                 add_msg("assistant", reply)
                 add_llm("assistant", reply)
                 st.rerun()
-
-            if c3.button("Cancel", use_container_width=True, key="btn_cancel"):
+            if c3.button("Cancel", use_container_width=True, key="chat_cancel"):
                 reset()
                 st.rerun()
 
-    # Execution
+    # Execution progress notification
     if s.phase == "executing" and s.plan and not s.run_result:
         with st.chat_message("assistant"):
-            with st.spinner("Submitting plan to runtime…"):
+            with st.spinner("Submitting workflow to runtime…"):
                 result = (
                     submit_to_backend(s.plan, dry_run, api_url, jwt_token)
-                    if _api_up
-                    else {"run_id": f"LOCAL-{int(time.time())}", "status": "dry_run_saved",
-                          "note": "Backend offline — plan saved locally"}
+                    if (_api_up and jwt_token)
+                    else {
+                        "run_id": f"LOCAL-{int(time.time())}",
+                        "status": "dry_run_saved",
+                        "note":   "Backend offline — plan saved locally",
+                    }
                 )
                 try:
                     save_plan(s.plan)
+                    save_conversation(s.messages, s.plan, result)
                 except Exception:
                     pass
                 s.run_result = result
-                s.phase = "done"
+                s.poll_run_id = result.get("run_id")
 
             if "error" in result:
-                reply = f"Execution error: `{result['error']}`\n\nCheck sidebar settings."
-            elif dry_run:
+                reply = f"Submission error: `{result['error']}`\n\nCheck sidebar settings."
+                s.phase = "done"
+            elif dry_run or result.get("status") == "dry_run_saved":
                 reply = (
-                    f"Plan `{result.get('run_id','—')}` submitted as **dry-run** — no live writes made.\n\n"
-                    "Disable *Dry-run only* in the sidebar and provide JWT + approval ticket to execute for real."
+                    f"Plan `{result.get('run_id','—')}` saved as **dry-run** — no live writes.\n\n"
+                    "Disable *Dry-run* in the sidebar and add a JWT token to execute for real. "
+                    "Your plan is saved in History."
                 )
+                s.phase = "done"
             else:
                 reply = (
-                    f"Plan `{result.get('run_id','—')}` queued.\n\n"
-                    "Monitor progress in the **Control Plane Dashboard** at port 8502."
+                    f"Workflow `{result.get('run_id','—')}` submitted and queued.\n\n"
+                    "Progress is shown in the **Progress** tab. I'll alert you if approval is required."
                 )
+                s.panel_tab = "progress"
+                # Don't set phase to done yet — keep polling
+
             add_msg("assistant", reply)
             st.markdown(reply)
 
-    # Done
+    # Polling while executing live
+    if s.phase == "executing" and s.poll_run_id and _api_up and jwt_token and s.run_result:
+        now = time.time()
+        if now - s.last_poll_ts > 5:
+            s.last_poll_ts = now
+            wf_data = get_workflow(api_url, jwt_token, s.poll_run_id)
+            if wf_data:
+                s.workflow_data = wf_data
+                wf_status = wf_data.get("status", "")
+
+                if wf_status == "paused_for_hitl":
+                    # Fetch pending approval
+                    all_approvals = get_approvals(api_url, jwt_token)
+                    run_approvals = [a for a in all_approvals if a.get("run_id") == s.poll_run_id]
+                    if run_approvals:
+                        s.hitl_approval = run_approvals[0]
+                        s.phase = "hitl_pending"
+                        open_panel("hitl")
+                        skill_name = run_approvals[0].get("skill_name", "unknown")
+                        add_msg("assistant",
+                                f"**Approval required** — the workflow has reached a human checkpoint "
+                                f"at skill `{skill_name}`. See the Approvals panel.")
+                        st.rerun()
+
+                elif wf_status in ("completed", "failed", "cancelled"):
+                    s.phase = "done"
+                    open_panel("progress", artifact=wf_data)
+                    status_word = "completed successfully" if wf_status == "completed" else f"ended with status **{wf_status}**"
+                    add_msg("assistant",
+                            f"Workflow `{s.poll_run_id}` has {status_word}. "
+                            "Full details are in the Progress tab.")
+                    st.rerun()
+                else:
+                    # Still running — update panel and auto-rerun
+                    if s.panel_tab == "progress":
+                        s.panel_artifact = wf_data
+                    time.sleep(5)
+                    st.rerun()
+
+    # Done state
     if s.phase == "done":
         with st.chat_message("assistant"):
-            st.markdown("Workflow submitted. Type a new request to plan another workflow.")
+            st.markdown("Workflow complete. Type a new request to start another.")
+
+    # Question progress indicator
+    if s.phase == "questioning" and s.dynamic_questions:
+        total = len(s.dynamic_questions)
+        st.progress(s.q_index / total if total else 0,
+                    text=f"Question {s.q_index}/{total}")
 
     # ── Chat input ─────────────────────────────────────────────────────────────
     placeholders = {
         "idle":        "Describe what your organisation needs to accomplish…",
         "questioning": "Type your answer…",
-        "reviewing":   "Type 'yes' to approve or 'no' to cancel…",
-        "done":        "Type a new request…",
+        "reviewing":   "Type 'approve' or 'cancel', or use the buttons above…",
+        "executing":   "Workflow running…",
+        "hitl_pending":"Type 'approve' or 'reject', or use the Approvals panel…",
+        "done":        "Type a new request to start another workflow…",
     }
-    user_input = st.chat_input(placeholders.get(s.phase, "Type here…"))
+    user_input = st.chat_input(placeholders.get(s.phase, "Type here…"),
+                               disabled=(s.phase == "executing"))
 
     if user_input:
         user_input = user_input.strip()
         add_msg("user", user_input)
         add_llm("user", user_input)
 
-        # ── idle/done → analyze request ───────────────────────────────────────
+        # ── idle / done → analyze ─────────────────────────────────────────────
         if s.phase in ("idle", "done"):
             s.intent_raw = user_input
-            s.q_index = 0
-            s.answers = {}
-            s.plan = None
+            s.q_index    = 0
+            s.answers    = {}
+            s.plan       = None
             s.run_result = None
+            s.poll_run_id = None
+            s.workflow_data = None
             s.llm_messages = [{"role": "user", "content": user_input}]
 
             with st.chat_message("assistant"):
-                with st.spinner(f"Analysing request across all domains…"):
+                with st.spinner("Analysing across all domains…"):
                     analysis = analyze_request(ollama_url, user_input) if use_ollama else None
                     if not analysis:
                         analysis = _fallback_analysis(user_input)
 
-                s.analysis = analysis
+                s.analysis          = analysis
                 s.dynamic_questions = analysis.get("questions", [])
 
                 if s.dynamic_questions:
                     s.phase = "questioning"
                     with st.spinner("Thinking…"):
-                        reply = gen_analysis_greeting(ollama_url, user_input, analysis) if use_ollama else (
-                            f"This is a **{analysis.get('workflow_title','')}** workflow touching "
-                            + ", ".join(DOMAIN_LABELS.get(d, d) for d in analysis.get("domains", []))
-                            + f".\n\n{s.dynamic_questions[0]}"
+                        reply = (
+                            gen_analysis_greeting(ollama_url, user_input, analysis)
+                            if use_ollama else (
+                                f"This is a **{analysis.get('workflow_title','')}** workflow touching "
+                                + ", ".join(DOMAIN_LABELS.get(d, d) for d in analysis.get("domains", []))
+                                + f".\n\n{s.dynamic_questions[0]}"
+                            )
                         )
                 else:
                     with st.spinner("Thinking…"):
-                        reply = gen_unknown_response(ollama_url, user_input) if use_ollama else (
-                            "Could you describe the primary goal in more detail?"
+                        reply = (
+                            gen_unknown_response(ollama_url, user_input)
+                            if use_ollama else "Could you describe the primary goal in more detail?"
                         )
 
                 st.markdown(reply)
@@ -964,7 +1399,6 @@ with col_chat:
         # ── questioning → collect answer, advance ─────────────────────────────
         elif s.phase == "questioning":
             questions = s.dynamic_questions
-            # Store answer keyed by question index
             s.answers[str(s.q_index + 1)] = user_input
             s.q_index += 1
 
@@ -981,9 +1415,12 @@ with col_chat:
                 add_msg("assistant", reply)
                 add_llm("assistant", reply)
             else:
-                # All answered → synthesize plan
+                # All answered → synthesize
                 with st.chat_message("assistant"):
-                    with st.spinner(f"Building multi-domain plan across {len(s.analysis.get('domains',[]))} domains…"):
+                    with st.spinner(
+                        f"Building multi-domain plan across "
+                        f"{len(s.analysis.get('domains', []))} domains…"
+                    ):
                         synthesis = (
                             synthesize_plan(ollama_url, s.intent_raw, s.analysis, s.answers)
                             if use_ollama else None
@@ -991,17 +1428,19 @@ with col_chat:
                         if not synthesis:
                             synthesis = _fallback_plan(s.intent_raw, s.analysis or {}, s.answers)
 
-                        plan = build_plan(s.intent_raw, synthesis, s.answers)
+                        plan   = build_plan(s.intent_raw, synthesis, s.answers)
                         s.plan = plan
                         s.phase = "reviewing"
+                        open_panel("plan")   # auto-open plan panel
 
-                        with st.spinner("Drafting summary…"):
-                            reply = (
-                                gen_synthesis_intro(ollama_url, plan, s.llm_messages)
-                                if use_ollama else
+                    with st.spinner("Drafting summary…"):
+                        reply = (
+                            gen_synthesis_intro(ollama_url, plan, s.llm_messages)
+                            if use_ollama else (
                                 f"I've built a {plan.get('workflow_title','')} plan with "
-                                f"{len(plan['skill_chain'])} skills. Review and approve below."
+                                f"{len(plan['skill_chain'])} skills. Review in the Plan panel."
                             )
+                        )
                     st.markdown(reply)
                 add_msg("assistant", reply)
                 add_llm("assistant", reply)
@@ -1013,8 +1452,41 @@ with col_chat:
             lower = user_input.lower()
             if any(w in lower for w in ["yes","approve","ok","proceed","run","go","confirm","execute"]):
                 s.phase = "executing"
+                s.panel_tab = "progress"
             elif any(w in lower for w in ["no","cancel","stop","reset","abort","start over"]):
                 reset()
             else:
-                add_msg("assistant", "Use the **Approve** or **Cancel** buttons above, or type `yes` / `no`.")
+                add_msg("assistant",
+                        "Use the **Approve** / **Cancel** buttons above, or type `approve` / `cancel`.")
+            st.rerun()
+
+        # ── hitl_pending → text decision ──────────────────────────────────────
+        elif s.phase == "hitl_pending":
+            lower = user_input.lower()
+            if s.hitl_approval and any(w in lower for w in ["approve","yes","proceed","ok","go"]):
+                apv = s.hitl_approval
+                result = decide_approval(api_url, jwt_token, apv["approval_id"], "approved",
+                                         "Approved via chat")
+                if "error" not in result:
+                    s.hitl_approval = None
+                    s.phase = "executing"
+                    s.panel_tab = "progress"
+                    add_msg("assistant",
+                            f"Approved. Workflow `{apv.get('run_id','')}` is resuming.")
+                else:
+                    add_msg("assistant", f"Error submitting approval: {result['error']}")
+            elif s.hitl_approval and any(w in lower for w in ["reject","no","cancel","stop","deny"]):
+                apv = s.hitl_approval
+                result = decide_approval(api_url, jwt_token, apv["approval_id"], "rejected",
+                                         "Rejected via chat")
+                if "error" not in result:
+                    s.hitl_approval = None
+                    s.phase = "done"
+                    add_msg("assistant",
+                            f"Rejected. Workflow `{apv.get('run_id','')}` has been cancelled.")
+                else:
+                    add_msg("assistant", f"Error submitting rejection: {result['error']}")
+            else:
+                add_msg("assistant",
+                        "Type `approve` or `reject`, or use the **Approvals** panel to review details.")
             st.rerun()

@@ -82,9 +82,7 @@ async def run_websocket(
         async with asyncio.TaskGroup() as tg:
             tg.create_task(_forward_messages(websocket, pubsub, run_id))
             tg.create_task(_ping_loop(websocket))
-    except (WebSocketDisconnect, asyncio.CancelledError):
-        pass
-    except* WebSocketDisconnect:
+    except* (WebSocketDisconnect, asyncio.CancelledError):
         pass
     finally:
         try:

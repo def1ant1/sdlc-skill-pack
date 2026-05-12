@@ -20,7 +20,7 @@ google = [
     "google-auth>=2.29.0",
 ]
 # Rich terminal UI (operator console)
-ui = [
+rich-ui = [
     "rich>=13.7.0",
 ]
 # FastAPI web application server
