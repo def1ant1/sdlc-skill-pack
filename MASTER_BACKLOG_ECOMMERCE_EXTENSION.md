@@ -429,7 +429,7 @@ Acceptance criteria:
 
 # P3 — Future Marketplace Ecosystem
 
-## MB-ECOM-P3-001 — Supplier and reseller network graph
+## MB-ECOM-P3-001 — Supplier and reseller network graph (Completed 2026-05-12)
 
 Create:
 
@@ -448,7 +448,7 @@ Acceptance criteria:
 
 ---
 
-## MB-ECOM-P3-002 — Autonomous commerce simulation environment
+## MB-ECOM-P3-002 — Autonomous commerce simulation environment (Completed 2026-05-12)
 
 Create:
 
@@ -541,3 +541,12 @@ Acceptance criteria:
 - Tax/jurisdiction outputs include `professional_review_required: true` and explicit qualified-review messaging.
 - Finance reconciliation outputs include linkage fields to accounting entities (`account_id`, `invoice_id`, `payment_id`, `order_id`, `marketplace_payout_id`).
 - Opportunity scoring includes logistics-impact-aware components (landed-cost delta, lead-time risk, and fulfillment constraints).
+
+
+Update (2026-05-12):
+- Implemented `core/commerce-network-graph/` with organizational-memory primitive mapping for supplier reliability history, pricing history, and fraud/risk correlation signals.
+- Added skills: `vendor-network-analysis`, `supplier-reputation-analysis`, and `reseller-relationship-mapping` with provenance/confidence and review-gate requirements.
+- Implemented `core/commerce-simulator/` with explicit dry-run-only controls and scenario coverage for demand shocks, fee changes, logistics delays, and inventory turnover dynamics.
+- Added skills: `pricing-strategy-simulation`, `marketplace-scenario-analysis`, and `fulfillment-simulation` with no-side-effects simulation safety constraints.
+- Added/update documentation references under `core/commerce-network-graph/references/` and `core/commerce-simulator/references/` for signal semantics, memory integration, and simulation safeguards.
+- Marked MB-ECOM-P3-001 and MB-ECOM-P3-002 as Completed (2026-05-12).

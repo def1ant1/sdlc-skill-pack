@@ -1,3 +1,11 @@
+## 2026-05-12 — MB-ECOM-P3-001/002 network graph + commerce simulator completion
+
+- Added `core/commerce-network-graph/` with reliability history, pricing history, and fraud/risk correlation signal definitions tied to organizational memory primitives.
+- Added network-graph skills: `vendor-network-analysis`, `supplier-reputation-analysis`, and `reseller-relationship-mapping`.
+- Added `core/commerce-simulator/` with mandatory dry-run-only simulation controls and side-effect isolation guidance.
+- Added simulation skills: `pricing-strategy-simulation`, `marketplace-scenario-analysis`, and `fulfillment-simulation`.
+- Documented required simulator scenario modeling for demand shocks, fee changes, logistics delays, and inventory turnover.
+
 ## 2026-05-12 — MB-ECOM-P0-010 regional arbitrage + negotiation + finance-tax integration completion
 
 - Added 13 ecommerce extension skills across regional-demand/arbitrage analysis, negotiation support, and finance-tax integration domains.
