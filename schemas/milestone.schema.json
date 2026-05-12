@@ -1,0 +1,1 @@
+{"$schema":"http://json-schema.org/draft-07/schema#","title":"Milestone","type":"object","required":["id","title","target_date"],"properties":{"id":{"type":"string"},"title":{"type":"string"},"target_date":{"type":"string","format":"date"}}}
