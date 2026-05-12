@@ -30,6 +30,7 @@ Use this page as the primary onboarding/navigation hub.
 - [Marketplace + Memory Guide](reference/marketplace-and-memory.md)
 - [Memory Engine](architecture/memory-engine.md)
 - [Assistant Workspace UX Architecture](architecture/assistant-workspace-ux.md)
+- [Intake Behavior and Prompting Policy](reference/intake-behavior-and-prompting-policy.md)
 
 ## Ecommerce Fulfillment
 - [Fulfillment + Logistics Workflow](workflows/ecommerce-fulfillment-logistics.md)

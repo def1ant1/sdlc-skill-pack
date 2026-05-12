@@ -1,3 +1,11 @@
+## 2026-05-12 — Intake behavior modernization + prompting policy update
+
+- Deprecated mandatory fixed intake sequencing in favor of progressive clarification rules.
+- Added a material-uncertainty decision rule: ask only when missing context changes the next safe action.
+- Added draft-first response strategy to deliver useful answer/plan/workflow output before refinement questions.
+- Added explicit support for user directives like "use your best assumptions" with structured, user-editable assumption objects.
+- Published intake behavior and assistant prompting policy documentation and linked it from `docs/index.md`.
+
 ## 2026-05-12 — Assistant Workspace app surface + synchronized UX panels
 
 - Added `apps/assistant-workspace/streamlit_app.py` as the new primary app surface over existing chat/workflow/memory experiences.

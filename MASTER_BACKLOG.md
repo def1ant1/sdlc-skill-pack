@@ -72,6 +72,19 @@ The following are not proven complete and remain open in this master backlog:
 
 ---
 
+
+## MB-P3-006 — Intake behavior and prompting policy modernization
+
+**Source:** UX/Operator workflow policy hardening  
+**Status:** Completed (2026-05-12)
+
+Completed scope:
+- Removed requirement for mandatory fixed intake sequence and standardized progressive clarification behavior.
+- Added rule to ask clarifying questions only when unknowns materially alter the next safe action.
+- Standardized draft-first response behavior before refinement questioning.
+- Added explicit assumption-driven execution mode (e.g., "use your best assumptions") with editable assumption object outputs.
+- Published `docs/reference/intake-behavior-and-prompting-policy.md` and linked in docs navigation.
+
 ## 2. Backlog Documents to Mark Complete / Archive
 
 ### Archive / supersede
