@@ -1387,3 +1387,14 @@ Completed scope:
 - Added conversation context tracking for goal, active artifacts, and resolved questions to avoid repetitive intake.
 - Added references and templates: `references/conversation-state-machine.md`, `references/adaptive-intake-policy.md`, and `templates/conversation-artifact-events.md`.
 - Updated orchestration documentation with conversation state-machine behavior.
+
+
+## MB-P1-008 — Conversation intent router and orchestration dispatch
+
+**Source:** Orchestration control-plane hardening  
+**Status:** Completed (2026-05-12)
+
+Completed scope:
+- Added conversation intent routing module with schema-constrained message/context contracts and normalized router outputs.
+- Integrated policy-safe dispatch to planners/executor and memory + skill-gap knowledge paths.
+- Added routing API examples to docs and release changelog coverage.

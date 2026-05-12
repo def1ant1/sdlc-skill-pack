@@ -237,3 +237,11 @@ All notable changes to the Apotheon AI Company OS are documented here.
 - Added context tracking for active goal, active artifacts, and resolved questions to prevent repetitive intake.
 - Added `references/conversation-state-machine.md`, `references/adaptive-intake-policy.md`, and `templates/conversation-artifact-events.md`.
 - Updated orchestration engine documentation with conversation state-machine details.
+
+
+## 2026-05-12 — Conversation intent router + policy-safe dispatch integration
+
+- Added `scripts/orchestration/route_conversation_intent.py` with explicit message/context input contract and structured routing output contract (`confidence`, `requires_question`, `missing_information`, candidate skills/workflows, and `knowledge_actions`).
+- Added support for intent classes: Q&A, brainstorm, create plan/workflow/skill, run skill, schedule task, curate/retrieve knowledge, clarifying question, request approval, and governed execution.
+- Integrated policy-safe dispatch hooks to SDLC and GTM planners, runtime executor path references, skill-gap detection, and memory retrieval actions.
+- Updated API docs with runnable routing examples.
