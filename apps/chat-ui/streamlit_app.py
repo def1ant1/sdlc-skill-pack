@@ -1023,10 +1023,15 @@ def derive_working_state(intent_raw: str, answers: dict[str, Any], analysis: dic
         )
     return {
         "goal": intent_raw,
+        "selected_intent": (analysis or {}).get("intent", ""),
+        "intent_confidence": float((analysis or {}).get("confidence", 0.0) or 0.0),
         "assumptions": assumptions,
         "constraints": [],
         "risks": (analysis or {}).get("risks", []),
         "open_questions": [],
+        "highest_impact_missing_datum": "",
+        "next_safe_action": "Ask clarifying question or draft a safe plan with explicit assumptions.",
+        "rationale_trace": [],
         "next_actions": ["Review plan", "Approve or refine before execution"],
     }
 
@@ -1411,6 +1416,7 @@ if col_panel is not None:
             st.caption(f"Working mode: **{s.selected_mode}**")
             updated_state, changed = render_visible_cognition_panel(s.assistant_working_state)
             if changed:
+                assumptions_changed = updated_state.get("assumptions", []) != (s.assistant_working_state or {}).get("assumptions", [])
                 s.assistant_working_state = updated_state
                 s.answers["goal"] = updated_state.get("goal", "")
                 s.answers["constraints"] = updated_state.get("constraints", [])
@@ -1418,6 +1424,10 @@ if col_panel is not None:
                 if s.plan:
                     s.plan["assistant_working_state"] = updated_state
                     s.plan["risks"] = updated_state.get("risks", s.plan.get("risks", []))
+                if assumptions_changed:
+                    s.phase = "analyzing"
+                    s.plan = None
+                    st.warning("Assumptions changed. Re-routing and re-drafting will run on next user turn.")
                 st.success("Cognition state updated.")
 
         # ── Progress tab ──────────────────────────────────────────────────────
@@ -1713,6 +1723,9 @@ with col_chat:
                 routed["confidence"] = max(float(routed.get("confidence", 0.0)), 0.99)
             s.routed_intent = routed.get("intent")
             s.routed_intent_confidence = routed.get("confidence")
+            if isinstance(s.assistant_working_state, dict):
+                s.assistant_working_state["selected_intent"] = s.routed_intent or ""
+                s.assistant_working_state["intent_confidence"] = float(s.routed_intent_confidence or 0.0)
             _dispatch_mode_for_intent(user_input, routed, ollama_url, use_ollama)
             st.rerun()
 
