@@ -1,0 +1,19 @@
+{
+  "$id": "https://apotheon.dev/schemas/conversation-intent.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Conversation Intent",
+  "type": "object",
+  "required": ["intent", "confidence", "risk_level", "default_action", "required_fields"],
+  "properties": {
+    "intent": {"type": "string"},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "risk_level": {"type": "string", "enum": ["low", "medium", "high"]},
+    "default_action": {"type": "string"},
+    "required_fields": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    }
+  },
+  "additionalProperties": true
+}

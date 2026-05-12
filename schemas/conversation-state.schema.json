@@ -1,0 +1,23 @@
+{
+  "$id": "https://apotheon.dev/schemas/conversation-state.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Conversation State",
+  "type": "object",
+  "required": ["user_message"],
+  "properties": {
+    "session_id": {"type": "string"},
+    "user_message": {"type": "string"},
+    "facts": {"type": "object", "additionalProperties": true},
+    "assumptions_catalog": {"type": "object", "additionalProperties": true},
+    "clarifying_questions_asked": {"type": "integer", "minimum": 0},
+    "use_best_assumptions": {"type": "boolean"},
+    "policy": {
+      "type": "object",
+      "properties": {
+        "high_risk": {"type": "boolean"}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
