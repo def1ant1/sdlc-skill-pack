@@ -26,12 +26,76 @@ SCHEMA_PATH = Path(__file__).resolve().parents[2] / "schemas" / "conversation-in
 
 HIGH_CONFIDENCE_THRESHOLD = 0.85
 MID_CONFIDENCE_THRESHOLD = 0.60
+DEFAULT_ASSISTANT_MODE = "chat"
+MODE_PRECEDENCE = ["user_override", "policy_constraints", "inferred_intent"]
+BASE_ASSISTANT_MODES = ["chat", "execute", "research", "agentic", "review"]
 HIGH_RISK_WORKFLOW_PATTERNS = [
     r"\b(hipaa|phi|medical records?)\b",
     r"\b(finra|sec filing|sox|basel|aml|kyc)\b",
     r"\b(gdpr|pci|soc\s?2|iso\s?27001)\b",
     r"\b(legal hold|litigation|regulator)\b",
 ]
+
+
+def _normalize_mode(value: str | None) -> str | None:
+    if not isinstance(value, str):
+        return None
+    normalized = value.strip().lower()
+    return normalized or None
+
+
+def _collect_available_modes(payload: dict, workspace_state: dict) -> list[str]:
+    modes: list[str] = []
+    for mode in BASE_ASSISTANT_MODES:
+        if mode not in modes:
+            modes.append(mode)
+
+    for source in (workspace_state.get("mode_selector"), payload.get("mode_selector")):
+        if isinstance(source, dict):
+            values = source.get("available_modes")
+            if isinstance(values, list):
+                for mode in values:
+                    normalized = _normalize_mode(mode)
+                    if normalized and normalized not in modes:
+                        modes.append(normalized)
+    return modes
+
+
+def _infer_mode_from_message(message: str) -> tuple[str, str]:
+    txt = message.lower()
+    execute_signals = [r"\banaly[sz]e\s+(a\s+)?website\b", r"\brun\b", r"\bexecute\b", r"\boperate\b"]
+    if any(re.search(pattern, txt) for pattern in execute_signals):
+        return "execute", "Explicit task request indicates operational execution (example: analyze website)."
+    if re.search(r"\b(research|investigate|compare|sources?)\b", txt):
+        return "research", "Message requests research-oriented assistance."
+    if re.search(r"\b(review|critique|qa|audit)\b", txt):
+        return "review", "Message requests review-oriented assistance."
+    return DEFAULT_ASSISTANT_MODE, "Default conversational mode for general requests."
+
+
+def _resolve_assistant_mode(payload: dict, message: str) -> tuple[str, str, str, str | None]:
+    workspace_state = payload.get("workspace_state") if isinstance(payload.get("workspace_state"), dict) else {}
+    policy = payload.get("policy") if isinstance(payload.get("policy"), dict) else {}
+    available_modes = _collect_available_modes(payload, workspace_state)
+    allowed_modes = policy.get("allowed_modes") if isinstance(policy.get("allowed_modes"), list) else []
+    allowed_mode_set = {_normalize_mode(mode) for mode in allowed_modes if _normalize_mode(mode)}
+
+    pinned_mode = _normalize_mode(workspace_state.get("pinned_mode") or payload.get("pinned_mode"))
+    if pinned_mode == "chat":
+        return "chat", "user_override", "User pinned chat mode; automatic switching is disabled.", None
+
+    requested_mode = _normalize_mode(payload.get("mode"))
+    if requested_mode and requested_mode in available_modes:
+        if allowed_mode_set and requested_mode not in allowed_mode_set:
+            fallback_mode = DEFAULT_ASSISTANT_MODE if DEFAULT_ASSISTANT_MODE in allowed_mode_set else sorted(allowed_mode_set)[0]
+            return fallback_mode, "policy_constraints", f"Requested mode '{requested_mode}' blocked by policy allowed_modes.", requested_mode
+        return requested_mode, "user_override", "User explicitly selected assistant mode.", None
+
+    inferred_mode, inferred_reason = _infer_mode_from_message(message)
+    if allowed_mode_set and inferred_mode not in allowed_mode_set:
+        fallback_mode = DEFAULT_ASSISTANT_MODE if DEFAULT_ASSISTANT_MODE in allowed_mode_set else sorted(allowed_mode_set)[0]
+        return fallback_mode, "policy_constraints", f"Inferred mode '{inferred_mode}' blocked by policy allowed_modes.", inferred_mode
+    return inferred_mode, "inferred_intent", inferred_reason, None
 
 
 def parse_args() -> argparse.Namespace:
@@ -121,10 +185,26 @@ def _compute_routing_mode(confidence: float, force_structured_clarification: boo
     return "required_clarification", True, "Low confidence intent (<0.60): clarification is required before execution."
 
 
-def _build_state_updates(payload: dict, confidence: float, routing_mode: str, routing_rationale: str, requires_clarification: bool) -> dict:
+def _build_state_updates(payload: dict, confidence: float, routing_mode: str, routing_rationale: str, requires_clarification: bool, assistant_mode: str, mode_source: str, mode_reason: str, blocked_mode: str | None) -> dict:
     conversation_state = payload.get("conversation_state") if isinstance(payload.get("conversation_state"), dict) else {}
     workspace_state = payload.get("workspace_state") if isinstance(payload.get("workspace_state"), dict) else {}
 
+    previous_mode = _normalize_mode(workspace_state.get("assistant_mode"))
+    timeline = workspace_state.get("timeline") if isinstance(workspace_state.get("timeline"), list) else []
+    mode_changed = previous_mode != assistant_mode
+    mode_change_event = {
+        "type": "assistant.mode.changed",
+        "from": previous_mode,
+        "to": assistant_mode,
+        "reason": mode_reason,
+        "source": mode_source,
+        "automatic": mode_source != "user_override",
+    }
+    if blocked_mode:
+        mode_change_event["blocked_mode"] = blocked_mode
+    updated_timeline = [*timeline, mode_change_event] if mode_changed else timeline
+
+    available_modes = _collect_available_modes(payload, workspace_state)
     return {
         "conversation_state": {
             **conversation_state,
@@ -139,6 +219,16 @@ def _build_state_updates(payload: dict, confidence: float, routing_mode: str, ro
             "intent_confidence": confidence,
             "routing_mode": routing_mode,
             "routing_rationale": routing_rationale,
+            "assistant_mode": assistant_mode,
+            "mode_precedence": MODE_PRECEDENCE,
+            "mode_source": mode_source,
+            "mode_reason": mode_reason,
+            "timeline": updated_timeline,
+            "mode_selector": {
+                "selected_mode": assistant_mode,
+                "available_modes": available_modes,
+                "pinned_mode": _normalize_mode(workspace_state.get("pinned_mode") or payload.get("pinned_mode")),
+            },
         },
     }
 
@@ -163,9 +253,20 @@ def main() -> int:
     intent, confidence, reason = _route_intent(message)
     force_override, override_reason = _requires_policy_override(payload, message)
     routing_mode, requires_clarification, routing_rationale = _compute_routing_mode(confidence, force_override)
+    assistant_mode, mode_source, mode_reason, blocked_mode = _resolve_assistant_mode(payload, message)
     if override_reason:
         routing_rationale = f"{routing_rationale} {override_reason}"
-    state_updates = _build_state_updates(payload, confidence, routing_mode, routing_rationale, requires_clarification)
+    state_updates = _build_state_updates(
+        payload,
+        confidence,
+        routing_mode,
+        routing_rationale,
+        requires_clarification,
+        assistant_mode,
+        mode_source,
+        mode_reason,
+        blocked_mode,
+    )
 
     routed = {
         "intent": intent,
@@ -176,6 +277,11 @@ def main() -> int:
         "requires_clarification": requires_clarification,
         "clarification_prompt_contract": "Clarifications are optional and limited to the highest-impact missing datum unless policy override requires structured clarification.",
         "routing_rationale": routing_rationale,
+        "assistant_mode": assistant_mode,
+        "mode_source": mode_source,
+        "mode_reason": mode_reason,
+        "mode_precedence": MODE_PRECEDENCE,
+        "blocked_mode": blocked_mode,
         "policy_override_applied": force_override,
         "policy_override_reason": override_reason,
         "state_updates": state_updates,
