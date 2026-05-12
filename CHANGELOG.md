@@ -288,3 +288,11 @@ All notable changes to the Apotheon AI Company OS are documented here.
 - Integrated scheduling runtime to generate recurring follow-up tasks (`runtime/tasks/`) from due run execution when `generate_task: true`.
 - Extended chat CLI schedule lifecycle commands (`create`, `pause`, `archive`) on top of existing preview/run/repair flows.
 - Added operational documentation: `docs/reference/task-schedule-operations.md`.
+
+## 2026-05-12 — Workflow dry-run preview + Approval Center + unified approval routing
+
+- Added dry-run preview UX in `apps/assistant-workspace/streamlit_app.py` for Assistant Home/Workflow Studio with step previews, gate visibility, side-effect classes, and missing-input detection before execution.
+- Added Approval Center UI with pending queue views, risk reason, policy context, and decision actions (`approve`, `reject`, `edit`, `request detail`).
+- Integrated approval decisions with runtime pause/resume audit trails via explicit event recording.
+- Unified scheduled and direct execution entrypoints so both route through the same approval and evidence pathways.
+- Updated workspace UX and governance runtime docs to reflect the new approval-routing parity contract.

@@ -1449,3 +1449,16 @@ Completed scope:
 - Added `core/knowledge-curation-assistant/` with taxonomy and note template artifacts.
 - Implemented `scripts/orchestration/conversation_to_knowledge_notes.py` with propose-only extraction (no auto-persist), lifecycle actions (`approve`, `edit`, `reject`, `archive`, `supersede`), provenance and impact links, conflict/staleness checks, command triggers, and targeted retrieval.
 - Added policy documentation at `docs/reference/knowledge-curation-policy.md`.
+
+## MB-P0-020 — Workflow preview and approval center convergence
+
+**Source:** Workspace UX + Runtime Governance alignment  
+**Status:** Done (2026-05-12)
+
+Delivered:
+
+- `apps/assistant-workspace/streamlit_app.py` now provides dry-run previews with steps, gates, side-effect classes, and missing-input checks.
+- Approval Center now supports pending-queue review with risk reason, policy context, and approve/reject/edit/request-detail actions.
+- Approval decisions are integrated with runtime pause/resume/cancel audit trail events.
+- Scheduled and direct execution previews route through one shared approval/evidence pathway.
+- Documentation updated in `docs/architecture/assistant-workspace-ux.md` and `docs/governance/runtime-enforcement.md`.

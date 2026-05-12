@@ -75,3 +75,27 @@ When a chip is triggered, the system records an auditable event with:
 - optional `artifact_id`
 
 These events provide traceability for operator review and governance evidence.
+
+## Dry-run preview and approval-center integration (2026-05-12)
+
+Assistant Home and Workflow Studio now expose a shared dry-run preview contract before execution:
+
+- Step-by-step execution preview.
+- Explicit gate type per step (`none`, `soft_hitl`, `hard_hitl`).
+- Side-effect class per step (`read`, `analysis`, `external_write`).
+- Missing-input surfacing before run dispatch.
+
+### Unified execution pathways
+
+Scheduled and direct execution triggers both construct the same candidate-run preview payload and flow into the same approval + evidence pathway. This prevents governance drift between trigger origins.
+
+### Approval Center actions
+
+Approval Center now presents:
+
+- pending approvals queue
+- risk reason
+- policy context
+- actions: approve, reject, edit, request detail
+
+Approval decisions are linked to runtime control transitions and recorded in the pause/resume audit trail (`runtime.paused_for_hitl`, `runtime.resumed`, `runtime.cancelled`).
