@@ -253,3 +253,10 @@ All notable changes to the Apotheon AI Company OS are documented here.
 - Added support for intent classes: Q&A, brainstorm, create plan/workflow/skill, run skill, schedule task, curate/retrieve knowledge, clarifying question, request approval, and governed execution.
 - Integrated policy-safe dispatch hooks to SDLC and GTM planners, runtime executor path references, skill-gap detection, and memory retrieval actions.
 - Updated API docs with runnable routing examples.
+
+## 2026-05-12 — Conversation-to-plan pipeline + living Plan Builder + approved-scope converters
+
+- Added `scripts/orchestration/conversation_to_plan.py` to produce human-readable structured plans from conversation input with Plan Builder coverage for objectives, assumptions, phases, tasks, risks, dependencies, required skills, and per-step approvals.
+- Added living-plan operations for collapse/expand, priority reorder, assumption edits, individual step approvals, and version diff history.
+- Added `scripts/orchestration/plan_to_workflow.py` and `scripts/orchestration/plan_to_tasks.py` to convert approved plan scope into executable workflow/task forms.
+- Added plan workspace documentation for users and developers under `docs/plan-workspace/`.

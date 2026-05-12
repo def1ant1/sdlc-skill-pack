@@ -1411,3 +1411,16 @@ Completed scope:
 - Added conversation intent routing module with schema-constrained message/context contracts and normalized router outputs.
 - Integrated policy-safe dispatch to planners/executor and memory + skill-gap knowledge paths.
 - Added routing API examples to docs and release changelog coverage.
+
+
+## MB-P3-008 — Conversation-to-plan pipeline + living plan workspace
+
+**Source:** Plan workspace orchestration hardening  
+**Status:** Completed (2026-05-12)
+
+Completed scope:
+- Added conversation-first plan pipeline in `scripts/orchestration/conversation_to_plan.py` with human-readable structured plan output.
+- Added Plan Builder model coverage for objectives, assumptions, phases, tasks, risks, dependencies, required skills, and per-step approvals.
+- Added living plan operations (collapse/expand, priority reorder, assumptions edits, individual approvals, version diff history).
+- Added approved-scope converters in `scripts/orchestration/plan_to_workflow.py` and `scripts/orchestration/plan_to_tasks.py`.
+- Added plan workspace docs for users and developers in `docs/plan-workspace/`.
