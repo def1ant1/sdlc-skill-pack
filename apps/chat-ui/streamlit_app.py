@@ -32,6 +32,8 @@ from workspace_state import (
     register_conversation,
     resume_session_from_workspace,
     save_workspace_state,
+    snapshot_turn_state,
+    append_audit_event,
 )
 from workspace_views import render_workspace_actions
 from visible_cognition_panel import render_visible_cognition_panel
@@ -644,8 +646,25 @@ def save_conversation(messages: list, plan: dict | None, run_result: dict | None
         title=(plan or {}).get("workflow_title", name),
         plan_id=(plan or {}).get("id"),
         run_id=(run_result or {}).get("run_id") if isinstance(run_result, dict) else None,
+        turn_state=snapshot_turn_state(st.session_state),
     )
     save_workspace_state(WORKSPACE_STATE_FILE, st.session_state.workspace_state)
+
+
+def _persist_turn_state() -> None:
+    s = st.session_state
+    if s.workspace_state is None:
+        return
+    session_id = _current_session_id()
+    register_conversation(
+        s.workspace_state,
+        session_id=session_id,
+        title=(s.plan or {}).get("workflow_title", session_id),
+        plan_id=(s.plan or {}).get("id"),
+        run_id=(s.run_result or {}).get("run_id") if isinstance(s.run_result, dict) else None,
+        turn_state=snapshot_turn_state(s),
+    )
+    save_workspace_state(WORKSPACE_STATE_FILE, s.workspace_state)
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Conversational response generators
@@ -795,6 +814,12 @@ def _init() -> None:
         "selected_mode": "Chat",
         "explicit_mode_override": False,
         "workflow_builder_paused": False,
+        "active_goal": "",
+        "workflow_stage": "idle",
+        "clarification_status": "not_started",
+        "clarification_answer_map": {},
+        "last_clarification_id": None,
+        "completion_status": "incomplete",
     }
     for k, v in defaults.items():
         if k not in st.session_state:
@@ -881,6 +906,9 @@ def _run_conversational_mode(user_input: str, ollama_url: str, use_ollama: bool)
     s.workflow_data = None
     s.assistant_working_state = None
     s.llm_messages = [{"role": "user", "content": user_input}]
+    s.active_goal = user_input
+    s.workflow_stage = "analysis"
+    s.completion_status = "in_progress"
 
     with st.chat_message("assistant"):
         with st.spinner("Analysing across all domains…"):
@@ -893,8 +921,29 @@ def _run_conversational_mode(user_input: str, ollama_url: str, use_ollama: bool)
         s.assistant_working_state = derive_working_state(s.intent_raw, s.answers, analysis)
 
         if s.dynamic_questions:
+            candidate_q = s.dynamic_questions[0]
+            dedupe = _clarification_dedupe_check(candidate_q)
+            if dedupe["action"] == "skip":
+                s.dynamic_questions = s.dynamic_questions[1:]
+                s.clarification_status = "skipped"
+                append_audit_event(
+                    s.workspace_state,
+                    _current_session_id(),
+                    "clarification_skipped",
+                    {"question": candidate_q, "reason": dedupe["reason"]},
+                )
+            else:
+                s.last_clarification_id = dedupe["id"]
+                s.clarification_status = "asked"
+                append_audit_event(
+                    s.workspace_state,
+                    _current_session_id(),
+                    "clarification_asked",
+                    {"question": candidate_q, "clarification_id": dedupe["id"]},
+                )
             s.mode = "workflow_builder"
             s.phase = "questioning"
+            s.workflow_stage = "clarification"
             with st.spinner("Thinking…"):
                 reply = (
                     gen_analysis_greeting(ollama_url, user_input, analysis)
@@ -912,6 +961,7 @@ def _run_conversational_mode(user_input: str, ollama_url: str, use_ollama: bool)
             plan["assistant_working_state"] = s.assistant_working_state
             s.plan = plan
             s.phase = "draft_artifact"
+            s.workflow_stage = "planning"
             open_panel("plan")
             with st.spinner("Thinking…"):
                 reply = (
@@ -932,11 +982,46 @@ def _run_workflow_builder_mode(user_input: str, ollama_url: str, use_ollama: boo
     s = st.session_state
     questions = s.dynamic_questions
     s.answers[str(s.q_index + 1)] = user_input
+    if s.last_clarification_id:
+        s.clarification_answer_map[s.last_clarification_id] = {
+            "answer": user_input,
+            "answered_at": datetime.now(timezone.utc).isoformat(),
+            "valid": True,
+            "question": (s.dynamic_questions[s.q_index] if s.q_index < len(s.dynamic_questions) else ""),
+        }
+        s.clarification_status = "answered"
+        append_audit_event(
+            s.workspace_state,
+            _current_session_id(),
+            "clarification_answered",
+            {"clarification_id": s.last_clarification_id, "answer": user_input},
+        )
     s.q_index += 1
     s.assistant_working_state = derive_working_state(s.intent_raw, s.answers, s.analysis)
 
     if s.q_index < len(questions):
         next_q = questions[s.q_index]
+        dedupe = _clarification_dedupe_check(next_q)
+        if dedupe["action"] == "skip":
+            append_audit_event(
+                s.workspace_state,
+                _current_session_id(),
+                "clarification_skipped",
+                {"question": next_q, "reason": dedupe["reason"]},
+            )
+            s.q_index += 1
+            if s.q_index >= len(questions):
+                next_q = ""
+            else:
+                next_q = questions[s.q_index]
+        if next_q:
+            s.last_clarification_id = dedupe["id"] if dedupe["action"] != "skip" else _clarification_id(next_q)
+            append_audit_event(
+                s.workspace_state,
+                _current_session_id(),
+                "clarification_asked",
+                {"question": next_q, "clarification_id": s.last_clarification_id},
+            )
         with st.chat_message("assistant"):
             with st.spinner("Thinking…"):
                 reply = (
@@ -974,6 +1059,50 @@ def _run_workflow_builder_mode(user_input: str, ollama_url: str, use_ollama: boo
     add_msg("assistant", reply)
     add_llm("assistant", reply)
     s.phase = "reviewing"
+    s.workflow_stage = "reviewing"
+    s.completion_status = "ready_for_approval"
+
+
+def _clarification_id(question: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "_", question.lower()).strip("_")
+
+
+def _clarification_dedupe_check(question: str) -> dict[str, str]:
+    s = st.session_state
+    clarification_id = _clarification_id(question)
+    prior = (s.clarification_answer_map or {}).get(clarification_id)
+    if not prior:
+        return {"action": "ask", "id": clarification_id, "reason": "new_question"}
+    if _clarification_requires_reask(prior):
+        append_audit_event(
+            s.workspace_state,
+            _current_session_id(),
+            "clarification_invalidated",
+            {"clarification_id": clarification_id, "reasons": prior.get("invalid_reasons", [])},
+        )
+        return {"action": "ask", "id": clarification_id, "reason": "invalidated"}
+    return {"action": "skip", "id": clarification_id, "reason": "already_answered"}
+
+
+def _clarification_requires_reask(prior: dict[str, Any]) -> bool:
+    reasons = []
+    if prior.get("contradiction_detected"):
+        reasons.append("contradiction")
+    if prior.get("scope_changed"):
+        reasons.append("scope_change")
+    expires_at = prior.get("expires_at")
+    if expires_at and expires_at < datetime.now(timezone.utc).isoformat():
+        reasons.append("expiry")
+    answer = str(prior.get("answer", "")).strip()
+    if not answer or answer.lower() in {"n/a", "unknown", "idk"}:
+        reasons.append("invalid_answer")
+    prior["invalid_reasons"] = reasons
+    prior["valid"] = len(reasons) == 0
+    return bool(reasons)
+
+
+def _current_session_id() -> str:
+    return f"session-{abs(hash(str(st.session_state.get('messages', []))))}"
 
 
 def _dispatch_mode_for_intent(user_input: str, routed: dict[str, Any], ollama_url: str, use_ollama: bool) -> None:
@@ -1709,6 +1838,8 @@ with col_chat:
                                disabled=(s.phase == "executing"))
 
     if user_input:
+        if WORKSPACE_STATE_FILE.exists():
+            s.workspace_state = load_workspace_state(WORKSPACE_STATE_FILE)
         user_input = user_input.strip()
         add_msg("user", user_input)
         add_llm("user", user_input)
@@ -1727,11 +1858,13 @@ with col_chat:
                 s.assistant_working_state["selected_intent"] = s.routed_intent or ""
                 s.assistant_working_state["intent_confidence"] = float(s.routed_intent_confidence or 0.0)
             _dispatch_mode_for_intent(user_input, routed, ollama_url, use_ollama)
+            _persist_turn_state()
             st.rerun()
 
         # ── questioning → collect answer, advance ─────────────────────────────
         elif s.phase == "questioning" and s.mode == "workflow_builder":
             _run_workflow_builder_mode(user_input, ollama_url, use_ollama)
+            _persist_turn_state()
             st.rerun()
 
         # ── reviewing → text approval ─────────────────────────────────────────
@@ -1745,6 +1878,7 @@ with col_chat:
             else:
                 add_msg("assistant",
                         "Use the **Approve** / **Cancel** buttons above, or type `approve` / `cancel`.")
+            _persist_turn_state()
             st.rerun()
 
         # ── hitl_pending → text decision ──────────────────────────────────────
@@ -1776,4 +1910,5 @@ with col_chat:
             else:
                 add_msg("assistant",
                         "Type `approve` or `reject`, or use the **Approvals** panel to review details.")
+            _persist_turn_state()
             st.rerun()

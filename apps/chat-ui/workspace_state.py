@@ -67,17 +67,56 @@ def resume_session_from_workspace(session_state: Any, workspace: dict[str, Any])
     for conv in workspace.get("conversations", []):
         if conv.get("session_id") == active_id:
             session_state.active_workspace_conversation = conv
+            turn_state = conv.get("turn_state", {}) if isinstance(conv.get("turn_state"), dict) else {}
+            for key, default in _turn_state_defaults().items():
+                setattr(session_state, key, turn_state.get(key, default))
             break
 
 
+def _turn_state_defaults() -> dict[str, Any]:
+    return {
+        "active_goal": "",
+        "workflow_stage": "idle",
+        "clarification_status": "not_started",
+        "clarification_answer_map": {},
+        "last_clarification_id": None,
+        "completion_status": "incomplete",
+    }
+
+
+def snapshot_turn_state(session_state: Any) -> dict[str, Any]:
+    defaults = _turn_state_defaults()
+    snapshot: dict[str, Any] = {}
+    for key, default in defaults.items():
+        value = getattr(session_state, key, default)
+        snapshot[key] = value if value is not None else default
+    return snapshot
+
+
+def append_audit_event(workspace: dict[str, Any], session_id: str, event_type: str,
+                       payload: dict[str, Any] | None = None) -> None:
+    event = {
+        "event_type": event_type,
+        "timestamp": _utc_now(),
+        "payload": payload or {},
+    }
+    for conv in workspace.get("conversations", []):
+        if conv.get("session_id") == session_id:
+            conv.setdefault("timeline", []).append(event)
+            conv["saved_at"] = _utc_now()
+            return
+
+
 def register_conversation(workspace: dict[str, Any], session_id: str, title: str | None = None, plan_id: str | None = None,
-                          run_id: str | None = None) -> None:
+                          run_id: str | None = None, turn_state: dict[str, Any] | None = None) -> None:
     conv = {
         "session_id": session_id,
         "workspace_id": workspace["workspace"]["workspace_id"],
         "title": title,
         "plan_id": plan_id,
         "run_id": run_id,
+        "turn_state": turn_state or _turn_state_defaults(),
+        "timeline": [],
         "saved_at": _utc_now(),
     }
     workspace["conversations"] = [c for c in workspace["conversations"] if c.get("session_id") != session_id]
