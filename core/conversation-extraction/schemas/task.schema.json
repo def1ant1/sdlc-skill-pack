@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sdlc-skill-pack/core/conversation-extraction/schemas/task.schema.json",
+  "title": "Task Extraction",
+  "type": "object",
+  "required": ["suggestion_id", "title", "owner", "status", "source_message_ids"],
+  "properties": {
+    "suggestion_id": {"type": "string"},
+    "title": {"type": "string"},
+    "owner": {"type": "string"},
+    "due_date": {"type": "string", "format": "date"},
+    "status": {"type": "string", "enum": ["todo", "in_progress", "blocked", "done"]},
+    "dependencies": {"type": "array", "items": {"type": "string"}},
+    "source_message_ids": {"type": "array", "items": {"type": "string"}, "minItems": 1}
+  },
+  "additionalProperties": false
+}

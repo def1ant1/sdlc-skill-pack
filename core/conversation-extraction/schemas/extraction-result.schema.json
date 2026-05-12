@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sdlc-skill-pack/core/conversation-extraction/schemas/extraction-result.schema.json",
+  "title": "Conversation Extraction Result",
+  "type": "object",
+  "required": ["conversation_id", "generated_at", "requirements", "risks", "decisions", "tasks", "entities"],
+  "properties": {
+    "conversation_id": {"type": "string"},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "requirements": {"type": "array", "items": {"$ref": "requirement.schema.json"}},
+    "risks": {"type": "array", "items": {"$ref": "risk.schema.json"}},
+    "decisions": {"type": "array", "items": {"$ref": "decision.schema.json"}},
+    "tasks": {"type": "array", "items": {"$ref": "task.schema.json"}},
+    "entities": {"type": "array", "items": {"$ref": "entity.schema.json"}},
+    "review_log": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["action", "suggestion_id", "timestamp"],
+        "properties": {
+          "action": {"type": "string", "enum": ["approve", "edit", "reject", "merge"]},
+          "suggestion_id": {"type": "string"},
+          "merged_into": {"type": "string"},
+          "timestamp": {"type": "string", "format": "date-time"},
+          "note": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

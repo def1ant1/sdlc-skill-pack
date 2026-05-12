@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sdlc-skill-pack/core/conversation-extraction/schemas/requirement.schema.json",
+  "title": "Requirement Extraction",
+  "type": "object",
+  "required": ["suggestion_id", "title", "description", "priority", "source_message_ids"],
+  "properties": {
+    "suggestion_id": {"type": "string"},
+    "title": {"type": "string", "minLength": 3},
+    "description": {"type": "string", "minLength": 5},
+    "priority": {"type": "string", "enum": ["low", "medium", "high", "critical"]},
+    "acceptance_criteria": {"type": "array", "items": {"type": "string"}},
+    "source_message_ids": {"type": "array", "items": {"type": "string"}, "minItems": 1}
+  },
+  "additionalProperties": false
+}
