@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apotheon.dev/schemas/components/assumption.schema.json",
+  "title": "Assumption",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["text", "source", "confidence", "status"],
+  "properties": {
+    "text": {"type": "string", "minLength": 1},
+    "source": {"type": "string", "minLength": 1},
+    "confidence": {"type": "string", "enum": ["low", "medium", "high"]},
+    "status": {"type": "string", "enum": ["inferred", "user_provided"]}
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apotheon.dev/schemas/components/risk.schema.json",
+  "title": "Risk",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["description", "severity"],
+  "properties": {
+    "description": {"type": "string", "minLength": 1},
+    "severity": {"type": "string", "enum": ["low", "medium", "high", "critical"]},
+    "mitigation": {"type": "string"}
+  }
+}
