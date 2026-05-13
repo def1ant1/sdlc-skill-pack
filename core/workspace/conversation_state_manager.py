@@ -15,6 +15,11 @@ _REQUIRED_DEFAULTS: dict[str, Any] = {
     "completed_steps": [],
     "pending_steps": [],
     "execution_status": "idle",
+    "delivery_status": "pending",
+    "artifact_generated": False,
+    "final_response_synthesized": False,
+    "workflow_complete": False,
+    "completion_reason": "",
     "clarification_resolved": False,
     "memory_summary": "",
 }

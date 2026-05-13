@@ -7,7 +7,7 @@ from core.ui_p0_common import P0OperationContext, apply_reversible_update, enfor
 SCHEMA = {
     "module": "timeline",
     "required": ["id", "status", "updated_at"],
-    "status_values": ["pending", "active", "completed", "failed"],
+    "status_values": ["pending", "ready_to_execute", "executing", "awaiting_approval", "delivered", "failed_recoverable", "failed_terminal", "completed"],
 }
 
 

@@ -42,6 +42,10 @@ def _compute_missing(required_fields: list[str], facts: dict[str, Any]) -> list[
     return [field for field in required_fields if not facts.get(field)]
 
 
+TERMINAL_EXECUTION_STATUSES = {"success", "failed_terminal"}
+RECOVERABLE_FAILURE_STATUSES = {"failed_recoverable"}
+
+
 def _reconcile_turn_state(prior_state: dict[str, Any], turn_patch: dict[str, Any]) -> dict[str, Any]:
     completed_prior = set(prior_state.get("completed_steps", []))
     completed_turn = set(turn_patch.get("completed_steps", []))
@@ -62,6 +66,26 @@ def _reconcile_turn_state(prior_state: dict[str, Any], turn_patch: dict[str, Any
         "clarification_resolved": bool(turn_patch.get("clarification_resolved") or prior_state.get("clarification_resolved", False)),
     }
 
+
+
+
+def _derive_workflow_completion(state_patch: dict[str, Any], prior_state: dict[str, Any]) -> tuple[bool, str]:
+    artifact_or_response = bool(state_patch.get("artifact_generated") or state_patch.get("final_response_synthesized"))
+    execution_status = state_patch.get("execution_status", prior_state.get("execution_status", "idle"))
+    execution_terminal = execution_status in TERMINAL_EXECUTION_STATUSES
+    delivery_emitted = state_patch.get("delivery_status") == "delivered"
+
+    if artifact_or_response and execution_terminal and delivery_emitted:
+        return True, "Artifact/response generated, execution terminal, and delivery emitted."
+
+    blockers: list[str] = []
+    if not artifact_or_response:
+        blockers.append("artifact/report or final response is missing")
+    if not execution_terminal:
+        blockers.append("execution status is not terminal success/failure")
+    if not delivery_emitted:
+        blockers.append("final user-visible delivery event not emitted")
+    return False, "; ".join(blockers)
 
 def route_next_safe_action(state: dict[str, Any]) -> dict[str, Any]:
     facts = dict(state.get("facts", {}))
@@ -99,18 +123,36 @@ def orchestrate_conversation(conversation_state: dict[str, Any], session_state: 
     routing_input = {**prior, **incoming, **classification}
     routing = route_next_safe_action(routing_input)
 
+    incoming_execution_status = incoming.get("execution_status")
+    if incoming_execution_status:
+        execution_status = incoming_execution_status
+    elif routing["next_safe_action"] == "ask_clarifying_question":
+        execution_status = "ready_to_execute"
+    elif routing["next_safe_action"] == "defer_execution":
+        execution_status = "awaiting_approval"
+    elif routing["next_safe_action"] in {"propose_plan", "answer_directly"}:
+        execution_status = "executing"
+    else:
+        execution_status = "ready_to_execute"
+
     turn_patch = {
         "active_goal": incoming.get("goal", prior.get("active_goal", "")),
         "intent": routing["intent"],
         "intent_confidence": routing["intent_confidence"],
-        "workflow_stage": "execution" if routing["next_safe_action"] != "ask_clarifying_question" else "clarification",
+        "workflow_stage": incoming.get("workflow_stage", "execution" if routing["next_safe_action"] != "ask_clarifying_question" else "clarification"),
         "completed_steps": incoming.get("completed_steps", []),
         "pending_steps": incoming.get("pending_steps", prior.get("pending_steps", [])),
-        "execution_status": routing["next_safe_action"],
+        "execution_status": execution_status,
+        "delivery_status": incoming.get("delivery_status", prior.get("delivery_status", "pending")),
+        "artifact_generated": bool(incoming.get("artifact_generated", False) or prior.get("artifact_generated", False)),
+        "final_response_synthesized": bool(incoming.get("final_response_synthesized", False) or prior.get("final_response_synthesized", False)),
         "clarification_resolved": routing["next_safe_action"] != "ask_clarifying_question",
         "memory_summary": incoming.get("memory_summary", prior.get("memory_summary", "")),
         "user_message": incoming.get("user_message", ""),
     }
     reconciled_patch = _reconcile_turn_state(prior, turn_patch)
+    complete, reason = _derive_workflow_completion(reconciled_patch, prior)
+    reconciled_patch["workflow_complete"] = complete
+    reconciled_patch["completion_reason"] = reason
     next_state = manager.write(prior, reconciled_patch)
     return {**routing, "conversation_state": next_state}
