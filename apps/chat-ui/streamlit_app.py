@@ -180,13 +180,13 @@ STEP_ICONS = {
     "pending_hitl": "🔒", "hitl_required": "🔒",
 }
 
-MODE_OPTIONS = ["Chat", "Plan", "Workflow Builder", "Operator", "Research", "Governance"]
+MODE_OPTIONS = ["chat", "execute", "research", "agentic", "review"]
 MODE_TO_INTENT = {
-    "Plan": "draft_plan",
-    "Workflow Builder": "create_workflow",
-    "Operator": "run_workflow",
-    "Research": "ask_clarifying_question",
-    "Governance": "request_approval",
+    "chat": "answer_only",
+    "execute": "run_workflow",
+    "research": "ask_clarifying_question",
+    "agentic": "create_workflow",
+    "review": "request_approval",
 }
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -838,8 +838,9 @@ def _init() -> None:
         "assistant_working_state": None,
         "routed_intent": None,
         "routed_intent_confidence": None,
-        "selected_mode": "Chat",
-        "explicit_mode_override": False,
+        "selected_mode": "chat",
+        "mode_pinned": False,
+        "mode_transition_events": [],
         "workflow_builder_paused": False,
         "active_goal": "",
         "workflow_stage": "idle",
@@ -897,30 +898,64 @@ def _normalize_legacy_session_state() -> None:
     elif phase not in ("idle", "conversational_response", "draft_artifact", "questioning",
                        "reviewing", "executing", "hitl_pending", "done"):
         st.session_state.phase = "idle"
+    legacy_mode_map = {
+        "Chat": "chat",
+        "Plan": "execute",
+        "Workflow Builder": "agentic",
+        "Operator": "execute",
+        "Research": "research",
+        "Governance": "review",
+    }
+    selected_mode = st.session_state.get("selected_mode", "chat")
+    st.session_state.selected_mode = legacy_mode_map.get(selected_mode, selected_mode)
+    if st.session_state.selected_mode not in MODE_OPTIONS:
+        st.session_state.selected_mode = "chat"
 
 
 def _set_selected_mode(mode_label: str) -> None:
-    mode = mode_label if mode_label in MODE_OPTIONS else "Chat"
-    prev = st.session_state.get("selected_mode", "Chat")
+    mode = mode_label if mode_label in MODE_OPTIONS else "chat"
+    prev = st.session_state.get("selected_mode", "chat")
     st.session_state.selected_mode = mode
-    st.session_state.explicit_mode_override = mode != "Chat"
-    if prev == "Workflow Builder" and mode != "Workflow Builder":
+    st.session_state.mode_pinned = True
+    _emit_mode_transition(prev, mode, "user_selection")
+    if prev == "agentic" and mode != "agentic":
         if st.session_state.get("phase") == "questioning":
             st.session_state.workflow_builder_paused = True
             st.session_state.phase = "done"
-    if mode == "Workflow Builder" and st.session_state.get("workflow_builder_paused"):
+    if mode == "agentic" and st.session_state.get("workflow_builder_paused"):
         st.session_state.workflow_builder_paused = False
         if st.session_state.get("dynamic_questions") and st.session_state.get("q_index", 0) < len(st.session_state.get("dynamic_questions", [])):
             st.session_state.phase = "questioning"
 
 
+def _emit_mode_transition(from_mode: str, to_mode: str, reason: str) -> None:
+    if from_mode == to_mode:
+        return
+    st.session_state.mode_transition_events.append(
+        {"from_mode": from_mode, "to_mode": to_mode, "reason": reason, "timestamp": datetime.now(timezone.utc).isoformat()}
+    )
+
+
+def _governance_policy_mode() -> str | None:
+    policy = (st.session_state.get("workspace_state") or {}).get("workspace", {}).get("governance_policy", {})
+    forced_mode = policy.get("forced_mode") if isinstance(policy, dict) else None
+    return forced_mode if forced_mode in MODE_OPTIONS else None
+
+
 def _resolve_effective_mode(routed_intent: str | None) -> str:
-    if st.session_state.get("explicit_mode_override") and st.session_state.get("selected_mode") in MODE_OPTIONS:
-        return st.session_state["selected_mode"]
-    workflow_intents = {"create_workflow", "run_workflow", "draft_plan", "create_task", "create_schedule"}
-    if routed_intent in workflow_intents:
-        return "Workflow Builder"
-    return "Chat"
+    selected = st.session_state.get("selected_mode", "chat")
+    if st.session_state.get("mode_pinned") and selected in MODE_OPTIONS:
+        return selected
+    policy_mode = _governance_policy_mode()
+    if policy_mode:
+        return policy_mode
+    if routed_intent in {"create_workflow", "run_workflow", "draft_plan", "create_task", "create_schedule", "analysis_request"}:
+        return "execute"
+    if routed_intent in {"ask_clarifying_question", "search_knowledge"}:
+        return "research"
+    if routed_intent == "request_approval":
+        return "review"
+    return "chat"
 
 
 def _run_conversational_mode(user_input: str, ollama_url: str, use_ollama: bool) -> None:
@@ -1138,7 +1173,7 @@ def _current_session_id() -> str:
 
 def _dispatch_mode_for_intent(user_input: str, routed: dict[str, Any], ollama_url: str, use_ollama: bool) -> None:
     effective_mode = _resolve_effective_mode(routed.get("intent"))
-    if effective_mode in ("Plan", "Workflow Builder", "Operator"):
+    if effective_mode in ("execute", "agentic"):
         _run_conversational_mode(user_input, ollama_url, use_ollama)
         return
 
@@ -1261,7 +1296,7 @@ def _sync_execution_progress(session_state: Any, workflow: dict[str, Any] | None
 
 def render_current_task_banner(session_state: Any, api_url: str) -> None:
     goal = session_state.get("active_goal") or (session_state.get("intent_raw") or "No active goal")
-    mode = session_state.get("selected_mode") or "Chat"
+    mode = session_state.get("selected_mode") or "chat"
     stage = session_state.get("workflow_stage") or session_state.get("phase") or "idle"
     run_id = ((session_state.get("workflow_data") or {}).get("run_id")
               or (session_state.get("run_result") or {}).get("run_id")
@@ -1515,8 +1550,12 @@ with st.sidebar:
         _set_selected_mode(selected_mode)
         if s.workspace_state:
             s.workspace_state["workspace"]["selected_mode"] = s.selected_mode
+            s.workspace_state["workspace"]["mode_pinned"] = s.mode_pinned
         st.rerun()
     st.caption(f"Active mode: **{s.selected_mode}**")
+    if s.mode_transition_events:
+        latest = s.mode_transition_events[-1]
+        st.caption(f"Mode transition: `{latest['from_mode']} → {latest['to_mode']}` ({latest['reason']})")
     st.divider()
 
     # Config
@@ -1981,10 +2020,14 @@ with col_chat:
         if s.phase in ("idle", "done"):
             routed = route_conversation_intent(user_input)
             mode_prior_intent = MODE_TO_INTENT.get(s.selected_mode)
-            if s.explicit_mode_override and mode_prior_intent:
+            if s.mode_pinned and mode_prior_intent:
                 routed["intent"] = mode_prior_intent
-                routed["rationale"] = "explicit_mode_override"
+                routed["rationale"] = "user_mode_pinned"
                 routed["confidence"] = max(float(routed.get("confidence", 0.0)), 0.99)
+            prev_mode = s.selected_mode
+            if not s.mode_pinned:
+                s.selected_mode = _resolve_effective_mode(routed.get("intent"))
+                _emit_mode_transition(prev_mode, s.selected_mode, "governance_or_inferred_intent")
             s.routed_intent = routed.get("intent")
             s.routed_intent_confidence = routed.get("confidence")
             if isinstance(s.assistant_working_state, dict):
