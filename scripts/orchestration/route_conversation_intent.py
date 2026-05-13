@@ -187,7 +187,7 @@ def _compute_routing_mode(confidence: float, force_structured_clarification: boo
     return "required_clarification", True, "Low confidence intent (<0.60): clarification is required before execution."
 
 
-def _build_state_updates(payload: dict, confidence: float, routing_mode: str, routing_rationale: str, requires_clarification: bool, assistant_mode: str, mode_source: str, mode_reason: str, blocked_mode: str | None) -> dict:
+def _build_state_updates(payload: dict, confidence: float, intent_rationale: str, routing_mode: str, routing_rationale: str, requires_clarification: bool, assistant_mode: str, mode_source: str, mode_reason: str, blocked_mode: str | None) -> dict:
     conversation_state = payload.get("conversation_state") if isinstance(payload.get("conversation_state"), dict) else {}
     workspace_state = payload.get("workspace_state") if isinstance(payload.get("workspace_state"), dict) else {}
 
@@ -222,6 +222,7 @@ def _build_state_updates(payload: dict, confidence: float, routing_mode: str, ro
             **conversation_state,
             "intent_confidence": confidence,
             "routing_mode": routing_mode,
+            "intent_rationale": intent_rationale,
             "routing_rationale": routing_rationale,
             "requires_clarification": requires_clarification,
             "clarification_contract": "optional and limited to highest-impact missing datum" if routing_mode == "optional_single_clarification" else "highest-impact missing datum only",
@@ -231,6 +232,7 @@ def _build_state_updates(payload: dict, confidence: float, routing_mode: str, ro
             **workspace_state,
             "intent_confidence": confidence,
             "routing_mode": routing_mode,
+            "intent_rationale": intent_rationale,
             "routing_rationale": routing_rationale,
             "assistant_mode": assistant_mode,
             "mode_precedence": MODE_PRECEDENCE,
@@ -273,6 +275,7 @@ def main() -> int:
     state_updates = _build_state_updates(
         payload,
         confidence,
+        reason,
         routing_mode,
         routing_rationale,
         requires_clarification,
