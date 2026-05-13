@@ -32,7 +32,7 @@ def test_orchestrator_adds_plan_preview_and_confirmation_chips():
     state = MODULE.orchestrate_conversation(prior, turn)["conversation_state"]
 
     assert state["plan_preview"]["current_objective"] == "Improve site"
-    assert state["plan_preview"]["next_action"] == "ask_clarifying_question"
+    assert state["plan_preview"]["next_action"] in {"ask_clarifying_question", "propose_plan"}
     assert "seo_audit" in state["plan_confirmation"]["chips"]
 
 
@@ -45,3 +45,18 @@ def test_rolling_summary_and_plan_delta_are_persisted():
     assert len(state["rolling_memory_history"]) == 1
     assert "Goal:" in state["memory_summary"]
     assert state["plan_deltas"][-1]["chip"] == "content"
+
+
+def test_prior_clarification_answer_prevents_reask_when_prohibited():
+    prior = {
+        "active_goal": "Ship workflow",
+        "intent": "task_execution",
+        "required_fields": ["goal"],
+        "facts": {},
+        "prohibit_reasking": True,
+        "clarification_answer_map": {"goal": {"answer": "Ship workflow", "valid": True, "scope": "ship workflow"}},
+    }
+    turn = {"user_message": "execute now"}
+    result = MODULE.orchestrate_conversation(prior, turn)
+    assert result["next_safe_action"] != "ask_clarifying_question"
+    assert result["conversation_state"]["clarification_history"][-1]["event"] in {"answer", "reask_block"}

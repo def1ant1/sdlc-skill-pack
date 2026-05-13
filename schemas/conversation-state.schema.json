@@ -16,7 +16,9 @@
     "turn_count",
     "rolling_memory_history",
     "plan_preview",
-    "plan_deltas"
+    "plan_deltas",
+    "clarification_answer_map",
+    "clarification_history"
   ],
   "properties": {
     "schema_version": {
@@ -160,6 +162,34 @@
           "delta_type": {
             "type": "string"
           }
+        },
+        "additionalProperties": true
+      }
+    },
+    "clarification_answer_map": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "answer": {"type": "string"},
+          "answered_at_turn": {"type": "integer", "minimum": 1},
+          "valid": {"type": "boolean"},
+          "scope": {"type": "string"},
+          "expires_at_turn": {"type": "integer", "minimum": 1}
+        },
+        "additionalProperties": true
+      }
+    },
+    "clarification_history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["turn", "event", "question_key"],
+        "properties": {
+          "turn": {"type": "integer", "minimum": 1},
+          "event": {"type": "string", "enum": ["ask", "answer", "reask_block"]},
+          "question_key": {"type": "string"},
+          "reason": {"type": "string"}
         },
         "additionalProperties": true
       }

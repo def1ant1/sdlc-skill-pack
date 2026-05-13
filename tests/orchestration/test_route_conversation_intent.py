@@ -89,3 +89,16 @@ def test_pinned_chat_prevents_auto_switching():
     assert routed["assistant_mode"] == "chat"
     assert routed["mode_source"] == "user_override"
     assert routed["state_updates"]["workspace_state"]["timeline"] == []
+
+
+def test_prohibit_reasking_forces_non_clarification_routing_and_logs_block_event():
+    payload = {
+        "message": "",
+        "prohibit_reasking": True,
+        "conversation_state": {"prohibit_reasking": True},
+        "workspace_state": {"timeline": []},
+    }
+    routed = run_router(payload)
+    assert routed["routing_mode"] == "execute_or_draft"
+    assert routed["requires_clarification"] is False
+    assert routed["state_updates"]["workspace_state"]["timeline"][-1]["type"] == "clarification.reask_blocked"
