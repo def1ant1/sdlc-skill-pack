@@ -60,7 +60,7 @@ def _reconcile_turn_state(prior_state: dict[str, Any], turn_patch: dict[str, Any
         **turn_patch,
         "completed_steps": merged_completed,
         "pending_steps": merged_pending,
-        "clarification_resolved": bool(turn_patch.get("clarification_resolved") or prior_state.get("clarification_resolved", False)),
+        "clarification_status": turn_patch.get("clarification_status") or prior_state.get("clarification_status", "not_started"),
     }
 
 
@@ -136,10 +136,11 @@ def orchestrate_conversation(conversation_state: dict[str, Any], session_state: 
         "intent": routing["intent"],
         "intent_confidence": routing["intent_confidence"],
         "workflow_stage": "execution" if routing["next_safe_action"] != "ask_clarifying_question" else "clarification",
+        "clarification_status": "answered" if routing["next_safe_action"] != "ask_clarifying_question" else "asked",
         "completed_steps": incoming.get("completed_steps", []),
         "pending_steps": incoming.get("pending_steps", prior.get("pending_steps", [])),
         "execution_status": routing["next_safe_action"],
-        "clarification_resolved": routing["next_safe_action"] != "ask_clarifying_question",
+
         "memory_summary": incoming.get("memory_summary", prior.get("memory_summary", "")),
         "turn_count": turn_count,
         "user_message": incoming.get("user_message", ""),

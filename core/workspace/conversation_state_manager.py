@@ -3,6 +3,8 @@ from __future__ import annotations
 from copy import deepcopy
 from dataclasses import dataclass
 from datetime import datetime, timezone
+import json
+from pathlib import Path
 from typing import Any
 
 DEFAULT_SCHEMA_VERSION = "1.0.0"
@@ -15,7 +17,7 @@ _REQUIRED_DEFAULTS: dict[str, Any] = {
     "completed_steps": [],
     "pending_steps": [],
     "execution_status": "idle",
-    "clarification_resolved": False,
+    "clarification_status": "not_started",
     "memory_summary": "",
     "turn_count": 0,
     "rolling_memory_turn_interval": 3,
@@ -25,6 +27,17 @@ _REQUIRED_DEFAULTS: dict[str, Any] = {
 }
 
 
+
+
+SCHEMA_PATH = Path(__file__).resolve().parents[2] / "schemas" / "conversation-state.schema.json"
+
+
+def _validate_against_schema(state: dict[str, Any]) -> None:
+    schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
+    required = schema.get("required", [])
+    missing = [field for field in required if field not in state]
+    if missing:
+        raise ValueError(f"conversation state missing required fields: {missing}")
 def _utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
@@ -44,6 +57,7 @@ class ConversationStateManager:
         }
         if initial_state:
             base = self.merge(base, initial_state, bump_version=False)
+        _validate_against_schema(base)
         return base
 
     def read(self, state: dict[str, Any] | None) -> dict[str, Any]:
@@ -55,6 +69,7 @@ class ConversationStateManager:
         hydrated.setdefault("schema_version", self.schema_version)
         hydrated.setdefault("version", 1)
         hydrated.setdefault("updated_at", _utc_now())
+        _validate_against_schema(hydrated)
         return hydrated
 
     def merge(self, current_state: dict[str, Any] | None, patch: dict[str, Any], bump_version: bool = True) -> dict[str, Any]:
@@ -65,6 +80,7 @@ class ConversationStateManager:
         if bump_version:
             merged["version"] = int(merged.get("version", 1)) + 1
         merged["updated_at"] = _utc_now()
+        _validate_against_schema(merged)
         return merged
 
     def write(self, current_state: dict[str, Any] | None, patch: dict[str, Any]) -> dict[str, Any]:

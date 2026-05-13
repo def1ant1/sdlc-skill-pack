@@ -12,10 +12,10 @@
       "implement_next_step"
     ],
     "execution_status": "ask_clarifying_question",
-    "clarification_resolved": false,
     "memory_summary": "Need schema confirmation before implementation",
     "facts": {},
-    "clarifying_questions_asked": 1
+    "clarifying_questions_asked": 1,
+    "clarification_status": "asked"
   },
   "turn_input": {
     "user_message": "Execute the next step using the standard schema",
