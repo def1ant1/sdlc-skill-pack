@@ -15,7 +15,9 @@
     "memory_summary",
     "turn_count",
     "rolling_memory_history",
+    "memory_summary_for_planner",
     "plan_preview",
+    "memory_summary_ui",
     "plan_deltas",
     "clarification_answer_map",
     "clarification_history"
@@ -98,6 +100,9 @@
         "additionalProperties": true
       }
     },
+    "memory_summary_for_planner": {
+      "type": "string"
+    },
     "plan_preview": {
       "type": "object",
       "required": [
@@ -118,6 +123,16 @@
         "next_action": {
           "type": "string"
         }
+      },
+      "additionalProperties": true
+    },
+    "memory_summary_ui": {
+      "type": "object",
+      "required": ["editable", "refreshable"],
+      "properties": {
+        "editable": {"type": "boolean"},
+        "refreshable": {"type": "boolean"},
+        "last_refreshed_turn": {"type": "integer", "minimum": 0}
       },
       "additionalProperties": true
     },
