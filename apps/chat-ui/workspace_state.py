@@ -35,6 +35,8 @@ def default_workspace_state(workspace_id: str = "default", name: str = "Default 
             "artifact_ids": [],
             "approval_ids": [],
             "execution_run_ids": [],
+            "selected_mode": "chat",
+            "mode_pinned": False,
         },
         "conversations": [],
         "artifacts": [],
@@ -81,6 +83,8 @@ def _turn_state_defaults() -> dict[str, Any]:
         "clarification_answer_map": {},
         "last_clarification_id": None,
         "completion_status": "incomplete",
+        "selected_mode": "chat",
+        "mode_pinned": False,
     }
 
 
