@@ -1374,6 +1374,51 @@ def render_plan_panel(plan: dict) -> None:
         st.json(plan)
 
 
+def render_lightweight_plan_panel(plan: dict[str, Any], allow_edits: bool) -> tuple[dict[str, Any], bool]:
+    st.markdown("#### Lightweight Plan Review")
+    objective = st.text_input(
+        "Objective",
+        value=plan.get("workflow_title", ""),
+        disabled=not allow_edits,
+        key=f"light_obj_{plan.get('id', 'draft')}",
+    )
+    assumptions_text = st.text_area(
+        "Assumptions (one per line)",
+        value="\n".join(plan.get("assumptions", [])),
+        disabled=not allow_edits,
+        key=f"light_assump_{plan.get('id', 'draft')}",
+        height=90,
+    )
+    planned_steps = [phase.get("name", "") for phase in plan.get("phases", [])]
+    planned_steps_text = st.text_area(
+        "Planned Steps (one per line)",
+        value="\n".join([p for p in planned_steps if p]),
+        disabled=not allow_edits,
+        key=f"light_steps_{plan.get('id', 'draft')}",
+        height=120,
+    )
+    next_action = st.text_input(
+        "Next Action",
+        value=("Approve plan to execute phase 1." if allow_edits else "View summary response."),
+        disabled=not allow_edits,
+        key=f"light_next_{plan.get('id', 'draft')}",
+    )
+    st.caption("Why this clarification may be requested: missing constraints can change sequencing, risk controls, and approvals.")
+
+    if not allow_edits:
+        return plan, False
+
+    updated = dict(plan)
+    updated["workflow_title"] = objective.strip() or plan.get("workflow_title", "")
+    updated["assumptions"] = [line.strip() for line in assumptions_text.splitlines() if line.strip()]
+    delta_steps = [line.strip() for line in planned_steps_text.splitlines() if line.strip()]
+    if delta_steps:
+        updated["phases"] = [{"name": name, "description": "User-adjusted phase", "skills": [], "depends_on_phases": []} for name in delta_steps]
+    updated["next_action"] = next_action.strip()
+    changed = updated != plan
+    return updated, changed
+
+
 def render_progress_panel(workflow: dict) -> None:
     run_id = workflow.get("run_id", "—")
     status = workflow.get("status", "unknown")
@@ -1687,6 +1732,29 @@ if col_panel is not None:
         if s.panel_tab == "plan":
             plan = s.panel_artifact if isinstance(s.panel_artifact, dict) and "skill_chain" in (s.panel_artifact or {}) else s.plan
             if plan:
+                is_review_mode = s.phase in {"reviewing", "draft_artifact", "conversational_response"}
+                updated_plan, plan_changed = render_lightweight_plan_panel(plan, allow_edits=is_review_mode)
+                if plan_changed and st.button("Apply plan adjustments", key="apply_plan_adjustments", use_container_width=True):
+                    s.plan = updated_plan
+                    s.panel_artifact = updated_plan
+                    delta = {
+                        "timestamp": datetime.now(timezone.utc).isoformat(),
+                        "objective": updated_plan.get("workflow_title", ""),
+                        "assumptions": updated_plan.get("assumptions", []),
+                        "next_action": updated_plan.get("next_action", ""),
+                    }
+                    s.conversation_state["plan_deltas"] = [*(s.conversation_state.get("plan_deltas", [])), delta]
+                    append_audit_event(
+                        s.workspace_state,
+                        _current_session_id(),
+                        "plan_delta_applied",
+                        delta,
+                    )
+                    st.success("Plan adjustments saved to timeline.")
+                    _persist_conversation_state_at_turn_end("plan adjustment")
+                    _persist_turn_state()
+                    st.rerun()
+                st.divider()
                 render_plan_panel(plan)
                 # Approve/cancel buttons when in reviewing phase
                 if s.phase == "reviewing":
