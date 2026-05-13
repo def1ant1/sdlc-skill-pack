@@ -188,6 +188,13 @@ MODE_TO_INTENT = {
     "agentic": "create_workflow",
     "review": "request_approval",
 }
+POST_INTENT_TIMEOUT_SECONDS = 12
+POST_INTENT_CHIPS = [
+    {"label": "SEO Audit", "intent": "analysis_request", "sub_intent": "seo_audit"},
+    {"label": "Technical", "intent": "analysis_request", "sub_intent": "technical"},
+    {"label": "Content", "intent": "analysis_request", "sub_intent": "content"},
+    {"label": "Performance", "intent": "analysis_request", "sub_intent": "performance"},
+]
 
 # ─────────────────────────────────────────────────────────────────────────────
 # HTTP helpers
@@ -852,6 +859,8 @@ def _init() -> None:
         "pending_steps": [],
         "current_task_steps": [],
         "conversation_state": ConversationStateManager().create(),
+        "post_intent_chip_selected": None,
+        "post_intent_chip_presented_at": None,
     }
     for k, v in defaults.items():
         if k not in st.session_state:
@@ -985,6 +994,29 @@ def _run_conversational_mode(user_input: str, ollama_url: str, use_ollama: bool)
         s.analysis = analysis
         s.dynamic_questions = analysis.get("questions", [])
         s.assistant_working_state = derive_working_state(s.intent_raw, s.answers, analysis)
+        chip_selected = _render_post_intent_chips()
+        chip_timeout_elapsed = _post_intent_chip_timeout_elapsed()
+        if chip_selected:
+            chosen = s.post_intent_chip_selected or {}
+            s.analysis["intent"] = chosen.get("intent", s.analysis.get("intent", "analysis_request"))
+            s.analysis["sub_intent"] = chosen.get("sub_intent", "")
+            s.dynamic_questions = []
+            s.clarification_status = "skipped"
+            append_audit_event(
+                s.workspace_state,
+                _current_session_id(),
+                "clarification_bypassed_via_chip",
+                {"chip": chosen.get("label"), "intent": s.analysis["intent"], "sub_intent": s.analysis.get("sub_intent", "")},
+            )
+        elif chip_timeout_elapsed and s.dynamic_questions:
+            s.dynamic_questions = []
+            s.clarification_status = "skipped"
+            append_audit_event(
+                s.workspace_state,
+                _current_session_id(),
+                "clarification_timeout_fallback",
+                {"timeout_seconds": POST_INTENT_TIMEOUT_SECONDS, "fallback": "best_assumptions"},
+            )
 
         if s.dynamic_questions:
             candidate_q = s.dynamic_questions[0]
@@ -1041,6 +1073,39 @@ def _run_conversational_mode(user_input: str, ollama_url: str, use_ollama: bool)
 
     add_msg("assistant", reply)
     add_llm("assistant", reply)
+
+
+def _post_intent_chip_timeout_elapsed() -> bool:
+    s = st.session_state
+    if s.get("post_intent_chip_selected"):
+        return False
+    presented_at = s.get("post_intent_chip_presented_at")
+    if not presented_at:
+        return False
+    try:
+        elapsed = datetime.now(timezone.utc) - datetime.fromisoformat(presented_at)
+    except ValueError:
+        return False
+    return elapsed.total_seconds() >= POST_INTENT_TIMEOUT_SECONDS
+
+
+def _render_post_intent_chips() -> bool:
+    s = st.session_state
+    if not s.get("post_intent_chip_presented_at"):
+        s.post_intent_chip_presented_at = datetime.now(timezone.utc).isoformat()
+    st.caption("Optional: choose a focus to skip redundant clarifications.")
+    columns = st.columns(len(POST_INTENT_CHIPS))
+    for idx, chip in enumerate(POST_INTENT_CHIPS):
+        if columns[idx].button(chip["label"], key=f"post-intent-chip-{chip['label'].lower().replace(' ', '-')}"):
+            s.post_intent_chip_selected = chip
+            append_audit_event(
+                s.workspace_state,
+                _current_session_id(),
+                "post_intent_chip_selected",
+                {"chip_label": chip["label"], "intent": chip["intent"], "sub_intent": chip["sub_intent"], "source": "chat_ui"},
+            )
+            return True
+    return False
 
 
 def _run_workflow_builder_mode(user_input: str, ollama_url: str, use_ollama: bool) -> None:
