@@ -27,6 +27,8 @@ def test_high_confidence_request_routes_to_immediate_execution_or_draft():
     assert routed["routing_mode"] == "execute_or_draft"
     assert routed["requires_clarification"] is False
     assert routed["state_updates"]["conversation_state"]["intent_confidence"] == routed["intent_confidence"]
+    assert routed["state_updates"]["conversation_state"]["routing_rationale"] == routed["routing_rationale"]
+    assert routed["state_updates"]["conversation_state"]["intent_rationale"] == routed["rationale"]
 
 
 def test_medium_confidence_allows_single_optional_clarification():
@@ -50,6 +52,16 @@ def test_policy_override_enforces_required_clarification_for_regulated_workflow(
     assert routed["policy_override_applied"] is True
     assert routed["routing_mode"] == "required_clarification"
     assert routed["requires_clarification"] is True
+
+
+
+def test_high_risk_signal_triggers_policy_override_without_explicit_policy_flag():
+    payload = {"message": "Run workflow for HIPAA medical records migration."}
+    routed = run_router(payload)
+
+    assert routed["policy_override_applied"] is True
+    assert routed["routing_mode"] == "required_clarification"
+    assert "regulated/high-risk workflow signal detected" in routed["policy_override_reason"].lower()
 
 
 def test_explicit_task_request_auto_switches_to_execute_mode_and_records_reason():
