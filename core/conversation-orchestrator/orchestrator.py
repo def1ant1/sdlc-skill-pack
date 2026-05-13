@@ -88,6 +88,23 @@ def _build_memory_summary(state: dict[str, Any]) -> str:
     return f"Goal: {state.get('active_goal', '')}. Completed: {completed}. Pending: {pending}."
 
 
+def _major_event_summary_reason(
+    prior: dict[str, Any],
+    incoming: dict[str, Any],
+    workflow_stage: str,
+    next_action: str,
+) -> str | None:
+    if incoming.get("plan_confirmation") in {"confirmed", "completed"}:
+        return "execution_completed"
+    if workflow_stage != prior.get("workflow_stage"):
+        return f"mode_switch:{prior.get('workflow_stage', 'unknown')}->{workflow_stage}"
+    if prior.get("clarification_status") == "asked" and workflow_stage == "execution":
+        return "clarification_resolved"
+    if workflow_stage == "execution" and prior.get("execution_status") in {"idle", "ask_clarifying_question"} and next_action in {"propose_plan", "defer_execution"}:
+        return "execution_started"
+    return None
+
+
 def _extract_plan_delta(incoming: dict[str, Any], turn_number: int) -> dict[str, Any] | None:
     adjustment = incoming.get("plan_adjustment")
     if not isinstance(adjustment, dict):
@@ -159,7 +176,9 @@ def orchestrate_conversation(conversation_state: dict[str, Any], session_state: 
     incoming = session_state or {}
     classification = classify_intent(incoming.get("user_message", ""))
     routing_input = {**prior, **incoming, **classification}
-    routing_input["memory_summary"] = prior.get("memory_summary", "")
+    summary_for_planner = prior.get("memory_summary", "")
+    routing_input["memory_summary"] = summary_for_planner
+    routing_input["memory_summary_for_planner"] = summary_for_planner
     routing = route_next_safe_action(routing_input)
     turn_count = int(prior.get("turn_count", 0)) + 1
 
@@ -187,12 +206,31 @@ def orchestrate_conversation(conversation_state: dict[str, Any], session_state: 
         "chips": list(PLAN_ADJUSTMENT_CHIPS),
     }
     interval = int(prior.get("rolling_memory_turn_interval", 3))
-    if turn_count % max(interval, 1) == 0:
+    summary_refresh_requested = bool(incoming.get("refresh_memory_summary", False))
+    major_reason = _major_event_summary_reason(prior, incoming, reconciled_patch["workflow_stage"], routing["next_safe_action"])
+    should_refresh = summary_refresh_requested or (turn_count % max(interval, 1) == 0) or major_reason is not None
+    if should_refresh:
         summary = _build_memory_summary(reconciled_patch)
         history = list(prior.get("rolling_memory_history", []))
-        history.append({"turn": turn_count, "summary": summary})
+        history_entry = {"turn": turn_count, "summary": summary}
+        if major_reason:
+            history_entry["reason"] = major_reason
+        history.append(history_entry)
         reconciled_patch["memory_summary"] = summary
         reconciled_patch["rolling_memory_history"] = history[-10:]
+        reconciled_patch["memory_summary_for_planner"] = summary
+        reconciled_patch["memory_summary_ui"] = {
+            "editable": True,
+            "refreshable": True,
+            "last_refreshed_turn": turn_count,
+        }
+    else:
+        reconciled_patch["memory_summary_for_planner"] = prior.get("memory_summary_for_planner", prior.get("memory_summary", ""))
+        reconciled_patch["memory_summary_ui"] = {
+            "editable": True,
+            "refreshable": True,
+            "last_refreshed_turn": int(prior.get("memory_summary_ui", {}).get("last_refreshed_turn", 0)),
+        }
 
     delta = _extract_plan_delta(incoming, turn_count)
     if delta:
