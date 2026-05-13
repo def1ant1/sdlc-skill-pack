@@ -24,6 +24,8 @@ _REQUIRED_DEFAULTS: dict[str, Any] = {
     "rolling_memory_history": [],
     "plan_preview": {"current_objective": "", "planned_steps": [], "next_action": ""},
     "plan_deltas": [],
+    "clarification_answer_map": {},
+    "clarification_history": [],
 }
 
 

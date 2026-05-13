@@ -43,6 +43,16 @@ def _compute_missing(required_fields: list[str], facts: dict[str, Any]) -> list[
     return [field for field in required_fields if not facts.get(field)]
 
 
+def _is_cached_answer_valid(answer_record: dict[str, Any], turn_count: int, scope: str) -> bool:
+    if not isinstance(answer_record, dict) or answer_record.get("valid") is False:
+        return False
+    cached_scope = (answer_record.get("scope") or "global").strip().lower()
+    if cached_scope not in {"global", scope}:
+        return False
+    expires_at_turn = answer_record.get("expires_at_turn")
+    return not isinstance(expires_at_turn, int) or turn_count <= expires_at_turn
+
+
 def _reconcile_turn_state(prior_state: dict[str, Any], turn_patch: dict[str, Any]) -> dict[str, Any]:
     completed_prior = set(prior_state.get("completed_steps", []))
     completed_turn = set(turn_patch.get("completed_steps", []))
@@ -96,19 +106,38 @@ def _extract_plan_delta(incoming: dict[str, Any], turn_number: int) -> dict[str,
 def route_next_safe_action(state: dict[str, Any]) -> dict[str, Any]:
     facts = dict(state.get("facts", {}))
     missing = _compute_missing(state.get("required_fields", []), facts)
+    turn_count = int(state.get("turn_count", 0)) + 1
+    clarification_answer_map = state.get("clarification_answer_map") if isinstance(state.get("clarification_answer_map"), dict) else {}
+    prohibit_reasking = bool(state.get("prohibit_reasking", False))
+    scope = (state.get("active_goal") or "").strip().lower() or "global"
+    reask_allowed_reasons = {"contradiction_detected", "scope_changed", "answer_invalid", "clarification_expired"}
+    reask_context = state.get("reask_context") if isinstance(state.get("reask_context"), dict) else {}
+    reask_reason = (reask_context.get("reason") or "").strip().lower()
+
+    cached_answered = [f for f in missing if _is_cached_answer_valid(clarification_answer_map.get(f, {}), turn_count, scope)]
+    missing = [f for f in missing if f not in cached_answered]
+
     unresolved = [{"field": f, "reason": "Missing and no assumption mode enabled."} for f in missing]
     is_high_risk = state.get("risk_level") == "high" or bool(state.get("policy", {}).get("high_risk", False))
     allow_clarifying = is_high_risk or state.get("clarifying_questions_asked", 0) < 1
+    if prohibit_reasking and missing and reask_reason not in reask_allowed_reasons:
+        allow_clarifying = False
 
     if missing and allow_clarifying:
         next_action = "ask_clarifying_question"
         questions = missing if is_high_risk else missing[:1]
+        routing_event = "ask"
+        routing_event_reason = "missing_required_fields"
     elif missing:
         next_action = "defer_execution"
         questions = []
+        routing_event = "reask_block" if prohibit_reasking else "answer"
+        routing_event_reason = "prohibit_reasking_enforced" if prohibit_reasking else "clarification_budget_exhausted"
     else:
         next_action = state.get("default_action", "answer_directly")
         questions = []
+        routing_event = "answer"
+        routing_event_reason = "all_required_fields_resolved"
 
     return {
         "intent": state["intent"],
@@ -118,6 +147,9 @@ def route_next_safe_action(state: dict[str, Any]) -> dict[str, Any]:
         "facts": facts,
         "open_questions": unresolved,
         "clarifying_questions_to_ask": questions,
+        "routing_event": routing_event,
+        "routing_event_reason": routing_event_reason,
+        "cached_clarification_answers_used": cached_answered,
     }
 
 
@@ -144,6 +176,7 @@ def orchestrate_conversation(conversation_state: dict[str, Any], session_state: 
         "memory_summary": incoming.get("memory_summary", prior.get("memory_summary", "")),
         "turn_count": turn_count,
         "user_message": incoming.get("user_message", ""),
+        "prohibit_reasking": bool(incoming.get("prohibit_reasking", prior.get("prohibit_reasking", False))),
     }
     reconciled_patch = _reconcile_turn_state(prior, turn_patch)
     preview = _build_plan_preview(reconciled_patch["active_goal"], reconciled_patch["pending_steps"], routing["next_safe_action"])
@@ -166,5 +199,24 @@ def orchestrate_conversation(conversation_state: dict[str, Any], session_state: 
         deltas = list(prior.get("plan_deltas", []))
         deltas.append(delta)
         reconciled_patch["plan_deltas"] = deltas
+
+    clarification_answer_map = dict(prior.get("clarification_answer_map", {}))
+    if isinstance(incoming.get("clarification_answer_map"), dict):
+        clarification_answer_map.update(incoming["clarification_answer_map"])
+    for field in routing.get("cached_clarification_answers_used", []):
+        clarification_answer_map.setdefault(field, {"answer": "", "valid": True, "scope": "global"})
+    reconciled_patch["clarification_answer_map"] = clarification_answer_map
+
+    history = list(prior.get("clarification_history", []))
+    question_key = (routing.get("clarifying_questions_to_ask") or ["none"])[0]
+    history.append(
+        {
+            "turn": turn_count,
+            "event": routing.get("routing_event"),
+            "question_key": question_key,
+            "reason": routing.get("routing_event_reason"),
+        }
+    )
+    reconciled_patch["clarification_history"] = history[-100:]
     next_state = manager.write(prior, reconciled_patch)
     return {**routing, "conversation_state": next_state}

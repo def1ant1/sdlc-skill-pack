@@ -171,7 +171,9 @@ def _requires_policy_override(payload: dict, message: str) -> tuple[bool, str | 
     return False, None
 
 
-def _compute_routing_mode(confidence: float, force_structured_clarification: bool) -> tuple[str, bool, str]:
+def _compute_routing_mode(confidence: float, force_structured_clarification: bool, prohibit_reasking: bool) -> tuple[str, bool, str]:
+    if prohibit_reasking:
+        return "execute_or_draft", False, "prohibit_reasking enabled: clarification reroutes to non-clarification fallback."
     if force_structured_clarification:
         return (
             "required_clarification",
@@ -203,6 +205,16 @@ def _build_state_updates(payload: dict, confidence: float, routing_mode: str, ro
     if blocked_mode:
         mode_change_event["blocked_mode"] = blocked_mode
     updated_timeline = [*timeline, mode_change_event] if mode_changed else timeline
+    prohibit_reasking = bool(payload.get("prohibit_reasking") or conversation_state.get("prohibit_reasking"))
+    if prohibit_reasking:
+        updated_timeline = [
+            *updated_timeline,
+            {
+                "type": "clarification.reask_blocked",
+                "reason": "prohibit_reasking",
+                "fallback_action": "execute_or_draft",
+            },
+        ]
 
     available_modes = _collect_available_modes(payload, workspace_state)
     return {
@@ -213,6 +225,7 @@ def _build_state_updates(payload: dict, confidence: float, routing_mode: str, ro
             "routing_rationale": routing_rationale,
             "requires_clarification": requires_clarification,
             "clarification_contract": "optional and limited to highest-impact missing datum" if routing_mode == "optional_single_clarification" else "highest-impact missing datum only",
+            "prohibit_reasking": prohibit_reasking,
         },
         "workspace_state": {
             **workspace_state,
@@ -252,7 +265,8 @@ def main() -> int:
     message = _extract_message(payload)
     intent, confidence, reason = _route_intent(message)
     force_override, override_reason = _requires_policy_override(payload, message)
-    routing_mode, requires_clarification, routing_rationale = _compute_routing_mode(confidence, force_override)
+    prohibit_reasking = bool(payload.get("prohibit_reasking"))
+    routing_mode, requires_clarification, routing_rationale = _compute_routing_mode(confidence, force_override, prohibit_reasking)
     assistant_mode, mode_source, mode_reason, blocked_mode = _resolve_assistant_mode(payload, message)
     if override_reason:
         routing_rationale = f"{routing_rationale} {override_reason}"
