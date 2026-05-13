@@ -847,6 +847,9 @@ def _init() -> None:
         "clarification_answer_map": {},
         "last_clarification_id": None,
         "completion_status": "incomplete",
+        "completed_steps": [],
+        "pending_steps": [],
+        "current_task_steps": [],
         "conversation_state": ConversationStateManager().create(),
     }
     for k, v in defaults.items():
@@ -1249,6 +1252,13 @@ def _build_execution_tracker_state(session_state: Any) -> list[dict[str, Any]]:
     return tracker
 
 
+def _sync_execution_progress(session_state: Any, workflow: dict[str, Any] | None = None) -> None:
+    tracker = _build_execution_tracker_state(session_state)
+    session_state.current_task_steps = tracker
+    session_state.completed_steps = [step["label"] for step in tracker if step.get("status") == "completed"]
+    session_state.pending_steps = [step["label"] for step in tracker if step.get("status") != "completed"]
+
+
 def render_current_task_banner(session_state: Any, api_url: str) -> None:
     goal = session_state.get("active_goal") or (session_state.get("intent_raw") or "No active goal")
     mode = session_state.get("selected_mode") or "Chat"
@@ -1264,17 +1274,24 @@ def render_current_task_banner(session_state: Any, api_url: str) -> None:
     </div>
     """ % (mode, stage, run_id, goal), unsafe_allow_html=True)
 
-    tracker = _build_execution_tracker_state(session_state)
+    tracker = session_state.get("current_task_steps") or _build_execution_tracker_state(session_state)
     if tracker:
         st.markdown("**Execution Steps**")
         for idx, step in enumerate(tracker, start=1):
             icon = {"completed": "✅", "in_progress": "🟡", "pending": "⚪"}.get(step["status"], "⚪")
-            trace_url = f"{api_url.rstrip('/')}/v1/workflows/{step['run_id']}" if step.get("run_id") else None
-            trace_label = f"artifact `{step['artifact']}`"
-            if trace_url:
-                st.markdown(f"{icon} **{idx}. {step['label']}** · `{step['raw_status']}`  \n↳ [{trace_label}]({trace_url})")
-            else:
-                st.markdown(f"{icon} **{idx}. {step['label']}** · `{step['raw_status']}`  \n↳ {trace_label}")
+            run_link = f"{api_url.rstrip('/')}/v1/workflows/{step['run_id']}" if step.get("run_id") else None
+            artifact_id = step.get("artifact")
+            artifact_link = f"{api_url.rstrip('/')}/v1/artifacts/{artifact_id}" if artifact_id else None
+            refs = []
+            if run_link:
+                refs.append(f"[run `{step['run_id']}`]({run_link})")
+            if artifact_id:
+                if artifact_link:
+                    refs.append(f"[artifact `{artifact_id}`]({artifact_link})")
+                else:
+                    refs.append(f"artifact `{artifact_id}`")
+            ref_line = " · ".join(refs) if refs else "no run/artifact reference"
+            st.markdown(f"{icon} **{idx}. {step['label']}** · `{step['raw_status']}`  \n↳ {ref_line}")
 
 def render_plan_panel(plan: dict) -> None:
     st.markdown(f"### {plan.get('workflow_title', 'Workflow Plan')}")
@@ -1762,6 +1779,7 @@ if col_panel is not None:
 with col_chat:
 
     render_current_task_banner(s, api_url)
+    st.caption(f"Workflow stage: **{s.get('workflow_stage', s.phase)}** · Active mode: **{s.selected_mode}**")
 
     # Message history
     for msg in s.messages:
@@ -1858,6 +1876,8 @@ with col_chat:
                     pass
                 s.run_result = result
                 s.poll_run_id = result.get("run_id")
+                s.workflow_stage = "executing"
+                _sync_execution_progress(s)
 
             if "error" in result:
                 reply = f"Submission error: `{result['error']}`\n\nCheck sidebar settings."
@@ -1888,6 +1908,7 @@ with col_chat:
             wf_data = get_workflow(api_url, jwt_token, s.poll_run_id)
             if wf_data:
                 s.workflow_data = wf_data
+                _sync_execution_progress(s, wf_data)
                 wf_status = wf_data.get("status", "")
 
                 if wf_status == "paused_for_hitl":
@@ -1906,6 +1927,7 @@ with col_chat:
 
                 elif wf_status in ("completed", "failed", "cancelled"):
                     s.phase = "done"
+                    s.workflow_stage = "done"
                     open_panel("progress", artifact=wf_data)
                     status_word = "completed successfully" if wf_status == "completed" else f"ended with status **{wf_status}**"
                     add_msg("assistant",
