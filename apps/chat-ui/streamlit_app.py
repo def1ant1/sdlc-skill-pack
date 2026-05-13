@@ -37,6 +37,7 @@ from workspace_state import (
 )
 from workspace_views import render_workspace_actions
 from visible_cognition_panel import render_visible_cognition_panel
+from core.workspace import ConversationStateManager
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Configuration
@@ -276,10 +277,10 @@ def backend_up(api_url: str) -> bool:
     return code == 200
 
 
-def submit_to_backend(plan: dict, dry_run: bool, api_url: str, token: str) -> dict:
+def submit_to_backend(plan: dict, dry_run: bool, api_url: str, token: str, conversation_state: dict[str, Any] | None = None) -> dict:
     code, resp = _http(
         f"{api_url}/v1/workflows", method="POST",
-        data={"plan": plan, "mode": "local", "dry_run": dry_run},
+        data={"plan": plan, "mode": "local", "dry_run": dry_run, "conversation_state": conversation_state or {}},
         token=token, timeout=15,
     )
     return resp if code in (200, 202) else {"error": f"HTTP {code}: {resp}"}
@@ -577,7 +578,7 @@ def _fallback_plan(request: str, analysis: dict, answers: dict) -> dict:
 # Build & save plan
 # ─────────────────────────────────────────────────────────────────────────────
 
-def build_plan(request: str, synthesis: dict, answers: dict) -> dict:
+def build_plan(request: str, synthesis: dict, answers: dict, conversation_state: dict[str, Any]) -> dict:
     steps = []
     for i, skill in enumerate(synthesis["skill_chain"], 1):
         info = ALL_SKILLS.get(skill, {"domain": "business", "description": ""})
@@ -615,6 +616,7 @@ def build_plan(request: str, synthesis: dict, answers: dict) -> dict:
             "no_external_writes": True,
             "require_human_approval_for_mutations": True,
         },
+        "conversation_state": conversation_state,
         "planner_metadata": {
             "planner":    "multi-domain-planner",
             "version":    "2.0.0",
@@ -750,6 +752,31 @@ def gen_unknown_response(ollama_url: str, request: str) -> str:
                      "Could you tell me more about the primary outcome you're trying to achieve?")
 
 
+def _load_conversation_state_at_turn_start() -> None:
+    manager = ConversationStateManager()
+    st.session_state.conversation_state = manager.read(st.session_state.get("conversation_state"))
+
+
+def _persist_conversation_state_at_turn_end(user_message: str) -> None:
+    manager = ConversationStateManager()
+    merged = manager.write(
+        st.session_state.get("conversation_state"),
+        {
+            "active_goal": st.session_state.get("active_goal", ""),
+            "intent": st.session_state.get("routed_intent", ""),
+            "intent_confidence": float(st.session_state.get("routed_intent_confidence") or 0.0),
+            "workflow_stage": st.session_state.get("workflow_stage", "idle"),
+            "clarification_status": st.session_state.get("clarification_status", "not_started"),
+            "completed_steps": st.session_state.get("completed_steps", []),
+            "pending_steps": st.session_state.get("dynamic_questions", []),
+            "execution_status": st.session_state.get("phase", "idle"),
+            "memory_summary": st.session_state.get("intent_raw", ""),
+            "user_message": user_message,
+        },
+    )
+    st.session_state.conversation_state = merged
+
+
 def route_conversation_intent(message: str) -> dict[str, Any]:
     payload = {"message": message}
     default = {"intent": "ask_clarifying_question", "confidence": 0.0, "rationale": "routing_failed"}
@@ -820,6 +847,7 @@ def _init() -> None:
         "clarification_answer_map": {},
         "last_clarification_id": None,
         "completion_status": "incomplete",
+        "conversation_state": ConversationStateManager().create(),
     }
     for k, v in defaults.items():
         if k not in st.session_state:
@@ -957,7 +985,7 @@ def _run_conversational_mode(user_input: str, ollama_url: str, use_ollama: bool)
             synthesis = synthesize_plan(ollama_url, s.intent_raw, s.analysis or {}, s.answers) if use_ollama else None
             if not synthesis:
                 synthesis = _fallback_plan(s.intent_raw, s.analysis or {}, s.answers)
-            plan = build_plan(s.intent_raw, synthesis, s.answers)
+            plan = build_plan(s.intent_raw, synthesis, s.answers, s.conversation_state)
             plan["assistant_working_state"] = s.assistant_working_state
             s.plan = plan
             s.phase = "draft_artifact"
@@ -1041,7 +1069,7 @@ def _run_workflow_builder_mode(user_input: str, ollama_url: str, use_ollama: boo
             if not synthesis:
                 synthesis = _fallback_plan(s.intent_raw, s.analysis or {}, s.answers)
 
-            plan = build_plan(s.intent_raw, synthesis, s.answers)
+            plan = build_plan(s.intent_raw, synthesis, s.answers, s.conversation_state)
             plan["assistant_working_state"] = s.assistant_working_state
             s.plan = plan
             s.phase = "draft_artifact"
@@ -1815,7 +1843,7 @@ with col_chat:
         with st.chat_message("assistant"):
             with st.spinner("Submitting workflow to runtime…"):
                 result = (
-                    submit_to_backend(s.plan, dry_run, api_url, jwt_token)
+                    submit_to_backend(s.plan, dry_run, api_url, jwt_token, s.conversation_state)
                     if (_api_up and jwt_token)
                     else {
                         "run_id": f"LOCAL-{int(time.time())}",
@@ -1920,6 +1948,7 @@ with col_chat:
                                disabled=(s.phase == "executing"))
 
     if user_input:
+        _load_conversation_state_at_turn_start()
         if WORKSPACE_STATE_FILE.exists():
             s.workspace_state = load_workspace_state(WORKSPACE_STATE_FILE)
         user_input = user_input.strip()
@@ -1940,12 +1969,14 @@ with col_chat:
                 s.assistant_working_state["selected_intent"] = s.routed_intent or ""
                 s.assistant_working_state["intent_confidence"] = float(s.routed_intent_confidence or 0.0)
             _dispatch_mode_for_intent(user_input, routed, ollama_url, use_ollama)
+            _persist_conversation_state_at_turn_end(user_input)
             _persist_turn_state()
             st.rerun()
 
         # ── questioning → collect answer, advance ─────────────────────────────
         elif s.phase == "questioning" and s.mode == "workflow_builder":
             _run_workflow_builder_mode(user_input, ollama_url, use_ollama)
+            _persist_conversation_state_at_turn_end(user_input)
             _persist_turn_state()
             st.rerun()
 
@@ -1960,6 +1991,7 @@ with col_chat:
             else:
                 add_msg("assistant",
                         "Use the **Approve** / **Cancel** buttons above, or type `approve` / `cancel`.")
+            _persist_conversation_state_at_turn_end(user_input)
             _persist_turn_state()
             st.rerun()
 
@@ -1992,5 +2024,6 @@ with col_chat:
             else:
                 add_msg("assistant",
                         "Type `approve` or `reject`, or use the **Approvals** panel to review details.")
+            _persist_conversation_state_at_turn_end(user_input)
             _persist_turn_state()
             st.rerun()

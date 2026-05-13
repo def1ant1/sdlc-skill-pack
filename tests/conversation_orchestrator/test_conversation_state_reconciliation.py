@@ -17,12 +17,13 @@ def test_user_answers_clarification_then_execute_next_step():
     state = result["conversation_state"]
 
     assert state["workflow_stage"] == "execution"
-    assert state["clarification_resolved"] is True
+    assert state["clarification_status"] == "answered"
     assert "capture_requirements" in state["completed_steps"]
     assert "confirm_schema" in state["completed_steps"]
     assert "implement_next_step" in state["pending_steps"]
     assert state["version"] >= 2
     assert result["next_safe_action"] == "propose_plan"
+    assert result["next_safe_action"] != "ask_clarifying_question"
 
 
 def test_orchestrator_adds_plan_preview_and_confirmation_chips():
